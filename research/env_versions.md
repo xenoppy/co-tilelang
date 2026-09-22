@@ -98,3 +98,36 @@ ninja -j 96
 GQA decode 失败的根因：示例的 `get_heuristic_config()` 只对 sm_89 特判，其余 GPU 一律用 `block_N=128, block_H=64, num_split=8, num_stages=2`。这组配置需要 Q 16 KB + K/V 双缓冲 2×2×32 KB = 144 KB，只适合 A100/H100 这类大 smem 的卡；sm_86、sm_89、sm_120 每 CTA 最多 99 KB。示例文件没有改，改用外部包装脚本替换配置后，调用的仍是示例自己的 `main()`，示例自带的两项相似度检查都通过。注意：示例里的 `assert_similar` 默认 `assert_=False`，失败时只打印红字，不会抛异常，也照样会打印 "All checks pass."；因此判断是否通过要看 `passed:` 那两行。
 
 上游 CI 本来就不会覆盖这些情况：`test_example_flash_decoding.py` 限定 cc ≤ 8.9，`test_example_warp_specialize.py` 限定 cc == 9.0。另外 `~/mpk-env` 里没有 pytest，所以示例是直接用 `python` 跑的，没有经过 pytest。
+
+## 5. FlashInfer（P1-baselines，2026-09-22）
+
+用途：GQA decode / prefill 的单跑参考实现，以及 POD-Attention（kernel 内 prefill+decode 编排）的现成基线。测量结果见 `research/results/2026-09-22_flashinfer_baselines/`，包装模块 `research/bench/baselines/flashinfer_ops.py`。
+
+### 5.1 安装
+
+```bash
+source research/env.sh
+pip install --dry-run --no-cache-dir --report dry.json flashinfer-python==0.7.0   # 先 dry-run：只有新增，没有任何已装包升级/降级
+pip install --no-cache-dir flashinfer-python==0.7.0
+```
+
+- `flashinfer-python 0.7.0`：纯 Python 的 JIT wheel（`py3-none-any`），CUDA 源码与 CUTLASS/CCCL 头文件随包附带，第一次调用时用本机 nvcc 编译。
+- 新增 15 个包（安装前后 `pip list` 逐项对比：**已有包版本全部不变**，torch 仍是 2.8.0+cu128，apache-tvm-ffi 仍是 0.1.12）：flashinfer-python 0.7.0、nvidia-cutlass-dsl 4.8.0（+ libs-base / libs-core / libs-cu12 / libs-cu13 4.8.0）、nvidia-cudnn-frontend 1.29.0、cuda-core 1.2.0、cuda-tile 1.6.0、nccl4py 0.5.0、nccl-extensions 0.1.0、nvidia-ml-py 13.610.43、protobuf 7.36.2、click 8.5.0、tabulate 0.10.0。
+- 占盘：根分区少了约 0.93 GB（site-packages 里 `nvidia_cutlass_dsl` 485 MB、`flashinfer` 258 MB、`nccl` 104 MB、`cudnn`（frontend）55 MB、`cuda/core` 18 MB 等）。`--no-cache-dir`，pip 缓存没有增长。
+- 卸载：`pip uninstall` 上面 15 个包，再 `rm -rf ~/.cache/flashinfer`。
+
+### 5.2 JIT 与缓存
+
+- 编译器：`$CUDA_HOME/bin/nvcc`（12.9；FlashInfer 按 `CUDA_HOME` → `which nvcc` 的顺序找）。目标：`-gencode=arch=compute_120f,code=sm_120f`（FlashInfer 对 SM 12.x 用 family 后缀 `f`，要求 CUDA ≥ 12.9；可用 `FLASHINFER_CUDA_ARCH_LIST` 覆盖）。
+- 缓存目录：`~/.cache/flashinfer/0.7.0/120f/`（`cached_ops/` 放编好的 `.so` 与 `.o`，`generated/` 放模板实例化出的源码；基目录可用 `FLASHINFER_WORKSPACE_BASE` 改）。
+- 本任务编了 4 个模块（bf16，head_dim 128，无 RoPE/滑窗/soft-cap），首次编译耗时（96 核）：`batch_decode` 约 8 s，`batch_prefill`（tensor-core decode 走它）约 18 s，`single_prefill` 约 10 s，`pod_with_kv_cache` 约 107 s（16 种 mask 组合的实例化）。4 个模块编完后 `~/.cache/flashinfer` 共 51 MB。（同一任务里 TileLang GQA decode 示例的 48 个配置使 `~/.tilelang/cache` 从 41 MB 涨到 74 MB。）
+
+### 5.3 与现有环境的相互影响
+
+- FlashInfer 0.7.0 要求 `apache-tvm-ffi>=0.1.11,<0.2`，直接复用已装的 0.1.12（与 TileLang 相同）。同一进程先后 `import tilelang, flashinfer` 正常。FlashInfer 的 kernel 通过 tvm-ffi 调用，launch 在 **torch 当前 stream** 上（tvm-ffi 的 DLPack exchange API 在调用时取 torch 的 current stream），所以 `with torch.cuda.stream(s)`（包括 green context 的 ExternalStream）对它生效。
+- `nvidia-cutlass-dsl` 装了一个 `nvidia_cutlass_dsl_packages.pth`：每次 Python 启动都会 import `nvidia_cutlass_dsl` 并把其 `dsl_packages/` 插到 `sys.path` 最前面，于是 `import cutlass`（CuTe DSL）现在能成功。TileLang 只有在显式选 `cutedsl` 后端时才会用到它（`tilelang/jit/adapter/cutedsl/checks.py`），默认的 tvm_ffi 后端不受影响。
+- `nvidia-ml-py` 提供 `pynvml`；cobench 自己用 ctypes 调 NVML，不受影响。
+
+### 5.4 sm_120 上的已知问题（FlashInfer 0.7.0）
+
+- POD（`PODWithPagedKVCacheWrapper`）能编译、结果正确，但它的 CTA 调度计数器 `tbAssign`（进程级 `static int*`）是用不带 stream 的 `cudaMemset` 清零的（`include/flashinfer/attention/pod.cuh:414-415`），即落在 legacy default stream 上，而 kernel 本身在 torch 当前 stream 上。后果（实测）：在非阻塞 stream（torch 的 side stream、green context stream）上连续调用会得到错误结果；放进 CUDA graph 时只有第一次 replay 正确，之后每次 replay 约 15 µs 就结束、什么都没算。因此 POD 只能在 legacy default stream 上、不用 graph 来测。详见结果目录的 README。

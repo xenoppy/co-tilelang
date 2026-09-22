@@ -1,0 +1,162 @@
+[
+ {
+  "prefill_seq": 2048,
+  "decode_batch": 16,
+  "decode_kv_len": 2048,
+  "prefill_ctas": 512,
+  "decode_ctas": 256,
+  "grid": 768,
+  "waves_at_2_per_sm": 2.0425531914893615,
+  "ticket_ratio_prefill_to_decode": "2:1",
+  "pod_decode_plan": {
+   "padded_batch_size": 32,
+   "cta_tile_q": 16,
+   "split_kv": true
+  },
+  "standalone_tc_decode_plan": {
+   "padded_batch_size": 32,
+   "cta_tile_q": 16,
+   "split_kv": true
+  }
+ },
+ {
+  "prefill_seq": 2048,
+  "decode_batch": 16,
+  "decode_kv_len": 8192,
+  "prefill_ctas": 512,
+  "decode_ctas": 256,
+  "grid": 768,
+  "waves_at_2_per_sm": 2.0425531914893615,
+  "ticket_ratio_prefill_to_decode": "2:1",
+  "pod_decode_plan": {
+   "padded_batch_size": 32,
+   "cta_tile_q": 16,
+   "split_kv": true
+  },
+  "standalone_tc_decode_plan": {
+   "padded_batch_size": 32,
+   "cta_tile_q": 16,
+   "split_kv": true
+  }
+ },
+ {
+  "prefill_seq": 2048,
+  "decode_batch": 64,
+  "decode_kv_len": 2048,
+  "prefill_ctas": 512,
+  "decode_ctas": 512,
+  "grid": 1024,
+  "waves_at_2_per_sm": 2.723404255319149,
+  "ticket_ratio_prefill_to_decode": "1:1",
+  "pod_decode_plan": {
+   "padded_batch_size": 64,
+   "cta_tile_q": 16,
+   "split_kv": false
+  },
+  "standalone_tc_decode_plan": {
+   "padded_batch_size": 64,
+   "cta_tile_q": 16,
+   "split_kv": false
+  }
+ },
+ {
+  "prefill_seq": 2048,
+  "decode_batch": 64,
+  "decode_kv_len": 8192,
+  "prefill_ctas": 512,
+  "decode_ctas": 512,
+  "grid": 1024,
+  "waves_at_2_per_sm": 2.723404255319149,
+  "ticket_ratio_prefill_to_decode": "1:1",
+  "pod_decode_plan": {
+   "padded_batch_size": 64,
+   "cta_tile_q": 16,
+   "split_kv": false
+  },
+  "standalone_tc_decode_plan": {
+   "padded_batch_size": 64,
+   "cta_tile_q": 16,
+   "split_kv": false
+  }
+ },
+ {
+  "prefill_seq": 8192,
+  "decode_batch": 16,
+  "decode_kv_len": 2048,
+  "prefill_ctas": 2048,
+  "decode_ctas": 256,
+  "grid": 2304,
+  "waves_at_2_per_sm": 6.127659574468085,
+  "ticket_ratio_prefill_to_decode": "8:1",
+  "pod_decode_plan": {
+   "padded_batch_size": 32,
+   "cta_tile_q": 16,
+   "split_kv": true
+  },
+  "standalone_tc_decode_plan": {
+   "padded_batch_size": 32,
+   "cta_tile_q": 16,
+   "split_kv": true
+  }
+ },
+ {
+  "prefill_seq": 8192,
+  "decode_batch": 16,
+  "decode_kv_len": 8192,
+  "prefill_ctas": 2048,
+  "decode_ctas": 256,
+  "grid": 2304,
+  "waves_at_2_per_sm": 6.127659574468085,
+  "ticket_ratio_prefill_to_decode": "8:1",
+  "pod_decode_plan": {
+   "padded_batch_size": 32,
+   "cta_tile_q": 16,
+   "split_kv": true
+  },
+  "standalone_tc_decode_plan": {
+   "padded_batch_size": 32,
+   "cta_tile_q": 16,
+   "split_kv": true
+  }
+ },
+ {
+  "prefill_seq": 8192,
+  "decode_batch": 64,
+  "decode_kv_len": 2048,
+  "prefill_ctas": 2048,
+  "decode_ctas": 512,
+  "grid": 2560,
+  "waves_at_2_per_sm": 6.808510638297872,
+  "ticket_ratio_prefill_to_decode": "4:1",
+  "pod_decode_plan": {
+   "padded_batch_size": 64,
+   "cta_tile_q": 16,
+   "split_kv": false
+  },
+  "standalone_tc_decode_plan": {
+   "padded_batch_size": 64,
+   "cta_tile_q": 16,
+   "split_kv": false
+  }
+ },
+ {
+  "prefill_seq": 8192,
+  "decode_batch": 64,
+  "decode_kv_len": 8192,
+  "prefill_ctas": 2048,
+  "decode_ctas": 512,
+  "grid": 2560,
+  "waves_at_2_per_sm": 6.808510638297872,
+  "ticket_ratio_prefill_to_decode": "4:1",
+  "pod_decode_plan": {
+   "padded_batch_size": 64,
+   "cta_tile_q": 16,
+   "split_kv": false
+  },
+  "standalone_tc_decode_plan": {
+   "padded_batch_size": 64,
+   "cta_tile_q": 16,
+   "split_kv": false
+  }
+ }
+]

@@ -12,9 +12,9 @@
 
 - 子 agent 实际调用方式：自定义 agent 类型在会话中途创建后无法加载，改用 `general-purpose` + `model: opus`，在 prompt 里写明规则与"extra-high effort"（Agent 工具无法直接设 effort）。
 - 无免密 sudo：不能锁频，测量协议改为 NVML 记录频率 + 交错测量（已写入 plan）。
-- `/data`（916G NVMe）可放编译中间产物和数据（用户 19:40 告知），但目前归 root 所有、ywc 不可写，需要用户建一个自己的子目录。
+- `/data`（916G NVMe）可放编译中间产物和数据（用户约 19:30 告知），但目前归 root 所有、ywc 不可写，需要用户建一个自己的子目录。
 
-**P0-1 编译与冒烟测试：已完成（20:05 验收）**
+**P0-1 编译与冒烟测试：已完成（19:41 验收）**
 - 完成标准：任意目录下 `import tilelang` 可用（`source research/env.sh`）；gemm / GQA decode / RMSNorm / 一个 warp_specialize 示例在 GPU 上通过自带正确性检查；版本记录在 `research/env_versions.md`。
 - 结果：开发模式编译（`build/`，ninja，编译约 95 s，总占用约 790MB）。子模块只浅克隆了 tvm、tvm-ffi、cutlass；TVM 下四个不需要的子模块在本地 git config 设为 `update=none`。mpk-env 新装 apache-tvm-ffi 0.1.12 等运行时依赖；z3 保持 4.16（mirage 依赖它）。
 - 示例：gemm 1024³ fp16 通过；RMSNorm 8192² 通过（0.36 ms，约 1.49 TB/s）；warp_specialize 五个 GEMM 示例通过（16384³ 约 284 TFLOPS）；flashmla 用 wgmma，sm_120 不支持，符合预期。
@@ -24,11 +24,11 @@
   - shared memory 超限不会在编译期报错，只在启动时失败；配置生成器要自己检查 101376 B 上限。
   - 上游 CI 对 flash decoding 只测 cc ≤ 8.9，对 warp_specialize 只测 cc == 9.0，sm_120 路径缺少测试覆盖。
 
-**TileLang 能力调研：已完成（20:25）**，报告 `research/notes/tilelang_capability_survey.md`。结论：
+**TileLang 能力调研：已完成（19:46）**，报告 `research/notes/tilelang_capability_survey.md`。结论：
 - 已有：运行时角色分支（layout 推断、流水、同步插入都能处理 uniform 条件）；`T.Pipelined` 可嵌在 for/if/while 内；`atomic_add(return_prev=True)` 单元素；`T.sync_threads`、named barrier；`T.Persistent`/`loop_break`；`T.ws` 在连续线程子区间上可用 gemm/copy/reduce/parallel；`T.annotate_min_blocks_per_sm` 给出寄存器上限；`par_compile` 批量编译。
 - 缺口（按风险）：① sm_120 默认开启自动 warp specialization，会破坏双角色 kernel → CoKernel 一律 `tl.disable_warp_specialized=True`；② shared memory 分配把两个角色的缓冲区都算成整个 if/while 内存活，**两角色 smem 相加、不复用**，CTA 级共驻前必须解决；③ warp 级下跨 warp 的 `T.reduce` 固定用 barrier 1、2，两个角色同时归约会冲突；④ while 循环里没有跨迭代的同步分析；⑤ `%smid`/`%globaltimer` 缺失，可用 `T.Kernel(prelude=...)` + `T.call_extern` 补；⑥ 没有寄存器/smem 查询 API，用 cuobjdump 或 ptxas -v。
 
-**相关工作扫描：已完成（20:50）**，报告 `research/notes/related_work_scan.md`（约 32 项，8 篇精读）。结论与处理：
+**相关工作扫描：已完成（19:53）**，报告 `research/notes/related_work_scan.md`（约 32 项，8 篇精读）。结论与处理：
 - 没有工作完整覆盖本研究的主张，但各部件都已单独存在：POD（CTA 级 `%smid` 绑定，手工改实现）、HFuse（warp 级 + 线程划分 / 寄存器上限搜索）、Rammer（多个算子的 tile 共驻同一 SM，库内多版本按 profiling 挑选，多余线程空转）、MPK / Event Tensor / Hazy（SM 级 worker 与动态队列）、mKernel（运行时调角色 SM 划分）、GOLDYLOC / NanoFlow（为共同执行调优实现，跨 kernel）。
 - proposal v0.1 对 Rammer、HFuse、MPK 的描述有误或不完整，已修正。
 - 仍然空白：共同资源契约下从语义重新推导实现；覆盖三级绑定与多种调度、让已有设计成为其中的点的统一空间；有成本控制的联合搜索；sm_120 上的刻画；与伙伴无关的数值。
@@ -36,7 +36,7 @@
 - 处理：proposal v0.2（658a0019）把核心主张改为"为共同资源契约重新推导实现"，2×2 扩展为 3×2（solo / lib / derived × inter / intra）；plan v0.2（8e10db30）据此修订了 P1 的度量、基线（空转线程、虚拟 CTA、GOLDYLOC 式预算调优、FlashInfer POD）和 D1（在看到任何 P1 数据之前）。
 - 附带发现：FlashInfer POD 按 SM 数开计数器数组，而 PTX 规定 `%nsmid` 可能大于 SM 数；本机 188/192 SM，可能越界，使用前要先看探测结果。
 
-**P0-2 测量框架 v0 + `%smid` 探测：已完成（21:05 验收，主 agent 复跑 `research/bench/tests/test_cobench.py` 9/9 通过）**
+**P0-2 测量框架 v0 + `%smid` 探测：已完成（20:14 验收，主 agent 复跑 `research/bench/tests/test_cobench.py` 9/9 通过）**
 - API（`research/bench/cobench`，文档 `research/bench/README.md`）：`bench(fn, mode=flush|graph|hot)`、`bench_corun`（公共起点，solo/serial 在每轮内交错测量，发射顺序 ab/ba 交替）、`NvmlSampler`、`split_sms`（green context → torch ExternalStream）、`build_sm_remap`、`CudaKernel`（NVRTC，可在普通流和 green 流上启动）。额外加了"主机闸门"（计时区间不含主机发射延迟）和 GPU 内时钟探针（每 50µs 记录 SM 时钟）。
 - 关键数字：bf16 dense 峰值 1024 FLOP/clk/SM，即 2617 MHz 时 504 TFLOP/s；持续负载下 600W 功耗墙把频率压到约 2.18–2.35 GHz，实际峰值约 430–450。torch matmul 4096³ 约 360–390 TFLOP/s（同频率下达峰值的 79–86%）。DRAM 拷贝约 1.46 TB/s（理论 1.79）。跨 5 个进程的 CV 0.17%。
 - `%smid`：`%nsmid` = 188，编号 0..187 无空洞（全卡重映射为恒等）；第一波 188 个 CTA 必定落在 188 个不同 SM；块→SM 映射确定但不按 smid 顺序（TPC 成对、8 组轮转）；green context 内 `%nsmid` 仍为 188、编号为物理编号，分区要自己建表。**FlashInfer POD 的 `%nsmid` 越界风险在本机不存在。**
@@ -45,10 +45,29 @@
 - 教训：NVML 在本驱动上约 500ms 才刷新一次，10ms 轮询没有意义（改用 GPU 内时钟探针；功耗可用 `nvmlDeviceGetSamples` 20ms 采样）；功耗墙在负载开始 0.1–0.3s 后降频，预热必须 ≥ 1s；不同模式下频率不同，跨模式比较要用 cycles 而不是 µs。
 - 初步观察（非正式）：matmul ∥ copy 在两条普通 stream 上完全串行（加速比 0.998，copy 总是先完成）；green context 94/94 划分为串行时间的 0.81×。说明 M1 基线可能很弱，M2 才是真正要赢的跨 kernel 基线。
 
+**P1 准备：算子库 v0（`cotile/`）：已完成（20:59 验收，主 agent 复跑 `python -m cotile.tests.test_ops` 全部通过；提交 8e60a158）**
+- 完成标准：C1 每个算子有 tile_body macro + 普通 grid 版 + 持久化版 + 配置枚举 + 资源签名；C2 每个算子 ≥30 个配置在测试形状上两种版本都通过正确性检查；C3 split-K GEMM 与 split-KV decode 在 kernel 内合并（最后到达的 tile 做合并）并通过重复启动测试；C4 资源签名写入 `research/results/2026-09-22_op_library/signatures.csv`；C5 `cotile/README.md`。
+- 结果：GEMM 43、decode 36、RMSNorm 39 个配置全部正确；grid 版与持久化版逐位相同；同一数值键的配置逐位相同（GEMM 的 35 个 split-K=1 配置跨 tile 形状、流水级数、线程数、epilogue、warp specialization 都逐位相同，E0 成立）；split 配置在 kernel 内按固定顺序合并，结果确定。236 个 kernel 冷编译 81.5s（32 并行）。资源签名从 cubin 读取，寄存器与每 SM CTA 数与驱动交叉验证一致。
+- 发现：
+  - **编译器数值问题**：TileLang 生成的成对 fp32 `mul/sub.rn.f32x2`，在 sm_120a 上会被 ptxas 融合成 FFMA（即使 `-fmad=false`），融合哪一个操作数取决于上下文代码。decode 不同 num_stages 之间差 1–3 个 fp32 ulp。子 agent 在 decode tile 里改写为 `exp2((s−m)·scale)` 规避。**这直接威胁"与伙伴无关的数值"：两个角色编进同一 kernel 后，上下文变化可能改变融合方式。** 需要在 CoKernel 中验证，必要时在 TileLang 里修（`common.h` 对 sm_12x 用标量 `__fmul_rn/__fsub_rn`，或查 #3128 的 PassConfig）。
+  - decode 在 ≥8 warp 且每 warp ≥16 列时，TileLang 的 `T.reduce_*` lowering 失败（配置被 validate 拒绝）。
+  - `tl.disable_tma_lower=True` 会让 GEMM smem epilogue 的 lowering 崩溃。
+  - 持久化版的 shared memory 是所有 scratch 之和（阶段间不复用），19 个 GEMM 配置因此每 SM 少一个 CTA；寄存器也上升（decode 最多 +48，RMSNorm 181→247）。
+  - 寄存器耦合会很严重：GEMM 最高 254，decode 56–206，RMSNorm 30–247。
+- 技术债：`DeviceSpec` 默认值写死本机参数，应加 `from_current_device()`；`configs()` 的 smem 上限默认值应取自 DeviceSpec。
+
+**P1 基线：FlashInfer 0.7.0：已完成（20:55）**，结果 `research/results/2026-09-22_flashinfer_baselines/`，封装 `research/bench/baselines/flashinfer_ops.py`。
+- 安装不改动已有包版本（新增 15 个包，约 0.93GB；JIT 缓存 `~/.cache/flashinfer/0.7.0/120f/`）。decode、prefill、POD 在 sm_120 上都能编译且正确；POD 输出与单独的 FlashInfer kernel 逐位相同。
+- GQA decode：1370–1636 GB/s（graph 模式达 DRAM 峰值 84–91%）。TileLang 示例用最好的 ≤99KB 配置（block_N 128、1 stage、不 split）与 FlashInfer 相差约 1%（B16/KV2048 差 5%）。prefill：S=8192 为 331 TFLOP/s（同频率 mma.sync 峰值的 70%）。
+- **FlashInfer POD 的 bug**：`pod.cuh:413-415` 用默认流上的 `cudaMemset` 复位调度计数器，而 kernel 跑在 torch 当前流上 → 在非默认流或 green context 流上结果错误；CUDA graph 下第二次回放起不写任何输出（会测出假的约 100× 加速）。封装里禁止了这两种用法；POD 只在默认流 + flush 模式下测。可向上游报告。
+- POD（prefill S ∈ {2048, 8192} × decode B ∈ {16, 64} × KV ∈ {2048, 8192}）相对串行 1.02–1.38×；两条 stream 1.04–1.23×；事后挑出的最好 green context 划分 0.97–1.31×。POD 相对最好划分：短 prefill 时基本持平，平衡的重负载情形快 7–15%。划分选错最多慢 5×。
+- **功耗墙是共享资源**：张量核与 DRAM 同时忙时 600W 功耗墙压低频率。最重的情形 POD 跑在 2066 MHz，串行为 2606 MHz，cycles 上 1.74× 的优势变成时间上 1.38×。含义：(1) 资源下界 LB 与性能模型必须把功耗（或频率）作为一种资源；(2) 结果要同时报时间与频率；(3) 本平台上共置收益的上限低于只看 SM / DRAM 资源的估计。
+- 寄存器耦合可见：POD 里 decode 角色继承 prefill 的 255 寄存器（单跑时 134），但 shared memory 已把两者都限制在每 SM 2 个 block，所以这里没有额外代价。
+
 **进行中（附完成标准）**
-- P1 准备：算子库 v0（`cotile/ops/`：GEMM、GQA decode、RMSNorm）。完成标准：C1 每个算子有 tile_body macro + 普通 grid 版 + 持久化版 + 配置枚举 + 资源签名；C2 每个算子 ≥30 个配置在测试形状上两种版本都通过正确性检查；C3 split-K GEMM 与 split-KV decode 在 kernel 内合并（最后到达的 tile 做合并）并通过重复启动测试；C4 资源签名写入 `research/results/2026-09-22_op_library/signatures.csv`；C5 `cotile/README.md`。
-- P0-2 测量框架 v0（`research/bench/cobench/`）。完成标准：单 kernel 计时三种模式（刷 L2 的 event 计时、CUDA Graph + 输入轮换、热模式）；双流共跑计时（公共起点、各自完成时刻）；NVML 采样器；green context 流封装并实测 SM 粒度；`%smid` 探测（取值与空洞、持久化 grid 的 CTA 分布、green context 下用到哪些 SM、`%globaltimer` 分辨率）；matmul 重复 5 次的 CV < 2%（或给出原因）；README。
+- P1-M3a CoKernel 构建器 v0（`cotile/cokernel.py`，GEMM × decode、GEMM × RMSNorm）。完成标准：K1 通用双角色持久化 kernel（SM 级 / CTA 级绑定，静态 / 动态队列，chunk，跨角色接手，SM 划分与配比为运行时参数）；K2 两角色 scratch 复用（每 CTA smem ≈ max 而非 sum，从编译产物验证）；K3 `%smid`/`%globaltimer` 与设备端各角色完成时间戳；K4 两个输出与参考一致，且与同配置单跑持久化版逐位相同，调试模式证明 tile 不丢不重，重复启动无需主机清零；K5 "另一角色编进来但不执行"的开销与动态分派开销；K6 README 与生成代码观察。
+- P1 基线：FlashInfer（0.7.0，JIT）。完成标准：不改动现有包版本安装；GQA decode 与 prefill 在 sm_120 上正确并测时（与 TileLang 示例对比）；POD 融合 kernel 能否在 sm_120 编译运行、结果正确，并与串行 / 双流 / green context 划分对比；结果写入 `research/results/2026-09-22_flashinfer_baselines/`，封装 `research/bench/baselines/flashinfer_ops.py`。
 
 **关注的问题**
-- 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 2×2 分解里用最强的单跑实现作为 solo 基线。
+- 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
