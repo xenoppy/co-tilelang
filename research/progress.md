@@ -24,8 +24,20 @@
   - shared memory 超限不会在编译期报错，只在启动时失败；配置生成器要自己检查 101376 B 上限。
   - 上游 CI 对 flash decoding 只测 cc ≤ 8.9，对 warp_specialize 只测 cc == 9.0，sm_120 路径缺少测试覆盖。
 
+**TileLang 能力调研：已完成（20:25）**，报告 `research/notes/tilelang_capability_survey.md`。结论：
+- 已有：运行时角色分支（layout 推断、流水、同步插入都能处理 uniform 条件）；`T.Pipelined` 可嵌在 for/if/while 内；`atomic_add(return_prev=True)` 单元素；`T.sync_threads`、named barrier；`T.Persistent`/`loop_break`；`T.ws` 在连续线程子区间上可用 gemm/copy/reduce/parallel；`T.annotate_min_blocks_per_sm` 给出寄存器上限；`par_compile` 批量编译。
+- 缺口（按风险）：① sm_120 默认开启自动 warp specialization，会破坏双角色 kernel → CoKernel 一律 `tl.disable_warp_specialized=True`；② shared memory 分配把两个角色的缓冲区都算成整个 if/while 内存活，**两角色 smem 相加、不复用**，CTA 级共驻前必须解决；③ warp 级下跨 warp 的 `T.reduce` 固定用 barrier 1、2，两个角色同时归约会冲突；④ while 循环里没有跨迭代的同步分析；⑤ `%smid`/`%globaltimer` 缺失，可用 `T.Kernel(prelude=...)` + `T.call_extern` 补；⑥ 没有寄存器/smem 查询 API，用 cuobjdump 或 ptxas -v。
+
+**相关工作扫描：已完成（20:50）**，报告 `research/notes/related_work_scan.md`（约 32 项，8 篇精读）。结论与处理：
+- 没有工作完整覆盖本研究的主张，但各部件都已单独存在：POD（CTA 级 `%smid` 绑定，手工改实现）、HFuse（warp 级 + 线程划分 / 寄存器上限搜索）、Rammer（多个算子的 tile 共驻同一 SM，库内多版本按 profiling 挑选，多余线程空转）、MPK / Event Tensor / Hazy（SM 级 worker 与动态队列）、mKernel（运行时调角色 SM 划分）、GOLDYLOC / NanoFlow（为共同执行调优实现，跨 kernel）。
+- proposal v0.1 对 Rammer、HFuse、MPK 的描述有误或不完整，已修正。
+- 仍然空白：共同资源契约下从语义重新推导实现；覆盖三级绑定与多种调度、让已有设计成为其中的点的统一空间；有成本控制的联合搜索；sm_120 上的刻画；与伙伴无关的数值。
+- 风险：会被读成"自动化的 POD"；MPK / Mirage 与 Event Tensor 团队最可能先做出"每 SM 两个共驻 worker"。
+- 处理：proposal v0.2（658a0019）把核心主张改为"为共同资源契约重新推导实现"，2×2 扩展为 3×2（solo / lib / derived × inter / intra）；plan v0.2（8e10db30）据此修订了 P1 的度量、基线（空转线程、虚拟 CTA、GOLDYLOC 式预算调优、FlashInfer POD）和 D1（在看到任何 P1 数据之前）。
+- 附带发现：FlashInfer POD 按 SM 数开计数器数组，而 PTX 规定 `%nsmid` 可能大于 SM 数；本机 188/192 SM，可能越界，使用前要先看探测结果。
+
 **进行中（附完成标准）**
-- 调研：TileLang 中 CoKernel 原型所需能力（角色分支内的 layout/pipeline/smem 合并、持久化循环、`atomic_add(return_prev)`、`%smid`/`%globaltimer`、`T.ws` 与 named barrier、寄存器上限、批量编译）。产出 `research/notes/tilelang_capability_survey.md`。
+- P1 准备：算子库 v0（`cotile/ops/`：GEMM、GQA decode、RMSNorm）。完成标准：C1 每个算子有 tile_body macro + 普通 grid 版 + 持久化版 + 配置枚举 + 资源签名；C2 每个算子 ≥30 个配置在测试形状上两种版本都通过正确性检查；C3 split-K GEMM 与 split-KV decode 在 kernel 内合并（最后到达的 tile 做合并）并通过重复启动测试；C4 资源签名写入 `research/results/2026-09-22_op_library/signatures.csv`；C5 `cotile/README.md`。
 - P0-2 测量框架 v0（`research/bench/cobench/`）。完成标准：单 kernel 计时三种模式（刷 L2 的 event 计时、CUDA Graph + 输入轮换、热模式）；双流共跑计时（公共起点、各自完成时刻）；NVML 采样器；green context 流封装并实测 SM 粒度；`%smid` 探测（取值与空洞、持久化 grid 的 CTA 分布、green context 下用到哪些 SM、`%globaltimer` 分辨率）；matmul 重复 5 次的 CV < 2%（或给出原因）；README。
 
 **关注的问题**
