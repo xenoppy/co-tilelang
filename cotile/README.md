@@ -2,7 +2,7 @@
 
 `cotile` sits on top of TileLang (this repo's `tilelang/`) and will host the CoKernel
 compiler (research/plan.md §3, §8). v0 contains the single-op pieces a two-role
-CoKernel is built from:
+CoKernel is built from, and the CoKernel builder v0 (see "CoKernel builder" below):
 
 | module | contents |
 |---|---|
@@ -12,7 +12,8 @@ CoKernel is built from:
 | `cotile/kernel.py` | op protocol types, generic `build_grid` / `build_persistent`, `compile_specs` (par_compile), `Runner` |
 | `cotile/resources.py` | resource signature of a *compiled* kernel + occupancy model + driver cross-check |
 | `cotile/device.py` | `DeviceSpec` for the RTX PRO 6000 Blackwell (sm_120) |
-| `cotile/tests/` | correctness / bitwise / repeated-launch tests and signature export |
+| `cotile/cokernel.py` | two-role persistent CoKernel builder (`build_cokernel`, `Orch`, `CoRunner`), `%smid`/`%globaltimer` helpers |
+| `cotile/tests/` | correctness / bitwise / repeated-launch tests and signature export; `test_cokernel.py`, `probe_cokernel_overhead.py` |
 
 ## Op protocol
 
@@ -175,3 +176,123 @@ multiply cannot be contracted. Any new tile body should avoid `x*a - y*b` / `x*a
 patterns on vectorized fp32 fragments (or use explicit `fma`) if bitwise E0 claims
 matter. A TileLang-side fix would be to use scalar `__fmul_rn/__fsub_rn/__fadd_rn` in
 `src/tl_templates/cuda/common.h` for sm_12x.
+
+## CoKernel builder (`cotile/cokernel.py`, P1-M3a v0)
+
+`build_cokernel(opA, shapeA, cfgA, opB, shapeB, cfgB, orch) -> KernelSpec` fuses two
+op-library tile bodies into **one persistent TileLang kernel**. Nothing is op-specific:
+roles are described only by the op protocol above. Tested with GEMM x GQA decode and
+GEMM x RMSNorm (and A x A for overhead probes).
+
+```python
+from cotile.cokernel import Orch, build_cokernel, CoRunner, sm_role_table
+spec = build_cokernel(gemm, gs, gc, gqa_decode, ds, dc,
+                      Orch(binding="sm", schedule="dynamic", chunk=1, takeover=True,
+                           num_ctas=188, threads=None, smem="alias", timing=True, debug=False))
+compile_specs([spec])
+run = CoRunner(spec)
+run.set_knobs(sm_role=sm_role_table(94))   # runtime knob: SM split (no recompile)
+(out_a, out_b) = run([inputs_a, inputs_b])  # dicts keyed by each op's own io names
+run.stats()   # T_A_ns, T_B_ns, makespan_ns, exit_ns, done_A/B, ctas_A/B, ... (device-side)
+```
+
+**Kernel signature** = op A's `io_params` prefixed `a_`, op B's prefixed `b_`, plus
+`co_knobs` int32[8] (runtime knobs: kA, kB, static strides), `co_state` int32[16+num_sms]
+(queue heads, rank tickets, steal counters, done counters, per-role CTA counts, exit
+counter, epoch, per-SM arrival counters), `co_tacc` int64[4] (timestamp accumulators),
+`co_out` int64[16] (results of the launch), `co_sm_role` int32[num_sms] (SM binding),
+`co_claim` int32[NA+NB] (static+takeover) and, in debug builds, `co_dbg` (per-tile
+execution count), `co_dbg_sm` (executing SM) and `co_dbg_time` (tile start/end ns).
+Pass configs: `tl.disable_warp_specialized` (plus each op's own).
+
+**Dispatch loop.** Each CTA: thread 0 reads `%smid`, determines its role, then every
+iteration of a `for it in T.serial(MAX)` loop (TileLang does loop-carried sync analysis
+for `for`, not for `while`) thread 0 produces the next (role, tile) pair, writes it to a
+double-buffered 4-int shared slot (`slot[(it%2)*2 ...]`), `__syncthreads()`, everyone
+reads it, `break` on DONE, and runs the role's tile body. That one barrier per
+iteration also makes cross-role scratch reuse safe (every thread has left the previous
+tile). Thread-0 state (phase, rank, chunk cursor, counts) lives in registers.
+
+| `Orch` field | meaning |
+|---|---|
+| `binding="sm"` | role = `co_sm_role[%smid]` (runtime table; `sm_role_table(n_a, order=contiguous\|interleave)`) |
+| `binding="cta"` | POD-style: r = atomic_add(co_state[SMCTR+%smid], 1); role A iff r mod (kA+kB) < kA; kA/kB runtime (`set_knobs(ratio=(kA,kB))`) |
+| `schedule="dynamic"` | per-role queue head; thread 0 grabs `chunk` tiles with `atomic_add(return_prev=True)`; `chunk` = int or (chunk_A, chunk_B) |
+| `schedule="static"` | rank = per-role ticket (1 atomic per CTA), tiles rank, rank+n_r, ...; n_r = host-computed CTAs of role r (`expected_role_ctas`: assumes num_ctas/num_sms co-resident CTAs per SM, breadth-first placement, as measured by the smid probe); the kernel reports the actual count and `CoRunner.stats()` raises on mismatch |
+| `takeover=True` | after its own role is exhausted a CTA continues with the other role: dynamic = grab from the other queue; static = steal from the back of the other role's range with epoch-tagged per-tile claims (`atomic_max(co_claim[t], epoch)`; owners claim each of their tiles, thieves stop at the first failed claim; exactly-once regardless of how far thieves get) |
+| `threads` | common CTA size, default max of the roles. A smaller role runs under `if tx < n` (Rammer-style idle threads); TileLang rewrites its `__syncthreads` to `bar.sync 3, n` |
+| `smem="alias"` | each role's tile call is wrapped in a `tl.shared_lifetime_scope` AttrStmt (core addition, below): per-CTA smem = max over roles (and within a role the grid-build reuse, e.g. GEMM's C staging over its A/B pipeline) instead of the sum. `"sum"`: TileLang's default plan, for comparison |
+| `timing` | CTA barrier after each tile + `%globaltimer`; per-role end = max over CTAs of their last tile's completion |
+| `debug` | per-tile exec counter / SM / start-end timeline |
+| `min_blocks_per_sm` | `__launch_bounds__` 2nd argument (register cap for CTA binding co-residence) |
+
+**Tile id bounds.** The dispatched tile id comes from shared memory, opaque to TVM's
+analyzer; the dispatcher guards the call with `0 <= t < N` *and* passes
+`min(max(t,0),N-1)` (`bounded()`): only the combination lets LegalizeSafeMemoryAccess
+prove the bodies' loads in range (0/10 predicated cp.async, vs 4/10 with the clamp
+alone and 10/10 with the guard alone) and lets the simplifier turn the GEMM grouped
+rasterization divisions into shifts.
+
+**Timestamps (K3).** `%smid`, `%nsmid`, `%globaltimer` and a u64 atomicMax come from a
+`prelude` (`cotile_smid()` ... via `T.call_extern`). Kernel start = min over CTAs of
+their first `%globaltimer` (atomicMax of the complement, so the zero-initialised
+accumulator needs no host init); role end = atomicMax of each CTA's last tile completion
+of that role (flushed when the CTA's phase for that role ends, together with its done
+count). `stats()` gives T_A, T_B, makespan and the last CTA's exit time in ns. They agree
+with CUDA-event times minus the ~3-5 us launch floor.
+
+**Counters / repeated launches.** All counters are zeroed once at allocation. Every CTA
+ends with `atomic_add(co_state[EXIT], 1, acq_rel)`; the last one copies the results to
+`co_out`, zeroes every counter (incl. per-SM arrival counters and timestamp
+accumulators) and bumps the epoch. No host re-zeroing between launches; after an aborted
+launch call `CoRunner.reset_state()` (also zeroes the claim array). The ops' split-K/KV
+counters self-reset as before.
+
+**Core changes this needed** (co-tilelang, not upstream):
+* `tl.shared_lifetime_scope` (`src/op/builtin.h`, `src/transform/merge_shared_memory_allocations.cc`):
+  an AttrStmt declaring that no shared-memory value crosses its boundary. The merge
+  planner attributes touches inside it to the scope's direct children (as it does for a
+  kernel's top level), so the live range of a role's scratch ends with the tile call.
+  Without it every buffer touched anywhere inside the dispatch loop is live for the whole
+  loop (TileLang's default plan; StorageRewrite hoists all shared allocations to kernel
+  scope and nested attach scopes are not supported), i.e. smem = sum of both roles, and
+  GEMM x decode does not even launch (173 KB > 99 KB). Regression test:
+  `testing/python/transform/test_tilelang_transform_shared_lifetime_scope.py`.
+* `3rdparty/tvm/src/target/z3/z3_prover_on.cc`: `Z3Prover::CanProve` returns "not provable"
+  when Z3 throws (it throws `canceled` when its rlimit is exhausted on some queries)
+  instead of aborting LayoutInference/LowerTileOp with `InternalError: canceled`. Hit by
+  GEMM swizzle-layout identities in CoKernel builds (e.g. gd_thr with takeover); whether
+  a query exceeds the budget depends on the solver's accumulated context, so it is not
+  reproducible in isolation. Only kernels that previously failed to compile are affected.
+
+**Status (2026-09-22, research/results/2026-09-22_cokernel/).** GEMM(2048x4096x4096) x GQA decode(16 x
+8192) and GEMM x RMSNorm(16384x4096), 7 config pairs (incl. split-K, split-KV, roles on a thread subset, 2 and
+4 CTAs/SM), SM and CTA binding x static/dynamic x takeover on/off x 3–5 runtime splits/ratios: 184/184 settings
+(552 launches) give outputs within tolerance **and bitwise equal to the solo persistent builds**, every tile runs
+exactly once, and counters are clean after every launch. Per-CTA smem with `alias` is <= max(solo A, solo B)
+(e.g. GEMM x decode 73216 B vs 173072 B for the default plan, which cannot launch). Overhead of a compiled-in but
+idle partner: +2% (static GEMM) to +3.6% (decode) vs the solo persistent build at equal CTA count; registers rise to
+about max(roles) + 10–40. Dynamic dispatch is no slower than static even for 2 µs RMSNorm tiles (4 CTAs/SM).
+
+**Generated code.** `__launch_bounds__(threads, min_blocks_per_sm)`; one `__syncthreads()` per dispatch iteration
+(+1 with timestamps) in front of each role body's own leading barrier. The partial-thread role's barriers become
+`bar.sync 3, n`; the decode's `T.reduce_*` keeps `NamedBarrier<n>` ids 1/2 (safe here: one role per CTA at a time).
+Single 1024-aligned `buf_dyn_shmem` arena: slot at offset 0, role scratch overlaid from 1024. The GEMM TMA-store
+epilogue waits for the bulk store (`tma_store_wait<0,true>`) before its barrier, so aliasing is safe.
+
+**Running.**
+```bash
+python -m cotile.tests.test_cokernel [--pairs gd_e0,gr_small] [--no-gpu] [--out DIR]
+python -m cotile.tests.probe_cokernel_overhead [--out DIR]           # K5 overhead probe (cobench flush mode)
+python testing/python/transform/test_tilelang_transform_shared_lifetime_scope.py   # needs pytest
+```
+
+**Known limits / open problems (v0).**
+* Static schedule assumes num_ctas/num_sms co-resident CTAs per SM (breadth-first placement); violations are
+  detected (`stats()` raises), not repaired. It cannot coexist with foreign kernels taking SMs (e.g. M1 baselines).
+* Static + takeover needs one claim atomic per owner tile (not atomic-free).
+* In flush mode the static schedule of large kernels is 20–30% slower than dynamic for reasons not yet understood
+  (see the results README); the same holds for the op library's static `build_persistent`.
+* Role bodies use absolute `threadIdx` (the op protocol), so a role can only occupy threads [0, n): fine for SM/CTA
+  binding, not for warp-level binding (needs a thread-offset argument in `make_tile_body`).
+* No prefetch of the next dynamic grab (atomic latency is exposed at 1 CTA/SM for tiny tiles).

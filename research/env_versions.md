@@ -71,6 +71,11 @@ ninja -j 96
 - 上游在 2026-02-09 加的这个上限（#1817，没写原因）。查 PyPI：z3-solver 4.15.5（2026-02-07 发布）**没有 manylinux x86_64 wheel**，pip 会退回源码编译；4.16.0.0 又有了 manylinux_2_27 的 wheel。所以这个上限看起来是打包层面的临时规避，与正确性无关。
 - `~/mirage-compiler` 的 `core.*.so` 链接的是 `libz3.so.4.16`，降级会弄坏 Mirage，所以没动。TileLang 编译时链接 z3 4.16，并把 libz3 拷进 `build/lib`（rpath `$ORIGIN`）。编译和全部冒烟测试都通过。
 
+- **补丁（2026-09-22，CoKernel 构建器 v0 时加入）**：`research/patches/tvm_z3_canprove_exception.patch`，作用于子模块 `3rdparty/tvm`（基于 907a88c）的 `src/target/z3/z3_prover_on.cc`。Z3 在资源上限（rlimit）耗尽时有时会抛出 `canceled` 异常，而不是返回 `unknown`，导致 LayoutInference / LowerTileOp 在带 swizzle layout 的 GEMM 下标恒等式上崩溃（CoKernel 的 4 个 kernel 触发）。补丁让 `CanProve` 把任何 Z3 异常当作"无法证明"（它本来就是保守的后备证明器）。是否与 z3 4.16（超出上游约束）有关尚未确认。子模块的远端不归我们，所以以补丁文件形式保存；重新检出子模块后需执行：
+  ```bash
+  git -C 3rdparty/tvm apply ../../research/patches/tvm_z3_canprove_exception.patch && cmake --build build
+  ```
+
 ### 3.3 sm_120 相关的观察（对后续研究有用）
 - TMA 可用（`TargetHasBulkCopy` 条件是 arch ≥ 90），GEMM 走 `mma.sync`（`ldmatrix` + `mma_sync m16n8k16`），没有 wgmma/tcgen05。
 - **基础 gemm 示例（`threads=128`）被自动做了 warp specialization**：生成的 kernel 是 `__launch_bounds__(256, 1)`，前 128 线程作 TMA producer（`warpgroup_reg_dealloc<24>`），后 128 线程作 mma consumer（`warpgroup_reg_alloc<240>`），用 mbarrier 做 3 级流水。实际的线程数和寄存器分配都和源码写的不一样，做资源签名时要以编译产物为准。

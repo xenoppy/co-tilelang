@@ -32,6 +32,15 @@ static constexpr const char *kPipelineMbarPhaseExpr =
 static constexpr const char *kLocalVarInit = "tl.local_var_init";
 static constexpr const char *kNonRestrictParams = "tl.non_restrict_params";
 static constexpr const char *kLexicalAllocScope = "lexical_alloc_scope";
+// AttrStmt marking a shared-memory liveness boundary: no shared-memory value
+// written inside one execution of the scope is read after it exits, and no
+// value written before an execution is read inside it. The producer of the IR
+// guarantees this (e.g. a CoKernel role's tile execution, whose scratch is
+// fully rewritten by every tile). MergeSharedMemoryAllocations then plans the
+// buffers touched inside the scope as if the scope body were a kernel of its
+// own, so buffers of sibling scopes (e.g. two roles dispatched from one
+// persistent loop) can share bytes even though they sit inside the same loop.
+static constexpr const char *kSharedLifetimeScope = "tl.shared_lifetime_scope";
 
 } // namespace attr
 

@@ -1,0 +1,30 @@
+diff --git a/src/target/z3/z3_prover_on.cc b/src/target/z3/z3_prover_on.cc
+index 66e514b..31c7988 100644
+--- a/src/target/z3/z3_prover_on.cc
++++ b/src/target/z3/z3_prover_on.cc
+@@ -378,10 +378,21 @@ public:
+     Materialize();
+     if (CheckTrivilBadCases(expr)) return false;
+     z3::expr_vector constr(*ctx);
+-    constr.push_back(!ConvertBool(expr));
+-    auto result = solver->check(constr);
+-    constr.pop_back();
+-    return result == z3::unsat;
++    try {
++      constr.push_back(!ConvertBool(expr));
++      auto result = solver->check(constr);
++      return result == z3::unsat;
++    } catch (const z3::exception& e) {
++      // The solver runs under a resource limit (rlimit). On some queries Z3
++      // reports an exhausted budget by throwing ("canceled") instead of
++      // returning `unknown`. CanProve is a conservative fallback prover, so
++      // treat any solver failure as "cannot prove" rather than aborting the
++      // calling pass (seen in LayoutInference / LowerTileOp on swizzled-layout
++      // index identities).
++      VLOG(1) << "Z3Prover::CanProve: z3 exception '" << e.msg() << "' while proving " << expr
++              << "; treating it as not provable";
++      return false;
++    }
+   }
+ 
+   /// @brief Binded

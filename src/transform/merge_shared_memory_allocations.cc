@@ -172,7 +172,9 @@ public:
         if (enable_aggressive_merge) {
           scope_[scope_.size() - 1].touched.push_back(buf);
         } else {
-          scope_[it->second.level].touched.push_back(buf);
+          size_t level = TouchLevel(it->second.level);
+          ICHECK_LT(level, scope_.size());
+          scope_[level].touched.push_back(buf);
         }
       }
     }
@@ -223,7 +225,8 @@ public:
           // we attribute it to that frame instead of the outer parent.  This
           // keeps the liveness window tight while still accounting for nested
           // scopes that legitimately touch the buffer deeper in the tree.
-          size_t access_level = std::min(it->second.level, scope_.size() - 1);
+          size_t access_level =
+              std::min(TouchLevel(it->second.level), scope_.size() - 1);
           scope_[access_level].touched.push_back(buf);
         }
       }
@@ -245,7 +248,8 @@ public:
         } else {
           // Attribute same-level uses to the allocation frame, mirroring the
           // BufferLoad handling to keep reuse decisions consistent.
-          size_t access_level = std::min(it->second.level, scope_.size() - 1);
+          size_t access_level =
+              std::min(TouchLevel(it->second.level), scope_.size() - 1);
           scope_[access_level].touched.push_back(buf);
         }
       }
@@ -287,6 +291,16 @@ public:
       VisitNewScope(op);
     } else if (op->attr_key == "kWarpSpecializationScope") {
       VisitWarpSpecializationBody(op->body);
+    } else if (op->attr_key == tl::attr::kSharedLifetimeScope) {
+      // No shared-memory value crosses the boundary of this scope (see
+      // tl::attr::kSharedLifetimeScope). Plan the buffers touched inside it
+      // like allocations at the scope's own level: touches are attributed to
+      // the scope's direct children, so the live range of such a buffer ends
+      // with the scope instead of spanning every enclosing construct (e.g. a
+      // persistent loop) up to the allocation's level.
+      lifetime_levels_.push_back(scope_.size() + 1);
+      VisitNewScope(op);
+      lifetime_levels_.pop_back();
     } else {
       StmtExprVisitor::VisitStmt_(op);
     }
@@ -328,6 +342,18 @@ public:
   std::unordered_map<const Object *, StmtAttr> stmt_attrs_;
 
 private:
+  // Scope-stack level a touch of a buffer allocated at `alloc_level` is
+  // attributed to (default mode): the allocation's level, or the direct-child
+  // level of the outermost enclosing shared-lifetime scope below it.
+  size_t TouchLevel(size_t alloc_level) const {
+    for (size_t level : lifetime_levels_) {
+      if (level > alloc_level) {
+        return level;
+      }
+    }
+    return alloc_level;
+  }
+
   void VisitWarpSpecializationBody(const Stmt &stmt) {
     if (const auto *seq = stmt.as<SeqStmtNode>()) {
       for (const auto &sub_stmt : seq->seq) {
@@ -366,6 +392,8 @@ private:
   std::vector<StmtEntry> scope_;
   // The size of the scope.
   size_t scope_level_{0};
+  // Direct-child levels of the enclosing kSharedLifetimeScope attrs.
+  std::vector<size_t> lifetime_levels_;
 };
 
 class SharedMemoryAlignmentPlanner : public StmtExprVisitor {
