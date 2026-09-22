@@ -1,0 +1,1340 @@
+{
+ "global_warmup": {
+  "seconds": 101.2,
+  "temps": [
+   [
+    5.2088048458099365,
+    75
+   ],
+   [
+    10.247427701950073,
+    76
+   ],
+   [
+    15.315005540847778,
+    78
+   ],
+   [
+    20.366971969604492,
+    79
+   ],
+   [
+    25.402825832366943,
+    80
+   ],
+   [
+    30.452102661132812,
+    81
+   ],
+   [
+    35.51794910430908,
+    82
+   ],
+   [
+    40.5564820766449,
+    82
+   ],
+   [
+    45.6045298576355,
+    83
+   ],
+   [
+    50.66342282295227,
+    83
+   ],
+   [
+    55.729599952697754,
+    84
+   ],
+   [
+    60.768566608428955,
+    84
+   ],
+   [
+    65.81404113769531,
+    84
+   ],
+   [
+    70.86621618270874,
+    85
+   ],
+   [
+    75.9243381023407,
+    85
+   ],
+   [
+    80.98838925361633,
+    86
+   ],
+   [
+    86.05634903907776,
+    85
+   ],
+   [
+    91.12834167480469,
+    86
+   ],
+   [
+    96.16744375228882,
+    86
+   ],
+   [
+    101.2119288444519,
+    86
+   ]
+  ]
+ },
+ "rows": [
+  {
+   "op": "gemm",
+   "shape": "M4096_N4096_K4096",
+   "cfg": "128x128x64_s2_t128_k1_wsoff_smem_g8",
+   "sig": {
+    "grid": {
+     "threads": 128,
+     "regs": 191,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 65536,
+     "num_barriers": 1,
+     "limit_by": "smem",
+     "grid": 1024,
+     "num_tiles": 1024,
+     "numerics": "E0",
+     "smem": 65536,
+     "ctas_sm": 1
+    },
+    "persistent": {
+     "threads": 128,
+     "regs": 192,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 98304,
+     "num_barriers": 1,
+     "limit_by": "smem",
+     "grid": 188,
+     "num_tiles": 1024,
+     "numerics": "E0",
+     "smem": 98304,
+     "ctas_sm": 1,
+     "num_ctas": 188,
+     "k_pass1": 1
+    }
+   },
+   "modes": {
+    "flush": {
+     "grid": {
+      "median": 422.43,
+      "p10": 421.41,
+      "p90": 423.52,
+      "cv": 0.0028417,
+      "clk": 2510.9,
+      "cycles": 1060300.0,
+      "n": 440,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 646.85,
+      "p10": 645.79,
+      "p90": 648.9,
+      "cv": 0.0023272,
+      "clk": 2568.7,
+      "cycles": 1662500.0,
+      "n": 437,
+      "contaminated": null
+     },
+     "ratio_time": 1.5313,
+     "ratio_cycles": 1.568
+    },
+    "flush_read": {
+     "grid": {
+      "median": 421.89,
+      "p10": 417.34,
+      "p90": 424.42,
+      "cv": 0.0063867,
+      "clk": 2412.6,
+      "cycles": 1018300.0,
+      "n": 421,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 648.8,
+      "p10": 642.66,
+      "p90": 651.26,
+      "cv": 0.0048363,
+      "clk": 2558.7,
+      "cycles": 1660000.0,
+      "n": 419,
+      "contaminated": null
+     },
+     "ratio_time": 1.5378,
+     "ratio_cycles": 1.6302
+    },
+    "hot": {
+     "grid": {
+      "median": 431.8,
+      "p10": 430.99,
+      "p90": 432.03,
+      "cv": 0.00092195,
+      "clk": 2321.2,
+      "cycles": 1002200.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 636.89,
+      "p10": 635.41,
+      "p90": 638.54,
+      "cv": 0.0082193,
+      "clk": 2582.9,
+      "cycles": 1644800.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.475,
+     "ratio_cycles": 1.6412
+    },
+    "graph": {
+     "grid": {
+      "median": 458.8,
+      "p10": 458.26,
+      "p90": 459.12,
+      "cv": 0.00069342,
+      "clk": 2192.4,
+      "cycles": 1005700.0,
+      "k": 21,
+      "n_copies": 3,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 659.37,
+      "p10": 658.43,
+      "p90": 660.87,
+      "cv": 0.0086282,
+      "clk": 2500.0,
+      "cycles": 1648500.0,
+      "k": 21,
+      "n_copies": 3,
+      "contaminated": false
+     },
+     "ratio_time": 1.4372,
+     "ratio_cycles": 1.6392
+    }
+   }
+  },
+  {
+   "op": "gemm",
+   "shape": "M4096_N4096_K4096",
+   "cfg": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+   "sig": {
+    "grid": {
+     "threads": 256,
+     "regs": 193,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 98304,
+     "num_barriers": 1,
+     "limit_by": "regs+smem",
+     "grid": 512,
+     "num_tiles": 512,
+     "numerics": "E0",
+     "smem": 98304,
+     "ctas_sm": 1
+    },
+    "persistent": {
+     "threads": 256,
+     "regs": 196,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 98304,
+     "num_barriers": 1,
+     "limit_by": "regs+smem",
+     "grid": 188,
+     "num_tiles": 512,
+     "numerics": "E0",
+     "smem": 98304,
+     "ctas_sm": 1,
+     "num_ctas": 188,
+     "k_pass1": 1
+    }
+   },
+   "modes": {
+    "flush": {
+     "grid": {
+      "median": 393.12,
+      "p10": 391.17,
+      "p90": 393.81,
+      "cv": 0.002431,
+      "clk": 2484.3,
+      "cycles": 975810.0,
+      "n": 465,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 495.3,
+      "p10": 493.47,
+      "p90": 496.64,
+      "cv": 0.0025922,
+      "clk": 2551.3,
+      "cycles": 1263200.0,
+      "n": 461,
+      "contaminated": null
+     },
+     "ratio_time": 1.2599,
+     "ratio_cycles": 1.2945
+    },
+    "flush_read": {
+     "grid": {
+      "median": 395.84,
+      "p10": 392.77,
+      "p90": 397.31,
+      "cv": 0.0056628,
+      "clk": 2476.9,
+      "cycles": 980120.0,
+      "n": 441,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 497.41,
+      "p10": 492.45,
+      "p90": 499.63,
+      "cv": 0.0055079,
+      "clk": 2539.9,
+      "cycles": 1262600.0,
+      "n": 438,
+      "contaminated": null
+     },
+     "ratio_time": 1.2566,
+     "ratio_cycles": 1.2882
+    },
+    "hot": {
+     "grid": {
+      "median": 400.39,
+      "p10": 399.94,
+      "p90": 400.69,
+      "cv": 0.00067153,
+      "clk": 2402.8,
+      "cycles": 962100.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 492.21,
+      "p10": 492.01,
+      "p90": 499.48,
+      "cv": 0.010009,
+      "clk": 2538.9,
+      "cycles": 1249600.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.2293,
+     "ratio_cycles": 1.2988
+    },
+    "graph": {
+     "grid": {
+      "median": 424.96,
+      "p10": 424.59,
+      "p90": 425.28,
+      "cv": 0.00073519,
+      "clk": 2270.6,
+      "cycles": 964920.0,
+      "k": 21,
+      "n_copies": 3,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 510.65,
+      "p10": 510.39,
+      "p90": 519.9,
+      "cv": 0.011025,
+      "clk": 2447.9,
+      "cycles": 1250000.0,
+      "k": 21,
+      "n_copies": 3,
+      "contaminated": false
+     },
+     "ratio_time": 1.2016,
+     "ratio_cycles": 1.2954
+    }
+   }
+  },
+  {
+   "op": "gemm",
+   "shape": "M4096_N4096_K4096",
+   "cfg": "64x128x64_s2_t128_k4_wsoff_smem_g8",
+   "sig": {
+    "grid": {
+     "threads": 128,
+     "regs": 144,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 49152,
+     "num_barriers": 1,
+     "limit_by": "smem",
+     "grid": 8192,
+     "num_tiles": 8192,
+     "numerics": "E1",
+     "smem": 49152,
+     "ctas_sm": 2
+    },
+    "persistent": {
+     "threads": 128,
+     "regs": 150,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 65552,
+     "num_barriers": 1,
+     "limit_by": "smem",
+     "grid": 188,
+     "num_tiles": 8192,
+     "numerics": "E1",
+     "smem": 65552,
+     "ctas_sm": 1,
+     "num_ctas": 188,
+     "k_pass1": 1
+    }
+   },
+   "modes": {
+    "flush": {
+     "grid": {
+      "median": 591.49,
+      "p10": 587.78,
+      "p90": 593.92,
+      "cv": 0.0041361,
+      "clk": 2067.5,
+      "cycles": 1222100.0,
+      "n": 342,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 1090.5,
+      "p10": 1085.0,
+      "p90": 1097.6,
+      "cv": 0.0043583,
+      "clk": 2643.8,
+      "cycles": 2881500.0,
+      "n": 295,
+      "contaminated": null
+     },
+     "ratio_time": 1.8436,
+     "ratio_cycles": 2.3578
+    },
+    "flush_read": {
+     "grid": {
+      "median": 572.45,
+      "p10": 565.25,
+      "p90": 580.63,
+      "cv": 0.010262,
+      "clk": 2103.2,
+      "cycles": 1204000.0,
+      "n": 333,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 1095.6,
+      "p10": 1087.7,
+      "p90": 1101.8,
+      "cv": 0.0050855,
+      "clk": 2614.3,
+      "cycles": 2863600.0,
+      "n": 285,
+      "contaminated": null
+     },
+     "ratio_time": 1.9139,
+     "ratio_cycles": 2.3784
+    },
+    "hot": {
+     "grid": {
+      "median": 622.36,
+      "p10": 621.76,
+      "p90": 622.98,
+      "cv": 0.00076285,
+      "clk": 1892.3,
+      "cycles": 1177700.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 1092.4,
+      "p10": 1090.4,
+      "p90": 1094.0,
+      "cv": 0.0040507,
+      "clk": 2592.9,
+      "cycles": 2831800.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.7553,
+     "ratio_cycles": 2.4045
+    },
+    "graph": {
+     "grid": {
+      "median": 623.05,
+      "p10": 622.35,
+      "p90": 623.62,
+      "cv": 0.0008426,
+      "clk": 1892.1,
+      "cycles": 1179000.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 1091.2,
+      "p10": 1089.9,
+      "p90": 1092.8,
+      "cv": 0.0046612,
+      "clk": 2592.1,
+      "cycles": 2828500.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.7514,
+     "ratio_cycles": 2.3991
+    }
+   }
+  },
+  {
+   "op": "gqa_decode",
+   "shape": "B64_S8192",
+   "cfg": "n64_h4_sp1_t128_s1",
+   "sig": {
+    "grid": {
+     "threads": 128,
+     "regs": 68,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 39936,
+     "num_barriers": 3,
+     "limit_by": "smem",
+     "grid": 512,
+     "num_tiles": 512,
+     "numerics": "E1",
+     "smem": 39936,
+     "ctas_sm": 2
+    },
+    "persistent": {
+     "threads": 128,
+     "regs": 72,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 40960,
+     "num_barriers": 3,
+     "limit_by": "smem",
+     "grid": 376,
+     "num_tiles": 512,
+     "numerics": "E1",
+     "smem": 40960,
+     "ctas_sm": 2,
+     "num_ctas": 376,
+     "k_pass1": 2
+    }
+   },
+   "modes": {
+    "flush": {
+     "grid": {
+      "median": 1348.6,
+      "p10": 1346.5,
+      "p90": 1352.6,
+      "cv": 0.0019623,
+      "clk": 2821.0,
+      "cycles": 3804900.0,
+      "n": 170,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 1347.6,
+      "p10": 1346.2,
+      "p90": 1351.6,
+      "cv": 0.0018511,
+      "clk": 2819.2,
+      "cycles": 3800300.0,
+      "n": 170,
+      "contaminated": null
+     },
+     "ratio_time": 0.99926,
+     "ratio_cycles": 0.99879
+    },
+    "flush_read": {
+     "grid": {
+      "median": 1307.2,
+      "p10": 1305.5,
+      "p90": 1309.6,
+      "cv": 0.001389,
+      "clk": 2821.1,
+      "cycles": 3686400.0,
+      "n": 170,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 1305.6,
+      "p10": 1304.5,
+      "p90": 1308.2,
+      "cv": 0.0013701,
+      "clk": 2819.8,
+      "cycles": 3682300.0,
+      "n": 170,
+      "contaminated": null
+     },
+     "ratio_time": 0.99878,
+     "ratio_cycles": 0.99889
+    },
+    "hot": {
+     "grid": {
+      "median": 1305.2,
+      "p10": 1305.0,
+      "p90": 1305.6,
+      "cv": 0.00021278,
+      "clk": 2820.2,
+      "cycles": 3681100.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 1304.3,
+      "p10": 1304.0,
+      "p90": 1304.5,
+      "cv": 0.00015884,
+      "clk": 2818.8,
+      "cycles": 3676500.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 0.99931,
+     "ratio_cycles": 0.99875
+    },
+    "graph": {
+     "grid": {
+      "median": 1304.9,
+      "p10": 1304.5,
+      "p90": 1305.3,
+      "cv": 0.00027384,
+      "clk": 2820.0,
+      "cycles": 3679800.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 1304.8,
+      "p10": 1304.5,
+      "p90": 1305.1,
+      "cv": 0.0001917,
+      "clk": 2818.9,
+      "cycles": 3678100.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 0.99992,
+     "ratio_cycles": 0.99954
+    }
+   }
+  },
+  {
+   "op": "gqa_decode",
+   "shape": "B64_S8192",
+   "cfg": "n32_h4_sp8_t64_s2",
+   "sig": {
+    "grid": {
+     "threads": 64,
+     "regs": 134,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 38400,
+     "num_barriers": 3,
+     "limit_by": "smem",
+     "grid": 4096,
+     "num_tiles": 4096,
+     "numerics": "E1",
+     "smem": 38400,
+     "ctas_sm": 2
+    },
+    "persistent": {
+     "threads": 64,
+     "regs": 173,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 39440,
+     "num_barriers": 3,
+     "limit_by": "smem",
+     "grid": 376,
+     "num_tiles": 4096,
+     "numerics": "E1",
+     "smem": 39440,
+     "ctas_sm": 2,
+     "num_ctas": 376,
+     "k_pass1": 2
+    }
+   },
+   "modes": {
+    "flush": {
+     "grid": {
+      "median": 1369.1,
+      "p10": 1368.1,
+      "p90": 1371.2,
+      "cv": 0.0012241,
+      "clk": 2834.2,
+      "cycles": 3881500.0,
+      "n": 168,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 1492.0,
+      "p10": 1488.9,
+      "p90": 1496.1,
+      "cv": 0.0020901,
+      "clk": 2834.5,
+      "cycles": 4229200.0,
+      "n": 166,
+      "contaminated": null
+     },
+     "ratio_time": 1.0898,
+     "ratio_cycles": 1.0896
+    },
+    "flush_read": {
+     "grid": {
+      "median": 1316.8,
+      "p10": 1315.7,
+      "p90": 1318.1,
+      "cv": 0.0010623,
+      "clk": 2834.0,
+      "cycles": 3731200.0,
+      "n": 168,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 1440.8,
+      "p10": 1438.7,
+      "p90": 1444.3,
+      "cv": 0.0015806,
+      "clk": 2834.8,
+      "cycles": 4085000.0,
+      "n": 166,
+      "contaminated": null
+     },
+     "ratio_time": 1.0942,
+     "ratio_cycles": 1.0948
+    },
+    "hot": {
+     "grid": {
+      "median": 1315.9,
+      "p10": 1315.6,
+      "p90": 1316.0,
+      "cv": 0.00013699,
+      "clk": 2819.2,
+      "cycles": 3709500.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 1440.1,
+      "p10": 1439.6,
+      "p90": 1440.4,
+      "cv": 0.00018407,
+      "clk": 2829.2,
+      "cycles": 4074300.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.0944,
+     "ratio_cycles": 1.0983
+    },
+    "graph": {
+     "grid": {
+      "median": 1315.7,
+      "p10": 1315.5,
+      "p90": 1316.0,
+      "cv": 0.00014458,
+      "clk": 2834.2,
+      "cycles": 3729000.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 1439.9,
+      "p10": 1439.5,
+      "p90": 1440.4,
+      "cv": 0.00022926,
+      "clk": 2830.0,
+      "cycles": 4075300.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.0944,
+     "ratio_cycles": 1.0929
+    }
+   }
+  },
+  {
+   "op": "gqa_decode",
+   "shape": "B64_S8192",
+   "cfg": "n64_h1_sp4_t128_s2",
+   "sig": {
+    "grid": {
+     "threads": 128,
+     "regs": 116,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 72704,
+     "num_barriers": 3,
+     "limit_by": "smem",
+     "grid": 8192,
+     "num_tiles": 8192,
+     "numerics": "E1",
+     "smem": 72704,
+     "ctas_sm": 1
+    },
+    "persistent": {
+     "threads": 128,
+     "regs": 136,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 74768,
+     "num_barriers": 3,
+     "limit_by": "smem",
+     "grid": 188,
+     "num_tiles": 8192,
+     "numerics": "E1",
+     "smem": 74768,
+     "ctas_sm": 1,
+     "num_ctas": 188,
+     "k_pass1": 1
+    }
+   },
+   "modes": {
+    "flush": {
+     "grid": {
+      "median": 1385.4,
+      "p10": 1382.4,
+      "p90": 1387.5,
+      "cv": 0.0016752,
+      "clk": 2551.3,
+      "cycles": 3532900.0,
+      "n": 166,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 2391.0,
+      "p10": 2386.9,
+      "p90": 2397.1,
+      "cv": 0.0014795,
+      "clk": 2752.4,
+      "cycles": 6581000.0,
+      "n": 164,
+      "contaminated": null
+     },
+     "ratio_time": 1.7259,
+     "ratio_cycles": 1.8628
+    },
+    "flush_read": {
+     "grid": {
+      "median": 1331.2,
+      "p10": 1329.1,
+      "p90": 1334.3,
+      "cv": 0.0017058,
+      "clk": 2520.3,
+      "cycles": 3354700.0,
+      "n": 166,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 2335.6,
+      "p10": 2331.6,
+      "p90": 2339.7,
+      "cv": 0.0013371,
+      "clk": 2720.1,
+      "cycles": 6349800.0,
+      "n": 164,
+      "contaminated": null
+     },
+     "ratio_time": 1.7545,
+     "ratio_cycles": 1.8928
+    },
+    "hot": {
+     "grid": {
+      "median": 1362.7,
+      "p10": 1361.8,
+      "p90": 1363.2,
+      "cv": 0.00054341,
+      "clk": 2284.4,
+      "cycles": 3112700.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 2332.4,
+      "p10": 2331.6,
+      "p90": 2333.2,
+      "cv": 0.00071317,
+      "clk": 2706.7,
+      "cycles": 6313300.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.7116,
+     "ratio_cycles": 2.0282
+    },
+    "graph": {
+     "grid": {
+      "median": 1366.0,
+      "p10": 1364.6,
+      "p90": 1366.8,
+      "cv": 0.00063776,
+      "clk": 2274.2,
+      "cycles": 3106700.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 2333.7,
+      "p10": 2332.9,
+      "p90": 2334.8,
+      "cv": 0.00071019,
+      "clk": 2705.2,
+      "cycles": 6313100.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.7084,
+     "ratio_cycles": 2.0321
+    }
+   }
+  },
+  {
+   "op": "rmsnorm",
+   "shape": "T16384_H4096",
+   "cfg": "r2_t128_v2",
+   "sig": {
+    "grid": {
+     "threads": 128,
+     "regs": 95,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 32,
+     "num_barriers": 1,
+     "limit_by": "regs",
+     "grid": 8192,
+     "num_tiles": 8192,
+     "numerics": "E1",
+     "smem": 32,
+     "ctas_sm": 5
+    },
+    "persistent": {
+     "threads": 128,
+     "regs": 96,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 32,
+     "num_barriers": 1,
+     "limit_by": "regs",
+     "grid": 940,
+     "num_tiles": 8192,
+     "numerics": "E1",
+     "smem": 32,
+     "ctas_sm": 5,
+     "num_ctas": 940,
+     "k_pass1": 5
+    }
+   },
+   "modes": {
+    "flush": {
+     "grid": {
+      "median": 180.22,
+      "p10": 180.13,
+      "p90": 182.27,
+      "cv": 0.0066132,
+      "clk": 2833.7,
+      "cycles": 511790.0,
+      "n": 723,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 190.43,
+      "p10": 188.96,
+      "p90": 192.48,
+      "cv": 0.0071403,
+      "clk": 2834.5,
+      "cycles": 539970.0,
+      "n": 717,
+      "contaminated": null
+     },
+     "ratio_time": 1.0567,
+     "ratio_cycles": 1.0551
+    },
+    "flush_read": {
+     "grid": {
+      "median": 164.72,
+      "p10": 163.64,
+      "p90": 165.92,
+      "cv": 0.0081854,
+      "clk": 2819.4,
+      "cycles": 464120.0,
+      "n": 720,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 171.94,
+      "p10": 169.89,
+      "p90": 173.98,
+      "cv": 0.0086117,
+      "clk": 2822.7,
+      "cycles": 485290.0,
+      "n": 714,
+      "contaminated": null
+     },
+     "ratio_time": 1.0438,
+     "ratio_cycles": 1.0456
+    },
+    "hot": {
+     "grid": {
+      "median": 181.72,
+      "p10": 181.43,
+      "p90": 182.05,
+      "cv": 0.0013593,
+      "clk": 2832.0,
+      "cycles": 514670.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 182.47,
+      "p10": 182.22,
+      "p90": 182.79,
+      "cv": 0.0011561,
+      "clk": 2832.6,
+      "cycles": 516850.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.0041,
+     "ratio_cycles": 1.0042
+    },
+    "graph": {
+     "grid": {
+      "median": 182.11,
+      "p10": 181.83,
+      "p90": 182.45,
+      "cv": 0.0014638,
+      "clk": 2832.0,
+      "cycles": 515730.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 182.57,
+      "p10": 182.37,
+      "p90": 182.91,
+      "cv": 0.001169,
+      "clk": 2832.8,
+      "cycles": 517260.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.0025,
+     "ratio_cycles": 1.003
+    }
+   }
+  },
+  {
+   "op": "rmsnorm",
+   "shape": "T16384_H4096",
+   "cfg": "r2_t128_v8",
+   "sig": {
+    "grid": {
+     "threads": 128,
+     "regs": 95,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 32,
+     "num_barriers": 1,
+     "limit_by": "regs",
+     "grid": 8192,
+     "num_tiles": 8192,
+     "numerics": "E1",
+     "smem": 32,
+     "ctas_sm": 5
+    },
+    "persistent": {
+     "threads": 128,
+     "regs": 96,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 32,
+     "num_barriers": 1,
+     "limit_by": "regs",
+     "grid": 940,
+     "num_tiles": 8192,
+     "numerics": "E1",
+     "smem": 32,
+     "ctas_sm": 5,
+     "num_ctas": 940,
+     "k_pass1": 5
+    }
+   },
+   "modes": {
+    "flush": {
+     "grid": {
+      "median": 180.13,
+      "p10": 178.08,
+      "p90": 180.26,
+      "cv": 0.0064702,
+      "clk": 2833.7,
+      "cycles": 509500.0,
+      "n": 725,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 188.38,
+      "p10": 187.26,
+      "p90": 190.37,
+      "cv": 0.006512,
+      "clk": 2834.4,
+      "cycles": 534270.0,
+      "n": 718,
+      "contaminated": null
+     },
+     "ratio_time": 1.0458,
+     "ratio_cycles": 1.0486
+    },
+    "flush_read": {
+     "grid": {
+      "median": 163.74,
+      "p10": 161.7,
+      "p90": 165.47,
+      "cv": 0.0076892,
+      "clk": 2823.3,
+      "cycles": 461930.0,
+      "n": 723,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 169.98,
+      "p10": 169.46,
+      "p90": 172.03,
+      "cv": 0.0079106,
+      "clk": 2827.2,
+      "cycles": 480910.0,
+      "n": 717,
+      "contaminated": null
+     },
+     "ratio_time": 1.0381,
+     "ratio_cycles": 1.0411
+    },
+    "hot": {
+     "grid": {
+      "median": 181.37,
+      "p10": 181.14,
+      "p90": 181.71,
+      "cv": 0.0013668,
+      "clk": 2832.1,
+      "cycles": 513710.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 182.26,
+      "p10": 181.96,
+      "p90": 182.6,
+      "cv": 0.0015319,
+      "clk": 2832.7,
+      "cycles": 516310.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.0049,
+     "ratio_cycles": 1.0051
+    },
+    "graph": {
+     "grid": {
+      "median": 181.37,
+      "p10": 181.01,
+      "p90": 181.79,
+      "cv": 0.0017212,
+      "clk": 2831.9,
+      "cycles": 513550.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 181.98,
+      "p10": 181.76,
+      "p90": 182.3,
+      "cv": 0.0011901,
+      "clk": 2833.1,
+      "cycles": 515520.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.0034,
+     "ratio_cycles": 1.0038
+    }
+   }
+  },
+  {
+   "op": "rmsnorm",
+   "shape": "T16384_H4096",
+   "cfg": "r1_t512_v8",
+   "sig": {
+    "grid": {
+     "threads": 512,
+     "regs": 30,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 64,
+     "num_barriers": 1,
+     "limit_by": "warps",
+     "grid": 16384,
+     "num_tiles": 16384,
+     "numerics": "E1",
+     "smem": 64,
+     "ctas_sm": 3
+    },
+    "persistent": {
+     "threads": 512,
+     "regs": 35,
+     "local_bytes": 0,
+     "smem_static": 0,
+     "smem_dynamic": 64,
+     "num_barriers": 1,
+     "limit_by": "regs+warps",
+     "grid": 564,
+     "num_tiles": 16384,
+     "numerics": "E1",
+     "smem": 64,
+     "ctas_sm": 3,
+     "num_ctas": 564,
+     "k_pass1": 3
+    }
+   },
+   "modes": {
+    "flush": {
+     "grid": {
+      "median": 180.22,
+      "p10": 180.0,
+      "p90": 182.21,
+      "cv": 0.0057895,
+      "clk": 2833.1,
+      "cycles": 511070.0,
+      "n": 727,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 206.43,
+      "p10": 204.38,
+      "p90": 208.53,
+      "cv": 0.0080338,
+      "clk": 2833.9,
+      "cycles": 584480.0,
+      "n": 716,
+      "contaminated": null
+     },
+     "ratio_time": 1.1454,
+     "ratio_cycles": 1.1436
+    },
+    "flush_read": {
+     "grid": {
+      "median": 163.84,
+      "p10": 163.32,
+      "p90": 165.92,
+      "cv": 0.009777,
+      "clk": 2815.8,
+      "cycles": 462160.0,
+      "n": 720,
+      "contaminated": null
+     },
+     "persistent": {
+      "median": 184.22,
+      "p10": 182.11,
+      "p90": 186.27,
+      "cv": 0.0099521,
+      "clk": 2821.4,
+      "cycles": 519460.0,
+      "n": 713,
+      "contaminated": null
+     },
+     "ratio_time": 1.1244,
+     "ratio_cycles": 1.124
+    },
+    "hot": {
+     "grid": {
+      "median": 181.17,
+      "p10": 180.84,
+      "p90": 181.42,
+      "cv": 0.001389,
+      "clk": 2831.3,
+      "cycles": 513000.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 193.44,
+      "p10": 193.02,
+      "p90": 193.98,
+      "cv": 0.0020359,
+      "clk": 2832.5,
+      "cycles": 547970.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.0677,
+     "ratio_cycles": 1.0682
+    },
+    "graph": {
+     "grid": {
+      "median": 181.37,
+      "p10": 181.07,
+      "p90": 181.78,
+      "cv": 0.0015119,
+      "clk": 2831.5,
+      "cycles": 513560.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "persistent": {
+      "median": 193.85,
+      "p10": 193.35,
+      "p90": 194.38,
+      "cv": 0.0019487,
+      "clk": 2832.3,
+      "cycles": 549160.0,
+      "k": 20,
+      "n_copies": 1,
+      "contaminated": false
+     },
+     "ratio_time": 1.0688,
+     "ratio_cycles": 1.0693
+    }
+   }
+  }
+ ]
+}

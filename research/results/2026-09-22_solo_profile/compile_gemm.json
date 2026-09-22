@@ -1,0 +1,53 @@
+{
+ "when": "2026-09-22 21:27:04",
+ "meta": {
+  "tilelang": "0.1.14+cuda.git35be5243",
+  "torch": "2.8.0+cu128",
+  "git_head": "35be5243",
+  "git_dirty_src": "src/op/builtin.h                                 |  9 +++++++\n src/transform/merge_shared_memory_allocations.cc | 34 +++++++++++++++++++++---\n 2 files changed, 40 insertions(+), 3 deletions(-)",
+  "sha_cotile_kernel_py": "282d87b6435cad57",
+  "sha_cotile_ops": {
+   "gemm": "817b6b5a9600a8c4",
+   "gqa_decode": "70a74131c043ed95",
+   "rmsnorm": "917c11014d23e994"
+  },
+  "sha_libtilelang": "d0dbba0e62e29128",
+  "host": "fst"
+ },
+ "tilelang_cache_ns": "0.1.14+cuda.git35be5243",
+ "stats": {
+  "n_kernels": 828,
+  "n_pass2": 54,
+  "build_s": 13.235479593276978,
+  "compile1": {
+   "wall_s": 119.55851435661316,
+   "n_ok": 774,
+   "n_fail": 0
+  },
+  "sig1_s": 41.61072850227356,
+  "compile2": {
+   "wall_s": 20.10191249847412,
+   "n_ok": 54,
+   "n_fail": 0
+  },
+  "pass2_total_s": 25.04340934753418,
+  "total_s": 200.60568976402283
+ },
+ "n_batches": 9,
+ "n_configs": 387,
+ "n_fail": 0,
+ "persistent_occupancy_changed_in_pass2": [],
+ "cache_bytes_before": 370173082,
+ "cache_bytes_after": 768708788,
+ "per_batch": {
+  "gemm__M2048_N4096_K4096": 43,
+  "gemm__M2048_N14336_K4096": 43,
+  "gemm__M2048_N4096_K14336": 43,
+  "gemm__M4096_N4096_K4096": 43,
+  "gemm__M4096_N14336_K4096": 43,
+  "gemm__M4096_N4096_K14336": 43,
+  "gemm__M8192_N4096_K4096": 43,
+  "gemm__M8192_N14336_K4096": 43,
+  "gemm__M8192_N4096_K14336": 43
+ }
+}

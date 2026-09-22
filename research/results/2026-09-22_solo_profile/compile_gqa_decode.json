@@ -1,0 +1,56 @@
+{
+ "when": "2026-09-22 21:34:53",
+ "meta": {
+  "tilelang": "0.1.14+cuda.git35be5243",
+  "torch": "2.8.0+cu128",
+  "git_head": "35be5243",
+  "git_dirty_src": "cotile/README.md                                 |  5 ++--\n src/op/builtin.h                                 |  9 +++++++\n src/transform/merge_shared_memory_allocations.cc | 34 +++++++++++++++++++++---\n 3 files changed, 43 insertions(+), 5 deletions(-)",
+  "sha_cotile_kernel_py": "282d87b6435cad57",
+  "sha_cotile_ops": {
+   "gemm": "817b6b5a9600a8c4",
+   "gqa_decode": "70a74131c043ed95",
+   "rmsnorm": "917c11014d23e994"
+  },
+  "sha_libtilelang": "d0dbba0e62e29128",
+  "host": "fst"
+ },
+ "tilelang_cache_ns": "0.1.14+cuda.git35be5243",
+ "stats": {
+  "n_kernels": 1025,
+  "n_pass2": 161,
+  "build_s": 54.58251357078552,
+  "compile1": {
+   "wall_s": 425.4122779369354,
+   "n_ok": 864,
+   "n_fail": 0
+  },
+  "sig1_s": 75.63546538352966,
+  "compile2": {
+   "wall_s": 86.7467188835144,
+   "n_ok": 161,
+   "n_fail": 0
+  },
+  "pass2_total_s": 103.51564264297485,
+  "total_s": 669.2082676887512
+ },
+ "n_batches": 12,
+ "n_configs": 432,
+ "n_fail": 0,
+ "persistent_occupancy_changed_in_pass2": [],
+ "cache_bytes_before": 370173082,
+ "cache_bytes_after": 1071006071,
+ "per_batch": {
+  "gqa_decode__B16_S2048": 36,
+  "gqa_decode__B16_S8192": 36,
+  "gqa_decode__B16_S32768": 36,
+  "gqa_decode__B32_S2048": 36,
+  "gqa_decode__B32_S8192": 36,
+  "gqa_decode__B32_S32768": 36,
+  "gqa_decode__B64_S2048": 36,
+  "gqa_decode__B64_S8192": 36,
+  "gqa_decode__B64_S32768": 36,
+  "gqa_decode__B128_S2048": 36,
+  "gqa_decode__B128_S8192": 36,
+  "gqa_decode__B128_S32768": 36
+ }
+}
