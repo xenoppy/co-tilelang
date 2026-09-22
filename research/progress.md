@@ -64,7 +64,7 @@
 - **功耗墙是共享资源**：张量核与 DRAM 同时忙时 600W 功耗墙压低频率。最重的情形 POD 跑在 2066 MHz，串行为 2606 MHz，cycles 上 1.74× 的优势变成时间上 1.38×。含义：(1) 资源下界 LB 与性能模型必须把功耗（或频率）作为一种资源；(2) 结果要同时报时间与频率；(3) 本平台上共置收益的上限低于只看 SM / DRAM 资源的估计。
 - 寄存器耦合可见：POD 里 decode 角色继承 prefill 的 255 寄存器（单跑时 134），但 shared memory 已把两者都限制在每 SM 2 个 block，所以这里没有额外代价。
 
-**P1-M3a CoKernel 构建器 v0（原型）：已完成（22:20 验收；提交 205528ca）**
+**P1-M3a CoKernel 构建器 v0（原型）：已完成（22:08 验收；提交 205528ca）**
 - 完成标准：K1 通用双角色持久化 kernel（SM 级 / CTA 级绑定，静态 / 动态队列，chunk，跨角色接手，SM 划分与配比为运行时参数）；K2 两角色 scratch 复用（每 CTA smem ≈ max 而非 sum）；K3 `%smid`/`%globaltimer` 与设备端各角色完成时间戳；K4 两个输出正确且与同配置单跑持久化版逐位相同，tile 不丢不重，重复启动无需主机清零；K5 开销测量；K6 README 与生成代码观察。
 - 验收：子 agent 的测试 184/184 个可启动设置全部通过（7 个配置对 × 两种绑定 × 两种调度 × 接手开关 × 3–5 种 SM 划分 / 配比，每个启动 3 次，与单跑持久化版逐位相同，每个 tile 恰好执行一次）；3 个不可启动的是故意保留的 `smem="sum"` 对照（173KB）。主 agent 复跑编译部分（92 个 kernel 全部通过）与 lifetime-scope 回归测试、已有 smem 合并测试（全部通过）；GPU 部分因 profiling 占用 GPU，推迟到 profiling 结束后复跑确认。
 - 设计：每轮分派由 thread 0 决定（角色, tile），写入双缓冲的共享槽，一次 `__syncthreads()` 后全体读取；这一次同步同时保证两角色 smem 复用的安全。线程少的角色在 `tx < n` 上执行，其余线程空转（Rammer 式）。SM 级按 `%smid` 查主机表；CTA 级按每 SM 到达计数（POD 式）。最后退出的 CTA 发布计时结果并复位所有计数器。
@@ -80,7 +80,20 @@
 **进行中（附完成标准）**
 - P1 基线：FlashInfer（0.7.0，JIT）。完成标准：不改动现有包版本安装；GQA decode 与 prefill 在 sm_120 上正确并测时（与 TileLang 示例对比）；POD 融合 kernel 能否在 sm_120 编译运行、结果正确，并与串行 / 双流 / green context 划分对比；结果写入 `research/results/2026-09-22_flashinfer_baselines/`，封装 `research/bench/baselines/flashinfer_ops.py`。
 
-- P1-S 单跑 profiling 与 C_lib 目录。完成标准：S1 可复现、可断点续跑的 profiling 脚本（flush 模式，记录频率与功耗→每次调用能耗）；S2 每个算子×形状的最佳 TileLang 配置 vs 参考库（cuBLAS / FlashInfer / torch rms_norm），标出慢 >10% 的形状；S3 持久化版 vs grid 版；S4 94、47 SM 预算下的最优配置变化（GOLDYLOC 效应）；S5 C_lib（Pareto 前沿 ∪ 预算最优）；S6 `cotile/catalog.py` 加载接口；S7 GEMM×decode、GEMM×RMSNorm 的配对表（时长比 0.25–4，T_serial 与资源下界含功耗下界）；S8 结果 < 5MB，GPU 时间 ≤ 约 2.5h。
+**P1-S 单跑 profiling 与 C_lib 目录：已完成（23:36 验收；提交 ff257ea5）**，结果 `research/results/2026-09-22_solo_profile/`，加载接口 `cotile/catalog.py`。
+- 完成标准（原文）：S1 可复现、可断点续跑的 profiling 脚本（flush 模式，记录频率与功耗→每次调用能耗）；S2 每个算子×形状的最佳 TileLang 配置 vs 参考库（cuBLAS / FlashInfer / torch rms_norm），标出慢 >10% 的形状；S3 持久化版 vs grid 版；S4 94、47 SM 预算下的最优配置变化（GOLDYLOC 效应）；S5 C_lib（Pareto 前沿 ∪ 预算最优）；S6 `cotile/catalog.py` 加载接口；S7 GEMM×decode、GEMM×RMSNorm 的配对表（时长比 0.25–4，T_serial 与资源下界含功耗下界）；S8 结果 < 5MB，GPU 时间 ≤ 约 2.5h。
+- 规模：27 个形状 × 1026 个配置 × 4 个测点（grid @188/94/48、persistent @188），2432 个 kernel（冷编译 11 分钟），GPU 约 1h45m，结果 3.2MB。qzr 的空闲进程全程持有上下文、无 SM 活动，0 个批次需要重测。
+- S2：**单跑基线是诚实的**。GEMM 最优 TileLang / 最快的正确 cuBLAS = 0.85–1.065；decode ≤ FlashInfer（0.93–0.997）；RMSNorm 0.98–1.04× FlashInfer（torch 2.8 的 `rms_norm` 拆成 8 个 kernel，慢 5–10×，不作参照）。注意：cuBLAS 在更低频率下运行（功耗密度更高），按 cycles 它领先 10–15%；torch 默认允许 cuBLAS 用 bf16 归约 split-K 部分和，M2048_N4096_K14336 上超出 fp32 参考容差。
+- S3：**静态持久化的惩罚是真实的**，不是 flush、占用率或代码生成造成的：GEMM persistent/grid 中位数 1.52×（hot、graph 模式下仍 1.20–1.75×），SASS 主循环完全相同，persistent 频率反而更高、功耗更低（在等待）。decode 只在需要循环时出现（中位数 1.10×）。与 CoKernel agent"热 L2 下消失"的说法矛盾，原因未明。
+- S4：**GEMM 的 GOLDYLOC 效应显著**：94/48 SM 预算下最优配置在 8/9 个形状上与全卡不同，全卡最优在缩减预算下慢 6–14%（中位数 9.1% / 12.3%）。原因与功耗有关：全卡时功耗墙压频（所有 GEMM 配置中位频率 2015 MHz），大 tile 更省能量而胜出；94/48 SM 时功耗不再受限（2736/2822 MHz），TMA warp-specialized 128×128 胜出。decode、RMSNorm 基本无此效应。
+- S5：C_lib 大小 GEMM 9–12、decode 5–10、RMSNorm 4–11。
+- S7：**功耗墙是大多数平衡算子对的约束资源**：GEMM×decode 的 63 个时长比在 [0.25, 4] 内的配对中 49 个、GEMM×RMSNorm 24 个中 23 个受功耗约束；T_serial / 下界只有 1.09–1.38。候选研究点：GEMM 4096³ × decode B16×8192（392/343µs，上限 1.22）；GEMM 2048×4096×4096 × decode B32×2048（202/176µs，1.35）；时长比扫描 GEMM 4096³ × decode B64×8192 / B32×8192 / B16×8192 / B32×2048（0.29/0.58/1.14/2.23）；GEMM 4096³ × RMSNorm 16384×8192（1.20）；GEMM 2048×14336×4096 × RMSNorm 65536×4096（1.19）。
+- **测量方法问题**：(1) cobench 的写 flush 让 L2 充满脏行，被测 op 要为回写付费（GEMM 慢 1–5.8%，RMSNorm 最多 30%）；先写后读的 flush（冷且干净）没有这个偏差；只读 flush 在本卡上清不干净。两个单跑时间相加会付两次，一次共跑只付一次，所以共跑加速比必须对照 `bench_corun` 自己的 serial 变体。(2) flush 模式下 flush 阶段（约 360W）给功耗控制器留出余量，单跑 GEMM 运行中功耗 608–689W，高于持续运行时；在稳态 serving 中不会有这种余量，所以 flush 模式可能高估单跑、低估共置收益（或相反），必须用持续负载的稳态模式对照。(3) 温度是主要的慢变量：功耗受限的 GEMM 空闲 2 秒后快 2.2–2.6%，测量时要保持 GPU 持续负载。
+- 其他：TileLang 的 kernel 缓存以 git commit 为键，每次提交都会让下一次运行重新编译约 11 分钟（2432 个 kernel），缓存增长约 1GB。
+
+**对研究方向的影响（主 agent 判断）**
+- 功耗墙把本平台上这些算子对的理想收益限制在 1.09–1.38×，D1 的完整主张（T_inter*/T[derived, intra] ≥ 1.10 且 lib/derived ≥ 1.05）可能只在少数配对上可达。按规则不在看到 P1 共跑数据前改阈值，但这提示 derived 空间应包含"低能耗"实现（大 tile、少 DRAM 流量），因为在功耗受限时降低 E_A + E_B 本身就降低下界——这正是 proposal 效应 4 的推论，可以作为"资源需求属于实现"的一个新的、平台相关的例子。
+- 下一功能：测量方法 v1（干净 flush、稳态共跑模式、统一 GPU 守卫、持久化调度检查），在任何 3×2 共跑测量之前完成。
 - proposal v0.3（35be5243）：功耗墙作为共享资源纳入 §1.2（效应 4，待验证推论：低能耗实现在共置下更值钱）、§4 下界、§5.4 模型、§9 风险。
 
 **关注的问题**
