@@ -1,0 +1,22 @@
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-22 19:38:10  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `matmul_warp_specialize_copy_gemm_0_1` with `out_idx=[-1]`
+2026-09-22 19:38:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `matmul_warp_specialize_copy_gemm_0_1`
+tensor([[  2.6797,   1.9004,   1.1602,  ...,   6.0938,  -2.2402,  -1.3545],
+        [  0.3237,  -0.5488,   7.9648,  ...,  -7.2031,   2.8496,  -3.4375],
+        [  7.8906,   5.6055,  -2.1484,  ...,  -8.7109, -23.6406, -12.9844],
+        ...,
+        [ -2.9414,   0.3296,  -1.9141,  ...,   3.1055,  -7.1211, -17.1406],
+        [ -0.0735,  -5.9219,  -0.2247,  ...,  -2.3691, -16.1719,   6.6797],
+        [ 12.6328,  -2.1914,  12.8984,  ...,  -2.0703,  -0.8843,  -6.7539]],
+       device='cuda:0', dtype=torch.float16)
+tensor([[  2.6797,   1.9004,   1.1602,  ...,   6.0938,  -2.2402,  -1.3545],
+        [  0.3237,  -0.5488,   7.9648,  ...,  -7.2031,   2.8496,  -3.4375],
+        [  7.8906,   5.6055,  -2.1484,  ...,  -8.7109, -23.6406, -12.9844],
+        ...,
+        [ -2.9414,   0.3296,  -1.9141,  ...,   3.1055,  -7.1211, -17.1406],
+        [ -0.0735,  -5.9219,  -0.2247,  ...,  -2.3691, -16.1719,   6.6797],
+        [ 12.6328,  -2.1914,  12.8984,  ...,  -2.0703,  -0.8843,  -6.7539]],
+       device='cuda:0', dtype=torch.float16)
+Kernel output matches PyTorch reference.
+Latency: 0.006215290632098913 ms
+wall=5.57 s

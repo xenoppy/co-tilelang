@@ -1,0 +1,7 @@
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-22 19:37:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `rms_norm` with `out_idx=[-1]`
+2026-09-22 19:37:47  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `rms_norm`
+All checks pass.
+Ref: 0.86 ms
+Tile-lang: 0.36 ms
+wall=5.50 s maxrss=1147532 KB

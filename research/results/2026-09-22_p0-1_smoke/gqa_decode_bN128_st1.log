@@ -1,0 +1,29 @@
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+device=NVIDIA RTX PRO 6000 Blackwell Workstation Edition cc=12.0 smem_optin_per_block=101376
+config={'block_N': 128, 'block_H': 64, 'num_split': 8, 'num_stages': 1, 'threads': 128} est_dynamic_smem=81920 B
+2026-09-22 19:37:28,718 WARNING:Tunable parameters ['block_N', 'block_H', 'num_split', 'num_stages', 'threads'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-22 19:37:28  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `flashattn_gqa_decode_split` with `out_idx=[4]`
+2026-09-22 19:37:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `flashattn_gqa_decode_split`
+tensor([[[ 0.0136, -0.0039, -0.0184,  ...,  0.0685,  0.0202, -0.0389],
+         [ 0.0266, -0.0519, -0.0051,  ...,  0.0133,  0.0336, -0.0271],
+         [ 0.0259, -0.0072, -0.0369,  ...,  0.0153,  0.0434,  0.0114],
+         ...,
+         [-0.0028, -0.0014,  0.0024,  ...,  0.0310,  0.0205, -0.0276],
+         [-0.0071, -0.0320, -0.0072,  ..., -0.0072, -0.0001, -0.0191],
+         [ 0.0098,  0.0088,  0.0062,  ...,  0.0308, -0.0240,  0.0227]]],
+       device='cuda:0', dtype=torch.float16)
+tensor([[[ 0.0136, -0.0039, -0.0184,  ...,  0.0685,  0.0202, -0.0389],
+         [ 0.0267, -0.0519, -0.0051,  ...,  0.0133,  0.0336, -0.0270],
+         [ 0.0259, -0.0071, -0.0368,  ...,  0.0153,  0.0434,  0.0113],
+         ...,
+         [-0.0027, -0.0014,  0.0025,  ...,  0.0310,  0.0204, -0.0276],
+         [-0.0071, -0.0320, -0.0072,  ..., -0.0072, -0.0001, -0.0191],
+         [ 0.0098,  0.0088,  0.0062,  ...,  0.0309, -0.0239,  0.0227]]],
+       device='cuda:0', dtype=torch.float16)
+passed: o_ref diff=1.3187790317559234e-06
+passed: o_ref_split diff=5.378102229669501e-06
+All checks pass.
+Ref: 0.09 ms
+Ref: 1.49 TFlops
+Tile-lang: 0.04 ms
+Tile-lang: 3.64 TFlops

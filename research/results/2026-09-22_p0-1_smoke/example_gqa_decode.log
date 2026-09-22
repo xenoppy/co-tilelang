@@ -1,0 +1,49 @@
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+CUDA device capability: 120
+2026-09-22 19:36:12,134 WARNING:Tunable parameters ['block_N', 'block_H', 'num_split', 'num_stages', 'threads'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-22 19:36:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `flashattn_gqa_decode_split` with `out_idx=[4]`
+2026-09-22 19:36:20  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `flashattn_gqa_decode_split`
+Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/examples/flash_decoding/example_gqa_decode.py", line 463, in <module>
+    main(args.batch, args.heads, args.groups, args.kv_seqlen, args.dim, args.tune)
+  File "/home/ywc/co-tilelang/examples/flash_decoding/example_gqa_decode.py", line 418, in main
+    o = kernel(q, k, v, mask)
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/kernel.py", line 212, in __call__
+    return self.torch_function(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/3rdparty/tvm/python/tvm/runtime/executable.py", line 46, in __call__
+    return self.jit().main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 147456
+Command exited with non-zero status 1
+	Command being timed: "python example_gqa_decode.py"
+	User time (seconds): 16.02
+	System time (seconds): 1.39
+	Percent of CPU this job got: 131%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:13.22
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1210216
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 95
+	Minor (reclaiming a frame) page faults: 391698
+	Voluntary context switches: 686
+	Involuntary context switches: 268
+	Swaps: 0
+	File system inputs: 57056
+	File system outputs: 54808
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1

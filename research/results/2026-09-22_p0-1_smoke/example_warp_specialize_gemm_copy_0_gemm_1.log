@@ -1,0 +1,6 @@
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-22 19:38:05  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `matmul_warp_specialize_copy_0_gemm_1` with `out_idx=[-1]`
+2026-09-22 19:38:07  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `matmul_warp_specialize_copy_0_gemm_1`
+Kernel output matches PyTorch reference.
+Latency: 0.03331200033426285 ms
+wall=5.15 s

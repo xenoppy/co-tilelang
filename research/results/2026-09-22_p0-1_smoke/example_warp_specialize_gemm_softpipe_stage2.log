@@ -1,0 +1,6 @@
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-22 19:38:16  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `matmul` with `out_idx=[-1]`
+2026-09-22 19:38:18  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `matmul`
+Kernel output matches PyTorch reference.
+Latency: 31.040512084960938 ms
+wall=5.76 s
