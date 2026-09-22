@@ -36,6 +36,15 @@
 - 处理：proposal v0.2（658a0019）把核心主张改为"为共同资源契约重新推导实现"，2×2 扩展为 3×2（solo / lib / derived × inter / intra）；plan v0.2（8e10db30）据此修订了 P1 的度量、基线（空转线程、虚拟 CTA、GOLDYLOC 式预算调优、FlashInfer POD）和 D1（在看到任何 P1 数据之前）。
 - 附带发现：FlashInfer POD 按 SM 数开计数器数组，而 PTX 规定 `%nsmid` 可能大于 SM 数；本机 188/192 SM，可能越界，使用前要先看探测结果。
 
+**P0-2 测量框架 v0 + `%smid` 探测：已完成（21:05 验收，主 agent 复跑 `research/bench/tests/test_cobench.py` 9/9 通过）**
+- API（`research/bench/cobench`，文档 `research/bench/README.md`）：`bench(fn, mode=flush|graph|hot)`、`bench_corun`（公共起点，solo/serial 在每轮内交错测量，发射顺序 ab/ba 交替）、`NvmlSampler`、`split_sms`（green context → torch ExternalStream）、`build_sm_remap`、`CudaKernel`（NVRTC，可在普通流和 green 流上启动）。额外加了"主机闸门"（计时区间不含主机发射延迟）和 GPU 内时钟探针（每 50µs 记录 SM 时钟）。
+- 关键数字：bf16 dense 峰值 1024 FLOP/clk/SM，即 2617 MHz 时 504 TFLOP/s；持续负载下 600W 功耗墙把频率压到约 2.18–2.35 GHz，实际峰值约 430–450。torch matmul 4096³ 约 360–390 TFLOP/s（同频率下达峰值的 79–86%）。DRAM 拷贝约 1.46 TB/s（理论 1.79）。跨 5 个进程的 CV 0.17%。
+- `%smid`：`%nsmid` = 188，编号 0..187 无空洞（全卡重映射为恒等）；第一波 188 个 CTA 必定落在 188 个不同 SM；块→SM 映射确定但不按 smid 顺序（TPC 成对、8 组轮转）；green context 内 `%nsmid` 仍为 188、编号为物理编号，分区要自己建表。**FlashInfer POD 的 `%nsmid` 越界风险在本机不存在。**
+- green context：默认粒度 8 个 SM 且分散在 4 组；加 `IGNORE_SM_COSCHEDULING` 后粒度 2、从 SM 0 连续、数量精确。
+- `%globaltimer`：分辨率 32ns、单调，SM 间偏差 ≤ 64ns，可作为 CoKernel 各角色完成时间的设备级时间戳。
+- 教训：NVML 在本驱动上约 500ms 才刷新一次，10ms 轮询没有意义（改用 GPU 内时钟探针；功耗可用 `nvmlDeviceGetSamples` 20ms 采样）；功耗墙在负载开始 0.1–0.3s 后降频，预热必须 ≥ 1s；不同模式下频率不同，跨模式比较要用 cycles 而不是 µs。
+- 初步观察（非正式）：matmul ∥ copy 在两条普通 stream 上完全串行（加速比 0.998，copy 总是先完成）；green context 94/94 划分为串行时间的 0.81×。说明 M1 基线可能很弱，M2 才是真正要赢的跨 kernel 基线。
+
 **进行中（附完成标准）**
 - P1 准备：算子库 v0（`cotile/ops/`：GEMM、GQA decode、RMSNorm）。完成标准：C1 每个算子有 tile_body macro + 普通 grid 版 + 持久化版 + 配置枚举 + 资源签名；C2 每个算子 ≥30 个配置在测试形状上两种版本都通过正确性检查；C3 split-K GEMM 与 split-KV decode 在 kernel 内合并（最后到达的 tile 做合并）并通过重复启动测试；C4 资源签名写入 `research/results/2026-09-22_op_library/signatures.csv`；C5 `cotile/README.md`。
 - P0-2 测量框架 v0（`research/bench/cobench/`）。完成标准：单 kernel 计时三种模式（刷 L2 的 event 计时、CUDA Graph + 输入轮换、热模式）；双流共跑计时（公共起点、各自完成时刻）；NVML 采样器；green context 流封装并实测 SM 粒度；`%smid` 探测（取值与空洞、持久化 grid 的 CTA 分布、green context 下用到哪些 SM、`%globaltimer` 分辨率）；matmul 重复 5 次的 CV < 2%（或给出原因）；README。

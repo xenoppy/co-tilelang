@@ -1,0 +1,354 @@
+{
+ "1a_matmul": {
+  "mma_peak": {
+   "warps_per_cta": 8,
+   "nacc": 8,
+   "iters": 20000,
+   "ctas_per_sm": 1,
+   "flop_per_clk_per_sm": 1023.8046372791755,
+   "cycles_median": 5120977.0,
+   "time_ms": 1.8170239925384521,
+   "tflops": 542.4592322652786,
+   "implied_clock_mhz": 2818.3320754316505
+  },
+  "peak_tflops_at_2617MHz": 503.70778632280525,
+  "peak_tflops_at_max_clock": 594.7485898882186,
+  "flush": {
+   "median_us": 350.8000075817108,
+   "p10_us": 349.7920036315918,
+   "p90_us": 352.2239923477173,
+   "cv": 0.004127518403044424,
+   "tflops": 391.7872021139759,
+   "clock_mhz_median": 2543.677627975211,
+   "peak_tflops_at_that_clock": 489.5950428376912,
+   "efficiency": 0.8002270608035135,
+   "k": 1,
+   "n_copies": 1,
+   "power_w": 560.197,
+   "throttle": [
+    "SwPowerCap"
+   ]
+  },
+  "graph": {
+   "median_us": 375.66171373639787,
+   "p10_us": 374.19169062659853,
+   "p90_us": 375.97621963137675,
+   "cv": 0.0019321552011954143,
+   "tflops": 365.85829336987223,
+   "clock_mhz_median": 2209.576902187566,
+   "peak_tflops_at_that_clock": 425.288914830302,
+   "efficiency": 0.8602582400151584,
+   "k": 21,
+   "n_copies": 3,
+   "power_w": 600.0043000000001,
+   "throttle": [
+    "SwPowerCap"
+   ]
+  },
+  "hot": {
+   "median_us": 357.1360111236572,
+   "p10_us": 355.7639956474304,
+   "p90_us": 357.4292731285095,
+   "cv": 0.0019099314396180261,
+   "tflops": 384.83644659516625,
+   "clock_mhz_median": 2316.2569669460145,
+   "peak_tflops_at_that_clock": 445.8221892912312,
+   "efficiency": 0.863206129795782,
+   "k": 20,
+   "n_copies": 1,
+   "power_w": 600.0072222222221,
+   "throttle": [
+    "SwPowerCap"
+   ]
+  }
+ },
+ "1b_copy": {
+  "dram_peak_gbps": 1792.128,
+  "torch_copy__512MB_flush": {
+   "median_us": 734.71999168396,
+   "gbps": 1461.4299816982123,
+   "cv": 0.002539576830638655,
+   "frac_of_peak": 0.815471875724397
+  },
+  "torch_copy__512MB_graph": {
+   "median_us": 724.3855953216553,
+   "gbps": 1482.27937017883,
+   "cv": 0.0025410541452298707,
+   "frac_of_peak": 0.8271057481267131
+  },
+  "copy_u4_512MB_flush": {
+   "median_us": 753.279983997345,
+   "gbps": 1425.4219504175549,
+   "cv": 0.003286562715859983,
+   "frac_of_peak": 0.7953795434352652
+  },
+  "copy_u4_512MB_graph": {
+   "median_us": 737.9184007644653,
+   "gbps": 1455.0956079800014,
+   "cv": 0.0011115116357570643,
+   "frac_of_peak": 0.8119373214301665
+  },
+  "copy_u4_16MB_flush": {
+   "median_us": 22.52800017595291,
+   "gbps": 1489.4545338212954,
+   "cv": 0.024610758101471942
+  },
+  "copy_u4_16MB_graph": {
+   "median_us": 22.27133388320605,
+   "gbps": 1506.6197730214128,
+   "cv": 0.003995616056993444
+  },
+  "copy_u4_16MB_hot": {
+   "median_us": 5.140800029039383,
+   "gbps": 6527.0836855076095,
+   "cv": 0.010562496583348189
+  }
+ },
+ "1c_api": "ok",
+ "2_corun": {
+  "streams": {
+   "cv_ok": true,
+   "slowdown_a": 1.9966924790613727,
+   "slowdown_b": 1.037640458050254,
+   "makespan_over_max_solo": 1.8662322440006789,
+   "makespan_over_sum_solo": 0.9646296919874323,
+   "speedup_vs_serial": 0.9991717083422668,
+   "makespan_us": 714.7520184516907,
+   "makespan_cv": 0.0031490508656622173,
+   "a_end_us": 714.7520184516907,
+   "b_end_us": 397.40799367427826,
+   "solo_a_us": 357.9680025577545,
+   "solo_b_us": 382.9919993877411,
+   "serial_us": 714.1599953174591,
+   "by_order": {
+    "ab": {
+     "n": 25,
+     "makespan_median": 714.7520184516907,
+     "a_end_median": 714.7520184516907,
+     "b_end_median": 397.3119854927063
+    },
+    "ba": {
+     "n": 25,
+     "makespan_median": 714.7520184516907,
+     "a_end_median": 714.7520184516907,
+     "b_end_median": 397.7600038051605
+    }
+   },
+   "clock_mhz": {
+    "corun": 2685.284124754388,
+    "solo_a": 2419.3460059506156,
+    "solo_b": 2849.327622328098,
+    "serial": 2645.1839334575498
+   }
+  },
+  "green_94_94": {
+   "cv_ok": true,
+   "slowdown_a": 1.5084764304413878,
+   "slowdown_b": 1.0796678005621827,
+   "makespan_over_max_solo": 1.5084764304413878,
+   "makespan_over_sum_solo": 0.910189340456948,
+   "speedup_vs_serial": 0.8122567811005093,
+   "makespan_us": 879.8399865627289,
+   "solo_a_us": 583.2639932632446,
+   "solo_b_us": 383.39200615882874,
+   "serial_us": 714.6559953689575
+  }
+ },
+ "3_nvml": {
+  "n_samples": 151,
+  "interval_ms_median": 9.99969999975292,
+  "refresh_ms_observed": {
+   "sm_clock": 500.0005574984243,
+   "power": 500.0005574984243
+  },
+  "sm_clock_mhz": {
+   "min": 2295.0,
+   "median": 2377.0,
+   "max": 2782.0,
+   "mean": 2440.5761589403974
+  },
+  "power_w": {
+   "n": 75,
+   "mean": 605.62604,
+   "min": 553.161,
+   "max": 687.738,
+   "source": "20ms-samples"
+  },
+  "temp_c": {
+   "min": 50.0,
+   "max": 59.0
+  },
+  "throttle": {
+   "reasons_seen": [
+    "SwPowerCap"
+   ],
+   "any_perf_limiting": true,
+   "frac_samples_perf_limited": 0.7615894039735099,
+   "frac_by_reason": {
+    "SwPowerCap": 0.7615894039735099
+   }
+  }
+ },
+ "4_green": {
+  "default_8": {
+   "got": 8,
+   "rest": 180
+  },
+  "default_16": {
+   "got": 16,
+   "rest": 172
+  },
+  "default_32": {
+   "got": 32,
+   "rest": 156
+  },
+  "default_64": {
+   "got": 64,
+   "rest": 124
+  },
+  "default_94": {
+   "got": 96,
+   "rest": 92
+  },
+  "default_128": {
+   "got": 128,
+   "rest": 60
+  },
+  "default_180": {
+   "got": 184,
+   "rest": 4
+  },
+  "ignoreCosched_8": {
+   "got": 8,
+   "rest": 180
+  },
+  "ignoreCosched_16": {
+   "got": 16,
+   "rest": 172
+  },
+  "ignoreCosched_32": {
+   "got": 32,
+   "rest": 156
+  },
+  "ignoreCosched_64": {
+   "got": 64,
+   "rest": 124
+  },
+  "ignoreCosched_94": {
+   "got": 94,
+   "rest": 94
+  },
+  "ignoreCosched_128": {
+   "got": 128,
+   "rest": 60
+  },
+  "ignoreCosched_180": {
+   "got": 180,
+   "rest": 8
+  }
+ },
+ "5_smid": {
+  "nsmid": 188,
+  "n": 188,
+  "holes": [],
+  "globaltimer_delta_ns": {
+   "min": 32,
+   "median": 32.0,
+   "mean": 38.82783028688013,
+   "max": 64,
+   "p01": 32.0,
+   "p99": 64.0
+  },
+  "skew": {
+   "n_sms": 188,
+   "rounds": 564,
+   "negative_one_way_samples": 0,
+   "one_way_min_ns": {
+    "min": 320,
+    "median": 384.0,
+    "max": 512
+   },
+   "offset_vs_cta0_ns": {
+    "min": -48.0,
+    "max": 48.0,
+    "abs_max": 48.0,
+    "abs_median": 16.0
+   },
+   "latency_est_ns": {
+    "min": 352.0,
+    "median": 384.0,
+    "max": 448.0
+   }
+  }
+ },
+ "6_repro": {
+  "runs": 5,
+  "processes": 5,
+  "inproc": 1,
+  "size": 4096,
+  "cv_across_runs": 0.0017173915848116854,
+  "median_us": {
+   "min": 380.1820959363665,
+   "max": 381.7957923525856,
+   "mean": 380.96701077052523
+  },
+  "clock_median_mhz": [
+   2186.0239109554223,
+   2183.29457849344,
+   2180.738986339723,
+   2178.2784958035027,
+   2176.436938847736
+  ],
+  "cv_clock_across_runs": 0.0017578333162601896,
+  "cv_cycles_per_call_across_runs": 0.00016005345057775426,
+  "temps_max_c": [
+   58.0,
+   59.0,
+   60.0,
+   61.0,
+   61.0
+  ],
+  "power_mean_w": [
+   600.0251499999999,
+   599.9744499999999,
+   600.0041428571429,
+   600.0220499999999,
+   600.0028500000001
+  ]
+ },
+ "7_readme": "/home/ywc/co-tilelang/research/bench/README.md",
+ "_meta": {
+  "device": {
+   "name": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+   "cc": "12.0",
+   "sms": 188,
+   "l2_bytes": 134217728,
+   "smem_per_sm": 102400,
+   "smem_per_block_optin": 101376,
+   "regs_per_sm": 65536,
+   "total_mem": 101968969728,
+   "mem_bus_bits": 512,
+   "mem_clock_mhz_driver": 14001.0,
+   "dram_peak_gbps": 1792.128,
+   "max_sm_clock_mhz_nvml": 3090,
+   "max_mem_clock_mhz_nvml": 14001,
+   "power_limit_w": 600.0,
+   "torch": "2.8.0+cu128",
+   "torch_cuda": "12.8"
+  },
+  "status": {
+   "test_1a_matmul_modes": "PASS",
+   "test_1b_copy_modes": "PASS",
+   "test_1c_api_contract": "PASS",
+   "test_2_corun": "PASS",
+   "test_3_nvml_sampler": "PASS",
+   "test_4_green_contexts": "PASS",
+   "test_5_smid": "PASS",
+   "test_6_reproducibility": "PASS",
+   "test_7_readme": "PASS"
+  },
+  "other_gpu_procs_start": [],
+  "other_gpu_procs_end": [],
+  "date": "2026-09-22 20:14"
+ }
+}
