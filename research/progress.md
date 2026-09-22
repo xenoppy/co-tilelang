@@ -64,9 +64,24 @@
 - **功耗墙是共享资源**：张量核与 DRAM 同时忙时 600W 功耗墙压低频率。最重的情形 POD 跑在 2066 MHz，串行为 2606 MHz，cycles 上 1.74× 的优势变成时间上 1.38×。含义：(1) 资源下界 LB 与性能模型必须把功耗（或频率）作为一种资源；(2) 结果要同时报时间与频率；(3) 本平台上共置收益的上限低于只看 SM / DRAM 资源的估计。
 - 寄存器耦合可见：POD 里 decode 角色继承 prefill 的 255 寄存器（单跑时 134），但 shared memory 已把两者都限制在每 SM 2 个 block，所以这里没有额外代价。
 
+**P1-M3a CoKernel 构建器 v0（原型）：已完成（22:20 验收；提交 205528ca）**
+- 完成标准：K1 通用双角色持久化 kernel（SM 级 / CTA 级绑定，静态 / 动态队列，chunk，跨角色接手，SM 划分与配比为运行时参数）；K2 两角色 scratch 复用（每 CTA smem ≈ max 而非 sum）；K3 `%smid`/`%globaltimer` 与设备端各角色完成时间戳；K4 两个输出正确且与同配置单跑持久化版逐位相同，tile 不丢不重，重复启动无需主机清零；K5 开销测量；K6 README 与生成代码观察。
+- 验收：子 agent 的测试 184/184 个可启动设置全部通过（7 个配置对 × 两种绑定 × 两种调度 × 接手开关 × 3–5 种 SM 划分 / 配比，每个启动 3 次，与单跑持久化版逐位相同，每个 tile 恰好执行一次）；3 个不可启动的是故意保留的 `smem="sum"` 对照（173KB）。主 agent 复跑编译部分（92 个 kernel 全部通过）与 lifetime-scope 回归测试、已有 smem 合并测试（全部通过）；GPU 部分因 profiling 占用 GPU，推迟到 profiling 结束后复跑确认。
+- 设计：每轮分派由 thread 0 决定（角色, tile），写入双缓冲的共享槽，一次 `__syncthreads()` 后全体读取；这一次同步同时保证两角色 smem 复用的安全。线程少的角色在 `tx < n` 上执行，其余线程空转（Rammer 式）。SM 级按 `%smid` 查主机表；CTA 级按每 SM 到达计数（POD 式）。最后退出的 CTA 发布计时结果并复位所有计数器。
+- **核心改动**：`tl.shared_lifetime_scope` 属性（`src/op/builtin.h`、`merge_shared_memory_allocations.cc`，+40 行，含回归测试），让 smem 合并 pass 把一次 tile 执行当作存活边界。GEMM × decode 每 CTA smem 从 173KB（无法启动）降到 73KB（≤ 两者单跑中较大者）。
+- **TVM 子模块补丁**：Z3 在 rlimit 耗尽时抛 `canceled`，导致 4 个 kernel 的 layout 推断崩溃；`CanProve` 改为把异常当作"无法证明"。以 `research/patches/tvm_z3_canprove_exception.patch` 保存（子模块远端不归我们）。
+- 开销（188 CTA，另一角色编进来但不分配 tile）：GEMM 静态 +2%；decode +3.6%；寄存器 ≈ 较大角色 + 10–40；动态分派的 atomic 被隐藏（RMSNorm chunk 1/4/16 与静态相当）；逐 tile 时间戳开销 0–4%。
+- f32x2→FFMA 融合问题在 CoKernel 中没有出现（全部逐位相同）。#3128 的 `tl.enable_fp32x2_reduction` 只影响 `T.reduce_sum/abssum`，不是这个问题的开关。
+- **未解决：静态调度在 flush 模式下慢 20–30%**。GEMM 静态 268µs vs 动态 211µs（op 库自己的静态持久化版同样慢，262.5µs）；debug 构建与热 L2 下消失（189 vs 186.5µs）。候选原因：flush 写入的脏 L2 行回写、固定的 SM↔地址映射、L1/smem carve-out。**这可能说明 flush 测量方法对某些 kernel 有偏差，影响所有共跑测量，必须在 3×2 研究之前查清。** 已通知 profiling agent 对代表性配置加测 hot / graph 模式。
+- 其他开放问题：寄存器耦合使 RMSNorm 在 GEMM 旁从每 SM 6 个 CTA 降到 1 个；大配置下 CTA 级绑定每 SM 只有 1 个 CTA，两个角色实际上不在同一 SM 共驻，需要更小的或重新推导的实现；warp 级绑定需要 tile body 支持线程偏移、按角色的 named barrier、分区（而非复用）的 smem，decode 归约固定用 barrier 1/2 会冲突。
+
+**GPU 占用规则的解释（22:00）**：用户 qzr 有一个空闲的检索服务（`local_retriever.py --gpu`，持有约 1.1GB 显存，利用率 0%，P8）长期驻留。规则 7 的"被占用"解释为：有外部进程的 SM 利用率 > 0（`nvidia-smi pmon -s u`），而不是仅仅持有上下文；每个计时批次前后采样，被污染的批次重测。若用户不同意此解释需要调整。各测试脚本里"有任何其他进程就等待"的守卫会因此永久阻塞，下一个功能里要统一成共享的守卫。
+
 **进行中（附完成标准）**
-- P1-M3a CoKernel 构建器 v0（`cotile/cokernel.py`，GEMM × decode、GEMM × RMSNorm）。完成标准：K1 通用双角色持久化 kernel（SM 级 / CTA 级绑定，静态 / 动态队列，chunk，跨角色接手，SM 划分与配比为运行时参数）；K2 两角色 scratch 复用（每 CTA smem ≈ max 而非 sum，从编译产物验证）；K3 `%smid`/`%globaltimer` 与设备端各角色完成时间戳；K4 两个输出与参考一致，且与同配置单跑持久化版逐位相同，调试模式证明 tile 不丢不重，重复启动无需主机清零；K5 "另一角色编进来但不执行"的开销与动态分派开销；K6 README 与生成代码观察。
 - P1 基线：FlashInfer（0.7.0，JIT）。完成标准：不改动现有包版本安装；GQA decode 与 prefill 在 sm_120 上正确并测时（与 TileLang 示例对比）；POD 融合 kernel 能否在 sm_120 编译运行、结果正确，并与串行 / 双流 / green context 划分对比；结果写入 `research/results/2026-09-22_flashinfer_baselines/`，封装 `research/bench/baselines/flashinfer_ops.py`。
+
+- P1-S 单跑 profiling 与 C_lib 目录。完成标准：S1 可复现、可断点续跑的 profiling 脚本（flush 模式，记录频率与功耗→每次调用能耗）；S2 每个算子×形状的最佳 TileLang 配置 vs 参考库（cuBLAS / FlashInfer / torch rms_norm），标出慢 >10% 的形状；S3 持久化版 vs grid 版；S4 94、47 SM 预算下的最优配置变化（GOLDYLOC 效应）；S5 C_lib（Pareto 前沿 ∪ 预算最优）；S6 `cotile/catalog.py` 加载接口；S7 GEMM×decode、GEMM×RMSNorm 的配对表（时长比 0.25–4，T_serial 与资源下界含功耗下界）；S8 结果 < 5MB，GPU 时间 ≤ 约 2.5h。
+- proposal v0.3（35be5243）：功耗墙作为共享资源纳入 §1.2（效应 4，待验证推论：低能耗实现在共置下更值钱）、§4 下界、§5.4 模型、§9 风险。
 
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
