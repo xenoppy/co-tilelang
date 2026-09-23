@@ -139,6 +139,11 @@
 - P1-3x2-B（进行中，05:05 启动）：同五个 GEMM × decode 对的 derived 行 + 无 oracle 鲁棒性。完成标准：B1 写明 C_derived 的定义（C_lib ∪ 以伙伴资源契约为条件的变体：契约内的全部 op 库配置含 split-K / split-KV、寄存器上限轴、至少一个"只在共置时才会选"的实现选择——首选 decode K/V 流式加载的 L2 evict-first 提示，作为 decode 的配置轴实现并测试数值逐位相同）；B2 T[derived,intra]、T[derived,inter] 与完整 3×2 表、对获胜者做轴消融；B3 同一组 SM 划分下 green context 与 CoKernel（动态 + 接手）的 oracle / 先验规则划分 / 最坏情况 / regret，以及把 main 上调好的划分迁移到其他对；B4 三行齐全的 D1 中期读数；B5 结果与测试。
 - 需要告知用户：qzr 的 RL 训练进程会占到 91–95GB 显存，我们的实验（1–5GB）可能与之争抢显存导致对方 OOM；当前脚本会等待显存足够才启动。
 
+**05:50 暂停（用户要求：集群有其他人在用）**
+- 已终止正在运行的 `p1b_study.py main --stages DC1,DC2,DC3,DC4,F,R`（P1-3x2-B 的 main 对，derived 行筛选阶段）；GPU 上只剩其他用户（qhy）的进程。已通知 Part B 子 agent 停止所有 GPU 工作，只做 CPU 侧的整理：写 `research/results/2026-09-23_p1_3x2_B/RESUME.md`（已完成 / 中断位置 / 剩余工作 / 恢复命令 / 未测试的代码改动）。
+- 在用户允许之前不启动任何 GPU 负载。恢复时：先按规则 7 查询 GPU 使用情况，再按 RESUME.md 继续 P1-3x2-B。
+- 尚未提交的工作：Part B 子 agent 在 `cotile/`（decode 的 L2 提示轴等）与 `research/bench/scripts/p1b_*.py` 中的改动，未验收，暂不提交。
+
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
