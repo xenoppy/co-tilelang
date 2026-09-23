@@ -80,7 +80,11 @@ class HostGate:
 
 @functools.lru_cache(maxsize=None)
 def _gate_kernel(device: int) -> CudaKernel:
-    return CudaKernel(_GATE_SRC, "host_gate", "pQQp", device=device)
+    k = CudaKernel(_GATE_SRC, "host_gate", "pQQp", device=device)
+    # max smem carveout: the gate's SM must not need a reconfiguration before a large-smem
+    # CTA of the measured kernel can run there (see cobench.clock)
+    k.set_carveout(100)
+    return k
 
 
 _COPY_SRC = r"""
@@ -107,6 +111,70 @@ def copy_u4(src: torch.Tensor, dst: torch.Tensor, *, ctas_per_sm: int = 4, threa
     dev = src.device.index
     nsm = torch.cuda.get_device_properties(dev).multi_processor_count
     _copy_kernel(dev)(nsm * ctas_per_sm, threads, src, dst, src.nbytes // 16, stream=stream)
+
+
+_READ_SRC = r"""
+extern "C" __global__ void read_u4(const uint4* __restrict__ src, unsigned long long n,
+                                   unsigned int magic, unsigned int* sink) {
+  unsigned long long i = (unsigned long long)blockIdx.x * blockDim.x + threadIdx.x;
+  const unsigned long long stride = (unsigned long long)gridDim.x * blockDim.x;
+  unsigned int acc = 0u;
+  #pragma unroll 4
+  for (; i < n; i += stride) { const uint4 v = src[i]; acc += v.x ^ v.y ^ v.z ^ v.w; }
+  // data-dependent (never true for cobench's flush buffer): keeps every load alive
+  if (acc == magic) atomicAdd(sink, 1u);
+}
+"""
+
+
+@functools.lru_cache(maxsize=None)
+def _read_kernel(device: int) -> CudaKernel:
+    return CudaKernel(_READ_SRC, "read_u4", "pQIp", device=device)
+
+
+@functools.lru_cache(maxsize=None)
+def _read_sink(device: int) -> torch.Tensor:
+    return torch.zeros(1, dtype=torch.int32, device=f"cuda:{device}")
+
+
+def read_u4(src: torch.Tensor, *, ctas_per_sm: int = 4, threads: int = 512, stream=None) -> None:
+    """Read every byte of ``src`` with 16B vector loads (default caching: lines are allocated
+    in L2). Used by the "clean" L2 flush: after a 2xL2 write, reading 2xL2 evicts the dirty
+    lines (written back) and leaves only clean lines behind."""
+    if src.nbytes % 16 or not src.is_contiguous():
+        raise ValueError("read_u4 needs a contiguous tensor with nbytes % 16 == 0")
+    dev = src.device.index
+    nsm = torch.cuda.get_device_properties(dev).multi_processor_count
+    _read_kernel(dev)(nsm * ctas_per_sm, threads, src, src.nbytes // 16, 0x9E3779B9, _read_sink(dev),
+                      stream=stream)
+
+
+_DISCARD_SRC = r"""
+extern "C" __global__ void discard_l2(char* p, unsigned long long nlines) {
+  unsigned long long i = (unsigned long long)blockIdx.x * blockDim.x + threadIdx.x;
+  const unsigned long long stride = (unsigned long long)gridDim.x * blockDim.x;
+  for (; i < nlines; i += stride)
+    asm volatile("discard.global.L2 [%0], 128;" :: "l"(p + i * 128) : "memory");
+}
+"""
+
+
+@functools.lru_cache(maxsize=None)
+def _discard_kernel(device: int) -> CudaKernel:
+    return CudaKernel(_DISCARD_SRC, "discard_l2", "pQ", device=device)
+
+
+def discard_l2(buf: torch.Tensor, *, ctas_per_sm: int = 4, threads: int = 512, stream=None) -> None:
+    """``discard.global.L2`` over every 128 B line of ``buf`` (sm_80+): the lines are
+    invalidated WITHOUT write-back, so the buffer's contents become undefined. Used by the
+    "clean" L2 flush after writing the 2x L2 flush buffer: the write evicts everything else
+    (writing back any dirty lines), the discard then drops the flush buffer's own dirty
+    lines, leaving an L2 with no dirty lines and none of the op's data."""
+    if buf.nbytes % 128 or buf.data_ptr() % 128 or not buf.is_contiguous():
+        raise ValueError("discard_l2 needs a contiguous, 128-byte aligned tensor with nbytes % 128 == 0")
+    dev = buf.device.index
+    nsm = torch.cuda.get_device_properties(dev).multi_processor_count
+    _discard_kernel(dev)(nsm * ctas_per_sm, threads, buf, buf.nbytes // 128, stream=stream)
 
 
 _MMA_SRC = r"""

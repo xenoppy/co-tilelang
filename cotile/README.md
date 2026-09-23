@@ -277,8 +277,16 @@ about max(roles) + 10–40. Dynamic dispatch is no slower than static even for 2
 **Generated code.** `__launch_bounds__(threads, min_blocks_per_sm)`; one `__syncthreads()` per dispatch iteration
 (+1 with timestamps) in front of each role body's own leading barrier. The partial-thread role's barriers become
 `bar.sync 3, n`; the decode's `T.reduce_*` keeps `NamedBarrier<n>` ids 1/2 (safe here: one role per CTA at a time).
-Single 1024-aligned `buf_dyn_shmem` arena: slot at offset 0, role scratch overlaid from 1024. The GEMM TMA-store
-epilogue waits for the bulk store (`tma_store_wait<0,true>`) before its barrier, so aliasing is safe.
+Single 1024-aligned `buf_dyn_shmem` arena with the slot at offset 0 and the role scratch overlaid after it.
+- The scratch starts at 1024 only when a TMA-store buffer forces 1 KB alignment. Otherwise the merge planner packs it at
+  16-byte alignment right after the slot.
+- With the original 16 B slot, the swizzled cp.async/ldmatrix buffers then started 16 B off a 128 B boundary. The role
+  bodies ran 1.5–1.7× slower, e.g. GEMM 128x256 direct-epilogue CoKernels.
+- The slot is therefore padded to 128 B (`SLOT_INTS = 32`); see research/results/2026-09-23_methodology_v1 §M4.5.
+- Check that every role buffer offset in the generated source is a multiple of 128.
+
+The GEMM TMA-store epilogue waits for the bulk store (`tma_store_wait<0,true>`) before its barrier, so aliasing is
+safe.
 
 **Running.**
 ```bash
@@ -291,8 +299,11 @@ python testing/python/transform/test_tilelang_transform_shared_lifetime_scope.py
 * Static schedule assumes num_ctas/num_sms co-resident CTAs per SM (breadth-first placement); violations are
   detected (`stats()` raises), not repaired. It cannot coexist with foreign kernels taking SMs (e.g. M1 baselines).
 * Static + takeover needs one claim atomic per owner tile (not atomic-free).
-* In flush mode the static schedule of large kernels is 20–30% slower than dynamic for reasons not yet understood
-  (see the results README); the same holds for the op library's static `build_persistent`.
+* ~~In flush mode the static schedule of large kernels is 20–30% slower than dynamic.~~ This was a measurement artefact:
+  - cobench's ClockProbe kept its SM at a small smem carveout, so one static CTA could not start until another exited.
+  - Fixed in cobench (methodology v1, §M4). Static is now within 0–1.7% of grid and dynamic.
+  - The static schedule still assumes that all num_ctas CTAs are co-resident. Any resident foreign kernel that takes an
+    SM's smem breaks that assumption in the same way.
 * Role bodies use absolute `threadIdx` (the op protocol), so a role can only occupy threads [0, n): fine for SM/CTA
   binding, not for warp-level binding (needs a thread-offset argument in `make_tile_body`).
 * No prefetch of the next dynamic grab (atomic latency is exposed at 1 CTA/SM for tiny tiles).

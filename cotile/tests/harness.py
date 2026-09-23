@@ -115,19 +115,29 @@ def other_gpu_processes() -> list[str]:
     return [r for r in rows if int(r.split(",")[0]) != me]
 
 
+def _cobench():
+    """cobench lives in research/bench (not an installed package)."""
+    bench = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "research", "bench"))
+    if bench not in sys.path:
+        sys.path.insert(0, bench)
+    import cobench
+
+    return cobench
+
+
 def wait_for_gpu(max_wait_s: float = 900, poll_s: float = 150) -> bool:
-    """Standing GPU rule: wait while another compute process is present (a sibling
-    agent may be timing kernels); poll every poll_s seconds for up to max_wait_s."""
-    t0 = time.time()
-    while True:
-        others = other_gpu_processes()
-        if not others:
-            return True
-        if time.time() - t0 >= max_wait_s:
-            print(f"[gpu] still busy after {max_wait_s:.0f}s: {others}", flush=True)
-            return False
-        print(f"[gpu] busy: {others}; waiting {poll_s:.0f}s", flush=True)
-        time.sleep(poll_s)
+    """Standing GPU rule (research/rules.md 7, clarified 2026-09-22): the GPU is occupied
+    only while a *foreign* process shows SM utilization > 0 in `nvidia-smi pmon -s u`; a
+    process that merely holds a CUDA context does not count. Uses the shared pmon guard
+    (cobench.guard): waits while the GPU is occupied, re-checking every poll_s seconds for
+    up to max_wait_s. Returns True when free, False if still occupied after max_wait_s."""
+    guard = _cobench().guard
+    try:
+        guard.wait_until_free(poll_s=poll_s, max_wait_s=max_wait_s, log=lambda m: print(f"[gpu] {m}", flush=True))
+        return True
+    except guard.GpuBusy as e:
+        print(f"[gpu] {e}", flush=True)
+        return False
 
 
 def compare(out, ref, tol) -> dict:

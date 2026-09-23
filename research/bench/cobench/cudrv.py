@@ -159,6 +159,7 @@ class CudaKernel:
         self._lib = check(cu.cuLibraryLoadData(self.cubin, [], [], 0, [], [], 0))
         self.kernel = check(cu.cuLibraryGetKernel(self._lib, name.encode()))
         self._max_dyn_smem = 48 * 1024
+        self.carveout = -1
 
     # -- attributes ---------------------------------------------------------
     def _attr(self, attr: cu.CUfunction_attribute) -> int:
@@ -177,6 +178,19 @@ class CudaKernel:
             cu.CUfunction_attribute.CU_FUNC_ATTRIBUTE_MAX_DYNAMIC_SHARED_SIZE_BYTES,
             int(nbytes), self.kernel, self._cudev))
         self._max_dyn_smem = int(nbytes)
+
+    def set_carveout(self, percent: int) -> None:
+        """Preferred shared-memory carveout (percent of the unified L1/smem; -1 = driver default).
+
+        An SM's carveout can only change while the SM is idle, so a long-running helper
+        kernel (e.g. cobench's ClockProbe) launched with a small carveout keeps its SM from
+        hosting any CTA that needs more shared memory for as long as it runs (measured:
+        a 96 KB-smem GEMM CTA never ran on the probe's SM; research/results/
+        2026-09-23_methodology_v1). Resident helpers therefore request 100 (max smem)."""
+        check(cu.cuKernelSetAttribute(
+            cu.CUfunction_attribute.CU_FUNC_ATTRIBUTE_PREFERRED_SHARED_MEMORY_CARVEOUT,
+            int(percent), self.kernel, self._cudev))
+        self.carveout = int(percent)
 
     def occupancy(self, block: int, smem: int = 0) -> int:
         """Max resident CTAs per SM for this block size and dynamic smem."""

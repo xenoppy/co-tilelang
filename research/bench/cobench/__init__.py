@@ -2,7 +2,11 @@
 
 API summary (all times in microseconds):
   bench(fn, *, make_inputs, mode="flush"|"graph"|"hot", warmup, reps, ...) -> BenchResult
-  bench_corun(fn_a, fn_b, *, stream_a, stream_b, flush, solo, serial, ...) -> CorunResult
+  bench_corun(fn_a, fn_b, *, stream_a, stream_b, flush, flush_kind, extra, ...) -> CorunResult
+  bench_variants(variants, *, reference, flush_kind, ...) -> VariantsResult   (flush mode, interleaved)
+  bench_steady(variants, *, reference, slice_s, rounds, ...) -> SteadyResult  (primary co-run mode)
+  Par((name, stream, fn), ...), Rotation(make_inputs)   variant building blocks
+  GpuGuard / wait_until_free() / foreign_activity(t0, t1)   GPU-sharing guard (pmon rule)
   NvmlSampler(interval_ms=10)            context manager; .summary()
   split_sms(n, ignore_coscheduling=False) -> SmPartition (.stream / .rest_stream / .n_sms)
   probe_ctas(grid, block, smem, ...)     %smid/%globaltimer per CTA
@@ -16,14 +20,20 @@ import torch
 
 from .cudrv import CudaKernel, check, device_attr, ensure_init
 from .green import GreenContext, SmPartition, query_split, split_sms
-from .kernels import HostGate, copy_u4, mma_peak
+from .kernels import HostGate, copy_u4, discard_l2, mma_peak, read_u4
 from .nvml import NvmlDevice, NvmlSampler, gpu_state
 from .smid import (SmRemap, build_sm_remap, globaltimer_resolution, globaltimer_skew,
                    one_cta_per_sm_smem, probe_ctas)
-from .timing import BenchResult, CorunResult, bench, bench_corun, l2_bytes, summarize, tensor_bytes
+from .timing import (DEFAULT_FLUSH, FLUSH_KINDS, BenchResult, CorunResult, VariantsResult, bench, bench_corun,
+                     bench_variants, l2_bytes, summarize, tensor_bytes)
+from .guard import GpuBusy, GpuGuard, foreign_activity, get_guard, wait_until_free
+from .variants import Par, Rotation
+from .steady import HostGapError, SteadyResult, bench_steady
 
 __all__ = [
     "bench", "bench_corun", "BenchResult", "CorunResult", "summarize", "tensor_bytes", "l2_bytes",
+    "FLUSH_KINDS", "DEFAULT_FLUSH", "bench_variants", "VariantsResult", "bench_steady", "SteadyResult", "HostGapError", "Par", "Rotation",
+    "GpuGuard", "GpuBusy", "get_guard", "wait_until_free", "foreign_activity", "read_u4", "discard_l2",
     "NvmlSampler", "NvmlDevice", "gpu_state",
     "split_sms", "query_split", "SmPartition", "GreenContext",
     "probe_ctas", "build_sm_remap", "SmRemap", "globaltimer_resolution", "globaltimer_skew",

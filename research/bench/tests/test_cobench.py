@@ -1,10 +1,23 @@
-"""Acceptance tests for cobench (P0-2). Run directly:
+"""Acceptance tests for cobench (P0-2 + methodology v1). Run directly:
 
-    CUDA_HOME=/usr/local/cuda-12.9 ~/mpk-env/bin/python research/bench/tests/test_cobench.py
+    source research/env.sh
+    python research/bench/tests/test_cobench.py [name-filter ...] [--out DIR]
+    python -m pytest research/bench/tests/test_cobench.py          # also works (no JSON report)
 
-Each test_* function asserts the behaviour listed in the P0-2 completion criteria and
-records its key numbers; a PASS/FAIL table and a JSON with the numbers are written at
-the end (research/results/2026-09-22_cobench_validation/test_output.json).
+Each test_* function asserts the behaviour listed in the completion criteria and records its
+key numbers; a PASS/FAIL table and a JSON with the numbers are written at the end
+(default: research/results/2026-09-23_methodology_v1/test_output.json; the P0-2 run is in
+research/results/2026-09-22_cobench_validation/).
+
+test_1..7   P0-2 (modes, co-run, NVML, green contexts, %smid, reproducibility, README)
+test_8      M1 clean flush: eviction + cleanliness of each flush kind, API
+test_9      M2 GPU guard: own/descendant activity ignored, a foreign process detected,
+            wait_until_free, cotile harness wait_for_gpu, bench/bench_corun guard records
+test_10     M3 bench_steady: serial ~ sum of solos (non-power-capped pair), Par per-op
+            times, speedups, host-gap detection, bench_variants
+test_11     ClockProbe carveout regression (the probe must not keep an SM from hosting a
+            large-smem CTA; root cause of the P1-S "static persistent penalty")
+test_12     M3 repeatability across 3 processes (steady mode; reads the study JSON)
 """
 from __future__ import annotations
 
@@ -25,6 +38,7 @@ sys.path.insert(0, BENCH)
 import cobench as cb  # noqa: E402
 
 REPORT: dict = {}
+OUT_DIR = os.path.join(RESULTS, "2026-09-23_methodology_v1")   # main(--out) overrides
 INFO = cb.device_info()
 NSM = INFO["sms"]
 DRAM = INFO["dram_peak_gbps"]
@@ -72,7 +86,7 @@ def test_1a_matmul_modes():
         assert clk["covered"], "clock probe did not cover every rep"
         peak_med = fpc * NSM * clk["median"] * 1e6 / 1e12
         peak_max = fpc * NSM * clk["max"] * 1e6 / 1e12
-        assert r.n == 50 and r.l2 == {"flush": "cold-flush", "graph": "cold-rotate", "hot": "hot"}[mode]
+        assert r.n == 50 and r.l2 == {"flush": "cold-flush-clean", "graph": "cold-rotate", "hot": "hot"}[mode]
         assert 0.5 * peak_med < r.tflops <= 1.0 * peak_max, (r.tflops, peak_med, peak_max)
         if mode == "graph":
             assert r.n_copies * r.bytes_per_copy >= 2 * L2 and r.k % r.n_copies == 0
@@ -105,10 +119,16 @@ def test_1b_copy_modes():
         print("   ", r)
         res[mode] = r
         rep[f"copy_u4_16MB_{mode}"] = {"median_us": r.median, "gbps": r.gbps, "cv": r.cv}
-    assert res["flush"].gbps <= DRAM and res["graph"].gbps <= DRAM, "cold modes exceed DRAM peak"
+    # graph (back-to-back rotation): reads and write-backs both hit DRAM
+    assert res["graph"].gbps <= DRAM, "graph mode exceeds DRAM peak"
+    # clean flush (methodology v1): the 16 MB source is read from DRAM, but the 16 MB of
+    # writes are absorbed by the (clean) L2 and written back after the end event -> check
+    # the read side only, and that it is far from L2-hot
+    assert small / (res["flush"].median * 1e-6) / 1e9 <= DRAM, "flush-mode reads exceed DRAM peak"
+    assert res["flush"].median > 2 * res["hot"].median, "flush mode is not cold"
     assert res["hot"].gbps > 2 * DRAM, "hot mode should run from L2"
-    # the 256 MB flush write takes >150 us; a 16 MB copy takes ~22 us -> excluded if close
-    assert abs(res["flush"].median / res["graph"].median - 1) < 0.25, "flush time leaked into timing"
+    # the clean flush takes ~136 us; a 16 MB copy ~14-22 us -> a leaked flush would show
+    assert res["flush"].median < 2 * res["graph"].median, "flush time leaked into timing"
     REPORT["1b_copy"] = rep
 
 
@@ -228,7 +248,7 @@ def test_5_smid():
 
 
 def test_6_reproducibility():
-    out = os.path.join(RESULTS, "2026-09-22_cobench_validation", "repro_matmul_graph.json")
+    out = os.path.join(OUT_DIR, "repro_matmul_graph.json")
     p = subprocess.run([sys.executable, os.path.join(BENCH, "scripts", "repro_matmul.py"),
                         "--runs", "5", "--out", out], capture_output=True, text=True)
     print("\n".join("    " + l for l in p.stdout.splitlines() if l.startswith("run ")))
@@ -240,16 +260,231 @@ def test_6_reproducibility():
     REPORT["6_repro"] = {k: v for k, v in s.items() if k != "per_run"}
 
 
+def test_8_flush_kinds():
+    """M1: "clean" flush evicts (a buffer read before the flush reads like a never-touched
+    one) and leaves no dirty lines (a 64 MB write-only kernel is absorbed); "write" leaves
+    dirty lines; flush kinds are selectable and labelled."""
+    MB = 1 << 20
+    assert cb.DEFAULT_FLUSH == "clean" and set(cb.FLUSH_KINDS) >= {"clean", "write", "write+read", "read"}
+    try:
+        cb.bench(lambda: None, flush_kind="bogus", strict=False)
+        raise AssertionError("unknown flush kind must raise")
+    except ValueError:
+        pass
+    X = torch.empty(32 * MB // 4, dtype=torch.int32, device="cuda").fill_(3)
+    rep = {}
+    for fk in ("clean", "write", "write+read"):
+        r = cb.bench(lambda: cb.read_u4(X), mode="flush", flush_kind=fk, nbytes=32 * MB, label=f"read32MB-{fk}")
+        assert r.l2 == f"cold-flush-{fk}" and r.flush_kind == fk
+        rep[f"read32MB_{fk}"] = r.median
+    # never-touched reference: same flush-mode structure (same launch/event floor), but every
+    # rep reads a different buffer of a rotation > 2x L2
+    bufs = [torch.empty(32 * MB // 4, dtype=torch.int32, device="cuda").fill_(3)
+            for _ in range(2 * L2 // (32 * MB) + 2)]
+    k = [0]
+
+    def rot():
+        k[0] += 1
+        cb.read_u4(bufs[k[0] % len(bufs)])
+    cold = cb.bench(rot, mode="flush", flush_kind="clean", nbytes=32 * MB, label="read32MB-rotation")
+    rep["read32MB_rotation_cold"] = cold.median
+    del bufs
+    Y = torch.empty(64 * MB // 4, dtype=torch.int32, device="cuda")
+    for fk in ("clean", "write", "write+read"):
+        rep[f"write64MB_{fk}"] = cb.bench(lambda: Y.fill_(7), mode="flush", flush_kind=fk, label=f"write64MB-{fk}").median
+    rep["write64MB_hot"] = cb.bench(lambda: Y.fill_(7), mode="hot", label="write64MB-hot").median
+    print("    ", {k: round(v, 2) for k, v in rep.items()})
+    # evicted: the clean flush reads as fast as a never-touched rotation (and not faster)
+    assert abs(rep["read32MB_clean"] / rep["read32MB_rotation_cold"] - 1) < 0.04, rep
+    assert rep["read32MB_clean"] > 2.5 * cb.bench(lambda: cb.read_u4(X), mode="hot").median
+    # the write flush makes the same read pay write-backs of dirty lines
+    assert rep["read32MB_write"] > 1.03 * rep["read32MB_clean"], rep
+    # clean: a 64 MB write is absorbed (close to hot); dirty: DRAM write-back bound
+    assert rep["write64MB_clean"] < 1.3 * rep["write64MB_hot"], rep
+    assert rep["write64MB_write"] > 1.8 * rep["write64MB_clean"], rep
+    REPORT["8_flush_kinds"] = rep
+
+
+_FOREIGN = r"""
+import os, sys, time
+if os.fork() > 0:
+    os._exit(0)
+os.setsid()
+if os.fork() > 0:
+    os._exit(0)
+import torch
+a = torch.randn(4096, 4096, device="cuda", dtype=torch.bfloat16)
+t = time.time()
+while time.time() - t < float(sys.argv[1]):
+    for _ in range(20):
+        a @ a
+    torch.cuda.synchronize()
+"""
+
+
+def test_9_guard():
+    """M2: pmon guard ignores this process (and its children), flags a foreign process with
+    SM% > 0, wait_until_free returns once it stops; harness.wait_for_gpu uses it; bench and
+    bench_corun record a clean guard window."""
+    g = cb.get_guard()
+    cb.wait_until_free(max_wait_s=1800)
+    rep = {}
+    # own activity is not foreign
+    a, b, c = mk_mm()
+    t0 = time.time()
+    while time.time() - t0 < 3.0:
+        for _ in range(20):
+            mm(a, b, c)
+        torch.cuda.synchronize()
+    own = g.check(t0, time.time())
+    assert own["clean"] and own["complete"], own
+    # a child process (descendant) is not foreign either
+    t0 = time.time()
+    subprocess.run([sys.executable, "-c", _FOREIGN.replace("os.fork() > 0", "False"), "3"], check=True)
+    child = g.check(t0, time.time())
+    assert child["clean"], child
+    # a detached (double-forked, not a descendant) GPU process is foreign
+    subprocess.run([sys.executable, "-c", _FOREIGN, "8"], check=True)
+    time.sleep(6.0)
+    t_mid = time.time()
+    busy = g.check(t_mid - 4.0, t_mid)
+    assert not busy["clean"] and busy["active"], busy
+    waited = cb.wait_until_free(poll_s=2.0, max_wait_s=120, log=lambda m: print("    " + m))
+    assert waited > 0.5, waited
+    rep.update({"own_clean": own["clean"], "child_clean": child["clean"], "foreign_detected": busy["active"],
+                "foreign_max_sm": busy["max_sm"], "waited_s": waited})
+    # cotile harness uses the guard (signature and bool result unchanged)
+    root = os.path.normpath(os.path.join(BENCH, "..", ".."))
+    sys.path.insert(0, root)
+    from cotile.tests import harness as H
+    import inspect
+    sig = inspect.signature(H.wait_for_gpu)
+    assert list(sig.parameters) == ["max_wait_s", "poll_s"] and sig.parameters["max_wait_s"].default == 900
+    assert H.wait_for_gpu(max_wait_s=60, poll_s=5) is True
+    assert "guard" in inspect.getsource(H.wait_for_gpu)
+    # bench / bench_corun record the guard window
+    r = cb.bench(mm, make_inputs=mk_mm, mode="flush", label="guarded")
+    assert r.guard and r.guard["clean"] and r.guard["complete"], r.guard
+    s, d = mk_copy(64 << 20)()
+    rc = cb.bench_corun(lambda: mm(a, b, c), lambda: cb.copy_u4(s, d), label="guarded corun")
+    assert rc.guard and rc.guard["clean"], rc.guard
+    rep["bench_guard"] = r.guard
+    REPORT["9_guard"] = rep
+
+
+def test_10_steady():
+    """M3: bench_steady mechanics on a non-power-capped pair (copy 128 MB -> 128 MB, read
+    256 MB): serial ~ solo_a + solo_b, Par per-op completion, speedups, no host gaps; a
+    host-starved variant raises HostGapError; bench_variants (flush-mode counterpart)."""
+    MB = 1 << 20
+
+    def mk_cp():
+        x = torch.empty(64 * MB, device="cuda", dtype=torch.bfloat16).normal_()
+        return x, torch.empty_like(x)
+    ra = cb.Rotation(mk_cp)
+    rb = cb.Rotation(lambda: (torch.empty(64 * MB, device="cuda", dtype=torch.int32).fill_(1),))
+    assert ra.total_bytes >= 2 * L2 and rb.total_bytes >= 2 * L2
+    fa = lambda i: cb.copy_u4(*ra[i])  # noqa: E731
+    fb = lambda i: cb.read_u4(*rb[i])  # noqa: E731
+    s1, s2 = torch.cuda.Stream(), torch.cuda.Stream()
+
+    def serial(i):
+        fa(i)
+        fb(i)
+    V = {"serial": serial, "solo_a": fa, "solo_b": fb, "streams": cb.Par(("a", s1, fa), ("b", s2, fb))}
+    r = cb.bench_steady(V, slice_s=1.0, settle_s=0.3, rounds=3, warmup_s=1.5, thermal=False, label="copy+read")
+    print("    " + str(r).replace("\n", "\n    "))
+    v = r.variants
+    ssum = v["solo_a"]["t_iter_us"] + v["solo_b"]["t_iter_us"]
+    ratio = v["serial"]["t_iter_us"] / ssum
+    assert abs(ratio - 1) < 0.03, (ratio, v)
+    assert all(x["gaps"] == 0 for x in v.values())
+    assert set(v["streams"]["ops"]) == {"a", "b"}
+    assert max(o["median_us"] for o in v["streams"]["ops"].values()) <= 1.05 * v["streams"]["t_iter_us"]
+    assert r.derived["speedup"]["serial"]["ratio_of_medians"] == 1.0
+    assert all(x["clock_mhz"] and x["power_w"] for x in v.values())
+    assert r.guard and r.guard["clean"]
+    # a variant the host cannot keep ahead of must be rejected
+    tiny = lambda: cb.read_u4(rb[0][0][:1024])  # noqa: E731
+
+    def starved():
+        time.sleep(0.0005)
+        tiny()
+    try:
+        cb.bench_steady({"serial": starved}, slice_s=0.5, settle_s=0.1, rounds=1, warmup_s=0.2, thermal=False,
+                        guard=False)
+        raise AssertionError("host-starved variant must raise HostGapError")
+    except cb.HostGapError:
+        pass
+    # flush-mode counterpart
+    rv = cb.bench_variants({"serial": lambda: (fa(0), fb(0)), "streams": cb.Par(("a", s1, fa), ("b", s2, fb))},
+                           reference="serial", label="copy+read flush")
+    print("    " + str(rv).replace("\n", "\n    "))
+    assert set(rv.variants["streams"]["ops"]) == {"a", "b"}
+    REPORT["10_steady"] = {"serial_over_sum_solo": ratio, "t_iter_us": {k: x["t_iter_us"] for k, x in v.items()},
+                           "cv_slices": {k: x["cv_slices"] for k, x in v.items()},
+                           "clock_mhz": {k: x["clock_mhz"] for k, x in v.items()},
+                           "power_w": {k: x["power_w"] for k, x in v.items()},
+                           "streams_ops": v["streams"]["ops"],
+                           "flush_mode": {k: x["total"]["median"] for k, x in rv.variants.items()}}
+
+
+def test_11_probe_carveout():
+    """While the ClockProbe runs, a grid of 188 one-CTA-per-SM CTAs with ~96 KB smem must use
+    all 188 SMs (before the fix the probe's SM kept a small smem carveout and hosted none)."""
+    from cobench.clock import ClockProbe
+    smem = 96 * 1024
+    pk = ClockProbe()
+    assert pk.k.carveout == 100
+    pk.start()
+    try:
+        res = cb.probe_ctas(NSM, 128, smem=smem, spin_ns=100_000)
+    finally:
+        pk.stop()
+    used = set(res["smid"].tolist())
+    print(f"     probe on SM {pk.smid}; distinct SMs used by the 96 KB-smem grid: {len(used)}")
+    assert res["occupancy"] == 1
+    assert len(used) == NSM and pk.smid in used, (len(used), pk.smid)
+    REPORT["11_probe_carveout"] = {"probe_smid": pk.smid, "distinct_sms": len(used)}
+
+
+def test_12_steady_repro():
+    """M3 (b): steady-mode repeatability across 3 processes (run by
+    research/bench/scripts/mv1_steady.py repro): CV of per-variant times and speedups < 2%."""
+    path = os.path.join(OUT_DIR, "steady_repro.json")
+    assert os.path.exists(path), "run research/bench/scripts/mv1_steady.py repro first"
+    d = json.load(open(path))
+    cvs = d["cv_across_processes"]
+    print("    ", cvs)
+    assert d["processes"] >= 3
+    assert all(v < 0.02 for v in cvs["t_iter"].values()), cvs
+    assert all(v < 0.02 for v in cvs["speedup"].values()), cvs
+    REPORT["12_steady_repro"] = cvs
+
+
 def test_7_readme():
     path = os.path.join(BENCH, "README.md")
     assert os.path.exists(path) and os.path.getsize(path) > 1000
     REPORT["7_readme"] = path
 
 
+def _key(item):
+    n = item[0]
+    num = n.split("_")[1]
+    return (int(num[:-1]) if num[-1].isalpha() else int(num), num)
+
+
 def main():
-    tests = [(n, f) for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
-    if len(sys.argv) > 1:
-        tests = [(n, f) for n, f in tests if any(k in n for k in sys.argv[1:])]
+    global OUT_DIR
+    argv = sys.argv[1:]
+    if "--out" in argv:
+        i = argv.index("--out")
+        OUT_DIR = argv[i + 1]
+        argv = argv[:i] + argv[i + 2:]
+    out_dir = OUT_DIR
+    tests = sorted([(n, f) for n, f in globals().items() if n.startswith("test_") and callable(f)], key=_key)
+    if argv:
+        tests = [(n, f) for n, f in tests if any(k in n for k in argv)]
     before = other_gpu_procs()
     print(f"device: {INFO['name']} sms={NSM} L2={L2 >> 20}MB DRAM peak={DRAM:.0f} GB/s "
           f"max SM clock={INFO['max_sm_clock_mhz_nvml']} MHz; other GPU procs at start: {before or 'none'}")
@@ -267,8 +502,8 @@ def main():
     after = other_gpu_procs()
     REPORT["_meta"] = {"device": INFO, "status": status, "other_gpu_procs_start": before,
                        "other_gpu_procs_end": after, "date": time.strftime("%Y-%m-%d %H:%M")}
-    os.makedirs(os.path.join(RESULTS, "2026-09-22_cobench_validation"), exist_ok=True)
-    with open(os.path.join(RESULTS, "2026-09-22_cobench_validation", "test_output.json"), "w") as fh:
+    os.makedirs(out_dir, exist_ok=True)
+    with open(os.path.join(out_dir, "test_output.json"), "w") as fh:
         json.dump(REPORT, fh, indent=1, default=str)
     print("\nSUMMARY")
     for n, s in status.items():

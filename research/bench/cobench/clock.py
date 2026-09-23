@@ -13,6 +13,15 @@ microseconds), and cycles are interpolated at the rep's start/end.
 Cost: one resident warp (32 threads, no smem) that mostly sleeps. Must be started after
 the workload has been warmed up: while it spins, a lazy module load (first launch of a
 kernel in a context) would need a context-wide sync and stall until the probe's timeout.
+
+Shared-memory carveout (methodology v1, 2026-09-23): the probe kernel requests the maximum
+shared-memory carveout. With the driver's default choice the probe's SM was usually
+configured for a small carveout, and since an SM can only change its carveout while idle,
+that SM could not host any CTA needing ~>50 KB of smem for as long as the probe ran: every
+large-smem kernel measured with clock=True ran on 187 SMs. For a static persistent grid
+(one CTA per SM, fixed tiles) that made one CTA start only after another exited: the
+P1-S "static persistent penalty" of large-smem kernels (GEMM 1.2-1.85x, looping decode up to
+1.8x) was this artefact (research/results/2026-09-23_methodology_v1, M4).
 """
 from __future__ import annotations
 
@@ -52,7 +61,9 @@ extern "C" __global__ void clock_probe(const volatile unsigned long long* stop,
 
 @functools.lru_cache(maxsize=None)
 def _kernel(device: int) -> CudaKernel:
-    return CudaKernel(_SRC, "clock_probe", "ppiQQp", device=device)
+    k = CudaKernel(_SRC, "clock_probe", "ppiQQp", device=device)
+    k.set_carveout(100)   # never keep an SM from hosting a large-smem CTA (see module doc)
+    return k
 
 
 @functools.lru_cache(maxsize=None)

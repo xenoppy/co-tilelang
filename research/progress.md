@@ -96,6 +96,20 @@
 - 下一功能：测量方法 v1（干净 flush、稳态共跑模式、统一 GPU 守卫、持久化调度检查），在任何 3×2 共跑测量之前完成。
 - proposal v0.3（35be5243）：功耗墙作为共享资源纳入 §1.2（效应 4，待验证推论：低能耗实现在共置下更值钱）、§4 下界、§5.4 模型、§9 风险。
 
+**测量方法 v1：已完成（02:20 验收：主 agent 复跑 test_cobench 14/14 通过、CoKernel 套件 184/184 通过）**，结果 `research/results/2026-09-23_methodology_v1/`。
+- 完成标准（原文）：M1 先写后读的干净 flush 为默认，用数据证明脏行偏差消失；M2 共享 GPU 守卫 `cobench.guard`（pmon 规则），替换 harness 的旧守卫；M3 稳态共跑测量 `bench_steady`（各变体背靠背持续执行、输入轮换、变体交错、报告每轮时间 / 频率 / 功耗 / 相对 serial 加速比），在 P1 主研究点（GEMM 4096³ × decode B16×8192，单跑最优配置）上做冒烟测试并与 flush 模式对比；M4 静态持久化惩罚的根因（grid / 静态 / 动态，ncu 指标，tile 时间线，假设检验）；M5 README 与结果目录。
+- M1：先写后读**并不干净**（读命中 L2 中的脏行不会清掉它们，约一半 L2 仍脏）。新的默认 `clean` flush = 写 2×L2 缓冲后对它执行 `discard.global.L2`。decode B16×8192：旧 flush 342.0µs → clean 330.0µs（背靠背 328.1µs）；RMSNorm 4096²：43.3 → 28.2µs。写密集且输出 ≤ L2 的 op 在 clean flush 下比稳态更快（L2 吸收了自己的写，在计时结束后才回写），已在文档说明。
+- M2：`cobench.guard` 用 pmon 流判断外部 SM 活动；qzr 的 ray worker 开始训练（600W / 94GB）时守卫挡住了 46 分钟，并自动重测了一次被污染的稳态测量。
+- M3：`bench_steady` 各变体背靠背 1.5s 切片、5 轮交错、输入输出轮换 > 2×L2，温度平稳后开始；3 个进程间时间 CV ≤ 0.28%、加速比 CV ≤ 0.21%。serial 与单跑之和之比：非功耗受限的对 0.988；P1 对 0.958（功耗控制器对 GEMM 与 decode 的功耗做平均）→ 加速比必须对照同一次测量中的 serial。
+- **P1 冒烟测试**（GEMM 4096³ × decode B16×8192，单跑最优配置，相对 serial 的加速比，稳态 / clean flush）：两条 stream 1.128 / 1.136；green context GEMM 60/80/100/120/140 SM：0.61/0.78/0.91/1.05/**1.220** 与 0.62/0.79/0.93/1.07/**1.322**；CoKernel 动态 + 接手，GEMM 60/94/128/160 SM：1.010/1.130/1.202/**1.204** 与 1.037/1.219/1.300/**1.320**。**flush 模式对触及功耗墙的变体高估 8–10%**（flush 阶段给控制器留余量：green 140 在 flush 模式下 2469 MHz，稳态 2214 MHz），所以稳态是主模式。两条 stream 的结果由硬件调度决定先跑 GEMM 还是 decode（makespan 约 640 vs 680µs），与主机发射顺序无关。
+- **M4：静态持久化惩罚是我们自己的测量假象**。cobench 的时钟探针（常驻一个 warp）让它所在 SM 保持小的 shared memory carveout（8 次中 7 次），SM 只有空闲时才能改 carveout → 大 smem kernel 实际只有 187 个 SM；188 个 CTA 的静态持久化 grid 有一个 CTA 只能在别的 CTA 退出后启动，它的固定 tile 形成串行尾巴（CTA 187 在 259µs 才开始，makespan 488 vs 388µs）。动态队列能吸收缺失的 SM，所以动态总是正常。修复：探针与主机闸门请求最大 carveout。修复后 persistent/grid：GEMM 4096³ 1.010、GEMM 8192×14336×4096 1.003、decode B64 split-KV 1.016。排除了 TPC 配对、atomic 抖动、分派槽与 barrier、flush/L2 状态、代码生成。ncu 需要管理员权限（`ERR_NVGPUCTRPERM`），改用 smem 缓冲的逐 tile 时间戳（扰动 < 0.5%）。
+  - **回退 / 作废**：P1-S 的所有 persistent 时间与 `c_lib_persistent` 作废；grid @188 基本不受影响（1026 个点中 17 个处在 187/188 SM 的波次边界）；大 smem 配置的 @94/@48 预算点可能少了一个 SM。CoKernel README 里"静态比动态慢 20–30%"同为此假象，已更正。
+  - 独立的真实效应：每个 CTA 分到连续 tile 区间会让 split-head decode 慢 3.95×（失去 K/V 共享）——tile 顺序是编排空间里的一个真实维度。
+- **额外修复：CoKernel scratch 未对齐**。16B 的分派槽让每个角色的 swizzle smem 缓冲偏离 128B 边界 16B，所有 CoKernel 角色慢 1.5–1.7×（GEMM 628 vs 373µs）。把槽补齐到 128B（`SLOT_INTS = 32`）后恢复到 grid 速度（0.999–1.006），P1 CoKernel 从 0.84–0.86× serial 变为 1.20×。**根本修复应在 TileLang 的 smem 合并 pass 里对 cp.async/ldmatrix/swizzle 缓冲强制 ≥128B 对齐**（待办）。
+- 对 3×2 研究的建议：稳态为主模式，报告每个变体的频率与功耗；双流基线取两种发射顺序 × 两种优先级中最好的，并分别在默认与最大 carveout 下评估（carveout 决定两个 kernel 的 CTA 能否共享 SM）；单跑最优 decode（128 个 tile、每个约 330µs）是很差的共置伙伴，lib / derived 列需要 split-KV 变体。
+- 附带（主 agent）：`research/env.sh` 设 `NO_GIT_VERSION=1` 与 `TILELANG_KERNEL_CACHE_USE_LIB_STAMP=1`，kernel 缓存不再因每次 git 提交失效（以 native 库内容哈希为键）；修改 `src/tl_templates` 后需手动清缓存。
+- GPU 环境变化：qzr 的 RL 训练（ray worker，持有 67GB 显存，间歇性满载）从约 00:30 开始，我们只剩约 29GB 显存，测量会被守卫间歇性挡住。
+
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。

@@ -31,6 +31,15 @@ case ":$PATH:" in
   *) export PATH="$MPK_ENV/bin:$PATH" ;;
 esac
 
+# Kernel-cache key: by default tilelang.__version__ embeds the repo's git HEAD, so every
+# research commit invalidated ~/.tilelang/cache (~11 min to recompile the solo sweep).
+# NO_GIT_VERSION drops the hash from the version (version_provider.py); the lib stamp
+# keys the cache on the SHA-256 of libtilelang/libtvm_* instead (tilelang/env.py), so
+# C++ pass changes still invalidate it. NOT covered: edits to src/tl_templates/*.h —
+# after changing a template, clear the cache: rm -rf ~/.tilelang/cache
+export NO_GIT_VERSION=1
+export TILELANG_KERNEL_CACHE_USE_LIB_STAMP=1
+
 # Source-tree tilelang (dev mode: libs come from $CO_TILELANG_ROOT/build).
 case ":${PYTHONPATH:-}:" in
   *":$CO_TILELANG_ROOT:"*) ;;

@@ -155,6 +155,14 @@ S_EXIT, S_EPOCH, S_ERR = 10, 11, 12
 S_SMCTR = 16  # per-SM arrival counters (cta binding), num_sms entries
 N_OUT = 16
 
+# int32 entries of the shared dispatch slot. Only 4 are used, but the slot is padded to 128 B:
+# the merge planner places the slot at offset 0 of the dynamic-smem arena and the role scratch
+# right after it with 16-byte alignment (it forces 1 KB alignment only for TMA/wgmma operands).
+# Swizzled cp.async/ldmatrix buffers whose 128-byte rows start 16 bytes off a 128-byte boundary
+# run ~1.7x slower (GEMM 4096^3 128x256 direct epilogue inside a CoKernel: 628 vs 373 us; with
+# the scratch at 128/256/512/1024 B: 375 us; research/results/2026-09-23_methodology_v1, M4).
+SLOT_INTS = 32
+
 # slot values
 SKIP = 2
 DONE = -1
@@ -391,8 +399,9 @@ def build_cokernel(opA, shapeA, cfgA, opB, shapeB, cfgB, orch: Orch, dev: Device
             scrB = alloc_scratch(rB.scratch)
             # [0..3]: double-buffered (role, tile) broadcast; [0] reused as "last CTA" flag.
             # Dynamic smem: a static __shared__ array would be padded to 1 KB because the
-            # dynamic arena is 1024-byte aligned.
-            slot = T.alloc_shared((4,), "int32")
+            # dynamic arena is 1024-byte aligned. Padded to SLOT_INTS (128 B) so the role
+            # scratch that follows stays 128-byte aligned (see SLOT_INTS).
+            slot = T.alloc_shared((SLOT_INTS,), "int32")
             tx = T.get_thread_binding()
             # thread-0 dispatcher state (registers; only thread 0 uses them)
             my_role = T.alloc_var("int32")
