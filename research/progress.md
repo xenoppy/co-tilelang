@@ -110,6 +110,9 @@
 - 附带（主 agent）：`research/env.sh` 设 `NO_GIT_VERSION=1` 与 `TILELANG_KERNEL_CACHE_USE_LIB_STAMP=1`，kernel 缓存不再因每次 git 提交失效（以 native 库内容哈希为键）；修改 `src/tl_templates` 后需手动清缓存。
 - GPU 环境变化：qzr 的 RL 训练（ray worker，持有 67GB 显存，间歇性满载）从约 00:30 开始，我们只剩约 29GB 显存，测量会被守卫间歇性挡住。
 
+- P1-3x2-A（进行中，02:25 启动）：GEMM × decode 的 solo 与 lib 两行（跨 kernel / kernel 内）。研究点：主点 GEMM 4096³ × decode B16×8192；时长比扫描 GEMM 4096³ × decode B64×8192 / B32×8192 / B32×2048；第二点 GEMM 2048×4096×4096 × decode B32×2048。完成标准：A1 用修复后的探针重测相关形状的预算点并重建 C_lib；A2 跨 kernel 变体（serial、双流取发射顺序 × 优先级最好者、green context 划分扫描）稳态为主、clean flush 为辅；A3 CoKernel SM 级（动态、接手、chunk、SM 划分扫描）、CTA 级（能共驻时的配比扫描）、静态对照；lib 行用两阶段搜索（flush 筛选 + 稳态确认），并量化筛选的保真度；A4 每对的完整表（T_serial、LB、四个格子、T_inter*、频率 / 功耗、获胜配置及其单跑排名）与收益归因；A5 D1 中期读数（不改阈值）；A6 结果目录与脚本。
+- 待办（根因修复）：TileLang smem 合并 pass 应对 cp.async / ldmatrix / swizzle 缓冲强制 ≥128B 对齐（CoKernel 目前靠把分派槽补到 128B 规避）。
+
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
