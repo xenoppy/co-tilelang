@@ -110,7 +110,30 @@
 - 附带（主 agent）：`research/env.sh` 设 `NO_GIT_VERSION=1` 与 `TILELANG_KERNEL_CACHE_USE_LIB_STAMP=1`，kernel 缓存不再因每次 git 提交失效（以 native 库内容哈希为键）；修改 `src/tl_templates` 后需手动清缓存。
 - GPU 环境变化：qzr 的 RL 训练（ray worker，持有 67GB 显存，间歇性满载）从约 00:30 开始，我们只剩约 29GB 显存，测量会被守卫间歇性挡住。
 
-- P1-3x2-A（进行中，02:25 启动）：GEMM × decode 的 solo 与 lib 两行（跨 kernel / kernel 内）。研究点：主点 GEMM 4096³ × decode B16×8192；时长比扫描 GEMM 4096³ × decode B64×8192 / B32×8192 / B32×2048；第二点 GEMM 2048×4096×4096 × decode B32×2048。完成标准：A1 用修复后的探针重测相关形状的预算点并重建 C_lib；A2 跨 kernel 变体（serial、双流取发射顺序 × 优先级最好者、green context 划分扫描）稳态为主、clean flush 为辅；A3 CoKernel SM 级（动态、接手、chunk、SM 划分扫描）、CTA 级（能共驻时的配比扫描）、静态对照；lib 行用两阶段搜索（flush 筛选 + 稳态确认），并量化筛选的保真度；A4 每对的完整表（T_serial、LB、四个格子、T_inter*、频率 / 功耗、获胜配置及其单跑排名）与收益归因；A5 D1 中期读数（不改阈值）；A6 结果目录与脚本。
+**P1-3x2-A：GEMM × decode 的 solo / lib 两行：已完成（05:00 验收：主 agent 独立重跑主研究对的 F 阶段，各变体加速比与原结果相差 ≤0.6%，排序不变，T_inter*/T[lib,intra] 0.993 vs 0.994）**，结果 `research/results/2026-09-23_p1_3x2_A/`。
+- 完成标准（原文）：A1 用修复后的探针重测相关形状的预算点并重建 C_lib；A2 跨 kernel 变体（serial、双流取发射顺序 × 优先级最好者、green context 划分扫描）稳态为主、clean flush 为辅；A3 CoKernel SM 级（动态、接手、chunk、SM 划分扫描）、CTA 级（能共驻时的配比扫描）、静态对照；lib 行用两阶段搜索（flush 筛选 + 稳态确认），并量化筛选的保真度；A4 每对的完整表（T_serial、LB、四个格子、T_inter*、频率 / 功耗、获胜配置及其单跑排名）与收益归因；A5 D1 中期读数（不改阈值）；A6 结果目录与脚本。
+- **结论是否定的**：kernel 内编排在 lib 层面没有超过最好的跨 kernel 共置。稳态下（相对同次测量的 serial）：
+
+| 研究对 | T_serial µs | T[solo,inter] | T[lib,inter] | T[solo,intra] | T[lib,intra] | T_inter*/T[lib,intra] |
+|---|---|---|---|---|---|---|
+| main GEMM 4096³ × B16×8192 | 725.9 | 1.224 | 1.238 | 1.225 | 1.230 | 0.994 |
+| GEMM 4096³ × B64×8192 | 1710.9 | 1.171 | 1.187 | 1.192 | 1.192 | 1.004 |
+| GEMM 4096³ × B32×8192 | 1061.6 | 1.331 | 1.331 | 1.349 | 1.349 | 1.013 |
+| GEMM 4096³ × B32×2048 | 574.2 | 1.133 | 1.137 | 1.131 | 1.131 | 0.995 |
+| GEMM 2048×4096² × B32×2048 | 375.0 | 1.188 | 1.197 | 1.171 | 1.182 | 0.987 |
+
+- 从 C_lib 挑选相对 solo-best 只值 ≤1.4%（inter）/ ≤0.9%（intra），两列之间没有交互。D1 弱化主张的条件（T_inter*/T[lib,intra] ≥ 1.10 在 ≥2 对上）在 0/5 对上成立；完整主张需要 derived 行比 T[lib,intra] 再快 8.7–11.4%。
+- **归因**：4/5 对受功耗墙约束——所有共置变体都跑在 600W，时间 ≈ 每轮能耗 / 600W；共置降低能耗的原因是静态功耗只付一次、DRAM 受限的 decode 在更低频率下运行，**是"重叠"本身而不是编排方式**，各机制之间能耗差 < 2%。r029 受 DRAM 约束（高于 DRAM 下界 4.8%）。时间与频率并不一致（lib-inter 获胜者频率最低 1836 MHz 但时间最好），以时间为准。
+- LB_power 不是有效下界：共置比两者单跑能耗之和少 7–16%（空闲但有时钟的静态功耗约 143W 只付一次、decode 降频）；有效的功耗下界需要"能耗随频率 / 电压变化"的模型。
+- 其他：两条 stream 1.05–1.15×；静态调度比动态慢 0.3–2.9%；CTA 级绑定需要小 tile（单跑慢 6–19%），只在第二对上以"部分共驻"获胜；两角色 CoKernel 丢失 warp specialization（第二对 +2.6%）；carveout 对共驻无影响，只有 decode 优先级更高时才共驻。
+- 筛选保真度：flush 筛选与稳态的 Spearman 0.77–0.99，稳态获胜者总在筛选前 8 名内，但前 8 名之内（功耗受限对）相关性约为 0，且 flush 会把最优划分推向更多 GEMM SM。
+- **TileLang bug 根因修复**：NVRTC / CuTeDSL 后端用 `str(target).startswith("cuda")` 选择 stream，而 `str(Target)` 现在是 JSON，导致所有启动都跑在 legacy 默认流上（`tilelang/jit/adapter/{nvrtc,cutedsl}/adapter.py`）。我们的默认后端（tvm_ffi）不受影响，之前的数据有效。
+- qzr 的训练进程会增长到 91–95GB，第一次 A1 运行因 OOM 失败；脚本现在同时等待 GPU 空闲与显存足够。我们的 1–5GB 也可能让对方 OOM——需要协调（应告知用户）。
+
+**主 agent 的判断（04:55）**
+- 在本平台（600W 功耗墙）上，对这些大尺寸的计算 × 访存对，"用什么机制共置"几乎不影响结果；收益来自重叠本身。这与 proposal §1.2 假设的主导效应（SM 内容量、波次、资源耦合）不同，功耗是第一位的。
+- 但所有 green context 结果都用的是事后挑出的最优划分（oracle）。冒烟测试中，在同一个非最优划分下 CoKernel + 接手为 1.13×，green context 为 0.91×。**kernel 内 tile 级动态调度 + 接手的价值可能在于不需要 oracle 就接近最优**（对划分选择不敏感、能适应变化的负载），这是 green context 做不到、而 mKernel 类工作在别的场景做过的。这需要数据验证，而不是假设。
+- 下一步（一个功能）：P1-3x2-B = 针对性的 derived 行 + 无 oracle 鲁棒性读数，然后用同一流程做 P2（GEMM × RMSNorm）与 P4（prefill × decode），在 P1–P4 的证据上做 D1 决策。
 - 待办（根因修复）：TileLang smem 合并 pass 应对 cp.async / ldmatrix / swizzle 缓冲强制 ≥128B 对齐（CoKernel 目前靠把分派槽补到 128B 规避）。
 
 **关注的问题**

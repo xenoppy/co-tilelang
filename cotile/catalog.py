@@ -41,6 +41,7 @@ from typing import Any, Iterable
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_DIR = os.path.join(REPO, "research", "results", "2026-09-22_solo_profile")
 FULL_SMS = 188
+C_LIB_BUDGETS = (94, 48)  # SM budgets whose budget-best config joins C_lib (1/2, ~1/4 GPU)
 POWER_CAP_W = 600.0
 SCHEMA = 1
 
@@ -310,7 +311,9 @@ class Entry:
         for c in self.pareto(build):
             why.setdefault(c.tag, []).append("pareto")
         for sms in self.budgets:
-            if sms == FULL_SMS:
+            # budget-best only at the definition's budgets (1/2 and ~1/4 of the GPU); other
+            # measured budgets (e.g. the green-split grid of the P1 study) do not add members
+            if sms == FULL_SMS or sms not in C_LIB_BUDGETS:
                 continue
             b = self.budget_best(sms, "grid")
             if b is not None:

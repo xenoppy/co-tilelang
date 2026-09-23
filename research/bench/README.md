@@ -8,7 +8,9 @@ research/bench/
              variants.py (Par, Rotation)  guard.py (pmon GPU guard)  clock.py (ClockProbe)
              nvml.py  green.py  smid.py  kernels.py  cudrv.py
   scripts/   smid_probe.py, repro_matmul.py (P0-2); solo_*.py (P1-S);
-             mv1_flush.py, mv1_steady.py, mv1_static.py, sched_variants.py, mv1_common.py (methodology v1)
+             mv1_flush.py, mv1_steady.py, mv1_static.py, sched_variants.py, mv1_common.py (methodology v1);
+             p1_common.py, p1_solo_v1.py, p1_study.py, p1_carveout.py, p1_report.py (P1 3x2 study, part A:
+             research/results/2026-09-23_p1_3x2_A)
   tests/test_cobench.py   acceptance tests (P0-2 + methodology v1)
 ```
 Environment: `source research/env.sh`, then `sys.path.insert(0, "research/bench"); import cobench as cb`. Tests: `python research/bench/tests/test_cobench.py [filter...]` (or `python -m pytest research/bench/tests/test_cobench.py`).

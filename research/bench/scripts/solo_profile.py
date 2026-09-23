@@ -515,16 +515,19 @@ class FlushMeter:
         self.i = 0
         self.F.synchronize()
 
-    # "write": cobench's flush (fill 2xL2, leaves dirty lines); "read": read 2xL2 (does NOT fully
-    # evict on this GPU: small working sets stay partly L2-resident); "write+read": write then
-    # read the same 2xL2 buffer (evicts, then the dirty lines are cleaned before the op starts)
+    # "write": the P1-S protocol (fill 2xL2, leaves dirty lines); "clean": cobench's
+    # methodology-v1 default (write + discard.global.L2: evicted and clean); "read": read 2xL2
+    # (does NOT fully evict on this GPU: small working sets stay partly L2-resident);
+    # "write+read": write then read the same 2xL2 buffer (evicts; about half the L2 stays dirty,
+    # research/results/2026-09-23_methodology_v1 §M1). The kind is passed to cobench explicitly:
+    # cobench's default changed from "write" to "clean" in methodology v1.
     flush_kind = "write"
 
     def _rep(self, fn, S, e0, e1, gated: bool):
         F = self.F
         with torch.cuda.stream(F):
-            if self.flush_kind in ("write", "write+read"):
-                cbt._flush(self.buf, self.i)
+            if self.flush_kind in ("write", "clean", "write+read"):
+                cbt._flush(self.buf, self.i, "write" if self.flush_kind == "write+read" else self.flush_kind)
             if self.flush_kind in ("read", "write+read"):
                 self._rd = self.buf.amax()
             self.i += 1

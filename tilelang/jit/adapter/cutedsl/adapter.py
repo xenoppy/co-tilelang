@@ -16,6 +16,7 @@ from tilelang.jit.adapter.cutedsl.libgen import CuTeDSLLibraryGenerator
 from tilelang.utils.language import retrieve_func_from_module
 from tilelang.backend.target import determine_target
 from tilelang.jit.adapter.base import BaseKernelAdapter, CachedTextSource
+from tilelang.jit.adapter.utils import is_cuda_target
 
 logger = logging.getLogger(__name__)
 
@@ -450,7 +451,8 @@ class CuTeDSLKernelAdapter(BaseKernelAdapter):
 
         # if stream is not None, we need to pass the stream to the library
         if stream is None:
-            if str(self.target).startswith("cuda") and torch.cuda.is_available():
+            # str(Target) is a JSON dict ({"kind":"cuda",...}), so compare the kind name
+            if is_cuda_target(self.target) and torch.cuda.is_available():
                 stream = torch.cuda.current_stream().cuda_stream
             else:
                 stream = 0

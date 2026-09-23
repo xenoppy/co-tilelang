@@ -1,0 +1,1971 @@
+{
+ "rates": {
+  "tflops": 361.19669252319255,
+  "tflops_at": "gemm:M4096_N4096_K4096:ref:cublas_fp32red",
+  "gbps": 1642.32138558593,
+  "gbps_at": "gqa_decode:B128_S32768:n64_h4_sp1_t128_s2|grid"
+ },
+ "pairs": {
+  "main": {
+   "pair": "main",
+   "A": "M4096_N4096_K4096",
+   "B": "B16_S8192",
+   "T_serial": 725.9206993635311,
+   "serial": {
+    "clock_mhz": 2653.4162150066604,
+    "power_w": 580.4638163265307
+   },
+   "solo_a": {
+    "t_iter_us": 430.0107792071051,
+    "clock_mhz": 2258.5956288581074,
+    "power_w": 600.0305510204081
+   },
+   "solo_b": {
+    "t_iter_us": 330.77153929250744,
+    "clock_mhz": 2820.5202491648633,
+    "power_w": 441.526306122449
+   },
+   "LB": {
+    "tc": 386.45546874999997,
+    "dram": 388.3505126327352,
+    "power": 673.439901177686,
+    "LB": 673.439901177686,
+    "binding": "power",
+    "E_A_uJ": 258019.6047923543,
+    "E_B_uJ": 146044.3359142573,
+    "power_dyn": 646.0279258477267
+   },
+   "speedup_bound": 1.0779294456625879,
+   "cells": {
+    "lib_inter": {
+     "variant": "gr_l_156",
+     "selected_in": "I2",
+     "T": 586.3808371803977,
+     "speedup": 1.2379679780364385,
+     "paired": [
+      1.2379679780364385,
+      1.2352241177462127,
+      1.2416621501708072
+     ],
+     "clock_mhz": 1835.720054890968,
+     "power_w": 600.0024897959183,
+     "kcycles": 1076.4310626158117,
+     "ops": {
+      "a": 583.0079913139343,
+      "b": 483.0720126628876
+     },
+     "knobs": "green 156/32",
+     "flush_T": 537.2160077095032,
+     "flush_speedup": 1.361567732968497,
+     "flush_clock_mhz": 2248.442990830022,
+     "cfg_a": {
+      "tag": "128x128x64_s2_t256_k1_wsauto_smem_g8",
+      "flush_rank": 3,
+      "n_configs": 43,
+      "solo_slowdown": 0.020675040057890115,
+      "steady_us": 444.09344464364136
+     },
+     "cfg_b": {
+      "tag": "n32_h4_sp1_t64_s2",
+      "flush_rank": 7,
+      "n_configs": 36,
+      "solo_slowdown": 0.005913929578746258,
+      "steady_us": null
+     }
+    },
+    "solo_inter": {
+     "variant": "gr_s_148",
+     "selected_in": "I2",
+     "T": 593.197935565388,
+     "speedup": 1.2237411087272962,
+     "paired": [
+      1.2237411087272962,
+      1.2194808444109764,
+      1.2265543715165683
+     ],
+     "clock_mhz": 2174.5131880305803,
+     "power_w": 600.0374081632652,
+     "kcycles": 1289.9167339994506,
+     "ops": {
+      "a": 591.4880037307739,
+      "b": 505.5999755859375
+     },
+     "knobs": "green 148/40",
+     "flush_T": 549.2799878120422,
+     "flush_speedup": 1.331663264567562,
+     "flush_clock_mhz": 2391.082331022987,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n128_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 330.8200804655217
+     }
+    },
+    "solo_streams": {
+     "variant": "st_eq_ab",
+     "selected_in": "I2",
+     "T": 643.3952808073084,
+     "speedup": 1.128265501812001,
+     "paired": [
+      1.128265501812001,
+      1.1267143983260175,
+      1.1290029042717662
+     ],
+     "clock_mhz": 2465.248881081084,
+     "power_w": 599.9579591836736,
+     "kcycles": 1586.129496103067,
+     "ops": {
+      "a": 454.6560049057007,
+      "b": 640.2879953384399
+     },
+     "knobs": "streams prio=eq order=ab",
+     "flush_T": 681.3919842243195,
+     "flush_speedup": 1.0734731236442223,
+     "flush_clock_mhz": 2697.669550625513,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n128_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 330.8200804655217
+     }
+    },
+    "lib_intra": {
+     "variant": "co_sm_dynT_c1-1_a0b3_n124",
+     "selected_in": "C4",
+     "T": 590.021388560235,
+     "speedup": 1.2303294650638283,
+     "paired": [
+      1.2303294650638283,
+      1.226935800182534,
+      1.233408763001723
+     ],
+     "clock_mhz": 2183.451958179553,
+     "power_w": 600.0199795918368,
+     "kcycles": 1288.283356219664,
+     "ops": null,
+     "knobs": "SM-bind dyn 124/64 +takeover chunk 1/1",
+     "flush_T": 548.8640069961548,
+     "flush_speedup": 1.3326725243554534,
+     "flush_clock_mhz": 2484.9437989854196,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t64_s1",
+      "flush_rank": 4,
+      "n_configs": 36,
+      "solo_slowdown": 0.004943438570951919,
+      "steady_us": 332.4606445041834
+     },
+     "timing_build": {
+      "T": 591.6066367245285,
+      "overhead": 0.0026867638953933515,
+      "roles": {
+       "T_A_us": 585.552,
+       "T_B_us": 464.0,
+       "makespan_us": 585.625,
+       "exit_us": 587.008,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 128.0,
+       "ctas_A": 124.0,
+       "ctas_B": 64.0,
+       "n": 24
+      }
+     }
+    },
+    "solo_intra": {
+     "variant": "co_sm_dyn_c1-1_a0b0_n140",
+     "selected_in": "C3",
+     "T": 592.4750052357172,
+     "speedup": 1.2252343017824394,
+     "paired": [
+      1.2252343017824394,
+      1.2226811183930326,
+      1.2283699473742244
+     ],
+     "clock_mhz": 2182.5711910965815,
+     "power_w": 600.0049591836735,
+     "kcycles": 1293.1188778722726,
+     "ops": null,
+     "knobs": "SM-bind dyn 140/48 chunk 1/1",
+     "flush_T": 546.8159914016724,
+     "flush_speedup": 1.3376638453027834,
+     "flush_clock_mhz": 2433.2881609091182,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n128_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 330.8200804655217
+     },
+     "timing_build": {
+      "T": 591.5123631022232,
+      "overhead": -0.0016247810033961363,
+      "roles": {
+       "T_A_us": 584.2719999999999,
+       "T_B_us": 461.24800000000005,
+       "makespan_us": 584.0,
+       "exit_us": 585.312,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 128.0,
+       "ctas_A": 140.0,
+       "ctas_B": 48.0,
+       "n": 24
+      }
+     }
+    },
+    "static": {
+     "variant": "co_sm_staticT_c1-1_a0b3_n124",
+     "selected_in": "C3",
+     "T": 596.3331301011851,
+     "speedup": 1.2173073450411143,
+     "paired": [
+      1.2173073450411143,
+      1.2155653974734912,
+      1.2207911968476577
+     ],
+     "clock_mhz": 2209.0814183007674,
+     "power_w": 599.9953265306123,
+     "kcycles": 1317.348436823662,
+     "ops": null,
+     "knobs": "SM-bind static 124/64 +takeover",
+     "flush_T": 538.6239886283875,
+     "flush_speedup": 1.3580085498866776,
+     "flush_clock_mhz": 2481.2749825441415,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t64_s1",
+      "flush_rank": 4,
+      "n_configs": 36,
+      "solo_slowdown": 0.004943438570951919,
+      "steady_us": 332.4606445041834
+     }
+    },
+    "cta": {
+     "variant": "co_cta_dynT_c1-1_a3b2_g376",
+     "selected_in": "C4",
+     "T": 616.8168272080795,
+     "speedup": 1.1768821266587235,
+     "paired": [
+      1.1764885248974175,
+      1.175014185907979,
+      1.1785881616191498
+     ],
+     "clock_mhz": 1894.874628277349,
+     "power_w": 599.9969795918367,
+     "kcycles": 1168.7905561711236,
+     "ops": null,
+     "knobs": "CTA-bind 376 CTAs (GEMM CTA on 188 SMs, decode CTA beside it on 188) +takeover chunk 1/1",
+     "flush_T": 570.9280073642731,
+     "flush_speedup": 1.28117025666376,
+     "flush_clock_mhz": 2310.075508988561,
+     "cfg_a": {
+      "tag": "128x128x32_s3_t128_k1_wsoff_smem_g8",
+      "flush_rank": 5,
+      "n_configs": 43,
+      "solo_slowdown": 0.0732930170052204,
+      "steady_us": 465.6094594737927
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.004640160131016202,
+      "steady_us": 331.9141731662866
+     }
+    }
+   },
+   "flush_serial": 731.4559817314148,
+   "energy_mJ_per_iter": {
+    "serial": 421.3706995029794,
+    "solo_a": 258.0196047923543,
+    "solo_b": 146.0443359142573,
+    "gr_s_148": 355.940951784455,
+    "gr_l_156": 351.8299622768537,
+    "st_eq_ab": 386.0101196215593,
+    "co_sm_dynT_c1-1_a0b3_n124": 354.0246215226594,
+    "co_sm_dyn_c1-1_a0b0_n140": 355.4879413338032,
+    "co_sm_staticT_c1-1_a0b3_n124": 357.7970911160827,
+    "co_cta_dynT_c1-1_a3b2_g376": 370.0882332862676,
+    "co_sm_dyn_c1-1_a0b0_n140_tm": 354.9093493302746,
+    "co_sm_dynT_c1-1_a0b3_n124_tm": 354.96013055477596
+   },
+   "T": {
+    "solo_inter": 593.197935565388,
+    "lib_inter": 586.3808371803977,
+    "solo_intra": 592.4750052357172,
+    "lib_intra": 590.021388560235
+   },
+   "T_inter_star": 586.3808371803977,
+   "D1_inter_over_lib_intra": 0.9938297976134037,
+   "inter_star_over_solo_intra": 0.9897140503793999,
+   "lib_gain_inter": 1.011625718223962,
+   "lib_gain_intra": 1.0041585215774456,
+   "fidelity": {
+    "n": 14,
+    "spearman": 0.7714285714285714,
+    "kendall": 0.6263736263736264,
+    "steady_winner": "co_sm_dynT_c1-1_a0b3_n124",
+    "winner_screen_rank": 7,
+    "winner_in_topk": true,
+    "screen_top1": "co_sm_dynT_c1-1_a0b1_n148",
+    "regret_of_screen_top1": 0.012625723253985255,
+    "spearman_topk": -0.2380952380952381
+   },
+   "cta_feasible": [
+    "a3b2",
+    "a3b3",
+    "a3b5",
+    "a3b6",
+    "a5b2",
+    "a5b3",
+    "a5b5",
+    "a5b6",
+    "a6b2",
+    "a6b3",
+    "a6b5",
+    "a6b6",
+    "a7b2",
+    "a7b3",
+    "a7b5",
+    "a7b6",
+    "a8b2",
+    "a8b3",
+    "a8b5",
+    "a8b6",
+    "a9b2",
+    "a9b3",
+    "a9b5",
+    "a9b6"
+   ],
+   "cta_solo_feasible": false,
+   "stage_wall_s": {
+    "I1": 21.437782049179077,
+    "I2": 143.57337045669556,
+    "I3": 139.5803143978119,
+    "C1": 86.23839402198792,
+    "C2": 79.14921545982361,
+    "C3": 148.70177674293518,
+    "F": 132.44531416893005,
+    "C4": 106.62862944602966,
+    "P": 96.11148881912231,
+    "K": 179.72931456565857
+   }
+  },
+  "r029": {
+   "pair": "r029",
+   "A": "M4096_N4096_K4096",
+   "B": "B64_S8192",
+   "T_serial": 1710.907661751525,
+   "serial": {
+    "clock_mhz": 2754.0616895272624,
+    "power_w": 505.8614166666667
+   },
+   "solo_a": {
+    "t_iter_us": 427.6340675435549,
+    "clock_mhz": 2268.6078506037775,
+    "power_w": 600.0458400000001
+   },
+   "solo_b": {
+    "t_iter_us": 1306.9929534313726,
+    "clock_mhz": 2819.1191173729917,
+    "power_w": 450.1935102040816
+   },
+   "LB": {
+    "tc": 404.291875,
+    "dram": 1369.522153057488,
+    "power": 1408.3329813150976,
+    "LB": 1408.3329813150976,
+    "binding": "power",
+    "E_A_uJ": 256600.0432717892,
+    "E_B_uJ": 588399.7455172694,
+    "power_dyn": 1305.927249487217
+   },
+   "speedup_bound": 1.2148459806386724,
+   "cells": {
+    "lib_inter": {
+     "variant": "gr_l_148",
+     "selected_in": "I3",
+     "T": 1441.3699279257476,
+     "speedup": 1.1870010804330189,
+     "paired": [
+      1.1870010804330189,
+      1.186559144824045,
+      1.1872070227893803
+     ],
+     "clock_mhz": 2628.962980152141,
+     "power_w": 545.6289795918367,
+     "kcycles": 3789.30818122135,
+     "ops": {
+      "a": 572.1279978752136,
+      "b": 1437.600016593933
+     },
+     "knobs": "green 148/40",
+     "flush_T": 1443.4560537338257,
+     "flush_speedup": 1.1895007237425803,
+     "flush_clock_mhz": 2621.059371079714,
+     "cfg_a": {
+      "tag": "128x128x64_s2_t256_k1_wsauto_smem_g8",
+      "flush_rank": 3,
+      "n_configs": 43,
+      "solo_slowdown": 0.020675040057890115,
+      "steady_us": 444.09344464364136
+     },
+     "cfg_b": {
+      "tag": "n128_h4_sp1_t128_s1",
+      "flush_rank": 8,
+      "n_configs": 36,
+      "solo_slowdown": 0.0015318627450979783,
+      "steady_us": null
+     }
+    },
+    "solo_inter": {
+     "variant": "gr_s_80",
+     "selected_in": "I3",
+     "T": 1461.5119800233003,
+     "speedup": 1.1706422425112442,
+     "paired": [
+      1.1706407753624235,
+      1.1701639597063203,
+      1.1707075056633722
+     ],
+     "clock_mhz": 2804.3636902752387,
+     "power_w": 600.2702040816326,
+     "kcycles": 4098.611129679613,
+     "ops": {
+      "a": 1364.3519878387451,
+      "b": 1458.5280418395996
+     },
+     "knobs": "green 80/108",
+     "flush_T": 1463.5519981384277,
+     "flush_speedup": 1.1731677608933138,
+     "flush_clock_mhz": 2802.561025704251,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 1306.882837499149
+     }
+    },
+    "solo_streams": {
+     "variant": "st_eq_ab",
+     "selected_in": "I2",
+     "T": 1627.4162068817436,
+     "speedup": 1.0513030744788745,
+     "paired": [
+      1.0512880084013745,
+      1.0512223615845457,
+      1.0513828354021935
+     ],
+     "clock_mhz": 2718.7681055391786,
+     "power_w": 515.2215510204081,
+     "kcycles": 4424.567277707633,
+     "ops": {
+      "a": 480.51199316978455,
+      "b": 1623.7759590148926
+     },
+     "knobs": "streams prio=eq order=ab",
+     "flush_T": 1628.607988357544,
+     "flush_speedup": 1.0542696786957224,
+     "flush_clock_mhz": 2727.4352039575406,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 1306.882837499149
+     }
+    },
+    "lib_intra": {
+     "variant": "co_sm_dynT_c1-4_a0b0_n128",
+     "selected_in": "C3",
+     "T": 1435.804720075435,
+     "speedup": 1.191601920393211,
+     "paired": [
+      1.1915458181853347,
+      1.1911071367398776,
+      1.191753465553706
+     ],
+     "clock_mhz": 2668.263206336448,
+     "power_w": 552.3543469387755,
+     "kcycles": 3831.1049060614864,
+     "ops": null,
+     "knobs": "SM-bind dyn 128/60 +takeover chunk 1/4",
+     "flush_T": 1435.647964477539,
+     "flush_speedup": 1.195970086741872,
+     "flush_clock_mhz": 2656.2550034649794,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 1306.882837499149
+     },
+     "timing_build": {
+      "T": 1435.6768816366964,
+      "overhead": -8.903609031996051e-05,
+      "roles": {
+       "T_A_us": 533.712,
+       "T_B_us": 1430.592,
+       "makespan_us": 1430.625,
+       "exit_us": 1431.5839999999998,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 512.0,
+       "ctas_A": 128.0,
+       "ctas_B": 60.0,
+       "n": 24
+      }
+     }
+    },
+    "cta": {
+     "variant": "co_cta_dynT_c1-1_a5b0_g282",
+     "selected_in": "C4",
+     "T": 1443.9834859329842,
+     "speedup": 1.1848526513072108,
+     "paired": [
+      1.1847619749806642,
+      1.1843526547709051,
+      1.1850008447192881
+     ],
+     "clock_mhz": 2679.515573148707,
+     "power_w": 592.5212040816326,
+     "kcycles": 3869.176237926988,
+     "ops": null,
+     "knobs": "CTA-bind 282 CTAs (GEMM CTA on 188 SMs, decode CTA beside it on 94) +takeover chunk 1/1",
+     "flush_T": 1442.4959421157837,
+     "flush_speedup": 1.1902924441427498,
+     "flush_clock_mhz": 2676.6999340024854,
+     "cfg_a": {
+      "tag": "128x64x64_s2_t128_k1_wsoff_smem_g8",
+      "flush_rank": 16,
+      "n_configs": 43,
+      "solo_slowdown": 0.1895642735307801,
+      "steady_us": null
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 1306.882837499149
+     }
+    },
+    "solo_intra": {
+     "variant": "co_sm_dynT_c1-4_a0b0_n128",
+     "selected_in": "C3",
+     "T": 1435.804720075435,
+     "speedup": 1.191601920393211,
+     "paired": [
+      1.1915458181853347,
+      1.1911071367398776,
+      1.191753465553706
+     ],
+     "clock_mhz": 2668.263206336448,
+     "power_w": 552.3543469387755,
+     "kcycles": 3831.1049060614864,
+     "ops": null,
+     "knobs": "SM-bind dyn 128/60 +takeover chunk 1/4",
+     "flush_T": 1435.647964477539,
+     "flush_speedup": 1.195970086741872,
+     "flush_clock_mhz": 2656.2550034649794,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 1306.882837499149
+     },
+     "timing_build": {
+      "T": 1435.6768816366964,
+      "overhead": -8.903609031996051e-05,
+      "roles": {
+       "T_A_us": 533.712,
+       "T_B_us": 1430.592,
+       "makespan_us": 1430.625,
+       "exit_us": 1431.5839999999998,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 512.0,
+       "ctas_A": 128.0,
+       "ctas_B": 60.0,
+       "n": 24
+      }
+     }
+    },
+    "static": {
+     "variant": "co_sm_staticT_c1-1_a5b3_n148",
+     "selected_in": "C3",
+     "T": 1442.6188503336941,
+     "speedup": 1.1859734547041116,
+     "paired": [
+      1.1859892030599786,
+      1.1854713197508309,
+      1.186088949310037
+     ],
+     "clock_mhz": 2703.0412053347486,
+     "power_w": 592.816551020408,
+     "kcycles": 3899.4581960446176,
+     "ops": null,
+     "knobs": "SM-bind static 148/40 +takeover",
+     "flush_T": 1441.9360160827637,
+     "flush_speedup": 1.190754653088881,
+     "flush_clock_mhz": 2705.2146239487865,
+     "cfg_a": {
+      "tag": "128x64x64_s2_t128_k1_wsoff_smem_g8",
+      "flush_rank": 16,
+      "n_configs": 43,
+      "solo_slowdown": 0.1895642735307801,
+      "steady_us": null
+     },
+     "cfg_b": {
+      "tag": "n128_h4_sp1_t128_s1",
+      "flush_rank": 8,
+      "n_configs": 36,
+      "solo_slowdown": 0.0015318627450979783,
+      "steady_us": null
+     }
+    }
+   },
+   "flush_serial": 1716.9920206069946,
+   "energy_mJ_per_iter": {
+    "serial": 865.4821735594805,
+    "solo_a": 256.6000432717892,
+    "solo_b": 588.3997455172694,
+    "gr_s_80": 877.3020945163375,
+    "gr_l_148": 786.4532029884849,
+    "st_eq_ab": 838.4799022653614,
+    "co_sm_dynT_c1-4_a0b0_n128": 793.0729784888782,
+    "co_cta_dynT_c1-1_a5b0_g282": 855.590833759005,
+    "co_sm_staticT_c1-1_a5b3_n148": 855.2083312918468,
+    "co_sm_dynT_c1-4_a0b0_n128_tm": 794.3159521191762
+   },
+   "T": {
+    "solo_inter": 1461.5119800233003,
+    "lib_inter": 1441.3699279257476,
+    "solo_intra": 1435.804720075435,
+    "lib_intra": 1435.804720075435
+   },
+   "T_inter_star": 1441.3699279257476,
+   "D1_inter_over_lib_intra": 1.0038760200273058,
+   "inter_star_over_solo_intra": 1.0038760200273058,
+   "lib_gain_inter": 1.0139742419397766,
+   "lib_gain_intra": 1.0,
+   "fidelity": {
+    "n": 14,
+    "spearman": 0.9296703296703297,
+    "kendall": 0.8681318681318682,
+    "steady_winner": "co_sm_dynT_c1-1_a5b3_n148",
+    "winner_screen_rank": 1,
+    "winner_in_topk": true,
+    "screen_top1": "co_sm_dynT_c1-1_a5b3_n148",
+    "regret_of_screen_top1": 0.0,
+    "spearman_topk": 0.6190476190476191
+   },
+   "cta_feasible": [
+    "a3b0",
+    "a3b1",
+    "a3b2",
+    "a3b4",
+    "a5b0",
+    "a5b1",
+    "a5b2",
+    "a5b4",
+    "a6b0",
+    "a6b1",
+    "a6b2",
+    "a6b4",
+    "a7b0",
+    "a7b1",
+    "a7b2",
+    "a7b4",
+    "a8b0",
+    "a8b1",
+    "a8b2",
+    "a8b4",
+    "a9b0",
+    "a9b1",
+    "a9b2",
+    "a9b4"
+   ],
+   "cta_solo_feasible": false,
+   "stage_wall_s": {
+    "I1": 23.45220637321472,
+    "I2": 141.98518228530884,
+    "I3": 98.80895853042603,
+    "C1": 109.09870934486389,
+    "C2": 76.95858454704285,
+    "C3": 128.0594129562378,
+    "C4": 74.43187236785889,
+    "F": 121.35621762275696
+   }
+  },
+  "r058": {
+   "pair": "r058",
+   "A": "M4096_N4096_K4096",
+   "B": "B32_S8192",
+   "T_serial": 1061.6433696382364,
+   "serial": {
+    "clock_mhz": 2704.571316835545,
+    "power_w": 542.9506938775511
+   },
+   "solo_a": {
+    "t_iter_us": 430.9571731922238,
+    "clock_mhz": 2251.8015394592057,
+    "power_w": 600.037081632653
+   },
+   "solo_b": {
+    "t_iter_us": 655.9787304110032,
+    "clock_mhz": 2817.583846602811,
+    "power_w": 453.9693469387755
+   },
+   "LB": {
+    "tc": 392.4009375,
+    "dram": 715.4077261076528,
+    "power": 927.3075339355498,
+    "LB": 927.3075339355498,
+    "binding": "power",
+    "E_A_uJ": 258590.28451091977,
+    "E_B_uJ": 297794.2358504102,
+    "power_dyn": 877.2089785547898
+   },
+   "speedup_bound": 1.1448665418823432,
+   "cells": {
+    "lib_inter": {
+     "variant": "gr_s_142",
+     "selected_in": "I3",
+     "T": 797.3875931005158,
+     "speedup": 1.331401916488572,
+     "paired": [
+      1.3314503949121537,
+      1.3303475220490775,
+      1.3316022957429174
+     ],
+     "clock_mhz": 2375.0997983515626,
+     "power_w": 600.6382857142856,
+     "kcycles": 1893.8751115810728,
+     "ops": {
+      "a": 603.3599972724915,
+      "b": 793.503999710083
+     },
+     "knobs": "green 142/46",
+     "flush_T": 795.663982629776,
+     "flush_speedup": 1.3423354879099236,
+     "flush_clock_mhz": 2530.577299231528,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 656.1388693220629
+     }
+    },
+    "solo_inter": {
+     "variant": "gr_s_142",
+     "selected_in": "I3",
+     "T": 797.3875931005158,
+     "speedup": 1.331401916488572,
+     "paired": [
+      1.3314503949121537,
+      1.3303475220490775,
+      1.3316022957429174
+     ],
+     "clock_mhz": 2375.0997983515626,
+     "power_w": 600.6382857142856,
+     "kcycles": 1893.8751115810728,
+     "ops": {
+      "a": 603.3599972724915,
+      "b": 793.503999710083
+     },
+     "knobs": "green 142/46",
+     "flush_T": 795.663982629776,
+     "flush_speedup": 1.3423354879099236,
+     "flush_clock_mhz": 2530.577299231528,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 656.1388693220629
+     }
+    },
+    "solo_streams": {
+     "variant": "st_eq_ab",
+     "selected_in": "I2",
+     "T": 966.8453492980072,
+     "speedup": 1.0980487938521488,
+     "paired": [
+      1.0978860668191979,
+      1.097491026441836,
+      1.0980487938521488
+     ],
+     "clock_mhz": 2652.062843944561,
+     "power_w": 565.1745918367347,
+     "kcycles": 2564.1346267138456,
+     "ops": {
+      "a": 454.0480077266693,
+      "b": 964.4799828529358
+     },
+     "knobs": "streams prio=eq order=ab",
+     "flush_T": 974.1279780864716,
+     "flush_speedup": 1.0964144592517644,
+     "flush_clock_mhz": 2656.4703068610706,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 656.1388693220629
+     }
+    },
+    "lib_intra": {
+     "variant": "co_sm_dynT_c1-1_a0b0_n128",
+     "selected_in": "C4",
+     "T": 786.923460281336,
+     "speedup": 1.3491062641069111,
+     "paired": [
+      1.348606527385115,
+      1.3484065934186686,
+      1.3491062641069111
+     ],
+     "clock_mhz": 2301.333981729975,
+     "power_w": 600.3975714285714,
+     "kcycles": 1810.973700165977,
+     "ops": null,
+     "knobs": "SM-bind dyn 128/60 +takeover chunk 1/1",
+     "flush_T": 785.8879864215851,
+     "flush_speedup": 1.3590333721716228,
+     "flush_clock_mhz": 2513.9127538886314,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 656.1388693220629
+     },
+     "timing_build": {
+      "T": 787.352603219045,
+      "overhead": 0.0005453426659254301,
+      "roles": {
+       "T_A_us": 595.696,
+       "T_B_us": 781.616,
+       "makespan_us": 781.5,
+       "exit_us": 782.608,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 256.0,
+       "ctas_A": 128.0,
+       "ctas_B": 60.0,
+       "n": 24
+      }
+     }
+    },
+    "solo_intra": {
+     "variant": "co_sm_dynT_c1-1_a0b0_n128",
+     "selected_in": "C4",
+     "T": 786.923460281336,
+     "speedup": 1.3491062641069111,
+     "paired": [
+      1.348606527385115,
+      1.3484065934186686,
+      1.3491062641069111
+     ],
+     "clock_mhz": 2301.333981729975,
+     "power_w": 600.3975714285714,
+     "kcycles": 1810.973700165977,
+     "ops": null,
+     "knobs": "SM-bind dyn 128/60 +takeover chunk 1/1",
+     "flush_T": 785.8879864215851,
+     "flush_speedup": 1.3590333721716228,
+     "flush_clock_mhz": 2513.9127538886314,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 656.1388693220629
+     },
+     "timing_build": {
+      "T": 787.352603219045,
+      "overhead": 0.0005453426659254301,
+      "roles": {
+       "T_A_us": 595.696,
+       "T_B_us": 781.616,
+       "makespan_us": 781.5,
+       "exit_us": 782.608,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 256.0,
+       "ctas_A": 128.0,
+       "ctas_B": 60.0,
+       "n": 24
+      }
+     }
+    },
+    "cta": {
+     "variant": "co_cta_dynT_c1-1_a3b0_g329",
+     "selected_in": "C4",
+     "T": 803.9462221397081,
+     "speedup": 1.3205402804340143,
+     "paired": [
+      1.3200314371066195,
+      1.31968556430131,
+      1.3205759830305774
+     ],
+     "clock_mhz": 2079.033368426156,
+     "power_w": 600.0001020408164,
+     "kcycles": 1671.4310222486,
+     "ops": null,
+     "knobs": "CTA-bind 329 CTAs (GEMM CTA on 188 SMs, decode CTA beside it on 141) +takeover chunk 1/1",
+     "flush_T": 804.6720027923584,
+     "flush_speedup": 1.3273085140645782,
+     "flush_clock_mhz": 2572.2184623819358,
+     "cfg_a": {
+      "tag": "128x128x32_s3_t128_k1_wsoff_smem_g8",
+      "flush_rank": 5,
+      "n_configs": 43,
+      "solo_slowdown": 0.0732930170052204,
+      "steady_us": 465.6094594737927
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 656.1388693220629
+     }
+    },
+    "static": {
+     "variant": "co_sm_staticT_c1-1_a0b0_n124",
+     "selected_in": "C2",
+     "T": 807.7260310655645,
+     "speedup": 1.3143607223326705,
+     "paired": [
+      1.314272695124736,
+      1.3133799253058795,
+      1.3143607223326705
+     ],
+     "clock_mhz": 2343.805634902989,
+     "power_w": 599.9847959183674,
+     "kcycles": 1893.1528230692968,
+     "ops": null,
+     "knobs": "SM-bind static 124/64 +takeover",
+     "flush_T": 805.8879971504211,
+     "flush_speedup": 1.3253057547851024,
+     "flush_clock_mhz": 2543.496482492785,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 656.1388693220629
+     }
+    }
+   },
+   "flush_serial": 1068.0480003356934,
+   "energy_mJ_per_iter": {
+    "serial": 576.4200041955819,
+    "solo_a": 258.5902845109198,
+    "solo_b": 297.7942358504102,
+    "gr_s_142": 478.94151696973415,
+    "st_eq_ab": 546.4364256587465,
+    "co_sm_dynT_c1-1_a0b0_n128": 472.466934453082,
+    "co_sm_dynT_c1-1_a0b0_n124": 483.41839477874356,
+    "co_cta_dynT_c1-1_a3b0_g329": 482.3678153191537,
+    "co_sm_staticT_c1-1_a0b0_n124": 484.62333790682555,
+    "co_sm_dynT_c1-1_a0b0_n124_tm": 483.42643315269976,
+    "co_sm_dynT_c1-1_a0b0_n128_tm": 472.41144945248374
+   },
+   "T": {
+    "solo_inter": 797.3875931005158,
+    "lib_inter": 797.3875931005158,
+    "solo_intra": 786.923460281336,
+    "lib_intra": 786.923460281336
+   },
+   "T_inter_star": 797.3875931005158,
+   "D1_inter_over_lib_intra": 1.0132975230087036,
+   "inter_star_over_solo_intra": 1.0132975230087036,
+   "lib_gain_inter": 1.0,
+   "lib_gain_intra": 1.0,
+   "fidelity": {
+    "n": 14,
+    "spearman": 0.8153846153846154,
+    "kendall": 0.6923076923076923,
+    "steady_winner": "co_sm_dynT_c1-1_a0b0_n124",
+    "winner_screen_rank": 8,
+    "winner_in_topk": true,
+    "screen_top1": "co_sm_dynT_c1-1_a4b1_n124",
+    "regret_of_screen_top1": 0.0024385801124009454,
+    "spearman_topk": 0.0
+   },
+   "cta_feasible": [
+    "a3b0",
+    "a3b1",
+    "a3b2",
+    "a3b3",
+    "a5b0",
+    "a5b1",
+    "a5b2",
+    "a5b3",
+    "a6b0",
+    "a6b1",
+    "a6b2",
+    "a6b3",
+    "a7b0",
+    "a7b1",
+    "a7b2",
+    "a7b3",
+    "a8b0",
+    "a8b1",
+    "a8b2",
+    "a8b3",
+    "a9b0",
+    "a9b1",
+    "a9b2",
+    "a9b3"
+   ],
+   "cta_solo_feasible": false,
+   "stage_wall_s": {
+    "I1": 16.06310725212097,
+    "I2": 141.95500302314758,
+    "I3": 103.69624090194702,
+    "C1": 59.943182945251465,
+    "C2": 74.22140049934387,
+    "C3": 77.39769792556763,
+    "C4": 68.9746642112732,
+    "F": 135.81591033935547
+   }
+  },
+  "r223": {
+   "pair": "r223",
+   "A": "M4096_N4096_K4096",
+   "B": "B32_S2048",
+   "T_serial": 574.2058313009315,
+   "serial": {
+    "clock_mhz": 2533.916534231426,
+    "power_w": 599.8114693877551
+   },
+   "solo_a": {
+    "t_iter_us": 431.74099860467,
+    "clock_mhz": 2248.2366699576096,
+    "power_w": 600.009612244898
+   },
+   "solo_b": {
+    "t_iter_us": 168.36342548684877,
+    "clock_mhz": 2818.285014745929,
+    "power_w": 449.7914489795918
+   },
+   "LB": {
+    "tc": 383.48273437499995,
+    "dram": 225.06133284511168,
+    "power": 557.9619637798505,
+    "LB": 557.9619637798505,
+    "binding": "power",
+    "E_A_uJ": 259048.74916301307,
+    "E_B_uJ": 75728.42910489724,
+    "power_dyn": 544.7357660419361
+   },
+   "speedup_bound": 1.0291128581795053,
+   "cells": {
+    "lib_inter": {
+     "variant": "gr_l_172",
+     "selected_in": "I3",
+     "T": 504.9217020208885,
+     "speedup": 1.1372175705713214,
+     "paired": [
+      1.1367108515266482,
+      1.133940133035846,
+      1.1372175705713214
+     ],
+     "clock_mhz": 1957.4048831258435,
+     "power_w": 600.0430816326531,
+     "kcycles": 988.3362051318993,
+     "ops": {
+      "a": 503.4880042076111,
+      "b": 474.4639992713928
+     },
+     "knobs": "green 172/16",
+     "flush_T": 441.0560131072998,
+     "flush_speedup": 1.2790756020655996,
+     "flush_clock_mhz": 2293.34286043828,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t64_s1",
+      "flush_rank": 2,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.86484300768052
+     }
+    },
+    "solo_inter": {
+     "variant": "gr_s_172",
+     "selected_in": "I2",
+     "T": 506.8756583011277,
+     "speedup": 1.1328337076305288,
+     "paired": [
+      1.1324226774855735,
+      1.1313305855675189,
+      1.1335322160771268
+     ],
+     "clock_mhz": 1951.5580290256942,
+     "power_w": 600.0025306122449,
+     "kcycles": 989.19726067525,
+     "ops": {
+      "a": 504.57602739334106,
+      "b": 470.335990190506
+     },
+     "knobs": "green 172/16",
+     "flush_T": 445.42399048805237,
+     "flush_speedup": 1.2665325567483203,
+     "flush_clock_mhz": 2273.873025394525,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     }
+    },
+    "solo_streams": {
+     "variant": "st_eq_ab",
+     "selected_in": "I2",
+     "T": 509.77837048520365,
+     "speedup": 1.1263832766274613,
+     "paired": [
+      1.1258814761882516,
+      1.124810379831386,
+      1.1267444820036083
+     ],
+     "clock_mhz": 2149.3942240606834,
+     "power_w": 600.002469387755,
+     "kcycles": 1095.714685071964,
+     "ops": {
+      "a": 464.1599953174591,
+      "b": 507.1359872817993
+     },
+     "knobs": "streams prio=eq order=ab",
+     "flush_T": 475.5519926548004,
+     "flush_speedup": 1.1862929694826876,
+     "flush_clock_mhz": 2482.862797978115,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     }
+    },
+    "lib_intra": {
+     "variant": "co_sm_dynT_c1-1_a0b2_n184",
+     "selected_in": "C3",
+     "T": 507.6186126863896,
+     "speedup": 1.1311756837720213,
+     "paired": [
+      1.131059585657516,
+      1.1301890078627992,
+      1.131866340969681
+     ],
+     "clock_mhz": 2092.399212468898,
+     "power_w": 599.9988775510204,
+     "kcycles": 1062.140785419556,
+     "ops": null,
+     "knobs": "SM-bind dyn 184/4 +takeover chunk 1/1",
+     "flush_T": 464.89599347114563,
+     "flush_speedup": 1.2134842920406599,
+     "flush_clock_mhz": 2431.9638697160517,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     },
+     "timing_build": {
+      "T": 507.9518517241858,
+      "overhead": 0.0006564752147930619,
+      "roles": {
+       "T_A_us": 463.424,
+       "T_B_us": 500.96,
+       "makespan_us": 501.0,
+       "exit_us": 501.98400000000004,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 256.0,
+       "ctas_A": 184.0,
+       "ctas_B": 4.0,
+       "n": 24
+      }
+     }
+    },
+    "solo_intra": {
+     "variant": "co_sm_dynT_c1-1_a0b2_n184",
+     "selected_in": "C3",
+     "T": 507.6186126863896,
+     "speedup": 1.1311756837720213,
+     "paired": [
+      1.131059585657516,
+      1.1301890078627992,
+      1.131866340969681
+     ],
+     "clock_mhz": 2092.399212468898,
+     "power_w": 599.9988775510204,
+     "kcycles": 1062.140785419556,
+     "ops": null,
+     "knobs": "SM-bind dyn 184/4 +takeover chunk 1/1",
+     "flush_T": 464.89599347114563,
+     "flush_speedup": 1.2134842920406599,
+     "flush_clock_mhz": 2431.9638697160517,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     },
+     "timing_build": {
+      "T": 507.9518517241858,
+      "overhead": 0.0006564752147930619,
+      "roles": {
+       "T_A_us": 463.424,
+       "T_B_us": 500.96,
+       "makespan_us": 501.0,
+       "exit_us": 501.98400000000004,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 256.0,
+       "ctas_A": 184.0,
+       "ctas_B": 4.0,
+       "n": 24
+      }
+     }
+    },
+    "cta": {
+     "variant": "co_cta_dynT_c1-1_a3b0_g376",
+     "selected_in": "C4",
+     "T": 564.2020649918041,
+     "speedup": 1.0177308218630372,
+     "paired": [
+      1.0174653147227424,
+      1.0165637571452475,
+      1.0180518054342271
+     ],
+     "clock_mhz": 2097.0731384819105,
+     "power_w": 600.0009591836734,
+     "kcycles": 1183.1729951703376,
+     "ops": null,
+     "knobs": "CTA-bind 376 CTAs (GEMM CTA on 188 SMs, decode CTA beside it on 188) +takeover chunk 1/1",
+     "flush_T": 511.29597425460815,
+     "flush_speedup": 1.1033608984156558,
+     "flush_clock_mhz": 2362.1610762824876,
+     "cfg_a": {
+      "tag": "128x128x32_s3_t128_k1_wsoff_smem_g8",
+      "flush_rank": 5,
+      "n_configs": 43,
+      "solo_slowdown": 0.0732930170052204,
+      "steady_us": 465.6094594737927
+     },
+     "cfg_b": {
+      "tag": "n32_h4_sp1_t64_s2",
+      "flush_rank": 1,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 169.36449685969217
+     }
+    },
+    "static": {
+     "variant": "co_sm_staticT_c1-1_a0b2_n172",
+     "selected_in": "C2",
+     "T": 520.500123531852,
+     "speedup": 1.1031809702650206,
+     "paired": [
+      1.1031809702650206,
+      1.1025651678673487,
+      1.1037177405187841
+     ],
+     "clock_mhz": 2112.3812937499533,
+     "power_w": 600.0051632653061,
+     "kcycles": 1099.4947243432239,
+     "ops": null,
+     "knobs": "SM-bind static 172/16 +takeover",
+     "flush_T": 471.0400104522705,
+     "flush_speedup": 1.1976561926622917,
+     "flush_clock_mhz": 2396.297031601671,
+     "cfg_a": {
+      "tag": "128x256x64_s2_t256_k1_wsoff_direct_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 425.7398595870853
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     }
+    }
+   },
+   "flush_serial": 564.1439855098724,
+   "energy_mJ_per_iter": {
+    "serial": 344.4152434036292,
+    "solo_a": 259.04874916301304,
+    "solo_b": 75.72842910489723,
+    "gr_l_172": 302.97477406381813,
+    "gr_s_172": 304.12667768642416,
+    "st_eq_ab": 305.86828113158805,
+    "co_sm_dynT_c1-1_a0b2_n184": 304.57059783584,
+    "co_cta_dynT_c1-1_a3b0_g376": 338.5217801684918,
+    "co_sm_staticT_c1-1_a0b2_n172": 312.30276159934084,
+    "co_sm_dynT_c1-1_a0b2_n184_tm": 304.7688658873269
+   },
+   "T": {
+    "solo_inter": 506.8756583011277,
+    "lib_inter": 504.9217020208885,
+    "solo_intra": 507.6186126863896,
+    "lib_intra": 507.6186126863896
+   },
+   "T_inter_star": 504.9217020208885,
+   "D1_inter_over_lib_intra": 0.994687132035548,
+   "inter_star_over_solo_intra": 0.994687132035548,
+   "lib_gain_inter": 1.0038698203551535,
+   "lib_gain_intra": 1.0,
+   "fidelity": {
+    "n": 14,
+    "spearman": 0.9912087912087912,
+    "kendall": 0.9560439560439561,
+    "steady_winner": "co_sm_dynT_c1-1_a0b2_n172",
+    "winner_screen_rank": 1,
+    "winner_in_topk": true,
+    "screen_top1": "co_sm_dynT_c1-1_a0b2_n172",
+    "regret_of_screen_top1": 0.0,
+    "spearman_topk": 0.9761904761904763
+   },
+   "cta_feasible": [
+    "a3b0",
+    "a3b1",
+    "a3b2",
+    "a3b3",
+    "a5b0",
+    "a5b1",
+    "a5b2",
+    "a5b3",
+    "a6b0",
+    "a6b1",
+    "a6b2",
+    "a6b3",
+    "a7b0",
+    "a7b1",
+    "a7b2",
+    "a7b3",
+    "a8b0",
+    "a8b1",
+    "a8b2",
+    "a8b3",
+    "a9b0",
+    "a9b1",
+    "a9b2",
+    "a9b3"
+   ],
+   "cta_solo_feasible": false,
+   "stage_wall_s": {
+    "I1": 12.840568780899048,
+    "I2": 143.31600952148438,
+    "I3": 101.10257601737976,
+    "C1": 89.37570095062256,
+    "C2": 88.71312975883484,
+    "C3": 97.87631797790527,
+    "C4": 75.08397579193115,
+    "F": 147.1467764377594
+   }
+  },
+  "second": {
+   "pair": "second",
+   "A": "M2048_N4096_K4096",
+   "B": "B32_S2048",
+   "T_serial": 375.03653641805516,
+   "serial": {
+    "clock_mhz": 2575.6098742574754,
+    "power_w": 597.0910408163265
+   },
+   "solo_a": {
+    "t_iter_us": 228.37198419764573,
+    "clock_mhz": 2126.831736906871,
+    "power_w": 600.032918367347
+   },
+   "solo_b": {
+    "t_iter_us": 168.2015666862078,
+    "clock_mhz": 2818.897359380858,
+    "power_w": 447.9927959183674
+   },
+   "LB": {
+    "tc": 193.22773437499998,
+    "dram": 204.6302331258391,
+    "power": 353.9729971484316,
+    "LB": 353.9729971484316,
+    "binding": "power",
+    "E_A_uJ": 137030.708151455,
+    "E_B_uJ": 75353.09013760395,
+    "power_dyn": 340.6030291094907
+   },
+   "speedup_bound": 1.059506062437839,
+   "cells": {
+    "lib_inter": {
+     "variant": "gr_l_164",
+     "selected_in": "I2",
+     "T": 313.2821121000773,
+     "speedup": 1.1971208119863879,
+     "paired": [
+      1.1971208119863879,
+      1.1942893241805632,
+      1.2002538261909292
+     ],
+     "clock_mhz": 1916.9289597400427,
+     "power_w": 600.0074489795919,
+     "kcycles": 600.5395532531646,
+     "ops": {
+      "a": 310.40000915527344,
+      "b": 306.40000104904175
+     },
+     "knobs": "green 164/24",
+     "flush_T": 281.5360128879547,
+     "flush_speedup": 1.3478630974932095,
+     "flush_clock_mhz": 2212.918419877001,
+     "cfg_a": {
+      "tag": "128x128x64_s2_t256_k1_wsauto_smem_g8",
+      "flush_rank": 1,
+      "n_configs": 43,
+      "solo_slowdown": -0.00983606557377048,
+      "steady_us": 228.45669010292895
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     }
+    },
+    "solo_inter": {
+     "variant": "gr_s_164",
+     "selected_in": "I2",
+     "T": 315.7966413567272,
+     "speedup": 1.1875887432077212,
+     "paired": [
+      1.1875887432077212,
+      1.1837726470987393,
+      1.191344082273775
+     ],
+     "clock_mhz": 2044.0542894412665,
+     "power_w": 600.0194897959184,
+     "kcycles": 645.5054793563635,
+     "ops": {
+      "a": 312.6400113105774,
+      "b": 296.1600124835968
+     },
+     "knobs": "green 164/24",
+     "flush_T": 288.06400299072266,
+     "flush_speedup": 1.3173183683046576,
+     "flush_clock_mhz": 2311.3819027957984,
+     "cfg_a": {
+      "tag": "128x128x64_s2_t128_k1_wsauto_smem_g8",
+      "flush_rank": 2,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 227.5158302853531
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     }
+    },
+    "solo_streams": {
+     "variant": "st_eq_ab",
+     "selected_in": "I2",
+     "T": 329.8570814796581,
+     "speedup": 1.1369667576507168,
+     "paired": [
+      1.1369667576507168,
+      1.1353198903517758,
+      1.1381400123053034
+     ],
+     "clock_mhz": 2273.8997054017063,
+     "power_w": 600.0015510204082,
+     "kcycles": 750.0619204012612,
+     "ops": {
+      "a": 239.16800320148468,
+      "b": 327.0080089569092
+     },
+     "knobs": "streams prio=eq order=ab",
+     "flush_T": 366.5600121021271,
+     "flush_speedup": 1.0352247650006143,
+     "flush_clock_mhz": 2580.0958786003266,
+     "cfg_a": {
+      "tag": "128x128x64_s2_t128_k1_wsauto_smem_g8",
+      "flush_rank": 2,
+      "n_configs": 43,
+      "solo_slowdown": 0.0,
+      "steady_us": 227.5158302853531
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     }
+    },
+    "lib_intra": {
+     "variant": "co_cta_dynT_c1-1_a3b2_g282",
+     "selected_in": "C4",
+     "T": 317.2783246500238,
+     "speedup": 1.1820427280424592,
+     "paired": [
+      1.1820427280424592,
+      1.1801363490343837,
+      1.1857771354840885
+     ],
+     "clock_mhz": 1953.946618670599,
+     "power_w": 600.0015510204082,
+     "kcycles": 619.9449096273866,
+     "ops": null,
+     "knobs": "CTA-bind 282 CTAs (GEMM CTA on 188 SMs, decode CTA beside it on 94) +takeover chunk 1/1",
+     "flush_T": 288.32000494003296,
+     "flush_speedup": 1.3161487093688569,
+     "flush_clock_mhz": 2359.3292236328125,
+     "cfg_a": {
+      "tag": "128x128x32_s3_t128_k1_wsoff_smem_g8",
+      "flush_rank": 6,
+      "n_configs": 43,
+      "solo_slowdown": 0.06028872033276245,
+      "steady_us": 242.88778575325784
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     },
+     "timing_build": {
+      "T": 317.77732861250496,
+      "overhead": 0.0015727641118616908,
+      "roles": {
+       "T_A_us": 311.23199999999997,
+       "T_B_us": 250.224,
+       "makespan_us": 311.25,
+       "exit_us": 312.20799999999997,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 256.0,
+       "ctas_A": 188.0,
+       "ctas_B": 94.0,
+       "n": 24
+      }
+     }
+    },
+    "solo_intra": {
+     "variant": "co_sm_dyn_c1-1_a2b2_n140",
+     "selected_in": "C2",
+     "T": 320.1894534374,
+     "speedup": 1.1712957200552463,
+     "paired": [
+      1.1712957200552463,
+      1.1693070029332768,
+      1.1753005462252077
+     ],
+     "clock_mhz": 2182.7612307544264,
+     "power_w": 600.0020408163266,
+     "kcycles": 698.8971254596063,
+     "ops": null,
+     "knobs": "SM-bind dyn 140/48 chunk 1/1",
+     "flush_T": 290.8160090446472,
+     "flush_speedup": 1.3048525204428782,
+     "flush_clock_mhz": 2440.4549161193886,
+     "cfg_a": {
+      "tag": "128x128x64_s2_t128_k1_wsoff_smem_g8",
+      "flush_rank": 3,
+      "n_configs": 43,
+      "solo_slowdown": 0.039931490090530986,
+      "steady_us": 234.84005252177957
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     },
+     "timing_build": {
+      "T": 319.12955921321594,
+      "overhead": -0.0033102096674501036,
+      "roles": {
+       "T_A_us": 307.856,
+       "T_B_us": 248.16,
+       "makespan_us": 307.75,
+       "exit_us": 308.832,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 256.0,
+       "ctas_A": 140.0,
+       "ctas_B": 48.0,
+       "n": 24
+      }
+     }
+    },
+    "cta": {
+     "variant": "co_cta_dynT_c1-1_a3b2_g282",
+     "selected_in": "C4",
+     "T": 317.2783246500238,
+     "speedup": 1.1820427280424592,
+     "paired": [
+      1.1820427280424592,
+      1.1801363490343837,
+      1.1857771354840885
+     ],
+     "clock_mhz": 1953.946618670599,
+     "power_w": 600.0015510204082,
+     "kcycles": 619.9449096273866,
+     "ops": null,
+     "knobs": "CTA-bind 282 CTAs (GEMM CTA on 188 SMs, decode CTA beside it on 94) +takeover chunk 1/1",
+     "flush_T": 288.32000494003296,
+     "flush_speedup": 1.3161487093688569,
+     "flush_clock_mhz": 2359.3292236328125,
+     "cfg_a": {
+      "tag": "128x128x32_s3_t128_k1_wsoff_smem_g8",
+      "flush_rank": 6,
+      "n_configs": 43,
+      "solo_slowdown": 0.06028872033276245,
+      "steady_us": 242.88778575325784
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     },
+     "timing_build": {
+      "T": 317.77732861250496,
+      "overhead": 0.0015727641118616908,
+      "roles": {
+       "T_A_us": 311.23199999999997,
+       "T_B_us": 250.224,
+       "makespan_us": 311.25,
+       "exit_us": 312.20799999999997,
+       "steal_A": 0.0,
+       "steal_B": 0.0,
+       "done_A": 512.0,
+       "done_B": 256.0,
+       "ctas_A": 188.0,
+       "ctas_B": 94.0,
+       "n": 24
+      }
+     }
+    },
+    "static": {
+     "variant": "co_sm_static_c1-1_a2b2_n140",
+     "selected_in": "C3",
+     "T": 321.8350393579518,
+     "speedup": 1.165306727217267,
+     "paired": [
+      1.165306727217267,
+      1.1631605322127416,
+      1.1685223975619
+     ],
+     "clock_mhz": 2186.8604969059907,
+     "power_w": 599.9946326530612,
+     "kcycles": 703.8083340920896,
+     "ops": null,
+     "knobs": "SM-bind static 140/48",
+     "flush_T": 292.4480140209198,
+     "flush_speedup": 1.2975707961549088,
+     "flush_clock_mhz": 2449.711385018336,
+     "cfg_a": {
+      "tag": "128x128x64_s2_t128_k1_wsoff_smem_g8",
+      "flush_rank": 3,
+      "n_configs": 43,
+      "solo_slowdown": 0.039931490090530986,
+      "steady_us": 234.84005252177957
+     },
+     "cfg_b": {
+      "tag": "n64_h4_sp1_t128_s1",
+      "flush_rank": 3,
+      "n_configs": 36,
+      "solo_slowdown": 0.0,
+      "steady_us": 168.31392554573577
+     }
+    }
+   },
+   "flush_serial": 379.4720023870468,
+   "energy_mJ_per_iter": {
+    "serial": 223.9309558740067,
+    "solo_a": 137.030708151455,
+    "solo_b": 75.35309013760396,
+    "solo_a_wsoff": 140.58624279853123,
+    "gr_s_164": 189.48413962612807,
+    "gr_l_164": 187.97160089210593,
+    "st_eq_ab": 197.91476050286005,
+    "co_cta_dynT_c1-1_a3b2_g282": 190.3674868951709,
+    "co_sm_dyn_c1-1_a2b2_n140": 192.11432551030418,
+    "co_sm_static_c1-1_a2b2_n140": 193.0992962144578,
+    "co_sm_dyn_c1-1_a2b2_n140_tm": 191.47685629342968,
+    "co_cta_dynT_c1-1_a3b2_g282_tm": 190.66615721319363
+   },
+   "solo_a_wsoff": {
+    "t_iter_us": 234.29465751308786,
+    "vs_solo_a": 0.025934325246814494
+   },
+   "T": {
+    "solo_inter": 315.7966413567272,
+    "lib_inter": 313.2821121000773,
+    "solo_intra": 320.1894534374,
+    "lib_intra": 317.2783246500238
+   },
+   "T_inter_star": 313.2821121000773,
+   "D1_inter_over_lib_intra": 0.9874047098730915,
+   "inter_star_over_solo_intra": 0.978427330247237,
+   "lib_gain_inter": 1.0080264054650099,
+   "lib_gain_intra": 1.0091753156809162,
+   "fidelity": {
+    "n": 14,
+    "spearman": 0.9648351648351648,
+    "kendall": 0.8901098901098901,
+    "steady_winner": "co_sm_dynT_c1-1_a2b1_n148",
+    "winner_screen_rank": 1,
+    "winner_in_topk": true,
+    "screen_top1": "co_sm_dynT_c1-1_a2b1_n148",
+    "regret_of_screen_top1": 0.0,
+    "spearman_topk": 0.8333333333333335
+   },
+   "cta_feasible": [
+    "a3b0",
+    "a3b1",
+    "a3b2",
+    "a3b3",
+    "a4b0",
+    "a4b1",
+    "a4b2",
+    "a4b3",
+    "a5b0",
+    "a5b1",
+    "a5b2",
+    "a5b3",
+    "a6b0",
+    "a6b1",
+    "a6b2",
+    "a6b3",
+    "a7b0",
+    "a7b1",
+    "a7b2",
+    "a7b3",
+    "a8b0",
+    "a8b1",
+    "a8b2",
+    "a8b3"
+   ],
+   "cta_solo_feasible": false,
+   "stage_wall_s": {
+    "I1": 11.694689512252808,
+    "I2": 149.5246467590332,
+    "I3": 106.31667113304138,
+    "C1": 81.80006408691406,
+    "C2": 89.63666796684265,
+    "C3": 156.1549994945526,
+    "C4": 66.0647873878479,
+    "F": 153.45657992362976,
+    "K": 179.67179155349731
+   }
+  }
+ },
+ "gpu_time": {
+  "A1_s": 1428.5102472305298,
+  "pairs": {
+   "main": {
+    "stage_wall_s": 1133.5956001281738,
+    "guard_wait_s": 5.745887756347656e-05,
+    "compile_s": 37.07105231285095,
+    "gpu_s": 1096.5244903564453
+   },
+   "r029": {
+    "stage_wall_s": 774.15114402771,
+    "guard_wait_s": 4.458427429199219e-05,
+    "compile_s": 36.19829320907593,
+    "gpu_s": 737.9528062343597
+   },
+   "r058": {
+    "stage_wall_s": 678.0672070980072,
+    "guard_wait_s": 4.696846008300781e-05,
+    "compile_s": 20.20712447166443,
+    "gpu_s": 657.8600356578827
+   },
+   "r223": {
+    "stage_wall_s": 755.4550552368164,
+    "guard_wait_s": 4.124641418457031e-05,
+    "compile_s": 46.334065675735474,
+    "gpu_s": 709.1209483146667
+   },
+   "second": {
+    "stage_wall_s": 994.3208978176117,
+    "guard_wait_s": 5.125999450683594e-05,
+    "compile_s": 53.20683431625366,
+    "gpu_s": 941.1140122413635
+   }
+  },
+  "P_static_w": 143.32510344827585,
+  "total_s": 5571.082540035248
+ }
+}

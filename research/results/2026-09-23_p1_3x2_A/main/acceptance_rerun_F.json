@@ -1,0 +1,89 @@
+{
+ "what": "main-agent acceptance: independent re-run of stage F (main pair) on 2026-09-23 04:51-04:58; original study.json restored",
+ "rows": {
+  "serial": {
+   "speedup_original": 1.0,
+   "speedup_rerun": 1.0,
+   "t_iter_us_rerun": 724.7496010600656,
+   "clock_mhz_rerun": 2657.330492145347,
+   "power_w_rerun": 577.1657755102041
+  },
+  "solo_a": {
+   "speedup_original": 1.688145354639837,
+   "speedup_rerun": 1.697658669423609,
+   "t_iter_us_rerun": 426.9112596739681,
+   "clock_mhz_rerun": 2272.3822995883115,
+   "power_w_rerun": 600.0419591836734
+  },
+  "solo_b": {
+   "speedup_original": 2.194628657943832,
+   "speedup_rerun": 2.1911307481566578,
+   "t_iter_us_rerun": 330.76510914274695,
+   "clock_mhz_rerun": 2821.0244075744627,
+   "power_w_rerun": 436.51342857142856
+  },
+  "gr_l_156": {
+   "speedup_original": 1.2379679780364385,
+   "speedup_rerun": 1.2457727613667653,
+   "t_iter_us_rerun": 581.7670955214389,
+   "clock_mhz_rerun": 1860.3416043730365,
+   "power_w_rerun": 600.0519183673468
+  },
+  "gr_s_148": {
+   "speedup_original": 1.2237411087272962,
+   "speedup_rerun": 1.2296924959285787,
+   "t_iter_us_rerun": 589.3746635517889,
+   "clock_mhz_rerun": 2189.940734959317,
+   "power_w_rerun": 600.011387755102
+  },
+  "st_eq_ab": {
+   "speedup_original": 1.128265501812001,
+   "speedup_rerun": 1.1307555389502262,
+   "t_iter_us_rerun": 640.9427821445037,
+   "clock_mhz_rerun": 2492.755654690023,
+   "power_w_rerun": 599.7033673469386
+  },
+  "co_sm_dynT_c1-1_a0b3_n124": {
+   "speedup_original": 1.2303294650638283,
+   "speedup_rerun": 1.2371637659861945,
+   "t_iter_us_rerun": 585.8154118200655,
+   "clock_mhz_rerun": 2199.790361635725,
+   "power_w_rerun": 600.0143265306123
+  },
+  "co_sm_dyn_c1-1_a0b0_n140": {
+   "speedup_original": 1.2252343017824394,
+   "speedup_rerun": 1.2313094504683628,
+   "t_iter_us_rerun": 588.6006972369025,
+   "clock_mhz_rerun": 2200.136428158302,
+   "power_w_rerun": 599.9939999999999
+  },
+  "co_sm_staticT_c1-1_a0b3_n124": {
+   "speedup_original": 1.2173073450411143,
+   "speedup_rerun": 1.2230327965653147,
+   "t_iter_us_rerun": 592.5839463139541,
+   "clock_mhz_rerun": 2229.010347693128,
+   "power_w_rerun": 600.0007346938776
+  },
+  "co_cta_dynT_c1-1_a3b2_g376": {
+   "speedup_original": 1.1768821266587235,
+   "speedup_rerun": 1.1790994486311566,
+   "t_iter_us_rerun": 614.6636756564037,
+   "clock_mhz_rerun": 1926.8472041793661,
+   "power_w_rerun": 599.9847346938776
+  },
+  "co_sm_dyn_c1-1_a0b0_n140_tm": {
+   "speedup_original": 1.2272282789769517,
+   "speedup_rerun": 1.2330634855116267,
+   "t_iter_us_rerun": 587.7634116781506,
+   "clock_mhz_rerun": 2194.637756197333,
+   "power_w_rerun": 600.0103469387755
+  },
+  "co_sm_dynT_c1-1_a0b3_n124_tm": {
+   "speedup_original": 1.2270327178590184,
+   "speedup_rerun": 1.2332238830664017,
+   "t_iter_us_rerun": 587.686965044807,
+   "clock_mhz_rerun": 2201.2856703283715,
+   "power_w_rerun": 600.0009795918368
+  }
+ }
+}
