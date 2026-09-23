@@ -149,6 +149,10 @@
 - Part B 中断前的进展（见 `research/results/2026-09-23_p1_3x2_B/RESUME.md`）：TileLang 的 `T.copy(..., eviction_policy=...)` 此前只对 TMA 生效、对 cp.async 静默忽略，已补上；带 cache hint 时 ptxas 12.9 会错误编译 43 个 GEMM 配置中的 15 个（运行时崩溃），已独立复现并在模板中规避，另在 `cotile/resources.py` 加了 SASS 检查。新配置轴 decode `kv_l2`、GEMM `ab_l2`，输出逐位不变。**初步结果**（待最终交错测量确认）：decode K/V 用 evict-first 提示时 green 共置快 3.0%（568.9 vs 586.0µs，每轮能耗 341 vs 352 mJ）——这是一个"只在共置时才值得选"的实现选择，符合 proposal 的论点，但幅度低于 5% 阈值；GEMM 的 evict-last 提示无效果。
 - 注意：Part B 改了 `src/tl_templates/cuda/copy.h`，kernel 缓存键（库哈希）不覆盖模板，已要求子 agent 清缓存或核实。
 
+**06:52 计划调整（用户同意）：plan v0.4（e73b4f5d）**
+- 用户问"CoKernel 是否不如 POD 式融合"。结论：目前不能这么说——POD（prefill × decode，旧 flush 模式、测量方法 v1 之前、对照只扫 5 个粗 green 划分）与 CoKernel（GEMM × decode，稳态、细扫且按预算挑配置的 green 对照）不是同条件；同条件下唯一的证据是在 GEMM × decode 上 POD 式 CTA 级混跑反而比 SM 级划分差（主研究对 1.18× vs 1.23×）。
+- 决定：P1-3x2-B 完成后先做 P4 与 POD 的同条件对比（算子库加 prefill attention；本地修补 POD 的默认流 memset 以便稳态测量；同一轮稳态比较串行 / 双流 / 细扫 green / POD / CoKernel SM 级与 CTA 级；归因差距来自算子特性还是 tile 实现），再做 P2。执行顺序 P1 → P4 → P2 → P3。
+
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
