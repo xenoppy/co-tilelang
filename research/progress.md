@@ -136,6 +136,9 @@
 - 下一步（一个功能）：P1-3x2-B = 针对性的 derived 行 + 无 oracle 鲁棒性读数，然后用同一流程做 P2（GEMM × RMSNorm）与 P4（prefill × decode），在 P1–P4 的证据上做 D1 决策。
 - 待办（根因修复）：TileLang smem 合并 pass 应对 cp.async / ldmatrix / swizzle 缓冲强制 ≥128B 对齐（CoKernel 目前靠把分派槽补到 128B 规避）。
 
+- P1-3x2-B（进行中，05:05 启动）：同五个 GEMM × decode 对的 derived 行 + 无 oracle 鲁棒性。完成标准：B1 写明 C_derived 的定义（C_lib ∪ 以伙伴资源契约为条件的变体：契约内的全部 op 库配置含 split-K / split-KV、寄存器上限轴、至少一个"只在共置时才会选"的实现选择——首选 decode K/V 流式加载的 L2 evict-first 提示，作为 decode 的配置轴实现并测试数值逐位相同）；B2 T[derived,intra]、T[derived,inter] 与完整 3×2 表、对获胜者做轴消融；B3 同一组 SM 划分下 green context 与 CoKernel（动态 + 接手）的 oracle / 先验规则划分 / 最坏情况 / regret，以及把 main 上调好的划分迁移到其他对；B4 三行齐全的 D1 中期读数；B5 结果与测试。
+- 需要告知用户：qzr 的 RL 训练进程会占到 91–95GB 显存，我们的实验（1–5GB）可能与之争抢显存导致对方 OOM；当前脚本会等待显存足够才启动。
+
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
