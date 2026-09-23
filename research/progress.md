@@ -144,6 +144,11 @@
 - 在用户允许之前不启动任何 GPU 负载。恢复时：先按规则 7 查询 GPU 使用情况，再按 RESUME.md 继续 P1-3x2-B。
 - 尚未提交的工作：Part B 子 agent 在 `cotile/`（decode 的 L2 提示轴等）与 `research/bench/scripts/p1b_*.py` 中的改动，未验收，暂不提交。
 
+**06:02 恢复（用户："继续做"）**
+- 查询 GPU：完全空闲（无任何进程）。已让 Part B 子 agent 恢复（保留上下文），并先收紧 GPU 共享策略（规则 7 的更严格实现）：任何非本用户的计算进程出现在 GPU 上即视为"被占用"（不论 SM 利用率）；启动前若被占用则挂起 30 分钟再查询；运行中若出现外部进程，完成当前测点后让出 GPU、等待 30 分钟再查询并从下一测点继续；被阻塞超过 2 小时则停下来报告（由主 agent 询问用户）。统一实现在 `cobench.guard`，`p1_common.wait_gpu` 与 `cotile/tests/harness.py` 共用。
+- Part B 中断前的进展（见 `research/results/2026-09-23_p1_3x2_B/RESUME.md`）：TileLang 的 `T.copy(..., eviction_policy=...)` 此前只对 TMA 生效、对 cp.async 静默忽略，已补上；带 cache hint 时 ptxas 12.9 会错误编译 43 个 GEMM 配置中的 15 个（运行时崩溃），已独立复现并在模板中规避，另在 `cotile/resources.py` 加了 SASS 检查。新配置轴 decode `kv_l2`、GEMM `ab_l2`，输出逐位不变。**初步结果**（待最终交错测量确认）：decode K/V 用 evict-first 提示时 green 共置快 3.0%（568.9 vs 586.0µs，每轮能耗 341 vs 352 mJ）——这是一个"只在共置时才值得选"的实现选择，符合 proposal 的论点，但幅度低于 5% 阈值；GEMM 的 evict-last 提示无效果。
+- 注意：Part B 改了 `src/tl_templates/cuda/copy.h`，kernel 缓存键（库哈希）不覆盖模板，已要求子 agent 清缓存或核实。
+
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
