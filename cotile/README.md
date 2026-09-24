@@ -141,7 +141,9 @@ alternating on one shared counter/workspace state.
   `TileSpace.work`; `TileSpace.works()`), and the default tile order `lpt` is
   longest-first (t -> qb = nq-1 - t // Hq, h = t % Hq: the Hq heads of a query block are
   adjacent, so the G heads of a KV group read the same K/V stream back to back); `natural`
-  (shortest first) is a control. The order is what the grid build dispatches, what the
+  (shortest first) is a control; `kvhead` is FlashInfer's CTA order (KV head outermost,
+  query blocks ascending, the G heads of a group adjacent: a per-KV-head sawtooth), used by
+  the P4-b POD emulation and not part of `configs()`. The order is what the grid build dispatches, what the
   persistent grid-stride walks and what a CoKernel's dynamic queue hands out. The causal
   mask initialises the score tile with 0/-inf before the QK^T GEMM accumulates into it
   (same cost as a clear); fully masked rows of a block are bitwise-neutral (alpha = 1,
@@ -291,6 +293,7 @@ tile). Thread-0 state (phase, rank, chunk cursor, counts) lives in registers.
 |---|---|
 | `binding="sm"` | role = `co_sm_role[%smid]` (runtime table; `sm_role_table(n_a, order=contiguous\|interleave)`) |
 | `binding="cta"` | POD-style: r = atomic_add(co_state[SMCTR+%smid], 1); role A iff r mod (kA+kB) < kA; kA/kB runtime (`set_knobs(ratio=(kA,kB))`) |
+| `binding="tile"` | POD's scheduling policy in a persistent kernel: the role is drawn per grab (not per CTA) from the SM's ticket counter, j = atomic_add(co_state[SMCTR+%smid], 1), role A iff j mod (kA+kB) < kA (runtime ratio); an exhausted role falls back to the other (so it needs `schedule="dynamic"`, `takeover=True`); the finished chunk is published before the next draw, so per-role counts and end times stay exact. `co_out` ctas_A counts every CTA. Tests: every pair of `test_cokernel` at its co-resident CTA count, ratios 1:1, 2:1, 1:3, 1:0, 0:1 (P4-b, 2026-09-24) |
 | `schedule="dynamic"` | per-role queue head; thread 0 grabs `chunk` tiles with `atomic_add(return_prev=True)`; `chunk` = int or (chunk_A, chunk_B) |
 | `schedule="static"` | rank = per-role ticket (1 atomic per CTA), tiles rank, rank+n_r, ...; n_r = host-computed CTAs of role r (`expected_role_ctas`: assumes num_ctas/num_sms co-resident CTAs per SM, breadth-first placement, as measured by the smid probe); the kernel reports the actual count and `CoRunner.stats()` raises on mismatch |
 | `takeover=True` | after its own role is exhausted a CTA continues with the other role: dynamic = grab from the other queue; static = steal from the back of the other role's range with epoch-tagged per-tile claims (`atomic_max(co_claim[t], epoch)`; owners claim each of their tiles, thieves stop at the first failed claim; exactly-once regardless of how far thieves get) |

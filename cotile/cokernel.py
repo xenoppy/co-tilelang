@@ -15,6 +15,14 @@ Orchestration (`Orch`)
 * binding="cta" : POD-style. r = atomic_add(co_state[SMCTR + %smid], 1) is the CTA's
                   arrival rank on its SM; role = A if r mod (kA+kB) < kA else B, with
                   kA = co_knobs[0], kB = co_knobs[1] runtime knobs.
+* binding="tile": POD's scheduling policy in a persistent kernel. The role is drawn per
+                  grab, not per CTA: before every grab thread 0 takes the SM's next
+                  ticket j = atomic_add(co_state[SMCTR + %smid], 1) and picks role A iff
+                  j mod (kA+kB) < kA (FlashInfer pod.cuh draws one ticket per launched
+                  CTA, each CTA running one tile). If the drawn role's queue is exhausted
+                  it falls back to the other role (as POD does), so takeover is implied;
+                  the CTA exits when both queues are exhausted. Needs schedule="dynamic".
+                  ctas_A in co_out counts every CTA (there is no per-CTA role).
 * schedule="dynamic": per-role global queue head co_state[Q + r]; thread 0 grabs
                   `chunk` tiles with atomic_add(return_prev=True) and hands them out
                   one per dispatch iteration. `chunk` is an int or a per-role pair
@@ -145,14 +153,14 @@ def bounded(tile_id, num_tiles: int):
 # orchestration description
 # ----------------------------------------------------------------------------------
 
-BINDINGS = ("sm", "cta")
+BINDINGS = ("sm", "cta", "tile")
 SCHEDULES = ("static", "dynamic")
 SMEM_MODES = ("alias", "sum")
 
 # co_state layout (int32)
 S_Q, S_RANK, S_STEAL, S_DONE, S_CTAS = 0, 2, 4, 6, 8
 S_EXIT, S_EPOCH, S_ERR = 10, 11, 12
-S_SMCTR = 16  # per-SM arrival counters (cta binding), num_sms entries
+S_SMCTR = 16  # per-SM arrival (cta binding) / ticket (tile binding) counters, num_sms entries
 N_OUT = 16
 
 # int32 entries of the shared dispatch slot. Only 4 are used, but the slot is padded to 128 B:
@@ -286,6 +294,10 @@ def validate_orch(orch: Orch, roles: list[Role]) -> int:
         raise ValueError(f"schedule must be one of {SCHEDULES}")
     if orch.smem not in SMEM_MODES:
         raise ValueError(f"smem must be one of {SMEM_MODES}")
+    if orch.binding == "tile" and (orch.schedule != "dynamic" or not orch.takeover):
+        # the per-grab ticket needs per-role queues, and it always falls back to the other
+        # role once the drawn one is exhausted (POD), i.e. takeover is part of the policy
+        raise ValueError('binding="tile" needs schedule="dynamic" and takeover=True')
     if isinstance(orch.chunk, (tuple, list)) and len(orch.chunk) != 2:
         raise ValueError("chunk must be an int or a (chunk_A, chunk_B) pair")
     if min(orch.chunks) < 1:
@@ -334,6 +346,7 @@ def build_cokernel(opA, shapeA, cfgA, opB, shapeB, cfgB, orch: Orch, dev: Device
     num_sms = dev.num_sms
     alias = orch.smem == "alias"
     dynamic = orch.schedule == "dynamic"
+    tile_bind = orch.binding == "tile"
     takeover = orch.takeover
     timing = orch.timing
     debug = orch.debug
@@ -432,9 +445,13 @@ def build_cokernel(opA, shapeA, cfgA, opB, shapeB, cfgB, orch: Orch, dev: Device
                     sm_v = sm_v % num_sms
                 if orch.binding == "sm":
                     my_role = args["co_sm_role"][sm_v]
-                else:
+                elif orch.binding == "cta":
                     j = T.atomic_add(st[S_SMCTR + sm_v], 1, return_prev=True)
                     my_role = T.if_then_else(j % (knobs[0] + knobs[1]) < knobs[0], 0, 1)
+                else:
+                    # tile binding: no per-CTA role (drawn per grab); CTAs are counted as A
+                    my_role = 0
+                    cr = 0
                 if not dynamic:
                     rank = T.atomic_add(st[S_RANK + my_role], 1, return_prev=True)
                     if takeover:
@@ -450,7 +467,36 @@ def build_cokernel(opA, shapeA, cfgA, opB, shapeB, cfgB, orch: Orch, dev: Device
                 if tx == 0:
                     o_r = DONE
                     o_t = 0
-                    if ph < NPH:
+                    if tile_bind:
+                        # POD policy: draw the role of every grab from the SM's ticket counter;
+                        # fall back to the other role if the drawn queue is exhausted; ph = 1
+                        # once both are (o_r stays DONE). The finished chunk is published
+                        # (flush) before the next draw, so per-role counts and end times stay
+                        # exact although the CTA alternates roles.
+                        if ph == 0:
+                            if left == 0:
+                                flush(st, tacc, cr, cnt, tlast)
+                                cnt = 0
+                                j = T.atomic_add(st[S_SMCTR + sm_v], 1, return_prev=True)
+                                cr = T.if_then_else(j % (knobs[0] + knobs[1]) < knobs[0], 0, 1)
+                                nr = T.if_then_else(cr == 0, NA, NB)
+                                ch = T.if_then_else(cr == 0, CHA, CHB)
+                                nxt = T.atomic_add(st[S_Q + cr], ch, return_prev=True)
+                                left = T.max(T.min(nr - nxt, ch), 0)
+                                if left == 0:
+                                    cr = 1 - cr
+                                    nr = T.if_then_else(cr == 0, NA, NB)
+                                    ch2 = T.if_then_else(cr == 0, CHA, CHB)
+                                    nxt = T.atomic_add(st[S_Q + cr], ch2, return_prev=True)
+                                    left = T.max(T.min(nr - nxt, ch2), 0)
+                            if left > 0:
+                                o_r = cr
+                                o_t = nxt
+                                nxt = nxt + 1
+                                left = left - 1
+                            else:
+                                ph = 1
+                    elif ph < NPH:
                         cr = T.if_then_else(ph == 0, my_role, 1 - my_role)
                         nr = T.if_then_else(cr == 0, NA, NB)
                         if dynamic:
@@ -563,7 +609,7 @@ def build_cokernel(opA, shapeA, cfgA, opB, shapeB, cfgB, orch: Orch, dev: Device
                     st[S_EPOCH] = st[S_EPOCH] + 1
                     for k in T.unroll(4):
                         tacc[k] = T.int64(0)
-                if orch.binding == "cta":
+                if orch.binding in ("cta", "tile"):
                     for i in T.serial(ceildiv(num_sms, threads)):
                         if i * threads + tx < num_sms:
                             st[S_SMCTR + i * threads + tx] = 0

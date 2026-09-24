@@ -27,6 +27,12 @@ def _run_op(name: str, limit: int | None = None, gpu: bool = True, workers: int 
     cfgs = op.configs(shape)
     if limit:
         cfgs = cfgs[:limit]
+    if name == "prefill_attn":
+        # FlashInfer's CTA order (not a library config; the P4-b POD emulation uses it):
+        # kvhead twins of the first two configs join their numerics groups (bitwise checks)
+        import dataclasses
+
+        cfgs = cfgs + [dataclasses.replace(c, order="kvhead") for c in cfgs[:2]]
     run = H.build_and_compile(op, shape, cfgs, num_workers=workers)
     H.extract_signatures(run)
     if gpu:

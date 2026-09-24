@@ -102,6 +102,11 @@ def orch_variants(pair: str, debug: bool) -> list[Orch]:
                         debug=debug,
                     )
                 )
+    # tile binding (POD's per-grab SM ticket; dynamic queues, fallback = takeover): every
+    # pair, at its co-resident CTA count (1 CTA/SM for the big-tile pairs)
+    per_sm = c or 1
+    out.append(Orch(binding="tile", schedule="dynamic", chunk=chunk, takeover=True,
+                    num_ctas=DEFAULT_DEVICE.num_sms * per_sm, min_blocks_per_sm=per_sm, debug=debug))
     return out
 
 
@@ -118,6 +123,11 @@ def knob_settings(orch: Orch, c: int | None) -> list[dict]:
         if orch.takeover:
             ks += [{"sm_role": sm_role_table(n), "label": "sm188(allA)"}, {"sm_role": sm_role_table(0), "label": "sm0(allB)"}]
         return ks
+    if orch.binding == "tile":
+        # the ratio is a per-SM ticket ratio over grabs, any value works at any CTAs/SM;
+        # (1, 0) / (0, 1): every ticket draws one role, the other runs only as fallback
+        ratios = [(1, 1), (2, 1), (1, 3), (1, 0), (0, 1)]
+        return [{"ratio": r, "label": f"t{r[0]}:{r[1]}"} for r in ratios]
     ratios = [(1, 1)] if c == 2 else [(1, 1), (1, 3), (3, 1)]
     ks = [{"ratio": r, "label": f"r{r[0]}:{r[1]}"} for r in ratios]
     if orch.takeover:

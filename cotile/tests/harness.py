@@ -99,6 +99,10 @@ def check_tile_space(op, shape, cfg) -> bool:
         w = ts.works()
         if sum(w) != catalog.work(op.NAME, shape, cfg)["flops_mma"]:
             return False
+        if cfg.order == "kvhead":
+            # FlashInfer's order: non-decreasing within every KV head's segment of nq*G tiles
+            seg = nq * shape.group
+            return all(all(a <= b for a, b in zip(w[i:i + seg], w[i + 1:i + seg])) for i in range(0, len(w), seg))
         pairs = list(zip(w, w[1:]))
         return all(a >= b for a, b in pairs) if cfg.order == "lpt" else all(a <= b for a, b in pairs)
     return True

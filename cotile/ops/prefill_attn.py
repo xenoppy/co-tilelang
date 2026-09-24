@@ -32,7 +32,12 @@ Tile order (config `order`):
                order of the grid build's blockIdx, of the persistent build's grid-stride and
                of a CoKernel's dynamic queue.
     "natural"  shortest first: qb = t // Hq (control; the classic tail-heavy order).
-Both orders are bitwise-neutral (a tile's arithmetic does not depend on its id).
+    "kvhead"   FlashInfer's CTA order (single_prefill / POD: blockIdx -> (q tile, KV head)
+               with the KV head outermost): KV head kvh = t // (nq*G), then query blocks in
+               ascending order, the G query heads of a group adjacent. The work is a
+               sawtooth (short to long within every KV head), not globally sorted. Not in
+               `configs()`: a control for emulating POD's scheduling (P4-b).
+All orders are bitwise-neutral (a tile's arithmetic does not depend on its id).
 
 Causal masking. For KV block k the score tile is initialised with 0 (visible) or -inf
 (masked) and the QK^T GEMM accumulates into it (same cost as a clear). Fully masked rows
@@ -71,7 +76,7 @@ NAME = "prefill_attn"
 DTYPE = "bfloat16"
 ACCUM = "float32"
 LOG2E = 1.44269504088896340736
-ORDERS = ("lpt", "natural")
+ORDERS = ("lpt", "natural", "kvhead")
 EPILOGUES = ("smem", "direct")
 
 
@@ -142,8 +147,13 @@ def tile_space(shape: PrefillShape, cfg: PrefillConfig) -> TileSpace:
     nq = shape.seqlen // cfg.block_M
     H, G = shape.heads, shape.group
     lpt = cfg.order == "lpt"
+    kvhead = cfg.order == "kvhead"
 
     def decode(tile_id):
+        if kvhead:
+            kvh = tile_id // (nq * G)
+            r = tile_id % (nq * G)
+            return Coords(r // G, kvh * G + r % G, kvh)
         r = tile_id // H
         h = tile_id % H
         qb = (nq - 1 - r) if lpt else r

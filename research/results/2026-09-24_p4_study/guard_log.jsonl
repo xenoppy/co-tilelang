@@ -1,0 +1,26 @@
+{"event": "launch", "waited_s": 5.5, "cmd": "python p4_study.py P2048_B16_S2048 --stages SA,SB,SC,SD,F,R", "t": "2026-09-24 06:23:30"}
+{"event": "exit", "rc": 0, "wall_s": 1513.7, "t": "2026-09-24 06:48:43"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P8192_B64_S8192 --stages SA,SB,SC,SD,F,R", "t": "2026-09-24 06:49:05"}
+{"event": "exit", "rc": 1, "wall_s": 78.6, "t": "2026-09-24 06:50:24"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P8192_B64_S8192 --stages SA,SB,SC,SD,F,R", "t": "2026-09-24 06:50:54"}
+{"event": "exit", "rc": 0, "wall_s": 1742.1, "t": "2026-09-24 07:19:56"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P2048_B16_S8192 --stages SA,SB,SC,SD,F,R", "t": "2026-09-24 07:20:01"}
+{"event": "exit", "rc": 0, "wall_s": 1667.6, "t": "2026-09-24 07:47:49"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P2048_B64_S2048 --stages SA,SB,SC,SD,F,R", "t": "2026-09-24 07:47:55"}
+{"event": "exit", "rc": 0, "wall_s": 1754.3, "t": "2026-09-24 08:17:09"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P8192_B16_S2048 --stages R,FQ", "t": "2026-09-24 08:17:15"}
+{"event": "exit", "rc": 0, "wall_s": 817.6, "t": "2026-09-24 08:30:53"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P8192_B16_S8192 --stages R,FQ", "t": "2026-09-24 08:30:59"}
+{"event": "exit", "rc": 0, "wall_s": 803.3, "t": "2026-09-24 08:44:22"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P8192_B64_S2048 --stages R,FQ", "t": "2026-09-24 08:44:29"}
+{"event": "exit", "rc": 0, "wall_s": 801.3, "t": "2026-09-24 08:57:50"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P2048_B64_S8192 --stages R,FQ", "t": "2026-09-24 08:57:56"}
+{"event": "exit", "rc": 0, "wall_s": 732.6, "t": "2026-09-24 09:10:09"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P2048_B16_S2048 --stages AT", "t": "2026-09-24 09:10:32"}
+{"event": "exit", "rc": 0, "wall_s": 421.9, "t": "2026-09-24 09:17:34"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P8192_B64_S8192 --stages AT", "t": "2026-09-24 09:17:40"}
+{"event": "exit", "rc": 0, "wall_s": 344.0, "t": "2026-09-24 09:23:24"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P2048_B16_S8192 --stages AT", "t": "2026-09-24 09:23:31"}
+{"event": "exit", "rc": 0, "wall_s": 345.0, "t": "2026-09-24 09:29:16"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p4_study.py P2048_B64_S2048 --stages AT", "t": "2026-09-24 09:29:22"}
+{"event": "exit", "rc": 0, "wall_s": 397.5, "t": "2026-09-24 09:35:59"}
