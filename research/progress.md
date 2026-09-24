@@ -157,6 +157,24 @@
 - "被占用"改回按计算判断：外部进程在 pmon 中有 SM 活动才算占用；只持有显存的外部进程不阻塞我们（仍检查剩余显存是否足够，保持小显存占用）。占用时仍按规则 7 挂起 30 分钟再查；运行中出现外部 SM 活动则做完当前测点后让出、30 分钟后再查。严格模式（任何外部进程即占用）保留为非默认选项。
 - 当时状态：Part B 已完成 main、r029、r058 三对的 FQ/R 阶段；r223 在 07:10 因 qzr 的进程出现（显存 45GB、SM 0%）而按严格策略让出等待。已停止等待中的包装进程，通知子 agent 按新策略立即重启 r223 并继续 second 与其余工作。
 
+## 2026-09-24 03:35 — 会话重启后恢复
+
+**现状**
+- 上一会话在 09-23 07:53 之后结束，Part B 子 agent 随之终止。Part B 已完成 main（完整 derived 搜索）、r029、r058（精简协议 FQ + 鲁棒性 R）；r223 在 07:48 因 qzr 的任务真正占用计算（SM 活动、仅剩 1.6GB 显存）让出，阻塞 2 小时后于 09:48 按策略停止；second 未开始。代码改动（L2 提示轴、ptxas 规避、缓存键覆盖模板头、GPU 守卫策略、p1b 脚本）仍未提交。
+- GPU：qzr 的 ray worker 持有 32GB，无 SM 活动 → 按用户的规则不算占用。
+- 子 agent 类型 `researcher`（opus、effort xhigh）现在可用，从此改用它（符合规则 1）。
+
+**Part B 中期结论（main、r029、r058，稳态）**
+- 唯一有效的 derived 轴是 decode K/V 加载的 L2 evict-first 提示：相对最好的 lib 变体，inter / intra 分别快 2.2%/1.6%（main）、4.4%/4.4%（r029）、8.7%/5.6%（r058）；单跑毫无价值（±0.25%），所以是"只在共置时才值得选"的实现。机制与 proposal 效应 4 一致：K/V 流不再把 GEMM 的操作数面板挤出 L2，DRAM 字节与能耗下降（r058 每轮能耗 479 → 440 mJ，时间同比例下降）。
+- 但它对 green 分区与 CoKernel 的帮助一样大（甚至 green 更多），所以**不是 kernel 内编排带来的效应**，proposal §4 的交互项 ≈ 0。
+- 其余 derived 轴都更差：split-K GEMM −10%，split-KV decode −1%，每 CTA 更少 head −7%，寄存器上限下的 CTA 共驻 −8%，GEMM A/B evict_last 0 到 −2%。
+- D1（阈值未改）：完整主张 0/3 对、弱化主张 0/3 对。r058 的重推导比值 1.056 过线，但同一提示让 green 更快，T_inter*/T[derived,intra] = 0.985。
+- **B3 鲁棒性假设成立**：8 个划分中 CoKernel（动态 + 接手）最差 ×1.061–1.077，green 最差 ×0.753–0.854（比串行慢）；按单跑时间成比例划分（R1）的 regret：CoKernel 1.000–1.092，green 1.255–1.489；把 main 的最优划分迁移到其他对：CoKernel regret ≤1.003，green 1.048–1.076。但在 oracle 划分下 green 与 CoKernel 相差 ±3% 以内或更好——CoKernel 的价值是鲁棒性，不是更高的最优值。
+- 其他发现：ptxas 12.9 在 sm_120 上带 cache policy 的 cp.async 会错误编译约 1/3 的 GEMM 配置（运行时非法指令），已用 64 位共享地址形式规避并加 SASS lint；kernel 缓存键原先不覆盖 `tl_templates` 头文件，已修（`tilelang/cache/build_stamp.py`）。
+
+**进行中**
+- 收尾 P1-3x2-B（researcher agent）：r223、second 两对的 FQ + R；重新生成表格与 README；跑全部测试套件；列出所有未提交文件供提交。之后按 plan v0.4 做 P4（与 POD 同条件对比）。
+
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
