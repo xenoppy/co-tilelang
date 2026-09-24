@@ -206,6 +206,8 @@
 - 配对表（稳态）：POD 相对 FlashInfer 串行 1.01–1.37×；只有 P2048_B16_S2048（时长比 1.56）与 P8192_B64_S8192（1.30）落在 0.5–2 之内，两个 0.41 的对勉强；prefill 为主的对（时长比 5–20）上限很低（1.03–1.14）。
 - 其他：S=8192 时原有的误差容限对 FlashInfer、TileLang、torch bf16 SDPA 都不通过（长 causal 行输出很小，缩小了容限尺度），改为同时接受"不比 torch bf16 差"。GPU 约 45 分钟测量。`~/.tilelang/cache` 有 2.7GB 旧缓存，未动。
 
+- P4-b（进行中，06:15 启动，researcher agent）：与 POD 的同条件对比。主研究对 P2048_B16_S2048、P8192_B64_S8192、P2048_B16_S8192、P2048_B64_S2048；次要对只做 F + R。完成标准：Q1 每对一轮最终交错稳态测量，含 TL 串行与 FI 串行、TL 双流、细扫 green（± L2 提示）、打补丁的 POD、CoKernel SM 级与 CTA 级（solo / lib / derived），各自对照自己的串行并给出绝对时间、频率 / 功耗 / 能耗、各角色完成时间；Q2 回答 (a) POD 是否胜过最好的 TileLang 跨 kernel 方案和 / 或最好的 CoKernel，(b) 同 SM 混跑在这对上是否胜过按 SM 划分，(c) 差距归因（算子特性 vs 实现：移植 POD 的 decode tile / 每 SM CTA 数 / 虚拟 CTA；剥离 TileLang 单跑更快的影响）；Q3 P4 的 D1 读数；Q4 鲁棒性；Q5 结果目录与测试，GPU ≤ 3h。
+
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
