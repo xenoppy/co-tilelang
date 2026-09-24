@@ -197,6 +197,8 @@
 - **kernel 内 tile 级动态调度的价值是鲁棒性**：不需要 oracle 划分、不需要逐对调参就能拿到接近最优的收益，而 green 分区选错会比串行更慢。这是 green context 做不到的，但 mKernel 等在别的场景有类似的运行时自适应。
 - D1 在 P1–P4 上决定。按 plan v0.4，下一步做 P4（prefill × decode，与 POD 同条件对比），它是唯一可能出现"同 SM 共驻胜过分区"的场景。
 
+- P4-a（进行中，04:55 启动，researcher agent）：P4 的基础设施。完成标准：P1' 算子库加入 causal prefill attention（与 decode 同一头配置 Hq=32/Hkv=8/D=128；tile 暴露每个 tile 的工作量以便长任务优先；配置枚举、数值键、grid / 持久化版、资源签名；逐配置正确性、grid 与持久化逐位相同；prefill × decode 的 CoKernel 测试）；P2' FlashInfer POD 的计数器改为在 kernel 所在流上按序复位（补丁文件 + 逐位验证：默认流与原版相同，side stream / green 流 / CUDA graph 回放结果正确）；P3' 稳态单跑 profiling（prefill 全配置 + SM 预算曲线、decode 缺失部分、FlashInfer 参照），TileLang prefill 若比 FlashInfer 慢 >10% 必须标出，给出 8 个 P4 对的配对表；P4' 结果目录与脚本，GPU ≤ 2h。
+
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
