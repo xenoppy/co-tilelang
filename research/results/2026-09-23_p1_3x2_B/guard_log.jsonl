@@ -1,0 +1,21 @@
+{"event": "launch", "waited_s": 5.5, "cmd": "python p1b_study.py main --stages DC1,DC2,DC3,DC4,F,R", "t": "2026-09-23 06:19:25"}
+{"event": "exit", "rc": 0, "wall_s": 1689.7, "t": "2026-09-23 06:47:35"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p1b_study.py r029 --stages FQ,R", "t": "2026-09-23 06:48:20"}
+{"event": "exit", "rc": 0, "wall_s": 581.1, "t": "2026-09-23 06:58:01"}
+{"event": "launch", "waited_s": 5.5, "cmd": "python p1b_study.py r058 --stages FQ,R", "t": "2026-09-23 06:58:07"}
+{"event": "exit", "rc": 0, "wall_s": 629.4, "t": "2026-09-23 07:08:37"}
+{"event": "launch", "waited_s": 5.5, "cmd": "python p1b_study.py r223 --stages FQ,R", "t": "2026-09-23 07:08:43"}
+{"event": "exit", "rc": 75, "wall_s": 80.4, "t": "2026-09-23 07:10:04"}
+{"event": "yield", "t": "2026-09-23 07:10:04"}
+{"event": "launch", "waited_s": 5.5, "cmd": "python p1b_study.py r223 --stages FQ,R", "t": "2026-09-23 07:41:12"}
+{"event": "exit", "rc": 75, "wall_s": 464.8, "t": "2026-09-23 07:48:57"}
+{"event": "yield", "t": "2026-09-23 07:48:57"}
+{"event": "blocked", "detail": "GPU still occupied after 7200s (foreign SM activity; only 1622 MiB free < 8192 MiB: procs [] active [(1066136, 'ray::WorkerDict.actor_rollout_load_checkpoint')])", "t": "2026-09-23 09:48:57"}
+{"event": "launch", "waited_s": 5.5, "cmd": "python p1b_study.py r223 --stages FQ,R", "t": "2026-09-24 03:37:09"}
+{"event": "exit", "rc": 0, "wall_s": 709.9, "t": "2026-09-24 03:48:59"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p1b_study.py second --stages FQ,R", "t": "2026-09-24 03:49:05"}
+{"event": "exit", "rc": 0, "wall_s": 670.5, "t": "2026-09-24 04:00:16"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p1b_study.py r029 --stages FQ --redo", "t": "2026-09-24 04:07:14"}
+{"event": "exit", "rc": 0, "wall_s": 328.1, "t": "2026-09-24 04:12:42"}
+{"event": "launch", "waited_s": 5.4, "cmd": "python p1b_study.py r029 --stages R --redo", "t": "2026-09-24 04:12:48"}
+{"event": "exit", "rc": 0, "wall_s": 202.8, "t": "2026-09-24 04:16:11"}

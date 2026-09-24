@@ -61,6 +61,10 @@ PAIRS = {
     "gr_split": (gemm, G(128, 128, 64, 2, 256, split_k=2), rmsnorm, R(4, 128, 8), None),
     # small: 4 CTAs/SM -> CTA binding with ratios 1:1, 1:3, 3:1
     "gr_small": (gemm, G(64, 64, 32, 2, 128), rmsnorm, R(2, 128, 8), 4),
+    # L2 eviction-policy axes: GEMM A/B loads evict_last (a config that hits the ptxas
+    # desc[UR1] miscompile with the 32-bit shared address), decode K/V loads evict_first
+    "gd_l2": (gemm, G(128, 128, 64, 2, 128, ab_l2="evict_last"), gqa_decode, D(64, 4, 1, 64, 1, kv_l2="evict_first"),
+              None),
 }
 
 
@@ -191,6 +195,8 @@ def signatures(specs: dict) -> list[dict]:
             "num_barriers": sig["num_barriers"],
             "ctas_per_sm": sig["ctas_per_sm"],
             "limit_by": sig["limit_by"],
+            # ptxas miscompile guard (cp.async with an L2 cache policy, resources.py)
+            "invalid_mem_desc": len(resources.invalid_memory_descriptors(resources.sass(resources.cubin_bytes(s.kernel)))),
         }
         row.update(code_observations(s))
         rows.append(row)
@@ -344,7 +350,7 @@ def _run(pairs, gpu=True, workers=32):
     rows = []
     if gpu:
         if not H.wait_for_gpu():
-            raise RuntimeError("GPU busy with another compute process for 15 min; aborting GPU tests")
+            raise RuntimeError("GPU occupied past the guard deadline (cobench.GuardPolicy); aborting GPU tests")
         rows = run_gpu(specs, pairs)
     return specs, cst, sigs, rows
 
@@ -352,6 +358,7 @@ def _run(pairs, gpu=True, workers=32):
 def test_cokernel_all():
     specs, cst, sigs, rows = _run(list(PAIRS))
     assert cst["n_fail"] == 0, cst
+    assert all(r["invalid_mem_desc"] == 0 for r in sigs), [r for r in sigs if r["invalid_mem_desc"]][:3]
     assert rows and all(r["ok"] for r in rows), [r for r in rows if not r["ok"]][:5]
 
 
@@ -389,7 +396,10 @@ def main(argv=None) -> int:
         H.write_csv(os.path.join(a.out, "cokernel_signatures.csv"), sigs)
         with open(os.path.join(a.out, "cokernel_summary.json"), "w") as f:
             json.dump(summary, f, indent=1, default=str)
-    ok = cst["n_fail"] == 0 and (a.no_gpu or (rows and all(r.get("ok") for r in rows)))
+    bad_desc = [(r["pair"], r["orch"]) for r in sigs if r["invalid_mem_desc"]]
+    if bad_desc:
+        H.log(f"  INVALID MEMORY DESCRIPTORS (ptxas miscompile) in {bad_desc[:10]}")
+    ok = cst["n_fail"] == 0 and not bad_desc and (a.no_gpu or (rows and all(r.get("ok") for r in rows)))
     return 0 if ok else 1
 
 

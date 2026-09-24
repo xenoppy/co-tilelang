@@ -66,6 +66,24 @@ class DecodeConfig:
     num_split: int = 1  # split-KV chunks, combined in-kernel
     threads: int = 128
     num_stages: int = 2
+    # L2 eviction priority of the streaming K/V loads (cp.async .L2::cache_hint,
+    # T.copy(..., eviction_policy=...)): "normal" | "evict_first" | "evict_last".
+    # K/V are read exactly once per call, so the hint has no solo value; in a
+    # co-run, evict_first keeps the stream from evicting the partner's L2-resident
+    # data (e.g. a GEMM's operand panels). Data and instructions are unchanged
+    # (bitwise-neutral).
+    kv_l2: str = "normal"
+
+
+L2_POLICIES = ("normal", "evict_first", "evict_last")
+_L2_TAG = {"normal": "", "evict_first": "_l2ef", "evict_last": "_l2el"}
+
+
+def l2_policy_arg(policy: str):
+    """T.copy eviction_policy argument for a config's L2 policy (None = no hint)."""
+    if policy not in L2_POLICIES:
+        raise ValueError(f"L2 policy must be one of {L2_POLICIES}, got {policy!r}")
+    return None if policy == "normal" else policy
 
 
 Coords = namedtuple("DecodeTile", "b kvh hb s g")
@@ -73,7 +91,8 @@ IO = namedtuple("DecodeIO", "Q K V O Op Lse Ctr")
 
 
 def cfg_tag(cfg: DecodeConfig) -> str:
-    return f"n{cfg.block_N}_h{cfg.heads_per_cta}_sp{cfg.num_split}_t{cfg.threads}_s{cfg.num_stages}"
+    return (f"n{cfg.block_N}_h{cfg.heads_per_cta}_sp{cfg.num_split}_t{cfg.threads}_s{cfg.num_stages}"
+            + _L2_TAG[cfg.kv_l2])
 
 
 def validate(shape: DecodeShape, cfg: DecodeConfig) -> None:
@@ -101,6 +120,7 @@ def validate(shape: DecodeShape, cfg: DecodeConfig) -> None:
         raise ValueError(f"seqlen={shape.seqlen} must be divisible by num_split*block_N={cfg.num_split * cfg.block_N}")
     if cfg.num_stages < 1:
         raise ValueError("num_stages >= 1")
+    l2_policy_arg(cfg.kv_l2)
 
 
 def tile_space(shape: DecodeShape, cfg: DecodeConfig) -> TileSpace:
@@ -168,6 +188,7 @@ def make_tile_body(shape: DecodeShape, cfg: DecodeConfig):
     nblk = chunk // BN
     stages = cfg.num_stages
     sc = LOG2E / math.sqrt(D)  # softmax scale folded into exp2
+    kv_hint = l2_policy_arg(cfg.kv_l2)
 
     @T.macro
     def tile_body(tile_id, io, scr):
@@ -189,7 +210,7 @@ def make_tile_body(shape: DecodeShape, cfg: DecodeConfig):
         T.fill(l, 0)
         T.fill(m, -T.infinity(ACCUM))
         for k in T.Pipelined(nblk, num_stages=stages):
-            T.copy(io.K[c.b, s0 + k * BN : s0 + (k + 1) * BN, c.kvh, :], scr.K_s)
+            T.copy(io.K[c.b, s0 + k * BN : s0 + (k + 1) * BN, c.kvh, :], scr.K_s, eviction_policy=kv_hint)
             T.clear(acc_s)
             T.gemm(scr.Q_s, scr.K_s, acc_s, transpose_B=True, policy=T.GemmWarpPolicy.FullCol)
             T.copy(m, m_prev)
@@ -211,7 +232,7 @@ def make_tile_body(shape: DecodeShape, cfg: DecodeConfig):
             T.copy(acc_s, scr.P_s)
             for i, j in T.Parallel(BH, D):
                 acc_o[i, j] *= alpha[i]
-            T.copy(io.V[c.b, s0 + k * BN : s0 + (k + 1) * BN, c.kvh, :], scr.V_s)
+            T.copy(io.V[c.b, s0 + k * BN : s0 + (k + 1) * BN, c.kvh, :], scr.V_s, eviction_policy=kv_hint)
             T.gemm(scr.P_s, scr.V_s, acc_o, policy=T.GemmWarpPolicy.FullCol)
         # Outputs are written straight from the accumulator fragment, rows < HPC only
         # (a region copy of a 1-row fragment slice fails TileLang layout inference).
@@ -285,7 +306,8 @@ def smem_bytes(shape: DecodeShape, cfg: DecodeConfig, build: str) -> int:
 def numerics(cfg: DecodeConfig) -> tuple[str, tuple]:
     """KV block size (online-softmax rescale points), split-KV (combine) and the thread
     count (cross-warp reduction tree of the row max/sum) change the bits: E1.
-    heads_per_cta and num_stages do not (rows are independent in both GEMMs)."""
+    heads_per_cta, num_stages and the K/V L2 policy do not (rows are independent in
+    both GEMMs; a cache hint does not change the data)."""
     return ("E1", (cfg.block_N, cfg.num_split, cfg.threads))
 
 

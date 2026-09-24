@@ -35,7 +35,7 @@ import torch
 
 from .clock import ClockProbe
 from .cudrv import device_index
-from .guard import SLACK_S, get_guard
+from .guard import SLACK_S, GpuYield, get_guard, get_policy
 from .nvml import NvmlDevice, NvmlSampler, gpu_state
 from .timing import CV_TARGET, _side_stream
 from .variants import Par, _nargs
@@ -174,6 +174,10 @@ def bench_steady(variants: dict, *, reference: str | None = "serial", slice_s: f
             if not chk["complete"]:
                 say("[steady] warning: pmon did not cover the end of the run")
             return res
+        if get_policy().yield_to_caller:
+            # the point is discarded and re-measured after the caller has waited (GuardPolicy)
+            raise GpuYield(f"bench_steady: foreign SM activity during the run ({chk['active']}); yielding",
+                           {"contaminated": attempts})
         say(f"[steady] foreign SM activity during the run ({chk['active']}); re-measuring")
     raise RuntimeError(f"bench_steady: every attempt was contaminated by foreign GPU work: {attempts}")
 

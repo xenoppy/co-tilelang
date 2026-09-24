@@ -112,6 +112,42 @@ def _run_cuobjdump(args: list[str], cubin: bytes) -> str:
         os.unlink(path)
 
 
+def sass(cubin: bytes) -> str:
+    """Disassembly (cuobjdump -sass) of a cubin."""
+    return _run_cuobjdump(["-sass"], cubin)
+
+
+def invalid_memory_descriptors(sass_text: str) -> list[str]:
+    """Global-memory instructions whose 64-bit memory descriptor (`desc[URn]`) is an odd
+    uniform register or one that no instruction of the function writes.
+
+    Guards against a ptxas 12.9 (sm_120/120a) miscompile of cp.async with an L2 cache
+    policy: when ptxas folds a uniform shared-memory base into the LDGSTS address
+    ([Rx+URy]) it emits `desc[UR1]` with UR0/UR1 never written, and the kernel faults with
+    "illegal instruction" (see src/tl_templates/cuda/copy.h, cp_async_gs_l2hint). A
+    heuristic over the text disassembly: uniform registers written by any instruction
+    (pairs for .64/WIDE writes) count as defined."""
+    written, bad = set(), []
+    for line in sass_text.splitlines():
+        m = re.search(r"/\*[0-9a-f]{4}\*/\s+(.*?);", line)
+        if not m:
+            continue
+        ins = re.sub(r"^@!?U?P\w+\s+", "", m.group(1))
+        parts = ins.split(None, 1)
+        if len(parts) == 2:
+            dst = parts[1].split(",")[0].strip()
+            if re.fullmatch(r"UR\d+", dst):
+                n = int(dst[2:])
+                written.add(n)
+                if parts[0].endswith(".64") or "WIDE" in parts[0]:
+                    written.add(n + 1)
+        for d in re.findall(r"desc\[UR(\d+)\]", ins):
+            n = int(d)
+            if n % 2 or (n not in written and n + 1 not in written):
+                bad.append(re.sub(r"\s+", " ", ins))
+    return bad
+
+
 def parse_resource_usage(text: str) -> dict:
     """cuobjdump --dump-resource-usage -> {function: {REG, STACK, SHARED, LOCAL, ...}}"""
     out, fn = {}, None

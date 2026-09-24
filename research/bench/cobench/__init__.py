@@ -26,14 +26,16 @@ from .smid import (SmRemap, build_sm_remap, globaltimer_resolution, globaltimer_
                    one_cta_per_sm_smem, probe_ctas)
 from .timing import (DEFAULT_FLUSH, FLUSH_KINDS, BenchResult, CorunResult, VariantsResult, bench, bench_corun,
                      bench_variants, l2_bytes, summarize, tensor_bytes)
-from .guard import GpuBusy, GpuGuard, foreign_activity, get_guard, wait_until_free
+from .guard import (ComputeProc, GpuBusy, GpuGuard, GpuYield, GuardPolicy, foreign_activity, get_guard, get_policy,
+                    free_mib, list_compute_procs, occupancy, occupied, set_policy, wait_loop, wait_until_free)
 from .variants import Par, Rotation
 from .steady import HostGapError, SteadyResult, bench_steady
 
 __all__ = [
     "bench", "bench_corun", "BenchResult", "CorunResult", "summarize", "tensor_bytes", "l2_bytes",
     "FLUSH_KINDS", "DEFAULT_FLUSH", "bench_variants", "VariantsResult", "bench_steady", "SteadyResult", "HostGapError", "Par", "Rotation",
-    "GpuGuard", "GpuBusy", "get_guard", "wait_until_free", "foreign_activity", "read_u4", "discard_l2",
+    "GpuGuard", "GpuBusy", "GpuYield", "GuardPolicy", "ComputeProc", "get_guard", "get_policy", "set_policy",
+    "wait_until_free", "wait_loop", "occupancy", "occupied", "list_compute_procs", "foreign_activity", "read_u4", "discard_l2",
     "NvmlSampler", "NvmlDevice", "gpu_state",
     "split_sms", "query_split", "SmPartition", "GreenContext",
     "probe_ctas", "build_sm_remap", "SmRemap", "globaltimer_resolution", "globaltimer_skew",

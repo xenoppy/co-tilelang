@@ -47,6 +47,16 @@ from ..kernel import (
 
 NAME = "gemm"
 DTYPE = "bfloat16"
+L2_POLICIES = ("normal", "evict_first", "evict_last")
+_L2_TAG = {"normal": "", "evict_first": "_l2ef", "evict_last": "_l2el"}
+
+
+def l2_policy_arg(policy: str):
+    """T.copy eviction_policy argument for a config's L2 policy (None = no hint)."""
+    if policy not in L2_POLICIES:
+        raise ValueError(f"L2 policy must be one of {L2_POLICIES}, got {policy!r}")
+    return None if policy == "normal" else policy
+
 ACCUM = "float32"
 
 # numerics class of the MMA instruction used on sm_120 (T.gemm -> mma.sync m16n8k16).
@@ -77,6 +87,12 @@ class GemmConfig:
     #         store); "direct": fragment -> global stores, no C staging buffer.
     epilogue: str = "smem"
     group_m: int = 8
+    # L2 eviction priority of the A/B operand loads (T.copy eviction_policy: a
+    # cp.async .L2::cache_hint, or the TMA cache hint with ws="auto"):
+    # "normal" | "evict_first" | "evict_last". evict_last keeps the operand panels,
+    # which the GEMM re-reads from L2 many times, resident against a streaming
+    # partner. Bitwise-neutral (E0).
+    ab_l2: str = "normal"
 
 
 Coords = namedtuple("GemmTile", "tm tn ks mn")
@@ -87,6 +103,7 @@ def cfg_tag(cfg: GemmConfig) -> str:
     return (
         f"{cfg.block_M}x{cfg.block_N}x{cfg.block_K}_s{cfg.num_stages}_t{cfg.threads}"
         f"_k{cfg.split_k}_ws{cfg.ws}_{cfg.epilogue}_g{cfg.group_m}"
+        + _L2_TAG[cfg.ab_l2]
     )
 
 
@@ -114,6 +131,7 @@ def validate(shape: GemmShape, cfg: GemmConfig) -> None:
         raise ValueError("epilogue must be 'smem' or 'direct'")
     if cfg.num_stages < 1 or cfg.group_m < 1:
         raise ValueError("num_stages >= 1 and group_m >= 1")
+    l2_policy_arg(cfg.ab_l2)
 
 
 def _mn_tiles(shape: GemmShape, cfg: GemmConfig):
@@ -188,6 +206,7 @@ def make_tile_body(shape: GemmShape, cfg: GemmConfig):
     kt = shape.K // (bK * S)  # k-blocks per split
     stages = cfg.num_stages
     smem_epilogue = cfg.epilogue == "smem"
+    ab_hint = l2_policy_arg(cfg.ab_l2)
 
     @T.macro
     def store_c(C_local, io, scr, m0, n0):
@@ -209,8 +228,8 @@ def make_tile_body(shape: GemmShape, cfg: GemmConfig):
         C_local = T.alloc_fragment((bM, bN), ACCUM)
         T.clear(C_local)
         for k in T.Pipelined(kt, num_stages=stages):
-            T.copy(io.A[m0 : m0 + bM, (k0 + k) * bK : (k0 + k + 1) * bK], scr.A_s)
-            T.copy(io.B[n0 : n0 + bN, (k0 + k) * bK : (k0 + k + 1) * bK], scr.B_s)
+            T.copy(io.A[m0 : m0 + bM, (k0 + k) * bK : (k0 + k + 1) * bK], scr.A_s, eviction_policy=ab_hint)
+            T.copy(io.B[n0 : n0 + bN, (k0 + k) * bK : (k0 + k + 1) * bK], scr.B_s, eviction_policy=ab_hint)
             T.gemm(scr.A_s, scr.B_s, C_local, transpose_B=True)
         if S == 1:
             store_c(C_local, io, scr, m0, n0)
@@ -260,7 +279,8 @@ def _align(n: int, a: int = 16) -> int:
 
 def numerics(cfg: GemmConfig) -> tuple[str, tuple]:
     """(class, key). Configs with equal keys are expected to be bitwise identical:
-    block_M/N/K, stages, threads, ws, epilogue and rasterization do not change the
+    block_M/N/K, stages, threads, ws, epilogue, rasterization and the operand L2
+    policy do not change the
     per-element K accumulation order as long as the MMA instruction is the same
     (proposal §5.5, E0); split_k changes it (E1)."""
     return ("E0" if cfg.split_k == 1 else "E1", (MMA_SHAPE, cfg.split_k))

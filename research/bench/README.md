@@ -8,6 +8,8 @@ research/bench/
              variants.py (Par, Rotation)  guard.py (pmon GPU guard)  clock.py (ClockProbe)
              nvml.py  green.py  smid.py  kernels.py  cudrv.py
   scripts/   smid_probe.py, repro_matmul.py (P0-2); solo_*.py (P1-S);
+             p1b_study.py, p1b_report.py (P1 3x2 part B: research/results/2026-09-23_p1_3x2_B);
+             run_guarded.py (runs a resumable study under the GPU-sharing policy);
              mv1_flush.py, mv1_steady.py, mv1_static.py, sched_variants.py, mv1_common.py (methodology v1);
              p1_common.py, p1_solo_v1.py, p1_study.py, p1_carveout.py, p1_report.py (P1 3x2 study, part A:
              research/results/2026-09-23_p1_3x2_A)
@@ -135,7 +137,24 @@ Measured (methodology v1, part A):
 
 ### GPU guard (`cobench.guard`)
 
-**Rule.** The GPU is occupied only while a foreign process shows SM% > 0 in `nvidia-smi pmon -s u`. A process that merely holds a context does not count.
+**Rule (since 2026-09-23, `cobench.GuardPolicy()` defaults).** Research/rules.md 7: query before launching; if occupied, suspend 30 minutes, then query again. The user clarified it on 2026-09-23.
+- **Occupied** = a process that is not ours shows SM activity in pmon (SM% > 0 within `quiet_s`).
+  - "Ours" = this process tree, or a process owned by this user.
+  - Foreign processes that only hold GPU memory (SM% '-' or 0) do not count.
+- **Free memory:** `min_free_mib` > 0 (`run_guarded.py --min-free-gib`, default 8) also makes the GPU count as occupied while less memory is free, because a foreign job can grow to ~95 GB. `p1_common.wait_gpu` additionally checks the free memory the study needs.
+- **Strict mode:** `GuardPolicy.strict()` (`run_guarded.py --strict`) counts any foreign compute process, idle or not. It was the default from 06:19 to 07:37 on 2026-09-23.
+- **Before launching** any job, stage or measurement point: if occupied, wait `poll_s` = 30 min, then re-check.
+- **Blocked** for more than `max_wait_s` = 2 h: `GpuBusy`. Stop and report instead of waiting further.
+- **While a job runs:** when foreign SM activity appears, finish the current measurement point, then yield.
+  - Yielding means: stop launching GPU work, release GPU memory, wait 30 min, re-check, and resume from the next point.
+  - With `set_policy(yield_to_caller=True)` the benches raise `GpuYield` (not a `RuntimeError`) instead of waiting in-process, so a resumable study can save its progress and exit.
+  - `research/bench/scripts/run_guarded.py -- <cmd>` holds no CUDA context. It waits under the policy, relaunches the command after a yield (exit code 75), and exits with code 3 after 2 h blocked.
+  - `p1b_study.py` saves every flush group (a measurement point) as soon as it is measured.
+- **Contamination:** a point measured while a process outside this process tree showed SM activity is discarded and re-measured. Under a yielding policy, this happens after the wait.
+- **The 2026-09-22 rule** is `GuardPolicy.legacy()`: tree-only, 150 s polls, 6 h deadline. Every waiting function takes `policy=` or single-field overrides (`poll_s`, `max_wait_s`, `quiet_s`).
+- **Tests:** test_13 covers the decision and wait logic with mocked process lists, pmon activity, free memory and clock.
+
+**Previous rule (2026-09-22), for reference.** The GPU is occupied only while a foreign process shows SM% > 0 in `nvidia-smi pmon -s u`. A process that merely holds a context does not count.
 
 **Implementation.**
 - `GpuGuard` streams `nvidia-smi pmon -s u -d 1` in a background thread.
@@ -193,7 +212,11 @@ s = cb.bench_steady({name: variant}, *, reference="serial", slice_s=1.5, settle_
 #                     kcycles_per_iter energy_mj_per_iter ops{op: median_us...} gaps
 #   s.derived["speedup"][name]: ratio_of_medians paired_median paired_min paired_max ; s.slices ; s.guard
 cb.Par((name, stream, fn), ..., order="given"|"reverse"|"alternate");  cb.Rotation(make_inputs, min_bytes=2*L2)
-cb.wait_until_free(quiet_s=5, poll_s=150, max_wait_s=6*3600); cb.foreign_activity(t0, t1); cb.get_guard()
+cb.wait_until_free(policy=None, quiet_s=None, poll_s=None, max_wait_s="policy")  # GuardPolicy: 30 min / 2 h
+cb.GuardPolicy(...), cb.GuardPolicy.legacy(), cb.set_policy(yield_to_caller=True), cb.get_policy()
+cb.occupied(policy=None) -> {occupied, reasons, foreign_procs, foreign_active}; cb.occupancy(...) (pure)
+cb.wait_loop(probe, policy, sleep=, now=); cb.list_compute_procs(); cb.GpuYield; cb.GpuBusy
+cb.foreign_activity(t0, t1); cb.get_guard()
 with cb.NvmlSampler(interval_ms=10) as s: ...;  s.summary()
 p = cb.split_sms(n, ignore_coscheduling=False)   # SmPartition: .n_sms .n_rest .stream .rest_stream
 cb.query_split(n, ignore_coscheduling=False); remap = cb.build_sm_remap(stream=None, expected=None)

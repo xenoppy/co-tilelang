@@ -38,7 +38,7 @@ import torch
 
 from .clock import ClockProbe, per_rep_clock
 from .cudrv import device_index
-from .guard import SLACK_S, get_guard
+from .guard import SLACK_S, GpuYield, get_guard, get_policy
 from .kernels import HostGate, discard_l2, read_u4
 from .nvml import NvmlSampler, gpu_state
 
@@ -132,6 +132,10 @@ def _guarded(run_once, guard: bool, attempts: int, what: str):
         res.guard = {"clean": chk["clean"], "complete": chk["complete"], "attempts": hist}
         if chk["clean"]:
             return res
+        if get_policy().yield_to_caller:
+            # the point is discarded and re-measured after the caller has waited (GuardPolicy)
+            raise GpuYield(f"{what}: foreign SM activity during the timed window {chk['active']}; yielding",
+                           {"contaminated": hist})
         print(f"[guard] {what}: foreign SM activity during the timed window {chk['active']}; "
               "re-measuring", flush=True)
     raise RuntimeError(f"{what}: every attempt was contaminated by foreign GPU work: {hist}")

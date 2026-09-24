@@ -18,6 +18,8 @@ test_10     M3 bench_steady: serial ~ sum of solos (non-power-capped pair), Par 
 test_11     ClockProbe carveout regression (the probe must not keep an SM from hosting a
             large-smem CTA; root cause of the P1-S "static persistent penalty")
 test_12     M3 repeatability across 3 processes (steady mode; reads the study JSON)
+test_13     GPU-sharing policy (2026-09-23): occupancy decision and wait loop on mocked
+            process lists / pmon activity / clock (no GPU work, no foreign job needed)
 """
 from __future__ import annotations
 
@@ -349,7 +351,10 @@ def test_9_guard():
     t_mid = time.time()
     busy = g.check(t_mid - 4.0, t_mid)
     assert not busy["clean"] and busy["active"], busy
-    waited = cb.wait_until_free(poll_s=2.0, max_wait_s=120, log=lambda m: print("    " + m))
+    # the detached process belongs to this user: the default policy (same_user_is_own) treats it
+    # as ours, so the tree-only (legacy) policy is used to exercise the pmon wait here
+    waited = cb.wait_until_free(policy=cb.GuardPolicy.legacy(poll_s=2.0, max_wait_s=120),
+                                log=lambda m: print("    " + m))
     assert waited > 0.5, waited
     rep.update({"own_clean": own["clean"], "child_clean": child["clean"], "foreign_detected": busy["active"],
                 "foreign_max_sm": busy["max_sm"], "waited_s": waited})
@@ -359,7 +364,8 @@ def test_9_guard():
     from cotile.tests import harness as H
     import inspect
     sig = inspect.signature(H.wait_for_gpu)
-    assert list(sig.parameters) == ["max_wait_s", "poll_s"] and sig.parameters["max_wait_s"].default == 900
+    # defaults None = the guard policy's (2 h deadline, 30 min between checks)
+    assert list(sig.parameters) == ["max_wait_s", "poll_s"] and sig.parameters["max_wait_s"].default is None
     assert H.wait_for_gpu(max_wait_s=60, poll_s=5) is True
     assert "guard" in inspect.getsource(H.wait_for_gpu)
     # bench / bench_corun record the guard window
@@ -451,7 +457,8 @@ def test_11_probe_carveout():
 def test_12_steady_repro():
     """M3 (b): steady-mode repeatability across 3 processes (run by
     research/bench/scripts/mv1_steady.py repro): CV of per-variant times and speedups < 2%."""
-    path = os.path.join(OUT_DIR, "steady_repro.json")
+    # produced by the study script in the canonical results directory (independent of --out)
+    path = os.path.join(RESULTS, "2026-09-23_methodology_v1", "steady_repro.json")
     assert os.path.exists(path), "run research/bench/scripts/mv1_steady.py repro first"
     d = json.load(open(path))
     cvs = d["cv_across_processes"]
@@ -460,6 +467,115 @@ def test_12_steady_repro():
     assert all(v < 0.02 for v in cvs["t_iter"].values()), cvs
     assert all(v < 0.02 for v in cvs["speedup"].values()), cvs
     REPORT["12_steady_repro"] = cvs
+
+
+def test_13_guard_policy():
+    """GPU-sharing policy (research/rules.md 7 as clarified on 2026-09-23): occupied = foreign
+    SM activity (another user's process with SM% > 0), not a foreign process that only holds
+    memory; optional free-memory floor; GuardPolicy.strict() = any foreign compute process;
+    30 min between checks; GpuBusy after 2 h; GpuYield when the policy yields; the legacy
+    (pmon, tree-only) rule stays available. Mocked process lists, pmon activity and clock."""
+    P = cb.GuardPolicy
+    dflt, strict, legacy = P(), P.strict(), P.legacy()
+    assert (dflt.poll_s, dflt.max_wait_s, dflt.foreign_process_occupies, dflt.foreign_sm_occupies,
+            dflt.same_user_is_own, dflt.min_free_mib) == (1800.0, 7200.0, False, True, True, 0)
+    assert strict.foreign_process_occupies and strict.poll_s == 1800.0
+    assert (legacy.poll_s, legacy.foreign_process_occupies, legacy.foreign_sm_occupies) == (150.0, False, True)
+    me, child, other_same_user, qzr, hidden = 100, 101, 200, 300, 400
+    users = {me: "ywc", child: "ywc", other_same_user: "ywc", qzr: "qzr", hidden: None}
+    own = {me, child}.__contains__
+    CP = cb.ComputeProc
+
+    def dec(procs, active, pol, free=None):
+        return cb.occupancy([CP(p, users[p], 1000, f"proc{p}") for p in procs], [(p, f"proc{p}") for p in active],
+                            is_own=own, own_user="ywc", policy=pol, user_of=users.get, free=free)
+    rep = {}
+    # our own process tree and this user's other processes: free under every rule but legacy's tree-only view
+    d = dec([me, child, other_same_user], [child, other_same_user], dflt)
+    assert not d["occupied"], d
+    assert not dec([me, child, other_same_user], [child, other_same_user], strict)["occupied"]
+    # a foreign (other user) process that only holds memory: NOT occupied by default, occupied when strict
+    d = dec([me, qzr], [], dflt)
+    assert not d["occupied"] and d["reasons"] == [], d
+    d = dec([me, qzr], [], strict)
+    assert d["occupied"] and d["reasons"] == ["foreign compute process"] and d["foreign_procs"][0][:2] == (qzr, "qzr"), d
+    assert not dec([me, qzr], [], legacy)["occupied"]
+    rep["idle_foreign_default"] = dec([me, qzr], [], dflt)
+    # foreign SM activity: occupied under every rule
+    d = dec([me, qzr], [qzr], dflt)
+    assert d["occupied"] and d["reasons"] == ["foreign SM activity"], d
+    assert set(dec([me, qzr], [qzr], strict)["reasons"]) == {"foreign compute process", "foreign SM activity"}
+    assert dec([qzr], [qzr], legacy)["occupied"]
+    # a process whose owner is not visible (other PID namespace) counts as foreign
+    assert dec([hidden], [hidden], dflt)["occupied"] and dec([hidden], [], strict)["occupied"]
+    assert not dec([hidden], [], dflt)["occupied"]
+    # the legacy rule judges this user's other processes by the process tree only
+    assert dec([], [other_same_user], legacy)["occupied"] and not dec([], [other_same_user], dflt)["occupied"]
+    # free-memory floor: a foreign job that only holds memory blocks us once too little is free
+    lowmem = P(min_free_mib=8192)
+    d = dec([me, qzr], [], lowmem, free=4096)
+    assert d["occupied"] and d["reasons"] == ["only 4096 MiB free < 8192 MiB"] and d["free_mib"] == 4096, d
+    assert not dec([me, qzr], [], lowmem, free=50000)["occupied"]
+    assert not dec([me, qzr], [], dflt, free=10)["occupied"]          # floor off by default
+    # policy knobs
+    assert not dec([], [qzr], P(foreign_sm_occupies=False))["occupied"]
+    busy = dec([qzr], [qzr], dflt)
+    free = dec([me, qzr], [], dflt)
+
+    # wait loop on a fake clock: occupied for 3 checks -> 3 x 30 min, then free
+    class Clock:
+        def __init__(self):
+            self.t, self.sleeps = 0.0, []
+
+        def now(self):
+            return self.t
+
+        def sleep(self, dt):
+            self.sleeps.append(dt)
+            self.t += dt
+    seq = iter([busy, busy, busy, free])
+    c = Clock()
+    waited = cb.wait_loop(lambda: next(seq), dflt, sleep=c.sleep, now=c.now, log=lambda m: None)
+    assert c.sleeps == [1800.0] * 3 and waited == 5400.0, (c.sleeps, waited)
+    # blocked for good: checks at 0, 30, 60, 90 min; GpuBusy at the 2 h check (no further wait)
+    c = Clock()
+    try:
+        cb.wait_loop(lambda: busy, dflt, sleep=c.sleep, now=c.now, log=lambda m: None)
+        raise AssertionError("expected GpuBusy")
+    except cb.GpuBusy as e:
+        assert c.sleeps == [1800.0] * 4 and c.t == 7200.0, (c.sleeps, c.t)
+        rep["busy_msg"] = str(e)[:120]
+    # yield_to_caller: GpuYield right away, carrying the decision; no sleep
+    c = Clock()
+    try:
+        cb.wait_loop(lambda: busy, P(yield_to_caller=True), sleep=c.sleep, now=c.now, log=lambda m: None)
+        raise AssertionError("expected GpuYield")
+    except cb.GpuYield as e:
+        assert c.sleeps == [] and e.decision["occupied"], e.decision
+    assert not issubclass(cb.GpuYield, RuntimeError)       # generic retry handlers must not swallow it
+    # free right away: no wait at all
+    c = Clock()
+    assert cb.wait_loop(lambda: free, dflt, sleep=c.sleep, now=c.now) == 0.0 and c.sleeps == []
+    # legacy timing: 150 s between checks; max_wait None waits until free
+    seq = iter([busy, free])
+    c = Clock()
+    cb.wait_loop(lambda: next(seq), P.legacy(), sleep=c.sleep, now=c.now, log=lambda m: None)
+    assert c.sleeps == [150.0], c.sleeps
+    seq = iter([busy] * 10 + [free])
+    c = Clock()
+    cb.wait_loop(lambda: next(seq), P(max_wait_s=None), sleep=c.sleep, now=c.now, log=lambda m: None)
+    assert c.sleeps == [1800.0] * 10
+    # process-wide policy: set_policy changes single fields and returns the previous policy
+    prev = cb.set_policy(yield_to_caller=True)
+    try:
+        assert cb.get_policy().yield_to_caller and cb.get_policy().poll_s == prev.poll_s
+    finally:
+        cb.set_policy(prev)
+    assert cb.get_policy() == prev
+    # the live process list parses (whatever is on the GPU right now)
+    live = cb.list_compute_procs()
+    rep["live_compute_procs"] = [(p.pid, p.user, p.used_mib) for p in live]
+    REPORT["13_guard_policy"] = rep
 
 
 def test_7_readme():

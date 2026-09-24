@@ -172,8 +172,30 @@
 - **B3 鲁棒性假设成立**：8 个划分中 CoKernel（动态 + 接手）最差 ×1.061–1.077，green 最差 ×0.753–0.854（比串行慢）；按单跑时间成比例划分（R1）的 regret：CoKernel 1.000–1.092，green 1.255–1.489；把 main 的最优划分迁移到其他对：CoKernel regret ≤1.003，green 1.048–1.076。但在 oracle 划分下 green 与 CoKernel 相差 ±3% 以内或更好——CoKernel 的价值是鲁棒性，不是更高的最优值。
 - 其他发现：ptxas 12.9 在 sm_120 上带 cache policy 的 cp.async 会错误编译约 1/3 的 GEMM 配置（运行时非法指令），已用 64 位共享地址形式规避并加 SASS lint；kernel 缓存键原先不覆盖 `tl_templates` 头文件，已修（`tilelang/cache/build_stamp.py`）。
 
-**进行中**
-- 收尾 P1-3x2-B（researcher agent）：r223、second 两对的 FQ + R；重新生成表格与 README；跑全部测试套件；列出所有未提交文件供提交。之后按 plan v0.4 做 P4（与 POD 同条件对比）。
+**P1-3x2-B：derived 行 + 无 oracle 鲁棒性：已完成（04:50 验收：主 agent 复跑 test_ops 全部通过含 L2 提示 32/32、test_cokernel 204/208（4 个为预期对照）、test_cobench 15/15）**，结果 `research/results/2026-09-23_p1_3x2_B/`。
+- r223、second 两对于 09-24 03:37–04:16 测完（GPU 空闲，守卫记录干净）；发现中期 README 误称 r029 已按最终精简协议重测，实际没有 → 已重测，与 21 小时前的结果相差 ≤0.2%（独立的复现性证据）。
+- 最终结果（稳态，相对串行）：
+
+| 研究对 | T_serial µs | lib,inter | derived,inter | lib,intra | derived,intra | lib/der inter | lib/der intra | T_inter*/T[der,intra] |
+|---|---|---|---|---|---|---|---|---|
+| main | 726.1 | ×1.238 | ×1.266 | ×1.232 | ×1.252 | 1.022 | 1.016 | 0.989 |
+| r029 | 1709.4 | ×1.186 | ×1.238 | ×1.191 | ×1.244 | 1.044 | 1.045 | 1.005 |
+| r058 | 1060.4 | ×1.330 | ×1.446 | ×1.349 | ×1.424 | 1.087 | 1.056 | 0.985 |
+| r223 | 571.4 | ×1.135 | ×1.157 | ×1.132 | ×1.140 | 1.019 | 1.007 | 0.985 |
+| second | 374.0 | ×1.195 | ×1.208 | ×1.179 | ×1.205 | 1.011 | 1.021 | 0.997 |
+
+- derived 获胜者全部是"C_lib 配置对 + decode K/V evict_first"。同一轮 F 中 31 对"带 / 不带提示"的相同旋钮变体，带提示者全部更快（+0.4% 到 +8.7%），每轮能耗低 0.4–8.1%；单跑价值只有 0.1–0.25%。提示对 inter 与 intra 帮助相当（lib/derived 均值 1.037 vs 1.029）。
+- **D1（阈值未改）：P1 的五对中，完整主张 0/5、弱化主张 0/5**；重推导阈值（≥1.05）只在 r058 单独成立（1.056）；T_inter*/T[derived,intra] 在 0.985–1.005。
+- **B3 鲁棒性（五对全部成立）**：CoKernel 最差划分 ×0.999–1.077，green ×0.590–0.854；R1 regret CoKernel 1.000–1.092，green 1.097–1.490；oracle 划分下 green 相等或更好（−0.1% 到 +3.9%）；不加提示时结论不变（最差 ×0.991–1.071 vs ×0.575–0.829）。r223 的 CoKernel 真实最优在 184 个 GEMM SM，超出 R 的划分集合，其 regret 低估约 2%（README 已标注）。
+- 其他：chunk 大小不单调且影响大（r058 在同一划分下 chunk 1/1、1/2、1/4 分别为 765.6 / 811.1 / 971.7µs，+27%）——chunk 必须与划分一起选。
+- 测试（子 agent 在最终代码上）：test_ops 全部通过（含 L2 提示 32/32），test_cokernel 204/208（4 个为预期不可启动的 `smem="sum"` 对照），test_cobench 15/15，lifetime-scope pytest 通过。
+- GPU 时间：研究共 1.36h（含被取代的运行），测试约 15 分钟。
+
+**P1 阶段小结（主 agent）**
+- 在本平台上，GEMM × decode 的共置收益（×1.13–1.45）来自"重叠"本身（共享静态功耗、DRAM 受限的 decode 可降频），各机制在 oracle 划分下相差 ≤4%。
+- **proposal 效应 4（资源需求属于实现、价值取决于伙伴）得到一个干净的正例**：L2 evict-first 在单跑时毫无价值、在共置时值 2–9%，机制是减少字节与能耗。但它与编排方式正交——跨 kernel 的 green 分区同样受益，所以不支持"需要 kernel 内编排才能兑现"的核心主张。
+- **kernel 内 tile 级动态调度的价值是鲁棒性**：不需要 oracle 划分、不需要逐对调参就能拿到接近最优的收益，而 green 分区选错会比串行更慢。这是 green context 做不到的，但 mKernel 等在别的场景有类似的运行时自适应。
+- D1 在 P1–P4 上决定。按 plan v0.4，下一步做 P4（prefill × decode，与 POD 同条件对比），它是唯一可能出现"同 SM 共驻胜过分区"的场景。
 
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。

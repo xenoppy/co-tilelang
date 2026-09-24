@@ -125,15 +125,19 @@ def _cobench():
     return cobench
 
 
-def wait_for_gpu(max_wait_s: float = 900, poll_s: float = 150) -> bool:
-    """Standing GPU rule (research/rules.md 7, clarified 2026-09-22): the GPU is occupied
-    only while a *foreign* process shows SM utilization > 0 in `nvidia-smi pmon -s u`; a
-    process that merely holds a CUDA context does not count. Uses the shared pmon guard
-    (cobench.guard): waits while the GPU is occupied, re-checking every poll_s seconds for
-    up to max_wait_s. Returns True when free, False if still occupied after max_wait_s."""
+def wait_for_gpu(max_wait_s: float | None = None, poll_s: float | None = None) -> bool:
+    """GPU-sharing rule (research/rules.md 7, cobench.GuardPolicy as applied since 2026-09-23):
+    the GPU is occupied while a foreign process (another user's) shows SM activity in
+    `nvidia-smi pmon`; processes that only hold memory do not count; wait policy.poll_s
+    (30 min) between checks. Uses the shared guard (cobench.guard). max_wait_s / poll_s
+    override the policy (None: the policy's 2 h / 30 min). Returns True when free, False if
+    still occupied after max_wait_s."""
     guard = _cobench().guard
+    kw = {} if poll_s is None else {"poll_s": poll_s}
+    if max_wait_s is not None:
+        kw["max_wait_s"] = max_wait_s
     try:
-        guard.wait_until_free(poll_s=poll_s, max_wait_s=max_wait_s, log=lambda m: print(f"[gpu] {m}", flush=True))
+        guard.wait_until_free(log=lambda m: print(f"[gpu] {m}", flush=True), **kw)
         return True
     except guard.GpuBusy as e:
         print(f"[gpu] {e}", flush=True)

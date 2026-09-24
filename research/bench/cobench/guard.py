@@ -1,9 +1,28 @@
-"""GPU-sharing guard based on `nvidia-smi pmon -s u`.
+"""GPU-sharing guard based on `nvidia-smi pmon -s u` and the compute-process list.
 
-Rule (research/rules.md 7, clarified 2026-09-22): the GPU counts as *occupied* only while a
-foreign process shows SM utilization > 0 in `nvidia-smi pmon -s u`. A process that merely
-holds a CUDA context (pmon prints '-' or 0 for its sm%) does not count. Points measured
-while a foreign process was active must be re-measured.
+Rule (research/rules.md 7: query before launching; if occupied, suspend 30 minutes, then
+query again), as applied since 2026-09-23 (``GuardPolicy`` defaults; clarified by the user
+the same day: a foreign job that only holds GPU memory must not block us):
+
+* **occupied** = a process that is not ours (not in this process tree, not owned by this
+  user) shows SM activity in pmon (SM% > 0 within ``quiet_s``); processes that only hold
+  memory (SM% '-' or 0) do not count. Optionally (``min_free_mib`` > 0) the GPU also counts
+  as occupied while less device memory than that is free (a foreign job can grow to ~95 GB);
+* ``GuardPolicy.strict()``: any foreign compute process occupies the GPU, idle or not (the
+  stricter reading used between 06:19 and 07:37 on 2026-09-23);
+* before launching GPU work (a job, a stage, a measurement point): if occupied, wait
+  ``poll_s`` = 30 min, then re-check (no fast polling);
+* while a job runs: when the GPU becomes occupied, finish the current measurement point,
+  then yield: stop launching GPU work, release GPU memory where feasible, wait 30 min,
+  re-check, resume from the next point. With ``yield_to_caller=True`` the guard raises
+  ``GpuYield`` instead of waiting in-process, so the caller can exit and release its memory
+  (research/bench/scripts/run_guarded.py waits and relaunches the resumable study);
+* blocked for more than ``max_wait_s`` = 2 h: ``GpuBusy`` (stop and report instead of waiting);
+* points measured while a foreign process showed SM activity are re-measured
+  (contamination is judged on SM activity of processes outside this process tree).
+
+``GuardPolicy.legacy()`` is the 2026-09-22 rule: occupied only by SM activity outside this
+process tree (same user included), re-checked every 150 s, 6 h deadline.
 
 ``GpuGuard`` streams `nvidia-smi pmon -s u -d 1` in a background thread (one line per
 compute process per ~1 s interval: ``gpu pid type sm% mem% ... command``) and keeps
@@ -26,19 +45,181 @@ Module-level helpers use one shared guard per process (started on first use)::
 from __future__ import annotations
 
 import atexit
+import dataclasses
+import getpass
 import os
+import pwd
 import subprocess
 import threading
 import time
 from dataclasses import dataclass
 
 PMON_CMD = ("nvidia-smi", "pmon", "-s", "u", "-d", "1")
+APPS_CMD = ("nvidia-smi", "--query-compute-apps=pid,used_memory", "--format=csv,noheader,nounits")
 SAMPLE_S = 1.0          # pmon interval
 SLACK_S = 1.5           # a pmon line at t covers ~(t - 1 s, t]; widen windows by this much
 
 
 class GpuBusy(RuntimeError):
     """Raised when the GPU stays occupied by a foreign process past a deadline."""
+
+
+class GpuYield(Exception):
+    """The GPU is occupied (policy.yield_to_caller): stop launching GPU work, release GPU
+    memory, wait and resume from the next measurement point. Not a RuntimeError, so generic
+    retry handlers do not swallow it. ``decision`` is the occupancy() record."""
+
+    def __init__(self, msg: str, decision: dict | None = None):
+        super().__init__(msg)
+        self.decision = decision or {}
+
+
+@dataclass(frozen=True)
+class GuardPolicy:
+    """When the GPU counts as occupied and how to wait (see the module doc)."""
+    foreign_process_occupies: bool = False  # strict(): any foreign compute process, idle or not
+    foreign_sm_occupies: bool = True        # foreign SM% > 0 in pmon within quiet_s
+    min_free_mib: int = 0                   # > 0: also occupied while less memory is free
+    same_user_is_own: bool = True           # processes of this user count as ours
+    poll_s: float = 1800.0                  # re-check interval while occupied
+    max_wait_s: float | None = 7200.0       # blocked longer -> GpuBusy (None: wait forever)
+    quiet_s: float = 5.0                    # pmon window for the SM-activity check
+    yield_to_caller: bool = False           # raise GpuYield instead of waiting in-process
+
+    @classmethod
+    def strict(cls, **kw) -> "GuardPolicy":
+        """Any foreign compute process occupies the GPU, idle or not."""
+        return cls(**{"foreign_process_occupies": True, **kw})
+
+    @classmethod
+    def legacy(cls, **kw) -> "GuardPolicy":
+        """The 2026-09-22 rule: occupied only by foreign SM activity; 150 s polls; 6 h."""
+        d = dict(foreign_process_occupies=False, same_user_is_own=False, poll_s=150.0, max_wait_s=6 * 3600.0)
+        d.update(kw)
+        return cls(**d)
+
+
+_POLICY = GuardPolicy()
+
+
+def get_policy() -> GuardPolicy:
+    return _POLICY
+
+
+def set_policy(policy: GuardPolicy | None = None, **changes) -> GuardPolicy:
+    """Set the process-wide policy (used by every bench and wait_until_free); returns the
+    previous one. set_policy(yield_to_caller=True) changes single fields."""
+    global _POLICY
+    prev = _POLICY
+    _POLICY = dataclasses.replace(policy or _POLICY, **changes)
+    return prev
+
+
+@dataclass(frozen=True)
+class ComputeProc:
+    pid: int
+    user: str | None        # None: owner unknown (pid not visible in this PID namespace)
+    used_mib: int | None
+    cmd: str = ""
+
+
+def _user_of(pid: int) -> str | None:
+    try:
+        with open(f"/proc/{pid}/status") as f:
+            for line in f:
+                if line.startswith("Uid:"):
+                    uid = int(line.split()[1])
+                    try:
+                        return pwd.getpwuid(uid).pw_name
+                    except KeyError:
+                        return str(uid)
+    except (OSError, ValueError):
+        return None
+    return None
+
+
+def list_compute_procs(gpu: int | None = None) -> list[ComputeProc]:
+    """Compute processes on the GPU (nvidia-smi --query-compute-apps), with their owner."""
+    cmd = list(APPS_CMD) + (["-i", str(gpu)] if gpu is not None else [])
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(f"{' '.join(cmd)} failed: {r.stderr.strip()[:300]}")
+    out = []
+    for line in r.stdout.splitlines():
+        f = [x.strip() for x in line.split(",")]
+        if not f or not f[0].isdigit():
+            continue
+        pid = int(f[0])
+        mem = int(f[1]) if len(f) > 1 and f[1].isdigit() else None
+        out.append(ComputeProc(pid, _user_of(pid), mem, _cmdline(pid)))
+    return out
+
+
+def free_mib(gpu: int | None = None) -> int:
+    """Free device memory (MiB) from nvidia-smi (no CUDA context needed)."""
+    cmd = ["nvidia-smi", "--query-gpu=memory.free", "--format=csv,noheader,nounits"]
+    cmd += ["-i", str(gpu)] if gpu is not None else []
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(f"{' '.join(cmd)} failed: {r.stderr.strip()[:300]}")
+    return int(r.stdout.split()[0])
+
+
+def occupancy(procs: list[ComputeProc], active: list[tuple[int, str]], *, is_own, own_user: str | None,
+              policy: GuardPolicy, user_of=None, free: int | None = None) -> dict:
+    """Pure occupancy decision (unit-tested with mocked inputs).
+
+    procs      compute processes on the GPU (list_compute_procs)
+    active     (pid, cmd) of processes outside this process tree with SM% > 0 in pmon within
+               policy.quiet_s (GpuGuard.busy)
+    is_own     pid -> True for this process tree
+    own_user   this user's name; with policy.same_user_is_own its processes count as ours
+    user_of    pid -> owner (for the pmon pids; default: /proc)
+    free       free device memory in MiB (checked against policy.min_free_mib)
+    Returns {"occupied", "reasons", "foreign_procs", "foreign_active", "free_mib"}."""
+    user_of = user_of or _user_of
+
+    def foreign(pid: int, user: str | None) -> bool:
+        if is_own(pid):
+            return False
+        if policy.same_user_is_own and user is not None and own_user is not None and user == own_user:
+            return False
+        return True
+
+    fp = [p for p in procs if foreign(p.pid, p.user)]
+    fa = [(pid, cmd) for pid, cmd in active if foreign(pid, user_of(pid))]
+    reasons = []
+    if policy.foreign_process_occupies and fp:
+        reasons.append("foreign compute process")
+    if policy.foreign_sm_occupies and fa:
+        reasons.append("foreign SM activity")
+    if policy.min_free_mib > 0 and free is not None and free < policy.min_free_mib:
+        reasons.append(f"only {free} MiB free < {policy.min_free_mib} MiB")
+    return {"occupied": bool(reasons), "reasons": reasons,
+            "foreign_procs": [(p.pid, p.user, p.used_mib, p.cmd[:80]) for p in fp],
+            "foreign_active": [(pid, cmd[:80]) for pid, cmd in fa], "free_mib": free}
+
+
+def wait_loop(probe, policy: GuardPolicy, *, sleep=time.sleep, now=time.time, log=None) -> float:
+    """Block until probe() reports a free GPU; returns the seconds waited.
+
+    probe() -> occupancy() record. While occupied: GpuYield if policy.yield_to_caller; GpuBusy
+    once blocked >= policy.max_wait_s; otherwise sleep policy.poll_s and re-check."""
+    say = log or (lambda m: print(m, flush=True))
+    t0 = now()
+    while True:
+        dec = probe()
+        if not dec["occupied"]:
+            return now() - t0
+        waited = now() - t0
+        what = "; ".join(dec["reasons"]) + f": procs {dec['foreign_procs']} active {dec['foreign_active']}"
+        if policy.yield_to_caller:
+            raise GpuYield(f"GPU occupied ({what}); yielding", dec)
+        if policy.max_wait_s is not None and waited >= policy.max_wait_s:
+            raise GpuBusy(f"GPU still occupied after {waited:.0f}s ({what})")
+        dt = policy.poll_s if policy.max_wait_s is None else min(policy.poll_s, max(1.0, policy.max_wait_s - waited))
+        say(f"[guard] GPU occupied ({what}); waiting {dt:.0f}s (waited {waited:.0f}s)")
+        sleep(dt)
 
 
 @dataclass(frozen=True)
@@ -82,6 +263,7 @@ class GpuGuard:
 
     def __init__(self, own_pids: tuple[int, ...] = (), gpu: int | None = None):
         self.me = os.getpid()
+        self.user = getpass.getuser()
         self.own_extra = set(int(p) for p in own_pids)
         self.my_ancestors = set(_ancestors(self.me))
         self.gpu = gpu
@@ -181,31 +363,37 @@ class GpuGuard:
         with self._lock:
             return sorted({(s.pid, s.cmd) for s in self.activity if s.t >= now - quiet_s})
 
-    def wait_until_free(self, *, quiet_s: float = 5.0, poll_s: float = 150.0,
-                        max_wait_s: float | None = 6 * 3600, log=None) -> float:
-        """Block until no foreign process has shown SM% > 0 for quiet_s seconds of pmon data;
-        re-check every poll_s while busy. Returns the seconds waited; raises GpuBusy after
-        max_wait_s (None = wait forever)."""
-        t0 = time.time()
+    def occupancy(self, policy: GuardPolicy | None = None) -> dict:
+        """occupancy() of the GPU right now (compute-process list + recent pmon activity)."""
+        policy = policy or get_policy()
         # need quiet_s of pmon coverage since the guard started, and a recent line (pmon
         # prints every ~1 s; do not idle the GPU waiting for a fresh one)
-        need = max(self.t_start + quiet_s, t0 - SAMPLE_S - 0.5)
-        if not self.wait_covered(need, timeout_s=quiet_s + 10):
+        need = max(self.t_start + policy.quiet_s, time.time() - SAMPLE_S - 0.5)
+        if not self.wait_covered(need, timeout_s=policy.quiet_s + 10):
             self._check_alive()
             raise RuntimeError("GpuGuard: nvidia-smi pmon produced no samples")
-        while True:
-            act = self.busy(quiet_s)
-            if not act:
-                return time.time() - t0
-            waited = time.time() - t0
-            if max_wait_s is not None and waited >= max_wait_s:
-                raise GpuBusy(f"GPU still occupied after {waited:.0f}s by {act}")
-            msg = f"[guard] foreign SM activity from {act}; waiting {poll_s:.0f}s (waited {waited:.0f}s)"
-            if log is None:
-                print(msg, flush=True)
-            else:
-                log(msg)
-            time.sleep(poll_s if max_wait_s is None else min(poll_s, max(1.0, max_wait_s - waited)))
+        procs = list_compute_procs(self.gpu) if policy.foreign_process_occupies else []
+        if any(p.user is None for p in procs):
+            # a listed pid without a /proc entry is either in another PID namespace (foreign)
+            # or has just exited (nvidia-smi lags): confirm with a second query
+            time.sleep(2.0)
+            again = {p.pid for p in list_compute_procs(self.gpu)}
+            procs = [p for p in procs if p.user is not None or (p.pid in again and _user_of(p.pid) is None)]
+        free = free_mib(self.gpu) if policy.min_free_mib > 0 else None
+        return occupancy(procs, self.busy(policy.quiet_s), is_own=self.is_own, own_user=self.user, policy=policy,
+                         free=free)
+
+    def wait_until_free(self, *, policy: GuardPolicy | None = None, quiet_s: float | None = None,
+                        poll_s: float | None = None, max_wait_s: float | None | str = "policy", log=None) -> float:
+        """Block while the GPU is occupied (see GuardPolicy; default: the process-wide policy,
+        get_policy()); the keyword arguments override single policy fields. Returns the
+        seconds waited; raises GpuBusy past max_wait_s and GpuYield if the policy yields."""
+        pol = policy or get_policy()
+        ch = {k: v for k, v in (("quiet_s", quiet_s), ("poll_s", poll_s)) if v is not None}
+        if max_wait_s != "policy":
+            ch["max_wait_s"] = max_wait_s
+        pol = dataclasses.replace(pol, **ch) if ch else pol
+        return wait_loop(lambda: self.occupancy(pol), pol, log=log)
 
     def summary(self, t0: float = 0.0, t1: float = float("inf")) -> dict:
         with self._lock:
@@ -247,8 +435,13 @@ def get_guard() -> GpuGuard:
 
 
 def wait_until_free(**kw) -> float:
-    """Block while a foreign process shows SM% > 0 (see GpuGuard.wait_until_free)."""
+    """Block while the GPU is occupied (see GpuGuard.wait_until_free, GuardPolicy)."""
     return get_guard().wait_until_free(**kw)
+
+
+def occupied(policy: GuardPolicy | None = None) -> dict:
+    """occupancy() record of the GPU right now, with the shared guard."""
+    return get_guard().occupancy(policy)
 
 
 def foreign_activity(t0: float, t1: float, **kw) -> dict:

@@ -97,6 +97,31 @@ alternating on one shared counter/workspace state.
   `T.reduce_*` lowering fails ("ReduceOp cannot lower a layout where a source index
   depends on a thread-owned reduce segment"; seen for 128/8, 256/8, 256/16 warps);
   `validate` rejects that combination.
+* **L2 eviction-priority axes** (P1-3x2-B, co-location-specific): `DecodeConfig.kv_l2` (the
+  streaming K/V loads) and `GemmConfig.ab_l2` (the A/B operand loads), each in
+  {`normal`, `evict_first`, `evict_last`}; tag suffix `_l2ef` / `_l2el`. They pass
+  `T.copy(..., eviction_policy=...)`, which now also works for cp.async copies (before, the
+  annotation was honoured only by TMA copies and silently ignored otherwise): LowerCPAsync
+  wraps the injected cp.async in a `tl.cp_async_l2_eviction_policy` AttrStmt
+  (`src/op/builtin.h`, `src/cuda/op/copy.cc`), and the CUDA codegen emits
+  `tl::cp_async_gs[_conditional]_l2hint<N, tl::L2EvictionPolicy::...>`
+  (`src/tl_templates/cuda/copy.h`): `cp.async.cg.shared.global.L2::cache_hint` with a
+  `createpolicy.fractional` policy (fraction 1.0). In SASS the LDGSTS memory descriptor
+  carries the policy (`desc[URx]` built from 0x12F0… / 0x14F0… instead of the default
+  descriptor). A requested hint that cannot be honoured (copy lowered as a normal copy) logs
+  a warning. The GEMM ws="auto" build takes the existing TMA cache-hint path. Numerics:
+  bitwise-neutral (same data, same instruction sequence; `numerics()` keys unchanged).
+  **ptxas 12.9 miscompile (sm_120/120a):** with the 32-bit shared address that
+  `cp_async_gs` uses, ptxas sometimes folds a uniform shared base into the LDGSTS address
+  (`[Rx+UR0]`) and then reads the policy descriptor from an odd, never-written uniform
+  register (`desc[UR1]`): "illegal instruction" at run time (15/43 GEMM configs of 4096³;
+  reproduced standalone with nvcc, for createpolicy and constant policies, .ca/.cg, -O1..-O3,
+  sm_120 and sm_120a). The hinted variant therefore passes a 64-bit shared-window address
+  (`cvta.to.shared.u64`); with it all 332 GEMM/decode kernels (43+36 configs, grid and
+  persistent, both policies) are clean. `cotile.resources.invalid_memory_descriptors(sass)`
+  lints for the pattern; `test_ops` (`run_l2_hints`) and `test_cokernel` (`invalid_mem_desc`)
+  check it. Cost: +5% static instructions in the hinted GEMM main loop (per-copy address
+  registers instead of immediate offsets).
 * **RMSNorm** (`RMSNormConfig`): `rows_per_cta`, `threads`, `vec` (vector width of
   every global access). SIMT-style so the reduction tree is explicit: per-thread
   sequential -> warp butterfly -> per-warp partials in the smem scratch -> fixed-order
@@ -154,7 +179,16 @@ python -m cotile.tests.test_ops                                  # all ops, all 
 python -m cotile.tests.test_ops --ops gemm --limit 4             # quick subset
 python -m cotile.tests.test_ops --no-gpu                         # compile + signatures only
 python -m cotile.tests.test_ops --cold --out research/results/2026-09-22_op_library
+python -m cotile.tests.test_ops --no-l2                          # skip the L2-hint axis tests
 ```
+
+`test_ops` also runs `run_l2_hints` (8 base configs incl. split-K/KV and TMA-WS, x
+{evict_first, evict_last} x {grid, persistent}): the hinted source equals its unhinted
+twin's except for the hint (TileLang's shared-view / AllReduce-workspace naming is not
+deterministic between two compilations of the same kernel, so those names are collapsed and
+the smem declarations compared as a set), every K/V (A/B) load carries the hint and nothing
+else does, no invalid SASS memory descriptor, and GPU outputs are bitwise equal to the twin's
+and within tolerance of the fp32 reference. `test_cokernel` has a hinted pair (`gd_l2`).
 
 The GPU phase first checks `nvidia-smi` for other compute processes and waits (poll
 every 150 s, up to 15 min) if a sibling is measuring. pytest is not installed in

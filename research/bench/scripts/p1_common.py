@@ -103,25 +103,37 @@ def gpu_procs() -> list[str]:
     return [line for line in out.splitlines() if line.strip()]
 
 
-def wait_gpu(need_bytes: int = 0, margin: int = 1 << 30, poll_s: float = 150.0, max_wait_s: float = 8 * 3600) -> float:
-    """Block until no foreign process shows SM activity (cobench guard, pmon rule) AND at least
-    need_bytes + margin of device memory are free (the foreign RL worker grows from ~67 to
-    ~91 GB while it trains). Returns the seconds waited."""
+def wait_gpu(need_bytes: int = 0, margin: int = 1 << 30, poll_s: float | None = None,
+             max_wait_s: float | None | str = "policy", policy=None) -> float:
+    """Block until the GPU is free under the cobench guard policy (cobench.GuardPolicy,
+    research/rules.md 7: foreign SM activity -> wait 30 min and re-check; GpuBusy after 2 h;
+    GpuYield instead of waiting if the policy yields) AND
+    at least need_bytes + margin of device memory are free. poll_s / max_wait_s override the
+    policy's fields. Returns the seconds waited."""
+    pol = policy or cb.get_policy()
+    kw = {} if poll_s is None else {"poll_s": poll_s}
+    if max_wait_s != "policy":
+        kw["max_wait_s"] = max_wait_s
+    pol = dataclasses.replace(pol, **kw) if kw else pol
     t0 = time.time()
     while True:
-        cb.wait_until_free(poll_s=poll_s)
+        left = None if pol.max_wait_s is None else max(1.0, pol.max_wait_s - (time.time() - t0))
+        cb.wait_until_free(policy=dataclasses.replace(pol, max_wait_s=left))
         free, _ = torch.cuda.mem_get_info()
         if free >= need_bytes + margin:
             return time.time() - t0
-        if time.time() - t0 > max_wait_s:
-            raise RuntimeError(f"only {free / 2**30:.1f} GiB free after {max_wait_s:.0f}s")
-        log(f"[mem] {free / 2**30:.1f} GiB free < {(need_bytes + margin) / 2**30:.1f} GiB; waiting {poll_s:.0f}s")
-        time.sleep(poll_s)
+        if pol.yield_to_caller:
+            raise cb.GpuYield(f"only {free / 2**30:.1f} GiB free < {(need_bytes + margin) / 2**30:.1f} GiB")
+        if pol.max_wait_s is not None and time.time() - t0 > pol.max_wait_s:
+            raise cb.GpuBusy(f"only {free / 2**30:.1f} GiB free after {pol.max_wait_s:.0f}s")
+        log(f"[mem] {free / 2**30:.1f} GiB free < {(need_bytes + margin) / 2**30:.1f} GiB; waiting {pol.poll_s:.0f}s")
+        time.sleep(pol.poll_s)
 
 
-def retry_oom(fn, *a, tries: int = 30, poll_s: float = 150.0, **kw):
+def retry_oom(fn, *a, tries: int = 30, poll_s: float | None = None, **kw):
     """Run fn; on a CUDA OOM (foreign process holding the memory), release cached memory, wait
-    for the GPU (wait_gpu) and retry."""
+    for the GPU (wait_gpu) and retry. cobench.GpuYield (policy.yield_to_caller) and GpuBusy
+    propagate to the caller."""
     import gc
     for i in range(tries):
         try:
@@ -130,8 +142,9 @@ def retry_oom(fn, *a, tries: int = 30, poll_s: float = 150.0, **kw):
             log(f"[mem] OOM in {getattr(fn, '__name__', fn)} (attempt {i + 1}): {str(e).splitlines()[0][:160]}")
             gc.collect()
             torch.cuda.empty_cache()
-            time.sleep(poll_s)
             wait_gpu(poll_s=poll_s)
+        except cb.GpuBusy:
+            raise
         except RuntimeError as e:
             # cobench benches give up after 3 contaminated attempts (foreign SM activity during
             # the timed window): wait for a free GPU and redo the whole step
@@ -239,9 +252,11 @@ class OpData:
             out.append(args)
         return out
 
-    def launcher(self, spec):
-        """fn(i): one call of the compiled grid/persistent kernel `spec` on copy i % n."""
-        k, al, n = spec.kernel, self.arglists(spec), self.n
+    def launcher(self, spec, state: dict | None = None):
+        """fn(i): one call of the compiled grid/persistent kernel `spec` on copy i % n.
+        `state`: shared dict for the ws/ctr buffers (e.g. a StatePool view), so launchers of
+        configs with equal workspace shapes do not each allocate their own."""
+        k, al, n = spec.kernel, self.arglists(spec, state), self.n
 
         def fn(i):
             k(*al[i % n])
@@ -256,9 +271,17 @@ class CoVariant:
     """One CoKernel launch per iteration on copy i % n (both ops' copies; own CoRunner, i.e.
     own knobs and counters, so several knob settings of one kernel can be interleaved)."""
 
-    def __init__(self, spec, da: OpData, db: OpData, sm_role=None, ratio=(1, 1)):
+    def __init__(self, spec, da: OpData, db: OpData, sm_role=None, ratio=(1, 1), pool: "StatePool | None" = None):
         self.spec = spec
         self.run = CoRunner(spec)
+        if pool is not None:
+            # the roles' split workspaces / counters come from the shared pool (they are
+            # self-resetting and never used by two launches at the same time: every variant
+            # runs its iterations back-to-back on one stream); co_* state stays private
+            for p in spec.params:
+                for pre, side in (("a_", "a"), ("b_", "b")):
+                    if p.name.startswith(pre) and p.role in ("ws", "ctr"):
+                        self.run.state[p.name] = pool.get(side, p.name[len(pre):], p.shape, p.dtype, p.role)
         self.run.set_knobs(sm_role=sm_role, ratio=ratio)
         self.n = max(da.n, db.n)
         self.arglists = []
@@ -298,6 +321,55 @@ class CoVariant:
                 "steal_A": med([r[11] for r in rows]), "steal_B": med([r[12] for r in rows]),
                 "done_A": med([r[4] for r in rows]), "done_B": med([r[5] for r in rows]),
                 "ctas_A": med([r[6] for r in rows]), "ctas_B": med([r[7] for r in rows]), "n": n}
+
+
+class StatePool:
+    """Split-reduction workspaces and arrival counters shared by every launcher / CoKernel
+    of a study, keyed by (side, name, shape, dtype). Counters are zeroed once (kernels leave
+    them zero); workspaces need no init. Keeps the memory footprint to one buffer per
+    distinct shape (split-K GEMM workspaces are 128-268 MB each)."""
+
+    def __init__(self):
+        self.bufs: dict = {}
+
+    def get(self, side, name, shape, dtype, role):
+        key = (side, name, tuple(shape), dtype)
+        if key not in self.bufs:
+            tdt = getattr(torch, dtype)
+            self.bufs[key] = (torch.zeros(tuple(shape), dtype=tdt, device="cuda") if role == "ctr"
+                              else torch.empty(tuple(shape), dtype=tdt, device="cuda"))
+        return self.bufs[key]
+
+    def view(self, side: str, spec) -> "_PoolView":
+        """Mapping for OpData.launcher/arglists(spec, state): the ws/ctr params of `spec`
+        (one op, unprefixed names) resolved in this pool."""
+        return _PoolView(self, side).bind(spec)
+
+    def nbytes(self) -> int:
+        return sum(t.numel() * t.element_size() for t in self.bufs.values())
+
+
+class _PoolView:
+    """Mapping used by OpData.arglists: state[name] for a ws/ctr param of one side."""
+
+    def __init__(self, pool: StatePool, side: str):
+        self.pool, self.side, self.params = pool, side, {}
+
+    def bind(self, spec):
+        self.params = {p.name: p for p in spec.params}
+        return self
+
+    def __contains__(self, name):
+        p = self.params[name]
+        return (self.side, name, tuple(p.shape), p.dtype) in self.pool.bufs
+
+    def __setitem__(self, name, value):
+        p = self.params[name]
+        self.pool.bufs[(self.side, name, tuple(p.shape), p.dtype)] = value
+
+    def __getitem__(self, name):
+        p = self.params[name]
+        return self.pool.get(self.side, name, p.shape, p.dtype, p.role)
 
 
 def check_same(fn_ref_a, fn_ref_b, da: OpData, db: OpData, variant) -> bool:
