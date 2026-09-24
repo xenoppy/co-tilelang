@@ -230,7 +230,10 @@
 - 站得住的发现：(1) 共置本身有 1.1–1.45× 的收益，主要受功耗 / DRAM 约束；(2) kernel 内 tile 级动态调度 + 接手的价值是**鲁棒性**（无需 oracle 划分，从不慢于串行），在 prefill 为主的对上最优值也略优于 green（+3–4%）；(3) 存在"只在共置时才值得选"的实现（L2 evict-first），但与编排方式正交；(4) 在本平台上，粗粒度同 SM 混跑（CTA 级）因资源耦合与功耗而不占优；(5) 测得 TileLang 能复现 POD，POD 的相对优势来自慢的单跑基线。
 - **用户提出的新方向（09-24 讨论中）**：像 TileLang 那样在 kernel 内做 tile 步骤级编排——把两个算子的 tile 拆成步骤，放进一条联合软件流水线（分 warp 的生产者 / 消费者，或同 warp 交错），而不是现在"一个 tile 整块执行完再换角色"。这是现有设计最大的缺口（SM 级 = 分区；CTA 级被寄存器耦合卡死；warp 级与步骤级交错从未实现）。主 agent 的建议：先做合成 kernel 的极限测试（纯 MMA 循环 + 纯 DRAM 流，比较 SM 分区 / CTA 共驻 / 分 warp 共驻 / 同 warp 交错），确认在功耗墙下细粒度方式能否超过分区 ≥10%，再决定是否投入手写原型与编译器化。待用户确认。
 
-- 极限测试 L（进行中，10:00 启动，researcher agent；属于 plan 中尚未完成的"压力 kernel v0"，不改变 plan）：用理想化的合成 kernel（纯寄存器 MMA、类 GEMM 的 smem/ldmatrix MMA；DRAM 读流 / 读写流）在相同总工作量下比较 6 种方式：串行、green 分区、单 kernel SM 级动态 + 接手、CTA 级共驻、分 warp 共驻（含 sm_120 上 `setmaxnreg` 的可用性测试）、同 warp 交错；3 种工作量比例 × 2 种 MMA 形态，另加一个功耗墙不起作用的对照。完成标准：L1 合成 kernel 达到 ≥85% 的 MMA 峰值与 DRAM 带宽；L2 工作量不丢不重；L3 各方式最佳加速比、频率、功耗、能耗表；L4 结论——细粒度同 SM 共置在功耗墙下 / 无功耗墙时能否超过 SM 分区 ≥10%，由哪种资源决定；L5 结果与测试。目的：判断"同 SM / 步骤级编排"这一方向（用户 09-24 提出）在本卡上的天花板，为 D1 讨论提供依据。
+- 极限测试 L（10:00 启动，**被用户叫停**：用户拒绝了写入 `research/bench/cobench/stress.py`，并要求停下等待指示）。未做任何 GPU 测量，L1–L5 均未完成。
+  - 回退 / 现状：只留下一处未提交的小改动——`research/bench/cobench/cudrv.py` 的 `CudaKernel` 增加可选 `arch=` 参数（默认行为不变，用于编译 `setmaxnreg`），若放弃此任务用 `git checkout research/bench/cobench/cudrv.py` 撤销。草稿脚本只在 scratchpad。
+  - 唯一的发现：`setmaxnreg.inc/dec` 在 NVRTC 12.8 下不支持 `sm_120` 目标，但支持 `sm_120a`；`sm_120a` 的 cubin 能在本卡上正确运行，SASS 中为 `USETMAXREG.DEALLOC/TRY_ALLOC.CTAPOOL`（按 CTA 寄存器池重分配）。需用 `__launch_bounds__` / maxrregcount 限制启动时的分配。
+  - 等待用户对方向的决定（D1 讨论、是否做步骤级编排、是否做极限测试）。
 
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
