@@ -47,15 +47,17 @@ class GreenContext:
     _closed: bool = field(repr=False, default=False)
 
     @classmethod
-    def create(cls, resource: cu.CUdevResource, device=None, priority: int = 0) -> "GreenContext":
+    def create(cls, resource, device=None, priority: int = 0) -> "GreenContext":
+        """``resource``: one SM resource or a list of them (combined into one descriptor)."""
         dev = ensure_init(device)
-        desc = check(cu.cuDevResourceGenerateDesc([resource], 1))
+        rs = list(resource) if isinstance(resource, (list, tuple)) else [resource]
+        desc = check(cu.cuDevResourceGenerateDesc(rs, len(rs)))
         gctx = check(cu.cuGreenCtxCreate(desc, dev,
                                          cu.CUgreenCtxCreate_flags.CU_GREEN_CTX_DEFAULT_STREAM))
         custream = check(cu.cuGreenCtxStreamCreate(
             gctx, cu.CUstream_flags.CU_STREAM_NON_BLOCKING, int(priority)))
         ts = torch.cuda.ExternalStream(int(custream), device=torch.device("cuda", device_index(device)))
-        return cls(n_sms=int(resource.sm.smCount), stream=ts, _gctx=gctx, _custream=custream)
+        return cls(n_sms=sum(int(r.sm.smCount) for r in rs), stream=ts, _gctx=gctx, _custream=custream)
 
     def sm_count_from_driver(self) -> int:
         r = check(cu.cuGreenCtxGetDevResource(self._gctx, cu.CUdevResourceType.CU_DEV_RESOURCE_TYPE_SM))

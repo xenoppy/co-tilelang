@@ -7,6 +7,7 @@ research/bench/
   cobench/   timing.py (bench, bench_corun, bench_variants, flush kinds)  steady.py (bench_steady)
              variants.py (Par, Rotation)  guard.py (pmon GPU guard)  clock.py (ClockProbe)
              nvml.py  green.py  smid.py  kernels.py  cudrv.py
+             stress.py (synthetic stress kernels + co-location variants, plan §1.4 v0)
   scripts/   smid_probe.py, repro_matmul.py (P0-2); solo_*.py (P1-S);
              p1b_study.py, p1b_report.py (P1 3x2 part B: research/results/2026-09-23_p1_3x2_B);
              run_guarded.py (runs a resumable study under the GPU-sharing policy);
@@ -15,11 +16,13 @@ research/bench/
              research/results/2026-09-23_p1_3x2_A);
              p4_common.py, p4_pod_patch.py, p4_solo.py, p4_report.py (P4-a: FlashInfer POD stream-memset
              patch verification, prefill x decode solo profiling and pairing table:
-             research/results/2026-09-24_p4_prep)
+             research/results/2026-09-24_p4_prep);
+             limit_study.py (co-location limit study with the stress kernels:
+             research/results/2026-09-24_limit_study)
   baselines/flashinfer_ops.py   FlashInfer decode / prefill / POD wrappers; POD runs on any stream and
              under CUDA graphs once research/patches/flashinfer_pod_stream_memset.patch is applied
              (pod_patch_status(); research/env_versions.md §5.5)
-  tests/test_cobench.py   acceptance tests (P0-2 + methodology v1)
+  tests/test_cobench.py   acceptance tests (P0-2 + methodology v1; test_14-16: stress kernels)
 ```
 Environment: `source research/env.sh`, then `sys.path.insert(0, "research/bench"); import cobench as cb`. Tests: `python research/bench/tests/test_cobench.py [filter...]` (or `python -m pytest research/bench/tests/test_cobench.py`).
 
@@ -236,6 +239,44 @@ cb.copy_u4(src, dst); cb.read_u4(buf); cb.discard_l2(buf); cb.mma_peak(); cb.dev
 - With `ignore_coscheduling=True` the granularity is 2 SMs and the partition is the contiguous range [0, n).
 
 The ClockProbe runs in the primary context and may sit inside a green partition. Since v1 it no longer takes an SM away from large-smem CTAs there. See `research/results/2026-09-22_smid_probe/README.md`.
+
+## Stress kernels (`cobench.stress`, 2026-09-24)
+
+A single NVRTC kernel family, configured by a `KCfg`. It is used by the limit study in
+`research/results/2026-09-24_limit_study`.
+
+**Kernels.**
+
+| kind | what it runs | measured |
+|---|---|---|
+| A, register-only | `mma.sync` loops | 97% of 1024 FLOP/clk/SM |
+| A, GEMM-like | 128×128 tiles over K=2048: cp.async pipeline, swizzled smem, ldmatrix; operands resident in L2 | 80% of peak per clock at 600 W |
+| B, DRAM stream | ld.global / cp.async / bulk copy, optional L2 evict-first, optional read+write | 1620–1637 GB/s |
+
+Every layout is a persistent kernel with dynamic queues:
+- `solo_a`, `solo_b`;
+- `sm`: SM-level roles with takeover;
+- `cta`: CTA co-residence;
+- `ws`: warp specialisation, optionally with `setmaxnreg` on `sm_120a` (`CudaKernel(arch=...)`);
+- `sw`: same-warp interleaving.
+
+**Variant builders.**
+- `v_serial`, `v_green`, `v_sm`, `v_cta`, `v_ws`, `v_sw` return a `Variant`.
+- `Variant.fn` goes to `bench_steady`.
+- `Variant.verify(k)` is the work-completion check: every unit done exactly k times, and the checksums equal k × the reference.
+
+**Helpers.**
+- `split_nested(n_outer, n_a)` / `split_ranges(sizes)` give green contexts over arbitrary consecutive SM ranges. The driver cannot re-split a split result, so these recombine 2-SM groups.
+- `ptxas_info(cfg)` reports registers and spills.
+- Compiled cubins are cached in `~/.cache/cobench_stress`.
+
+```python
+from cobench import stress as S
+wl = S.Workload("reg", stream_bytes=512 << 20, a_iters=312)          # or Workload("gemm", n_tiles=2048, ...)
+S.reference_sum_a(wl, S.KCfg(ak="reg", maxreg=64))
+v = S.v_ws(wl, S.KCfg(ak="reg", maxreg=64), 8, 4)                    # 8 MMA warps + 4 stream warps per SM
+assert v.verify(2)["ok"]; cb.bench_steady({"serial": ..., "ws": v.fn})
+```
 
 ## Reference numbers
 

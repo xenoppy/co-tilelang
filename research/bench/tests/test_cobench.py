@@ -20,9 +20,12 @@ test_11     ClockProbe carveout regression (the probe must not keep an SM from h
 test_12     M3 repeatability across 3 processes (steady mode; reads the study JSON)
 test_13     GPU-sharing policy (2026-09-23): occupancy decision and wait loop on mocked
             process lists / pmon activity / clock (no GPU work, no foreign job needed)
+test_14..16 stress kernels (cobench.stress, 2026-09-24 limit study): work-completion checks of
+            every co-location layout, criteria V (MMA / DRAM), setmaxnreg on sm_120(a)
 """
 from __future__ import annotations
 
+import dataclasses
 import json
 import os
 import subprocess
@@ -576,6 +579,154 @@ def test_13_guard_policy():
     live = cb.list_compute_procs()
     rep["live_compute_procs"] = [(p.pid, p.user, p.used_mib) for p in live]
     REPORT["13_guard_policy"] = rep
+
+
+def _stress_quick(fn, secs: float = 0.6):
+    """Back-to-back timing (events) with the ClockProbe: (us per call, MHz)."""
+    from cobench.clock import ClockProbe
+    s = torch.cuda.Stream()
+    with torch.cuda.stream(s):
+        fn()
+        s.synchronize()
+        e0, e1 = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
+        e0.record()
+        fn()
+        e1.record()
+        e1.synchronize()
+        n = max(5, int(secs * 1e6 / (e0.elapsed_time(e1) * 1e3)))
+        pr = ClockProbe(period_us=100, capacity=100_000, timeout_s=60).start()
+        for _ in range(n // 4):
+            fn()
+        e0.record()
+        for _ in range(n):
+            fn()
+        e1.record()
+        e1.synchronize()
+        pr.stop()
+    return e0.elapsed_time(e1) * 1e3 / n, pr.mhz_between(e0, e1)
+
+
+def test_14_stress_work_completion():
+    """Stress kernels (cobench.stress, plan §1.4 v0 / limit study): every co-location layout --
+    serial, green partition (full device and nested in a 94-SM sub-device), SM-level roles with
+    takeover, CTA-level co-residence, warp-specialised (incl. setmaxnreg), same-warp
+    interleaving -- does every A (MMA) and B (stream) unit exactly once per launch, with checksums
+    equal to the reference, for both MMA families; the checker catches skipped units; GEMM-like
+    tiles equal torch; cp.async / bulk / read+write streams are correct."""
+    from cobench import stress as S
+    remap = cb.build_sm_remap().to_tensor()
+    rep = {}
+
+    def chk(v, k=2, **kw):
+        r = v.verify(k, **kw)
+        rep[f"{v.wl.family}:{v.name}"] = r["ok"]
+        assert r["ok"], (v.name, r["errors"])
+
+    stream = S.KCfg(ak="none", mode="solo_b", su=4, maxreg=48)
+    # ---- register-only MMA family
+    wl = S.Workload("reg", stream_bytes=64 << 20, a_iters=64)
+    ra = S.KCfg(ak="reg", maxreg=64)
+    S.reference_sum_a(wl, ra)
+    chk(S.v_serial(wl, S.solo_a(wl, ra), S.solo_b(wl, stream)))
+    with cb.split_sms(96, ignore_coscheduling=True) as part:
+        chk(S.v_green(wl, part, ra, stream))
+    chk(S.v_sm(wl, ra, 120, remap))
+    chk(S.v_cta(wl, S.KCfg(ak="reg", warps=4, maxreg=64), 2, 2))
+    chk(S.v_ws(wl, ra, 8, 4))
+    chk(S.v_sw(wl, S.KCfg(ak="reg", maxreg=96)))
+    # nested split of the 94-SM sub-device [0, 94): A on [0, 48), B on [48, 94), disjoint
+    inner = S.split_nested(94, 48)
+    try:
+        assert (inner.n_sms, inner.n_rest) == (48, 46), (inner.n_sms, inner.n_rest)
+        sa, sb = (set(cb.build_sm_remap(st, expected=n).smids) for st, n in ((inner.stream, 48), (inner.rest_stream, 46)))
+        assert sa == set(range(48)) and sb == set(range(48, 94)), (sorted(sa)[:4], sorted(sb)[:4])
+        chk(S.v_green(wl, inner, ra, stream, name="green_nested_48"))
+    finally:
+        inner.close()
+    # the checker catches skipped work: start the B tickets at n_b/2 -> half the chunks never done
+    L = S.solo_b(wl, stream)
+    bad = S.Variant("skip_half", wl, [L], lambda i=0: (L.ctl[1].fill_(wl.n_b // 2), L.launch()), {})
+    r = bad.verify(1)
+    assert not r["ok"] and r["bad_units_b"] == wl.n_b // 2, r
+    rep["negative_control_bad_units"] = r["bad_units_b"]
+    # stream kinds
+    for name, cfg in (("cpasync", S.KCfg(ak="none", mode="solo_b", skind=1, su=8)),
+                      ("bulk", S.KCfg(ak="none", mode="solo_b", skind=2, su=2, sbulk=8192, warps=2))):
+        chk(S.v_single(f"stream_{name}", S.solo_b(wl, cfg), {}))
+    wrw = S.Workload("reg", stream_bytes=64 << 20, a_iters=16, rw=True)
+    chk(S.v_single("stream_rw", S.solo_b(wrw, S.KCfg(ak="none", mode="solo_b", su=4, srw=1, maxreg=64)), {}))
+    assert torch.equal(wrw.dbuf, wrw.sbuf)
+    # ---- GEMM-like family
+    wg = S.Workload("gemm", stream_bytes=64 << 20, n_tiles=256)
+    g4 = S.KCfg(ak="gemm", wm=2, wn=2, nt=8, warps=4, stages=3, maxreg=232)
+    S.reference_sum_a(wg, g4)
+    chk(S.v_serial(wg, S.solo_a(wg, g4, ctas_per_sm=2), S.solo_b(wg, stream)))
+    chk(S.v_sm(wg, g4, 140, remap, ctas_per_sm=2))
+    chk(S.v_cta(wg, S.KCfg(ak="gemm", wm=2, wn=2, nt=4, warps=4, stages=2, maxreg=128), 2, 1))  # 128x64 tiles (3 CTAs/SM fit)
+    chk(S.v_ws(wg, S.KCfg(ak="gemm", stages=4, maxreg=128), 8, 4))
+    chk(S.v_ws(wg, S.KCfg(ak="gemm", wm=2, wn=2, nt=8, stages=3, nga=2, smaxnreg=1, ra=232, rb=40, su=2), 8, 4))
+    chk(S.v_sw(wg, S.KCfg(ak="gemm", stages=3, spk=1, maxreg=168)))
+    # numerics: C of every tile vs torch (fp32 accumulation)
+    for cfg in (S.KCfg(ak="gemm", stages=4, maxreg=128, cdbg=1), dataclasses.replace(g4, cdbg=1)):
+        wd = S.Workload("gemm", stream_bytes=64 << 20, n_tiles=64, rw=True)
+        Ld = S.solo_a(wd, cfg)
+        Ld.reset()
+        Ld.launch()
+        torch.cuda.synchronize()
+        C = wd.dbuf.view(torch.float32)[: 1024 * 1024].view(1024, 1024)
+        ref = wd.aop.float() @ wd.bop.float().T
+        rel = ((C - ref).abs().max() / ref.abs().max()).item()
+        rep[f"gemm_rel_err_{cfg.warps}w"] = rel
+        assert rel < 1e-4, rel
+    print("    ", rep)
+    REPORT["14_stress_work_completion"] = rep
+
+
+def test_15_stress_validation():
+    """Stress kernels, criteria V (quick, back-to-back): register-only MMA >= 85% of the measured
+    1024 FLOP/clk/SM at its measured clock; the study's ldg stream >= 85% of the best measured
+    DRAM read bandwidth (ldg / cp.async / bulk / cobench read_u4). The steady-state numbers are in
+    research/results/2026-09-24_limit_study (stage V)."""
+    from cobench import stress as S
+    wl = S.Workload("reg", stream_bytes=512 << 20, a_iters=256)
+    La = S.solo_a(wl, S.KCfg(ak="reg", maxreg=64))
+    t, mhz = _stress_quick(La.launch)
+    fpc = wl.flops_a / (t * 1e-6) / (mhz * 1e6) / NSM
+    rep = {"mma_reg_us": t, "mma_reg_mhz": mhz, "mma_reg_flop_per_clk_per_sm": fpc}
+    gb = {}
+    for name, cfg, cps in (("ldg", S.KCfg(ak="none", mode="solo_b", su=4, maxreg=48), 2),
+                           ("cpasync", S.KCfg(ak="none", mode="solo_b", skind=1, su=8), 2),
+                           ("bulk", S.KCfg(ak="none", mode="solo_b", skind=2, su=2, sbulk=8192, warps=2), 2)):
+        L = S.solo_b(wl, cfg, ctas_per_sm=cps)
+        gb[name] = wl.bytes_b / _stress_quick(L.launch)[0] / 1e3
+    gb["read_u4"] = wl.bytes_b / _stress_quick(lambda: cb.read_u4(wl.sbuf))[0] / 1e3
+    rep["stream_gbps"] = gb
+    rep["ldg_frac_of_best"] = gb["ldg"] / max(gb.values())
+    print(f"     MMA {fpc:.0f} FLOP/clk/SM ({fpc / 1024 * 100:.1f}%) at {mhz:.0f} MHz; stream {gb} GB/s")
+    assert fpc >= 0.85 * 1024, fpc
+    assert rep["ldg_frac_of_best"] >= 0.85, rep
+    assert max(gb.values()) >= 0.85 * DRAM, gb
+    REPORT["15_stress_validation"] = rep
+
+
+def test_16_setmaxnreg():
+    """setmaxnreg on sm_120: rejected by ptxas for sm_120, accepted for sm_120a; with it the
+    warp-specialised GEMM (2 groups x 4 MMA warps at 232 regs + 4 stream warps at 40) launches
+    at 168 registers/thread without spills, while a uniform 168-register cap spills."""
+    from cobench import stress as S
+    smax = S.KCfg(ak="gemm", mode="ws", wm=2, wn=2, nt=8, stages=3, nga=2, wa=8, warps=12,
+                  smaxnreg=1, ra=232, rb=40, su=2)
+    src = smax.defines() + S.SRC
+    plain = S._ptxas_log(src, "sm_120")
+    arch_a = S._ptxas_log(src, "sm_120a")
+    uniform = S.ptxas_info(dataclasses.replace(smax, smaxnreg=0, ra=0, rb=0, maxreg=168))
+    print(f"     sm_120: {plain.get('error', 'compiled')[:120]!r}; sm_120a: {arch_a}; uniform 168: {uniform}")
+    assert "error" in plain and "setmaxnreg" in plain["error"], plain
+    assert "error" not in arch_a and arch_a["regs"] <= 168 and arch_a["spill_stores"] == 0, arch_a
+    assert uniform["spill_stores"] > 0, uniform
+    k = S.kernel(smax)
+    assert k.arch.endswith("a") and k.num_regs <= 168
+    REPORT["16_setmaxnreg"] = {"sm_120": plain.get("error", "")[:300], "sm_120a": arch_a, "uniform_168": uniform}
 
 
 def test_7_readme():

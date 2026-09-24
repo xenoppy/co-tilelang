@@ -138,6 +138,8 @@ def _dim3(x) -> tuple[int, int, int]:
 class CudaKernel:
     """A ``__global__`` function compiled with NVRTC and loaded context-independently.
 
+    ``arch`` overrides the target (default: the device's ``sm_XY``), e.g. ``"sm_120a"`` for
+    arch-specific instructions such as ``setmaxnreg``.
     ``signature`` is one character per kernel parameter:
     p=pointer (torch.Tensor or int), i=int32, I=uint32, q=int64, Q=uint64, f=float, d=double.
     Launch: ``k(grid, block, *args, smem=0, stream=None)``; stream defaults to
@@ -145,7 +147,7 @@ class CudaKernel:
     """
 
     def __init__(self, src: str, name: str, signature: str, *, options: Sequence[str] = (),
-                 device=None):
+                 device=None, arch: str | None = None):
         self.device = device_index(device)
         self._cudev = ensure_init(self.device)
         self.name = name
@@ -154,8 +156,9 @@ class CudaKernel:
             if c not in _ARG_TYPES:
                 raise ValueError(f"bad signature char {c!r}")
         self._types = tuple(_ARG_TYPES[c] for c in signature)
-        self.cubin = compile_cubin(src, arch=arch_string(self.device), options=options,
-                                   name=f"{name}.cu")
+        # arch: e.g. "sm_120a" for arch-specific PTX (setmaxnreg); default = the device's sm_XY
+        self.arch = arch or arch_string(self.device)
+        self.cubin = compile_cubin(src, arch=self.arch, options=options, name=f"{name}.cu")
         self._lib = check(cu.cuLibraryLoadData(self.cubin, [], [], 0, [], [], 0))
         self.kernel = check(cu.cuLibraryGetKernel(self._lib, name.encode()))
         self._max_dyn_smem = 48 * 1024
