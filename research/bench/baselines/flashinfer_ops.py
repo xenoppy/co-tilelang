@@ -30,7 +30,7 @@ KV-cache layout (decode and the decode half of POD):
     which is the layout of TileLang's examples/flash_decoding/example_gqa_decode.py.
   * GQA: query head i reads KV head i // (H_q / H_kv) (FlashInfer's convention).
 
-POD caveat (FlashInfer 0.7.0, include/flashinfer/attention/pod.cuh:414-415): the kernel's
+POD caveat (FlashInfer 0.7.0, include/flashinfer/attention/pod.cuh:413-415): the kernel's
 CTA-scheduler counters (``static int* tbAssign``, one buffer per process) are zeroed with a
 plain ``cudaMemset``, i.e. on the *legacy default stream*, while the kernel is launched on
 the current torch stream. Measured consequences (results/2026-09-22_flashinfer_baselines):
@@ -39,12 +39,24 @@ the current torch stream. Measured consequences (results/2026-09-22_flashinfer_b
   * under CUDA-graph capture the memset executes once, eagerly, and is not captured: the
     first replay is correct, every later replay finds the counters exhausted, all CTAs exit
     at once (~15 us instead of ~2 ms) and the outputs are left unwritten.
-``POD.run`` therefore raises on any stream other than the legacy default stream (unless
-``unsafe_stream_ok=True``) and always raises during stream capture.
+
+Local fix (P4-a, 2026-09-24): research/patches/flashinfer_pod_stream_memset.patch replaces
+the memset by ``cudaMemsetAsync(..., stream)`` on the kernel's own stream (and keeps the
+counter buffer per device). Apply / revert instructions: research/env_versions.md §5.5;
+verification: research/results/2026-09-24_p4_prep (default stream bitwise equal to the
+unpatched build; side stream, green-context stream and >= 20 CUDA-graph replays bitwise
+equal to the default-stream result). ``pod_patch_status()`` reports whether the installed
+header carries the patch. With the patch, ``POD.run`` works on any stream and under stream
+capture (after one eager call: the counter buffer is cudaMalloc'ed on first use), so POD can
+run in cobench steady mode. Without it, ``POD.run`` raises on any stream other than the
+legacy default stream (unless ``unsafe_stream_ok=True``) and always raises during capture.
+Remaining limitation (patched too): POD launches that overlap in time on one device (two
+streams) share the counter buffer; never run two POD kernels concurrently.
 """
 from __future__ import annotations
 
 import math
+import os
 from dataclasses import asdict, dataclass
 
 import torch
@@ -52,6 +64,29 @@ import torch
 import flashinfer
 
 WORKSPACE_BYTES = 128 << 20      # FlashInfer's recommended float workspace (split-KV partials)
+POD_PATCH_MARKER = "co-tilelang patch (flashinfer_pod_stream_memset)"
+POD_HEADER = os.path.join(os.path.dirname(flashinfer.__file__), "data", "include", "flashinfer", "attention",
+                          "pod.cuh")
+
+
+def pod_patch_status() -> dict:
+    """Is the installed POD header patched (research/patches/flashinfer_pod_stream_memset.patch)?
+    The FlashInfer JIT rebuilds the POD module automatically (ninja header dependencies) the
+    first time it is loaded after the header changed; ``pod_so`` lists the compiled modules
+    and whether each is newer than the header (a stale module would be rebuilt on load)."""
+    import glob
+
+    from flashinfer.jit import env as jit_env
+
+    with open(POD_HEADER) as f:
+        patched = POD_PATCH_MARKER in f.read()
+    h_mtime = os.path.getmtime(POD_HEADER)
+    sos = sorted(glob.glob(os.path.join(str(jit_env.FLASHINFER_JIT_DIR), "pod_with_kv_cache_*", "*.so")))
+    return {"header": POD_HEADER, "header_patched": patched,
+            "pod_so": [{"path": p, "newer_than_header": os.path.getmtime(p) >= h_mtime} for p in sos]}
+
+
+_POD_EAGER_CALLED: set = set()   # devices on which a patched POD ran outside stream capture
 
 
 def _dtype_name(dt: torch.dtype) -> str:
@@ -308,7 +343,7 @@ class POD:
     """
 
     def __init__(self, prefill: PrefillShape, decode: DecodeShape, *, device="cuda",
-                 unsafe_stream_ok: bool = False):
+                 unsafe_stream_ok: bool = False, require_patch: bool = False):
         for f in ("num_qo_heads", "num_kv_heads", "head_dim", "dtype"):
             if getattr(prefill, f) != getattr(decode, f):
                 raise ValueError(f"POD needs equal {f} for prefill and decode")
@@ -316,6 +351,9 @@ class POD:
         self.prefill_shape, self.decode_shape = prefill, decode
         self.device = torch.device(device)
         self.unsafe_stream_ok = unsafe_stream_ok
+        self.patched = pod_patch_status()["header_patched"]
+        if require_patch and not self.patched:
+            raise RuntimeError(f"POD needs research/patches/flashinfer_pod_stream_memset.patch applied to {POD_HEADER}")
         self.workspace = torch.zeros(WORKSPACE_BYTES, dtype=torch.uint8, device=self.device)
         self.wrapper = flashinfer.PODWithPagedKVCacheWrapper(self.workspace, "NHD")
         self.page_table = _page_table(decode, self.device)
@@ -335,6 +373,14 @@ class POD:
         return q_p, k_p, v_p, q_d, k_c, v_c
 
     def _check_stream(self):
+        if self.patched:
+            if torch.cuda.is_current_stream_capturing():
+                if self.device.index not in _POD_EAGER_CALLED and 0 not in _POD_EAGER_CALLED:
+                    raise RuntimeError("patched POD: call run() once outside stream capture first "
+                                       "(the counter buffer is cudaMalloc'ed on first use)")
+            else:
+                _POD_EAGER_CALLED.add(self.device.index if self.device.index is not None else 0)
+            return
         if torch.cuda.is_current_stream_capturing():
             raise RuntimeError(
                 "FlashInfer 0.7.0 POD cannot be captured in a CUDA graph: its scheduler counters are "
@@ -367,7 +413,8 @@ class POD:
 
     def describe(self) -> dict:
         return {"api": "PODWithPagedKVCacheWrapper", "prefill": self.prefill_shape.to_dict(),
-                "decode": self.decode_shape.to_dict(), "nbytes": self.nbytes, "flops": self.flops}
+                "decode": self.decode_shape.to_dict(), "nbytes": self.nbytes, "flops": self.flops,
+                "stream_memset_patch": self.patched}
 
 
 def serial(prefill: SinglePrefill, decode: BatchDecode):

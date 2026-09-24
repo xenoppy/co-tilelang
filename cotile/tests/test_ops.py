@@ -43,6 +43,7 @@ def _assert_run(run):
     assert s["compile_fail"] == 0, s
     assert s["both_ok"] == s["configs"], s
     assert s["grid_eq_persistent"] == s["configs"], s
+    assert s["tile_space_ok"] == s["configs"] and s["group_bitwise_ok"] == s["configs"], s
     assert s["repeat_ok"] == s["split_configs"] and s["counters_zero"] == s["split_configs"], s
 
 
@@ -202,9 +203,13 @@ def test_rmsnorm():
     _assert_run(_run_op("rmsnorm"))
 
 
+def test_prefill_attn():
+    _assert_run(_run_op("prefill_attn"))
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ops", default="gemm,gqa_decode,rmsnorm")
+    ap.add_argument("--ops", default="gemm,gqa_decode,rmsnorm,prefill_attn")
     ap.add_argument("--limit", type=int, default=None, help="only the first N configs per op")
     ap.add_argument("--no-gpu", action="store_true", help="compile + signatures only")
     ap.add_argument("--cold", action="store_true", help="use a fresh, empty TileLang kernel cache")
@@ -249,7 +254,9 @@ def main(argv=None) -> int:
         with open(os.path.join(a.out, "summary.json"), "w") as f:
             json.dump(summaries, f, indent=1)
     ok = all(
-        s["compile_fail"] == 0 and (a.no_gpu or (s["both_ok"] == s["configs"] and s["grid_eq_persistent"] == s["configs"]))
+        s["compile_fail"] == 0 and (a.no_gpu or (s["both_ok"] == s["configs"] and s["grid_eq_persistent"] == s["configs"]
+                                                 and s["tile_space_ok"] == s["configs"]
+                                                 and s["group_bitwise_ok"] == s["configs"]))
         for s in summaries
     ) and all(r["ok"] for r in l2_rows)
     if a.out and l2_rows:

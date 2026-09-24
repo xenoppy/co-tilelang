@@ -99,10 +99,22 @@ def dtype_bytes(dtype: str) -> int:
 @dataclass(frozen=True)
 class TileSpace:
     """Flat bag of independent tiles. `decode(tile_id)` maps a tile id (Python int or
-    TIR PrimExpr) to the op's tile coordinates (a namedtuple)."""
+    TIR PrimExpr) to the op's tile coordinates (a namedtuple).
+
+    `work(tile_id)` (optional, Python ints only): relative cost of one tile (the ops use
+    issued MMA FLOPs). None means every tile does the same work. Ops with non-uniform tiles
+    (causal prefill attention) expose it so a scheduler can order or balance tiles; the
+    tile-id order of such an op is documented with its config (e.g. longest first)."""
 
     num_tiles: int
     decode: Callable[[Any], tuple]
+    work: Callable[[int], float] | None = None
+
+    def works(self) -> list:
+        """work(t) for every tile (1 for uniform tile spaces)."""
+        if self.work is None:
+            return [1] * self.num_tiles
+        return [self.work(t) for t in range(self.num_tiles)]
 
 
 def alloc_scratch(spec: list[ScratchBuf]):

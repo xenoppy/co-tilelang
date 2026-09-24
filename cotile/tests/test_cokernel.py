@@ -34,15 +34,16 @@ from cotile import resources
 from cotile.cokernel import S_EPOCH, CoRunner, Orch, build_cokernel, sm_role_table
 from cotile.device import DEFAULT_DEVICE
 from cotile.kernel import Runner, compile_specs
-from cotile.ops import gemm, gqa_decode, rmsnorm
+from cotile.ops import gemm, gqa_decode, prefill_attn, rmsnorm
 from cotile.tests import harness as H
 
-G, D, R = gemm.GemmConfig, gqa_decode.DecodeConfig, rmsnorm.RMSNormConfig
+G, D, R, P = gemm.GemmConfig, gqa_decode.DecodeConfig, rmsnorm.RMSNormConfig, prefill_attn.PrefillConfig
 
 SHAPES = {
     gemm.NAME: gemm.GemmShape(M=2048, N=4096, K=4096),
     gqa_decode.NAME: gqa_decode.DecodeShape(batch=16, seqlen=8192, heads=32, kv_heads=8, dim=128),
     rmsnorm.NAME: rmsnorm.RMSNormShape(tokens=16384, hidden=4096),
+    prefill_attn.NAME: prefill_attn.PrefillShape(seqlen=2048, heads=32, kv_heads=8, dim=128),
 }
 
 # name -> (opA, cfgA, opB, cfgB, ctas_per_sm for CTA binding (None: not co-resident))
@@ -65,6 +66,16 @@ PAIRS = {
     # desc[UR1] miscompile with the 32-bit shared address), decode K/V loads evict_first
     "gd_l2": (gemm, G(128, 128, 64, 2, 128, ab_l2="evict_last"), gqa_decode, D(64, 4, 1, 64, 1, kv_l2="evict_first"),
               None),
+    # P4 (prefill x decode, POD's scenario). Causal prefill tiles have unequal work (longest
+    # first in tile-id order); the prefill K/V loop has a tile-dependent trip count.
+    # 256-thread prefill (8 warps x 16 rows), decode on 128 of 256 threads
+    "pd_e0": (prefill_attn, P(128, 64, 1, 256), gqa_decode, D(64, 4, 1, 128, 2), None),
+    # equal threads, split-KV decode (in-kernel combine), 2-stage prefill pipeline
+    "pd_split": (prefill_attn, P(64, 64, 2, 128), gqa_decode, D(64, 4, 4, 128, 2), None),
+    # small tiles: 2 CTAs/SM -> CTA (POD-style) binding; decode on 64 of 128 threads
+    "pd_small": (prefill_attn, P(64, 32, 1, 128), gqa_decode, D(32, 4, 2, 64, 2), 2),
+    # roles swapped (decode = A, prefill = B), prefill 128x32 (FlashInfer's tile shape)
+    "dp_e0": (gqa_decode, D(64, 4, 1, 128, 2), prefill_attn, P(128, 32, 1, 128), None),
 }
 
 

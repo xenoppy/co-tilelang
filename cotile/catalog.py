@@ -53,11 +53,13 @@ _SHAPE_FIELDS = {
     "gemm": ("M", "N", "K"),
     "gqa_decode": ("batch", "seqlen"),
     "rmsnorm": ("tokens", "hidden"),
+    "prefill_attn": ("seqlen",),
 }
 _SHAPE_LETTERS = {
     "gemm": ("M", "N", "K"),
     "gqa_decode": ("B", "S"),
     "rmsnorm": ("T", "H"),
+    "prefill_attn": ("S",),
 }
 
 
@@ -78,13 +80,15 @@ def shape_tag(op: str, shape) -> str:
 def shape_obj(op: str, d: dict):
     """Shape dataclass of `op` from its field dict."""
     m = _op_module(op)
-    cls = {"gemm": "GemmShape", "gqa_decode": "DecodeShape", "rmsnorm": "RMSNormShape"}[op]
+    cls = {"gemm": "GemmShape", "gqa_decode": "DecodeShape", "rmsnorm": "RMSNormShape",
+           "prefill_attn": "PrefillShape"}[op]
     return getattr(m, cls)(**d)
 
 
 def cfg_obj(op: str, d: dict):
     m = _op_module(op)
-    cls = {"gemm": "GemmConfig", "gqa_decode": "DecodeConfig", "rmsnorm": "RMSNormConfig"}[op]
+    cls = {"gemm": "GemmConfig", "gqa_decode": "DecodeConfig", "rmsnorm": "RMSNormConfig",
+           "prefill_attn": "PrefillConfig"}[op]
     return getattr(m, cls)(**d)
 
 
@@ -134,6 +138,22 @@ def work(op: str, shape, cfg) -> dict:
             "bytes_ws": ws,
             "bytes_tiles": HB * kv + nsp * B * Hq * D * 2 + B * Hq * D * 2 + ws,
         }
+    if op == "prefill_attn":
+        S, Hq, Hkv, D = s["seqlen"], s.get("heads", 32), s.get("kv_heads", 8), s.get("dim", 128)
+        causal = s.get("causal", True)
+        bM, bN = c["block_M"], c["block_N"]
+        nq = S // bM
+        pairs = S * (S + 1) / 2 if causal else float(S * S)
+        # K/V blocks streamed per query block (causal: up to the diagonal, rounded up to bN)
+        nkv = [((qb + 1) * bM + bN - 1) // bN if causal else S // bN for qb in range(nq)]
+        e = 2  # bf16
+        return {
+            "flops": 4.0 * pairs * D * Hq,
+            "flops_mma": 4.0 * bM * bN * D * Hq * sum(nkv),
+            "bytes_min": float(e * D * (2 * S * Hq + 2 * S * Hkv)),
+            "bytes_ws": 0.0,
+            "bytes_tiles": float(e * D * Hq * (2 * S + 2 * bN * sum(nkv))),
+        }
     if op == "rmsnorm":
         T, H = s["tokens"], s["hidden"]
         R = c["rows_per_cta"]
@@ -154,6 +174,7 @@ def work_min(op: str, shape) -> dict:
         "gemm": {"block_M": 1, "block_N": 1, "split_k": 1},
         "gqa_decode": {"heads_per_cta": 1, "num_split": 1},
         "rmsnorm": {"rows_per_cta": 1},
+        "prefill_attn": {"block_M": 1, "block_N": 1},
     }[op]
     w = work(op, s, dummy)
     return {"flops": w["flops"], "bytes_min": w["bytes_min"]}

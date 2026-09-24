@@ -12,7 +12,13 @@ research/bench/
              run_guarded.py (runs a resumable study under the GPU-sharing policy);
              mv1_flush.py, mv1_steady.py, mv1_static.py, sched_variants.py, mv1_common.py (methodology v1);
              p1_common.py, p1_solo_v1.py, p1_study.py, p1_carveout.py, p1_report.py (P1 3x2 study, part A:
-             research/results/2026-09-23_p1_3x2_A)
+             research/results/2026-09-23_p1_3x2_A);
+             p4_common.py, p4_pod_patch.py, p4_solo.py, p4_report.py (P4-a: FlashInfer POD stream-memset
+             patch verification, prefill x decode solo profiling and pairing table:
+             research/results/2026-09-24_p4_prep)
+  baselines/flashinfer_ops.py   FlashInfer decode / prefill / POD wrappers; POD runs on any stream and
+             under CUDA graphs once research/patches/flashinfer_pod_stream_memset.patch is applied
+             (pod_patch_status(); research/env_versions.md §5.5)
   tests/test_cobench.py   acceptance tests (P0-2 + methodology v1)
 ```
 Environment: `source research/env.sh`, then `sys.path.insert(0, "research/bench"); import cobench as cb`. Tests: `python research/bench/tests/test_cobench.py [filter...]` (or `python -m pytest research/bench/tests/test_cobench.py`).

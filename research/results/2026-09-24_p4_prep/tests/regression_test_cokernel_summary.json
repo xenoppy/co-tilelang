@@ -1,0 +1,43 @@
+{
+ "compile": {
+  "wall_s": 62.18868851661682,
+  "n_ok": 151,
+  "n_fail": 0,
+  "n_kernels": 151
+ },
+ "cokernels_tested": 132,
+ "knob_runs": 306,
+ "knob_runs_ok": 299,
+ "not_launchable": [
+  [
+   "dp_e0",
+   "sm_dynamic_c1-1_n188_sum"
+  ],
+  [
+   "gd_e0",
+   "sm_dynamic_c1-1_n188_sum"
+  ],
+  [
+   "gd_l2",
+   "sm_dynamic_c1-1_n188_sum"
+  ],
+  [
+   "gd_split",
+   "sm_dynamic_c1-1_n188_sum"
+  ],
+  [
+   "gd_thr",
+   "sm_dynamic_c1-1_n188_sum"
+  ],
+  [
+   "pd_e0",
+   "sm_dynamic_c1-1_n188_sum"
+  ],
+  [
+   "pd_split",
+   "sm_dynamic_c1-1_n188_sum"
+  ]
+ ],
+ "failed": [],
+ "wall_s": 195.2
+}

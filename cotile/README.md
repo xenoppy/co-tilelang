@@ -9,6 +9,7 @@ CoKernel is built from, and the CoKernel builder v0 (see "CoKernel builder" belo
 | `cotile/ops/gemm.py` | GEMM `C = A @ B^T` (NT), bf16 in/out, fp32 accumulate, split-K with in-kernel combine |
 | `cotile/ops/gqa_decode.py` | GQA decode attention (Hq=32, Hkv=8, D=128 by default), split-KV with in-kernel combine |
 | `cotile/ops/rmsnorm.py` | RMSNorm `Y = X * rsqrt(mean(X^2) + eps) * W`, explicit thread/vector mapping |
+| `cotile/ops/prefill_attn.py` | causal prefill attention of one request (FlashAttention-2 style, GQA Hq=32/Hkv=8/D=128 by default), per-tile work exposed, longest-first tile order |
 | `cotile/kernel.py` | op protocol types, generic `build_grid` / `build_persistent`, `compile_specs` (par_compile), `Runner` |
 | `cotile/resources.py` | resource signature of a *compiled* kernel + occupancy model + driver cross-check |
 | `cotile/device.py` | `DeviceSpec` for the RTX PRO 6000 Blackwell (sm_120) |
@@ -127,6 +128,40 @@ alternating on one shared counter/workspace state.
   sequential -> warp butterfly -> per-warp partials in the smem scratch -> fixed-order
   sum. Only `__syncthreads` (no TileLang AllReduce named barriers). Numerics: E1;
   key = (threads, vec).
+* **Prefill attention** (`PrefillConfig`, P4-a 2026-09-24): `block_M` (query positions per
+  tile), `block_N` (KV block), `num_stages` (K/V smem buffers), `threads` (warps along M,
+  `T.GemmWarpPolicy.FullRow`: row max/sum are warp-local, P stays in registers as the A
+  operand of the PV GEMM, no cross-warp reduction workspace), `epilogue` (`smem`: O staged
+  through the dead Q buffer, or `direct`), `order`. Layouts are FlashInfer's NHD of one
+  request: Q/O [S, Hq, D], K/V [S, Hkv, D]; query head h uses KV head h // G. The head
+  configuration matches the decode op because FlashInfer's POD requires prefill and decode
+  to share (Hq, Hkv, D). Tile = (query block qb, query head h); causal tiles stream
+  `ceil((qb+1)*block_M/block_N)` K/V blocks, so their work differs by up to S/block_M x.
+  `tile_space(...).work(t)` returns the issued MMA FLOPs of tile t (new optional
+  `TileSpace.work`; `TileSpace.works()`), and the default tile order `lpt` is
+  longest-first (t -> qb = nq-1 - t // Hq, h = t % Hq: the Hq heads of a query block are
+  adjacent, so the G heads of a KV group read the same K/V stream back to back); `natural`
+  (shortest first) is a control. The order is what the grid build dispatches, what the
+  persistent grid-stride walks and what a CoKernel's dynamic queue hands out. The causal
+  mask initialises the score tile with 0/-inf before the QK^T GEMM accumulates into it
+  (same cost as a clear); fully masked rows of a block are bitwise-neutral (alpha = 1,
+  P = 0). 29 configs (64/128/256-row tiles x KV block 32/64/128 x 1-3 stages x 128-512
+  threads, plus direct-epilogue and natural-order controls), smem-filtered with
+  `smem_bytes` (exact for all 58 test kernels) and a <= 192 fp32-accumulators-per-thread
+  filter (no config spills). Numerics: E1; key = (block_N,) (rescale points and PV
+  accumulation order); block_M, threads, stages, epilogue and order are bitwise-neutral
+  (verified: 3 groups, 29/29). The exponential is the accurate `exp2f`: `--use_fast_math`
+  would be a pass config, and CoKernel pass configs are merged, so it would change the
+  partner's bits. Solo performance vs FlashInfer: research/results/2026-09-24_p4_prep.
+  **TileLang fix needed for this op** (`src/transform/inject_pipeline.cc`, `EmitImpl`): a
+  `T.Pipelined` loop with a run-time trip count n (here tile-dependent) has an epilogue
+  over [n, n + max_stage) whose extent was not simplified, so the epilogue was emitted as
+  a loop with loop-variable-dependent `cp.async.wait_group` counts and CUDA codegen failed
+  ("Downcast from tirx.Sub to ir.IntImm failed") for every num_stages >= 2 config. The
+  extent is now simplified before the constant check (the epilogue is expanded as for
+  static trip counts; static-extent kernels are unchanged). Regression test:
+  `testing/python/transform/test_tilelang_transform_pipeline_dynamic_extent.py` (fails
+  before the fix, passes after; num_stages 1-4 incl. trip counts below the depth).
 
 ## Resource signatures (`cotile.resources.signature(spec)`)
 
@@ -166,6 +201,7 @@ pipeline copy of the loop body.
 | gemm | 43 | 86 | 31.7 s | 43/43 | 43/43 | 3 groups, 43/43 | 8/8 / 8/8 / 8/8 |
 | gqa_decode | 36 | 72 | 39.2 s | 36/36 | 36/36 | 23 groups, 36/36 | 20/20 / 20/20 / 20/20 |
 | rmsnorm | 39 | 78 | 10.6 s | 39/39 | 39/39 | 12 groups, 39/39 | - |
+| prefill_attn (2026-09-24, S=1536) | 29 | 58 | 33.1 s | 29/29 | 29/29 | 3 groups, 29/29 | - |
 
 Registers and CTAs/SM from `cotile.resources` agree with the CUDA driver
 (`cuFuncGetAttribute`, `cuOccupancyMaxActiveBlocksPerMultiprocessor`) for all 236
@@ -193,7 +229,11 @@ and within tolerance of the fp32 reference. `test_cokernel` has a hinted pair (`
 The GPU phase first checks `nvidia-smi` for other compute processes and waits (poll
 every 150 s, up to 15 min) if a sibling is measuring. pytest is not installed in
 `~/mpk-env`; `test_gemm/test_gqa_decode/test_rmsnorm` are pytest-compatible anyway.
-Test shapes: GEMM 1024x4096x4096, decode batch 16 / S 2048, RMSNorm 4096x4096.
+Test shapes: GEMM 1024x4096x4096, decode batch 16 / S 2048, RMSNorm 4096x4096, prefill S 1536
+(= 6 x 256: every block_M divides it and the query-block count is not a power of two).
+`test_ops` also checks every tile space (bijective decode; for prefill: per-tile work sums to
+the catalog work model and is monotone in the configured order) and asserts bitwise equality
+within numerics-key groups.
 Persistent test builds use min(188, ceil(tiles/3)) CTAs so every CTA loops.
 
 ## Numerics caveat found while testing (sm_120, CUDA 12.9)
@@ -307,6 +347,14 @@ exactly once, and counters are clean after every launch. Per-CTA smem with `alia
 (e.g. GEMM x decode 73216 B vs 173072 B for the default plan, which cannot launch). Overhead of a compiled-in but
 idle partner: +2% (static GEMM) to +3.6% (decode) vs the solo persistent build at equal CTA count; registers rise to
 about max(roles) + 10–40. Dynamic dispatch is no slower than static even for 2 µs RMSNorm tiles (4 CTAs/SM).
+
+**Prefill x decode (P4-a, 2026-09-24).** Causal prefill S=2048 x GQA decode B16 x 8192, 4 pairs (`pd_e0`: 256-thread
+prefill with the decode on 128 of 256 threads; `pd_split`: split-KV decode, 2-stage prefill; `pd_small`: 2 CTAs/SM
+with CTA binding, decode on 64 of 128 threads; `dp_e0`: roles swapped, FlashInfer's 128x32 prefill tile): 95/95
+launchable settings (285 launches) pass the same checks (fp32 reference, bitwise equal to the solo persistent builds,
+every tile exactly once, counters clean); the 3 `smem="sum"` controls of the 1-CTA/SM pairs are not launchable
+(124–158 KB). The prefill role's pipelined K/V loop has a tile-dependent trip count (needs the inject_pipeline fix,
+see the prefill op), and the dynamic queue hands out prefill tiles longest-first.
 
 **Generated code.** `__launch_bounds__(threads, min_blocks_per_sm)`; one `__syncthreads()` per dispatch iteration
 (+1 with timestamps) in front of each role body's own leading barrier. The partial-thread role's barriers become

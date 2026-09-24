@@ -1,0 +1,29 @@
+--- a/data/include/flashinfer/attention/pod.cuh
++++ b/data/include/flashinfer/attention/pod.cuh
+@@ -410,9 +410,23 @@
+             // nthrs);
+             //  ************************************************ /
+ 
+-            static int* tbAssign = nullptr;
+-            if (tbAssign == nullptr) cudaMalloc(&tbAssign, sizeof(int) * (num_sm + 2));
+-            cudaMemset(tbAssign, 0, sizeof(int) * (num_sm + 2));
++            // co-tilelang patch (flashinfer_pod_stream_memset): reset the CTA-scheduler
++            // counters in stream order, on the stream the kernel is launched on. FlashInfer
++            // 0.7.0 used a stream-less cudaMemset (legacy default stream): unordered w.r.t.
++            // the kernel on any non-blocking stream (a later call's memset could reset the
++            // counters of a running kernel), and never captured into a CUDA graph (every
++            // replay after the first found the counters exhausted and wrote nothing).
++            // The counter buffer is also kept per device (it was one process-wide pointer).
++            // Remaining limitation: POD launches that overlap in time (different streams)
++            // on one device still share the buffer. The first call must not be inside a
++            // stream capture (cudaMalloc).
++            static int* tbAssign_per_device[64] = {nullptr};
++            FLASHINFER_CHECK(dev_id >= 0 && dev_id < 64, "POD: device index out of range");
++            int*& tbAssign = tbAssign_per_device[dev_id];
++            if (tbAssign == nullptr) {
++              FLASHINFER_CUDA_CALL(cudaMalloc(&tbAssign, sizeof(int) * (num_sm + 2)));
++            }
++            FLASHINFER_CUDA_CALL(cudaMemsetAsync(tbAssign, 0, sizeof(int) * (num_sm + 2), stream));
+ 
+             // Setup kernel arguments
+             void* args[] = {(void*)&xsize, (void*)&prefill_params, (void*)&decode_params,

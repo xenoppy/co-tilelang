@@ -1,0 +1,22 @@
+[
+ {
+  "op": "prefill_attn",
+  "configs": 29,
+  "kernels": 58,
+  "compile_ok": 58,
+  "compile_fail": 0,
+  "compile_wall_s": 33.1,
+  "tile_space_ok": 29,
+  "grid_ok": 29,
+  "persistent_ok": 29,
+  "both_ok": 29,
+  "grid_eq_persistent": 29,
+  "group_bitwise_ok": 29,
+  "numerics_groups": 3,
+  "split_configs": 0,
+  "repeat_ok": 0,
+  "counters_zero": 0,
+  "shared_state_ok": 0,
+  "total_s": 77.8
+ }
+]

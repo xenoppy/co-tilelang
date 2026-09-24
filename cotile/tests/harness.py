@@ -23,14 +23,16 @@ from dataclasses import dataclass, field
 from cotile import resources
 from cotile.device import DEFAULT_DEVICE
 from cotile.kernel import Runner, ceildiv, compile_specs
-from cotile.ops import gemm, gqa_decode, rmsnorm
+from cotile.ops import gemm, gqa_decode, prefill_attn, rmsnorm
 
 TEST_SHAPES = {
     gemm.NAME: gemm.GemmShape(M=1024, N=4096, K=4096),
     gqa_decode.NAME: gqa_decode.DecodeShape(batch=16, seqlen=2048, heads=32, kv_heads=8, dim=128),
     rmsnorm.NAME: rmsnorm.RMSNormShape(tokens=4096, hidden=4096),
+    # 1536 = 6 x 256: every block_M divides it, and the query-block count is not a power of two
+    prefill_attn.NAME: prefill_attn.PrefillShape(seqlen=1536, heads=32, kv_heads=8, dim=128),
 }
-OPS = {m.NAME: m for m in (gemm, gqa_decode, rmsnorm)}
+OPS = {m.NAME: m for m in (gemm, gqa_decode, rmsnorm, prefill_attn)}
 
 
 def persistent_ctas(num_tiles: int, dev=DEFAULT_DEVICE) -> int:
@@ -86,6 +88,19 @@ def check_tile_space(op, shape, cfg) -> bool:
         )
     if op.NAME == "rmsnorm":
         return sorted(c[0] for c in coords) == list(range(0, shape.tokens, cfg.rows_per_cta))
+    if op.NAME == "prefill_attn":
+        nq = shape.seqlen // cfg.block_M
+        if not all(0 <= qb < nq and 0 <= h < shape.heads and kvh == h // shape.group for qb, h, kvh in coords):
+            return False
+        # per-tile work: sums to the issued MMA FLOPs of the catalog work model, and the
+        # longest-first order is non-increasing (the natural order non-decreasing)
+        from cotile import catalog
+
+        w = ts.works()
+        if sum(w) != catalog.work(op.NAME, shape, cfg)["flops_mma"]:
+            return False
+        pairs = list(zip(w, w[1:]))
+        return all(a >= b for a, b in pairs) if cfg.order == "lpt" else all(a <= b for a, b in pairs)
     return True
 
 

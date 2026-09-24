@@ -197,7 +197,14 @@
 - **kernel 内 tile 级动态调度的价值是鲁棒性**：不需要 oracle 划分、不需要逐对调参就能拿到接近最优的收益，而 green 分区选错会比串行更慢。这是 green context 做不到的，但 mKernel 等在别的场景有类似的运行时自适应。
 - D1 在 P1–P4 上决定。按 plan v0.4，下一步做 P4（prefill × decode，与 POD 同条件对比），它是唯一可能出现"同 SM 共驻胜过分区"的场景。
 
-- P4-a（进行中，04:55 启动，researcher agent）：P4 的基础设施。完成标准：P1' 算子库加入 causal prefill attention（与 decode 同一头配置 Hq=32/Hkv=8/D=128；tile 暴露每个 tile 的工作量以便长任务优先；配置枚举、数值键、grid / 持久化版、资源签名；逐配置正确性、grid 与持久化逐位相同；prefill × decode 的 CoKernel 测试）；P2' FlashInfer POD 的计数器改为在 kernel 所在流上按序复位（补丁文件 + 逐位验证：默认流与原版相同，side stream / green 流 / CUDA graph 回放结果正确）；P3' 稳态单跑 profiling（prefill 全配置 + SM 预算曲线、decode 缺失部分、FlashInfer 参照），TileLang prefill 若比 FlashInfer 慢 >10% 必须标出，给出 8 个 P4 对的配对表；P4' 结果目录与脚本，GPU ≤ 2h。
+**P4-a：P4 的基础设施：已完成（06:10 验收：主 agent 复跑 prefill 29/29 配置、prefill × decode CoKernel 95/95（3 个为预期对照）、流水线回归测试与已有流水线测试 34 通过 3 跳过；提交 c2ca9dcd 等）**，结果 `research/results/2026-09-24_p4_prep/`。
+- 完成标准（原文）：P1' 算子库加入 causal prefill attention（与 decode 同一头配置 Hq=32/Hkv=8/D=128；tile 暴露每个 tile 的工作量以便长任务优先；配置枚举、数值键、grid / 持久化版、资源签名；逐配置正确性、grid 与持久化逐位相同；prefill × decode 的 CoKernel 测试）；P2' FlashInfer POD 的计数器改为在 kernel 所在流上按序复位（补丁文件 + 逐位验证：默认流与原版相同，side stream / green 流 / CUDA graph 回放结果正确）；P3' 稳态单跑 profiling（prefill 全配置 + SM 预算曲线、decode 缺失部分、FlashInfer 参照），TileLang prefill 若比 FlashInfer 慢 >10% 必须标出，给出 8 个 P4 对的配对表；P4' 结果目录与脚本，GPU ≤ 2h。
+- prefill op（`cotile/ops/prefill_attn.py`）：causal、FA2 式、NHD 布局（与 FlashInfer 共用张量），Hq 32 / Hkv 8 / D 128（POD 要求两者头配置相同，09-22 的 POD 基线也是 32/8/128）；tile =（query 块, query head），warp 全部沿行排布；tile 暴露工作量，默认长任务优先（LPT），自然顺序作对照（188 SM 下慢 1.5–14.8%）；29 个配置；数值 E1，键 `(block_N,)`；用精确 `exp2f` 而非 fast math（fast math 是 pass 配置，会连带改变伙伴算子的比特）。
+- **TileLang 核心修复**（`src/transform/inject_pipeline.cc`，c2ca9dcd）：运行时 trip count 的流水循环，其 epilogue 长度未化简，cp.async wait_group 计数依赖循环变量，≥2 级流水的配置全部代码生成失败；加一次 `Simplify` 并附回归测试。
+- **POD 补丁**（`research/patches/flashinfer_pod_stream_memset.patch`，已应用于 site-packages）：计数器在 kernel 所在流上 `cudaMemsetAsync`、按设备分配。默认流上与原版逐位相同（24/24）；side stream / green 流 / CUDA graph 回放的错误数从 44/48、48/48、46/48 降到 0/192。剩余限制：两个 POD 同时在不同流上启动仍共用计数器；首次调用须在 stream capture 之外。
+- **单跑（稳态）**：TileLang prefill 比 FlashInfer **更快**（S2048 135.7 vs 162.9µs，0.833×；S8192 1699.9 vs 1846.9µs，0.920×），decode 0.96–0.99×。**公平性问题方向相反**：TileLang 串行比 FlashInfer 串行快 3–12%，POD 在三个 prefill 为主的对上比 TileLang 串行还慢。P4 必须让每个系统对照自己的串行，并加归因对照。
+- 配对表（稳态）：POD 相对 FlashInfer 串行 1.01–1.37×；只有 P2048_B16_S2048（时长比 1.56）与 P8192_B64_S8192（1.30）落在 0.5–2 之内，两个 0.41 的对勉强；prefill 为主的对（时长比 5–20）上限很低（1.03–1.14）。
+- 其他：S=8192 时原有的误差容限对 FlashInfer、TileLang、torch bf16 SDPA 都不通过（长 causal 行输出很小，缩小了容限尺度），改为同时接受"不比 torch bf16 差"。GPU 约 45 分钟测量。`~/.tilelang/cache` 有 2.7GB 旧缓存，未动。
 
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。

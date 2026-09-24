@@ -136,3 +136,21 @@ pip install --no-cache-dir flashinfer-python==0.7.0
 ### 5.4 sm_120 上的已知问题（FlashInfer 0.7.0）
 
 - POD（`PODWithPagedKVCacheWrapper`）能编译、结果正确，但它的 CTA 调度计数器 `tbAssign`（进程级 `static int*`）是用不带 stream 的 `cudaMemset` 清零的（`include/flashinfer/attention/pod.cuh:414-415`），即落在 legacy default stream 上，而 kernel 本身在 torch 当前 stream 上。后果（实测）：在非阻塞 stream（torch 的 side stream、green context stream）上连续调用会得到错误结果；放进 CUDA graph 时只有第一次 replay 正确，之后每次 replay 约 15 µs 就结束、什么都没算。因此 POD 只能在 legacy default stream 上、不用 graph 来测。详见结果目录的 README。
+- **2026-09-24 起已在本地打补丁修复**，见 §5.5。
+
+### 5.5 本地补丁：POD 计数器在 kernel 所在流上复位（P4-a，2026-09-24）
+
+- 补丁文件：`research/patches/flashinfer_pod_stream_memset.patch`，作用于 site-packages 里 FlashInfer 0.7.0 附带的头文件 `flashinfer/data/include/flashinfer/attention/pod.cuh`（原文件 md5 `2e7379940684ef9387475e211e82db03`，打补丁后 `0ed77691b03239590b8c58cd418360d7`）。
+- 改动：把不带 stream 的 `cudaMemset(tbAssign, ...)` 换成 `cudaMemsetAsync(tbAssign, 0, ..., stream)`（与 kernel 同一条流，按流序执行，也会被 CUDA graph 捕获成 memset 节点）；计数器缓冲区改为每个设备一份（原来是整个进程一个指针）。kernel 代码不变。
+- 仍有的限制：同一设备上时间重叠的两个 POD launch（不同流）仍共用计数器，不要并发跑两个 POD；第一次调用不能发生在 stream capture 中（缓冲区在首次调用时 `cudaMalloc`）。`flashinfer_ops.POD.run` 会检查后者。
+- 打补丁 / 撤销：
+  ```bash
+  source research/env.sh
+  FI=$(python -c 'import flashinfer,os;print(os.path.dirname(flashinfer.__file__))')
+  patch -p1 -d "$FI" < research/patches/flashinfer_pod_stream_memset.patch        # 打补丁
+  patch -R -p1 -d "$FI" < research/patches/flashinfer_pod_stream_memset.patch     # 撤销
+  python -c "import sys; sys.path.insert(0,'research/bench'); from baselines import flashinfer_ops as fo; print(fo.pod_patch_status())"
+  ```
+- JIT 缓存会自动重编：FlashInfer 用 ninja（`deps = gcc` 的依赖文件）管理 `~/.cache/flashinfer/0.7.0/120f/cached_ops/pod_with_kv_cache_*`，头文件变了之后第一次加载 POD 模块时重编 16 个实例（约 130 s，96 核），`pod_patch_status()["pod_so"]` 报告 `.so` 是否比头文件新。撤销补丁后同样会自动重编回原版。
+- 验证（`research/bench/scripts/p4_pod_patch.py`，结果 `research/results/2026-09-24_p4_prep/pod_patch_{unpatched,patched}.json`）：8 个 P4 配置 × 3 组输入，默认流上补丁版与原版输出逐位相同（SHA-256）；补丁版在 torch side stream（每配置 24 次背靠背调用）、green context stream（96 SM）、CUDA graph（每配置捕获一次、回放 24 次，每次回放前换输入并把输出置 NaN）上共 576 次调用全部与默认流结果逐位相同；原版在同样的测试上 side 44/48、green 48/48、graph 46/48 次错误。
+- `pip install --force-reinstall flashinfer-python==0.7.0` 会覆盖补丁，需要重新执行上面的 `patch`。
