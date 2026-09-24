@@ -2859,6 +2859,10 @@ void CodeGenTileLangCuTeDSL::VisitStmt_(const AttrStmtNode *op) {
     ICHECK(factor);
     unroll_factor_[op->node.as<VarNode>()] = Downcast<IntImm>(factor);
     CodeGenTileLangPY::VisitStmt_(op);
+  } else if (op->attr_key == tl::attr::kCPAsyncL2EvictionPolicy) {
+    LOG(FATAL) << "CuTeDSL backend: cp.async with an L2 eviction_policy "
+                  "(T.copy(..., eviction_policy=...)) is not implemented; "
+                  "use the CUDA backend";
   } else {
     CodeGenTileLangPY::VisitStmt_(op);
   }

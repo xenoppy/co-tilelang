@@ -69,6 +69,98 @@ TL_DEVICE void cp_async_gs_conditional(void const *const smem_addr,
   }
 }
 
+// cp.async with an L2 eviction-priority cache hint (PTX .L2::cache_hint, sm_80+).
+// Emitted for T.copy(..., eviction_policy="evict_first" | "evict_last") when the
+// copy lowers to cp.async (AttrStmt tl.cp_async_l2_eviction_policy). The policy
+// is created with createpolicy.fractional (fraction 1.0: every line of the
+// access gets the priority); only the L2 replacement priority of the copied
+// lines differs from cp_async_gs / cp_async_gs_conditional.
+enum class L2EvictionPolicy : int { EVICT_NORMAL = 0, EVICT_FIRST = 1, EVICT_LAST = 2 };
+
+template <L2EvictionPolicy P> TL_DEVICE uint64_t l2_eviction_policy() {
+  uint64_t policy;
+  // not volatile: a pure value, so the compiler may hoist / CSE it
+  if constexpr (P == L2EvictionPolicy::EVICT_FIRST) {
+    asm("createpolicy.fractional.L2::evict_first.b64 %0, 1.0;" : "=l"(policy));
+  } else if constexpr (P == L2EvictionPolicy::EVICT_LAST) {
+    asm("createpolicy.fractional.L2::evict_last.b64 %0, 1.0;" : "=l"(policy));
+  } else {
+    asm("createpolicy.fractional.L2::evict_normal.b64 %0, 1.0;" : "=l"(policy));
+  }
+  return policy;
+}
+
+// The shared-memory destination is passed as a 64-bit shared-window address
+// (cvta.to.shared.u64 of the generic pointer), not as the 32-bit address the
+// unhinted cp_async_gs uses. Reason: ptxas 12.9 miscompiles the 32-bit form for
+// sm_120/sm_120a whenever it folds a uniform shared-memory base into the LDGSTS
+// address ([Rx+URy]) of a cp.async that carries a cache policy: the emitted
+// LDGSTS reads its memory descriptor from an odd uniform register that is never
+// written (desc[UR1]) and faults with "illegal instruction" (1/3 of the GEMM
+// configs of cotile/ops/gemm.py; reproduced standalone, independent of -O level,
+// of .ca/.cg and of createpolicy vs a constant policy). With the 64-bit address
+// ptxas keeps the address in a per-thread register ([Rx]) and the descriptor in
+// a valid uniform pair.
+template <int N, L2EvictionPolicy P>
+TL_DEVICE void cp_async_gs_l2hint(void const *const smem_addr,
+                                  void const *global_ptr) {
+  static_assert(N == 16 || N == 8 || N == 4);
+  uint64_t policy = l2_eviction_policy<P>();
+  uint64_t addr;
+  asm("cvta.to.shared.u64 %0, %1;" : "=l"(addr) : "l"(smem_addr));
+  if constexpr (N == 16) {
+    asm volatile(
+#if TL_ENABLE_L2_PREFETCH
+        "cp.async.cg.shared.global.L2::cache_hint.L2::128B [%0], [%1], %2, %3;"
+#else
+        "cp.async.cg.shared.global.L2::cache_hint [%0], [%1], %2, %3;"
+#endif
+        ::"l"(addr),
+        "l"((void const *)(global_ptr)), "n"(N), "l"(policy));
+  } else {
+    asm volatile(
+#if TL_ENABLE_L2_PREFETCH
+        "cp.async.ca.shared.global.L2::cache_hint.L2::128B [%0], [%1], %2, %3;"
+#else
+        "cp.async.ca.shared.global.L2::cache_hint [%0], [%1], %2, %3;"
+#endif
+        ::"l"(addr),
+        "l"((void const *)(global_ptr)), "n"(N), "l"(policy));
+  }
+}
+
+template <int N, L2EvictionPolicy P>
+TL_DEVICE void cp_async_gs_conditional_l2hint(void const *const smem_addr,
+                                              void const *global_ptr,
+                                              bool cond) {
+  static_assert(N == 16 || N == 8 || N == 4);
+  int bytes = cond ? N : 0;
+  uint64_t policy = l2_eviction_policy<P>();
+  uint64_t addr;
+  asm("cvta.to.shared.u64 %0, %1;" : "=l"(addr) : "l"(smem_addr));
+  if constexpr (N == 16) {
+    asm volatile(
+#if TL_ENABLE_L2_PREFETCH
+        "cp.async.cg.shared.global.L2::cache_hint.L2::128B [%0], [%1], %2, %3, "
+        "%4;"
+#else
+        "cp.async.cg.shared.global.L2::cache_hint [%0], [%1], %2, %3, %4;"
+#endif
+        ::"l"(addr),
+        "l"((void const *)(global_ptr)), "n"(N), "r"(bytes), "l"(policy));
+  } else {
+    asm volatile(
+#if TL_ENABLE_L2_PREFETCH
+        "cp.async.ca.shared.global.L2::cache_hint.L2::128B [%0], [%1], %2, %3, "
+        "%4;"
+#else
+        "cp.async.ca.shared.global.L2::cache_hint [%0], [%1], %2, %3, %4;"
+#endif
+        ::"l"(addr),
+        "l"((void const *)(global_ptr)), "n"(N), "r"(bytes), "l"(policy));
+  }
+}
+
 // Global memory load intrinsics with explicit vector widths
 // Following CUTLASS style with template specialization
 

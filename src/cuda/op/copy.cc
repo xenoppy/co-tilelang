@@ -843,6 +843,12 @@ Stmt Copy::LowerCPAsync(const CopyNode &op, const LowerArgs &lower_args,
   bool no_implicit_commit_wait = GetNoImplicitAsyncCommitWait(op);
   bool explicit_async_semantics = no_implicit_commit_wait || GetIsAsyncCopy(op);
   if (!enable_async_copy && !explicit_async_semantics) {
+    if (GetEvictionPolicy(op) != 0) {
+      LOG(WARNING) << "T.copy " << op.src->name << " -> " << op.dst->name
+                   << ": eviction_policy is only implemented for TMA and "
+                      "cp.async copies; async copy is disabled, so it is "
+                      "lowered as a normal copy without the L2 hint";
+    }
     return LowerNormal(op, lower_args, analyzer);
   }
 
@@ -883,6 +889,12 @@ Stmt Copy::LowerCPAsync(const CopyNode &op, const LowerArgs &lower_args,
       DLOG(WARNING)
           << "Pipeline-managed async copy fallback to normal copy because "
              "cp.async rewrite found no eligible global->shared store.";
+      if (GetEvictionPolicy(op) != 0) {
+        LOG(WARNING) << "T.copy " << op.src->name << " -> " << op.dst->name
+                     << ": cp.async rewrite found no eligible global->shared "
+                        "store; lowered as a normal copy without the "
+                        "requested L2 eviction_policy";
+      }
       return lowered_loop;
     }
     if (explicit_async_semantics) {
@@ -891,7 +903,27 @@ Stmt Copy::LowerCPAsync(const CopyNode &op, const LowerArgs &lower_args,
     }
     DLOG(WARNING) << "Fallback to normal copy because cp.async rewrite found "
                      "no eligible global->shared store.";
+    if (GetEvictionPolicy(op) != 0) {
+      LOG(WARNING) << "T.copy " << op.src->name << " -> " << op.dst->name
+                   << ": cp.async rewrite found no eligible global->shared "
+                      "store; lowered as a normal copy without the requested "
+                      "L2 eviction_policy";
+    }
     return LowerNormal(op, lower_args, analyzer);
+  }
+  // T.copy(..., eviction_policy=...) on a cp.async copy: scope the injected
+  // cp.async instructions with their L2 eviction priority (emitted by the CUDA
+  // codegen as an .L2::cache_hint operand). Commit/wait stay outside the
+  // scope; they carry no data.
+  int eviction_policy = GetEvictionPolicy(op);
+  if (eviction_policy != 0) {
+    ICHECK(eviction_policy == 1 || eviction_policy == 2)
+        << "Unknown eviction_policy " << eviction_policy
+        << " (0 = evict_normal, 1 = evict_first, 2 = evict_last)";
+    cp_async_loop = AttrStmt(IntImm(DataType::Int(32), 0),
+                             attr::kCPAsyncL2EvictionPolicy,
+                             IntImm(DataType::Int(32), eviction_policy),
+                             cp_async_loop);
   }
   if (no_implicit_commit_wait) {
     return cp_async_loop;

@@ -35,8 +35,9 @@ esac
 # research commit invalidated ~/.tilelang/cache (~11 min to recompile the solo sweep).
 # NO_GIT_VERSION drops the hash from the version (version_provider.py); the lib stamp
 # keys the cache on the SHA-256 of libtilelang/libtvm_* instead (tilelang/env.py), so
-# C++ pass changes still invalidate it. NOT covered: edits to src/tl_templates/*.h —
-# after changing a template, clear the cache: rm -rf ~/.tilelang/cache
+# C++ pass changes still invalidate it. Since 2026-09-23 the stamp also hashes every
+# header under src/tl_templates (tilelang/cache/build_stamp.py): generated sources only
+# #include them, so a header edit used to leave stale cubins reachable.
 export NO_GIT_VERSION=1
 export TILELANG_KERNEL_CACHE_USE_LIB_STAMP=1
 

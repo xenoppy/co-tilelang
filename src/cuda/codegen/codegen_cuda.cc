@@ -2551,13 +2551,13 @@ void CodeGenTileLangCUDA::VisitExpr_(const CallNode *op, std::ostream &os) {
     this->PrintIndent();
     if (op->args.size() == 3) {
       // Non-predicated version
-      this->stream << "tl::cp_async_gs<" << size << ">(" << dst << ", " << src
+      this->stream << CPAsyncFuncName(false, size) << "(" << dst << ", " << src
                    << ");\n";
     } else {
       // Predicated version
       std::string condition = this->PrintExpr(op->args[3]);
-      this->stream << "tl::cp_async_gs_conditional<" << size << ">(" << dst
-                   << ", " << src << ", " << condition << ");\n";
+      this->stream << CPAsyncFuncName(true, size) << "(" << dst << ", " << src
+                   << ", " << condition << ");\n";
     }
   } else if (op->op.same_as(tl::ptx_cp_async())) {
     need_copy_h_ = true;
@@ -2572,13 +2572,13 @@ void CodeGenTileLangCUDA::VisitExpr_(const CallNode *op, std::ostream &os) {
     this->PrintIndent();
     if (op->args.size() == 3) {
       // Non-predicated version
-      this->stream << "tl::cp_async_gs<" << size << ">(" << dst << ", " << src
+      this->stream << CPAsyncFuncName(false, size) << "(" << dst << ", " << src
                    << ");\n";
     } else {
       // Predicated version
       std::string condition = this->PrintExpr(op->args[3]);
-      this->stream << "tl::cp_async_gs_conditional<" << size << ">(" << dst
-                   << ", " << src << ", " << condition << ");\n";
+      this->stream << CPAsyncFuncName(true, size) << "(" << dst << ", " << src
+                   << ", " << condition << ");\n";
     }
   } else if (op->op.same_as(builtin::ptx_commit_group())) {
     need_copy_h_ = true;
@@ -5034,7 +5034,31 @@ bool CodeGenTileLangCUDA::HandleLateIntrinsicCall(const CallNode *op,
   return false;
 }
 
+std::string CodeGenTileLangCUDA::CPAsyncFuncName(bool conditional,
+                                                 const std::string &size) const {
+  std::string base =
+      conditional ? "tl::cp_async_gs_conditional" : "tl::cp_async_gs";
+  if (cp_async_l2_eviction_policy_ == 0) {
+    return base + "<" + size + ">";
+  }
+  return base + "_l2hint<" + size + ", tl::L2EvictionPolicy::" +
+         eviction_policy_names_[cp_async_l2_eviction_policy_] + ">";
+}
+
 void CodeGenTileLangCUDA::VisitStmt_(const AttrStmtNode *op) {
+  if (op->attr_key == tl::attr::kCPAsyncL2EvictionPolicy) {
+    const auto *pol = op->value.as<IntImmNode>();
+    ICHECK(pol && pol->value > 0 &&
+           pol->value < static_cast<int64_t>(eviction_policy_names_.size()))
+        << "tl.cp_async_l2_eviction_policy expects 1 (evict_first) or 2 "
+           "(evict_last), got "
+        << op->value;
+    int saved = cp_async_l2_eviction_policy_;
+    cp_async_l2_eviction_policy_ = static_cast<int>(pol->value);
+    this->VisitStmt(op->body);
+    cp_async_l2_eviction_policy_ = saved;
+    return;
+  }
   if (op->attr_key == tl::attr::kLexicalAllocScope) {
     PrintIndent();
     stream << "{\n";

@@ -83,6 +83,12 @@ class CUDABinaryCache:
                             file_hash.update(chunk)
                     stamps.append(f"{name}:{file_hash.hexdigest()}")
                     seen_names.add(name)
+        # generated sources #include the tl_templates headers: cover them too (build_stamp.py)
+        from tilelang.cache.build_stamp import template_stamp
+
+        tpl = template_stamp()
+        if tpl:
+            stamps.append(tpl)
         if stamps:
             return "|".join(stamps)
         return None

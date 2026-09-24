@@ -192,6 +192,12 @@ private:
 
   std::vector<std::string> eviction_policy_names_ = {
       "EVICT_NORMAL", "EVICT_FIRST", "EVICT_LAST"};
+  // L2 eviction policy (index into eviction_policy_names_) of the cp.async
+  // instructions being printed: set inside a tl.cp_async_l2_eviction_policy
+  // AttrStmt, 0 (no cache hint) elsewhere.
+  int cp_async_l2_eviction_policy_{0};
+  // "tl::cp_async_gs" or its L2-cache-hint variant for the current scope.
+  std::string CPAsyncFuncName(bool conditional, const std::string &size) const;
   std::unordered_set<std::string> bf16_supported_ops_ = {
       "bf1622float2", "bf1622int16", "float22bf162", "bf162bf162"};
 };

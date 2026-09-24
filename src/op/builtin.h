@@ -41,6 +41,15 @@ static constexpr const char *kLexicalAllocScope = "lexical_alloc_scope";
 // own, so buffers of sibling scopes (e.g. two roles dispatched from one
 // persistent loop) can share bytes even though they sit inside the same loop.
 static constexpr const char *kSharedLifetimeScope = "tl.shared_lifetime_scope";
+// AttrStmt wrapping the cp.async instructions lowered from one T.copy that
+// carries an `eviction_policy` annotation (value: IntImm, 1 = evict_first,
+// 2 = evict_last; 0 = evict_normal is never emitted). The CUDA codegen emits
+// every cp.async inside the scope with an `.L2::cache_hint` operand holding a
+// `createpolicy.fractional` L2 eviction-priority policy (fraction 1.0). Only
+// the L2 replacement priority of the transferred lines changes; the data and
+// the instruction sequence are identical to the unannotated copy.
+static constexpr const char *kCPAsyncL2EvictionPolicy =
+    "tl.cp_async_l2_eviction_policy";
 
 } // namespace attr
 
