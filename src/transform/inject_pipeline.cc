@@ -2825,7 +2825,12 @@ private:
   Stmt EmitImpl(const PrimExpr &start, const PrimExpr &end, bool unroll_loop,
                 bool need_bound_check) {
     PrimExpr new_loop_var;
-    PrimExpr extent = end - start;
+    // Simplify: for a dynamic trip count n the epilogue range is [n, n + max_stage),
+    // whose extent (n + max_stage) - n is only recognised as the constant max_stage
+    // after simplification. Without it the epilogue was emitted as an "unrolled" loop
+    // whose cp.async wait counts depend on the loop variable (e.g. wait_group(3 - k*2)),
+    // which CUDA codegen cannot print (wait_group needs an immediate).
+    PrimExpr extent = analyzer_.Simplify(end - start);
     Optional<Integer> pipeline_num_stages =
         GetPipelineNumStages(pipeline_loop_.get());
     // Written against the original loop var; the per-block Substitute below
