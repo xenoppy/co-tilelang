@@ -1,0 +1,20 @@
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 16:03:23,146 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[CT5] check tilelang {'max_abs': 0.003509521484375, 'rel_l2': 0.00029326477174459705, 'mismatch_frac': 0.0, 'nonfinite': 0, 'ref_max_abs': 7.1584062576293945, 'ok': True} triton {'max_abs': 0.0036301612854003906, 'rel_l2': 0.00029326030039534314, 'mismatch_frac': 0.0, 'nonfinite': 0, 'ref_max_abs': 7.1584062576293945, 'ok': True}
+[mamba CT5] flush=clean reps=100
+  tilelang                   4355.86 us (p10 4353.66 p90 4360.32 cv 0.06%) clk 2823 MHz | x2.201 vs triton
+  triton                     9587.71 us (p10 9581.63 p90 9592.39 cv 0.04%) clk 2840 MHz | x1.000 vs triton
+2026-09-24 16:03:36,025 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 16:03:36,107 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 16:03:36,180 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 16:03:36,252 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 16:03:36,325 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[topk CT5] flush=clean reps=50
+  tl_top0                    4358.22 us (p10 4355.78 p90 4362.50 cv 0.07%) clk 2770 MHz | x2.200 vs triton
+  tl_top1                    4366.34 us (p10 4363.23 p90 4370.44 cv 0.07%) clk 2765 MHz | x2.196 vs triton
+  tl_top2                    4374.45 us (p10 4372.10 p90 4378.72 cv 0.06%) clk 2765 MHz | x2.192 vs triton
+  tl_top3                    4489.30 us (p10 4485.12 p90 4493.32 cv 0.08%) clk 2757 MHz | x2.136 vs triton
+  tl_top4                    4530.18 us (p10 4525.50 p90 4535.36 cv 0.09%) clk 2752 MHz | x2.117 vs triton
+  tl_top5                    4530.18 us (p10 4526.71 p90 4535.44 cv 0.08%) clk 2765 MHz | x2.117 vs triton
+  triton                     9588.74 us (p10 9583.61 p90 9592.83 cv 0.04%) clk 2826 MHz | x1.000 vs triton
+[CT5] TL 4355.86 us  Triton 9587.71 us  ratio 2.201  (secondary 2.191)  ok=True

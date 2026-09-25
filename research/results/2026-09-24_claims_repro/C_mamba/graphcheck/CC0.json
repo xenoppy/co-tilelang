@@ -1,0 +1,90 @@
+{
+ "shape_name": "CC0",
+ "shape": {
+  "kind": "scan_ex",
+  "batch": 1,
+  "nheads": 64,
+  "seqlen": 1024,
+  "headdim": 64,
+  "dstate": 128,
+  "chunk_size": 256,
+  "ngroups": 1
+ },
+ "tilelang_config": {
+  "block_M": 128,
+  "block_N": 64,
+  "block_K": 64,
+  "block_Dstate": 128,
+  "num_stages": 1
+ },
+ "triton_pick": "BLOCK_SIZE_M: 128, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 4, num_ctas: 1, num_stages: 4, maxnreg: None",
+ "tilelang_vs_triton": {
+  "max_abs": 0.0078125,
+  "rel_l2": 0.00022128598261114427
+ },
+ "method": "cobench.bench(mode='graph'): CUDA graph of k back-to-back calls over rotated input copies (> 2x L2), per-call = replay time / k; TL and Triton alternated",
+ "rounds": {
+  "tilelang": [
+   {
+    "median": 26.211199164390564,
+    "p10": 26.183998584747314,
+    "p90": 26.286399364471436,
+    "cv": 0.003123949094923143,
+    "k": 20,
+    "n_copies": 20,
+    "clock_mhz": 2741.5407989452315
+   },
+   {
+    "median": 26.61919891834259,
+    "p10": 26.521599292755127,
+    "p90": 26.64479911327362,
+    "cv": 0.0033406536649594203,
+    "k": 20,
+    "n_copies": 20,
+    "clock_mhz": 2737.737468070978
+   },
+   {
+    "median": 26.624800264835358,
+    "p10": 26.591838896274567,
+    "p90": 26.72640085220337,
+    "cv": 0.0036914173743049414,
+    "k": 20,
+    "n_copies": 20,
+    "clock_mhz": 2736.083193612419
+   }
+  ],
+  "triton": [
+   {
+    "median": 24.49440062046051,
+    "p10": 24.449279606342316,
+    "p90": 24.57599937915802,
+    "cv": 0.0051246237786953495,
+    "k": 20,
+    "n_copies": 20,
+    "clock_mhz": 2660.579699153182
+   },
+   {
+    "median": 24.853599816560745,
+    "p10": 24.76000040769577,
+    "p90": 24.91296038031578,
+    "cv": 0.004690219569772288,
+    "k": 20,
+    "n_copies": 20,
+    "clock_mhz": 2662.5783446467103
+   },
+   {
+    "median": 24.884800612926483,
+    "p10": 24.803040325641632,
+    "p90": 25.00352054834366,
+    "cv": 0.004891898358949804,
+    "k": 20,
+    "n_copies": 20,
+    "clock_mhz": 2657.0425786969026
+   }
+  ]
+ },
+ "time": "2026-09-25 06:34:19",
+ "tilelang_us": 26.61919891834259,
+ "triton_us": 24.853599816560745,
+ "ratio_triton_over_tilelang": 0.9336719670942006
+}

@@ -1,0 +1,16 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_triton_sweep.py --shape CT1', 't': '2026-09-24 17:11:01'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 17:11:03,351 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[triton sweep CT1] flush=clean reps=60
+  tilelang                     22.56 us (p10 22.37 p90 22.62 cv 0.80%) clk 2833 MHz | x1.085 vs triton_autotuned
+  triton_autotuned             24.48 us (p10 22.90 p90 24.61 cv 2.82%) clk 2828 MHz | x1.000 vs triton_autotuned
+  cfg1                         35.26 us (p10 34.72 p90 36.93 cv 2.86%) clk 2836 MHz | x0.694 vs triton_autotuned
+  cfg2                         32.67 us (p10 32.35 p90 32.87 cv 1.67%) clk 2835 MHz | x0.749 vs triton_autotuned
+  cfg3                         28.61 us (p10 27.07 p90 29.09 cv 2.28%) clk 2817 MHz | x0.856 vs triton_autotuned
+  cfg4                         24.48 us (p10 22.50 p90 24.67 cv 3.93%) clk 2829 MHz | x1.000 vs triton_autotuned
+  cfg5                         28.62 us (p10 28.51 p90 29.09 cv 0.87%) clk 2779 MHz | x0.855 vs triton_autotuned
+  cfg6                         28.70 us (p10 28.58 p90 29.12 cv 0.83%) clk 2815 MHz | x0.853 vs triton_autotuned
+  cfg7                         30.72 us (p10 28.67 p90 30.78 cv 3.22%) clk 2805 MHz | x0.797 vs triton_autotuned
+  cfg8                         22.19 us (p10 20.58 p90 22.66 cv 3.51%) clk 2823 MHz | x1.103 vs triton_autotuned
+[triton sweep CT1] TileLang 22.6 us; Triton autotuned 24.5 us (BLOCK_SIZE_M: 64, BLOCK_SIZE_N: 128, BLOCK_SIZE_K: 32, num_warps: 4, num_ctas: 1, num_stages: 4, maxnreg: None); best forced 22.2 us (BLOCK_SIZE_M: 64, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 2, num_ctas: 1, num_stages: 4, maxnreg: None); ratio best/TL 0.984
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 12.7, 't': '2026-09-24 17:11:14'}

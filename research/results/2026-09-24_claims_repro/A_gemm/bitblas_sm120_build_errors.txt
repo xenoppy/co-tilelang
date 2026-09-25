@@ -1,0 +1,34 @@
+# BitBLAS 0.1.0.post1 on sm_120 (RTX PRO 6000), 2026-09-24 - build logs (excerpts)
+
+## 1. As shipped (auto-detected TVM target 'cuda', arch sm_120): probe_bitblas.py, M=1 N=K=4096
+2026-09-24 15:05:42 [BitBLAS:WARNING]: TVM target not found. Please set the TVM target environment variable using `export TVM_TARGET=<target>`, where <target> is one of the available targets can be found in the output of `tools/get_available_targets.py`.
+2026-09-24 15:05:42 [BitBLAS:WARNING]: Failed to apply default schedule for operator Matmul With target cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32 and hint default. 
+The error message: Unsupported architecture: CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32) Please perform hardware-aware tuning manually.
+int4 FAILED 0.0006771087646484375 ValueError No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)
+2026-09-24 15:05:42 [BitBLAS:WARNING]: Failed to apply default schedule for operator Matmul With target cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32 and hint default. 
+The error message: Unsupported architecture: CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32) Please perform hardware-aware tuning manually.
+int2 FAILED 0.0003428459167480469 ValueError No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)
+2026-09-24 15:05:42 [BitBLAS:WARNING]: Failed to apply default schedule for operator Matmul With target cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32 and hint default. 
+
+## 2. TVM target overridden to 'cuda -arch=sm_89' (Ada schedules; nvcc still targets the device, compute_120)
+/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/3rdparty/tilelang/src/tl_templates/cuda/gemm_sm90.h(232): error: identifier "warpgroup_wait" is undefined
+/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/3rdparty/tilelang/src/tl_templates/cuda/gemm_sm90.h(232): error: expected an expression
+2 errors detected in the compilation of "/tmp/tmpg77shi7j.cu".
+/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/3rdparty/tilelang/src/tl_templates/cuda/gemm_sm90.h(232): error: identifier "warpgroup_wait" is undefined
+/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/3rdparty/tilelang/src/tl_templates/cuda/gemm_sm90.h(232): error: expected an expression
+2 errors detected in the compilation of "/tmp/tmp78wxkryl.cu".
+/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/3rdparty/tilelang/src/tl_templates/cuda/gemm_sm90.h(232): error: identifier "warpgroup_wait" is undefined
+/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/3rdparty/tilelang/src/tl_templates/cuda/gemm_sm90.h(232): error: expected an expression
+2026-09-24 15:14:08 [BitBLAS:WARNING]: Compilation Failed! ['nvcc', '-std=c++17', '-Xcudafe', '--diag_suppress=177', '--compiler-options', "'-fPIC'", '-lineinfo', '--shared', '/tmp/tmpg77shi7j.cu', '-lcuda', '-gencode', 'arch=compute_120,code=sm_120', '-I/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/3rdparty/tilelang/src', '-I/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/3rdparty/cutlass/include', '-diag-suppress=20013', '-o', '/tmp/tmpg77shi7j.so']
+
+## 3. Root cause of (2): bitblas/3rdparty/tilelang/src/tl_templates/cuda/gemm.h selects the Hopper (wgmma) header for every arch >= 900:
+#pragma once
+#if (defined(__CUDA_ARCH_LIST__) && (__CUDA_ARCH_LIST__ >= 900))
+#include "gemm_sm90.h"
+#elif (defined(__CUDA_ARCH_LIST__) && (__CUDA_ARCH_LIST__ >= 750))
+#include "gemm_sm80.h"
+#elif (defined(__CUDA_ARCH_LIST__) && (__CUDA_ARCH_LIST__ >= 700))
+#include "gemm_sm70.h"
+#else
+
+## 4. Root cause of (1): bitblas/ops/general_matmul/tilelang/dequantize/matmul_dequantize.py dispatch_scheduler() only knows Volta/Ampere/Ada/Hopper (sm_version 70-90) and raises 'Unsupported architecture' for sm_120 (bitblas/base/arch/cuda.py is_*_arch).

@@ -1,0 +1,6 @@
+2026-09-24 17:08:06,555 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 17:08:21,428 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 17:08:21,570 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 17:08:21,709 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 17:08:21,951 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 17:08:22,092 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT

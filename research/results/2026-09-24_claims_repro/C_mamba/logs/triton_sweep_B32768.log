@@ -1,0 +1,18 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_triton_sweep.py --shape B32768', 't': '2026-09-24 17:08:59'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 17:09:08,947 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[triton sweep B32768] flush=clean reps=60
+  tilelang                   6938.11 us (p10 6905.77 p90 6972.40 cv 0.39%) clk 2531 MHz | x1.757 vs triton_autotuned
+  triton_autotuned          12191.68 us (p10 12186.46 p90 12193.71 cv 0.02%) clk 2776 MHz | x1.000 vs triton_autotuned
+  cfg1                      17651.62 us (p10 17584.06 p90 17706.33 cv 0.26%) clk 2686 MHz | x0.691 vs triton_autotuned
+  cfg2                      13790.22 us (p10 13784.12 p90 13796.29 cv 0.03%) clk 2722 MHz | x0.884 vs triton_autotuned
+  cfg3                      13431.92 us (p10 13426.86 p90 13436.84 cv 0.03%) clk 2827 MHz | x0.908 vs triton_autotuned
+  cfg4                      12611.36 us (p10 12607.20 p90 12615.68 cv 0.03%) clk 2751 MHz | x0.967 vs triton_autotuned
+  cfg5                      13418.42 us (p10 13412.10 p90 13421.78 cv 0.03%) clk 2825 MHz | x0.909 vs triton_autotuned
+  cfg6                      12679.17 us (p10 12638.14 p90 12706.08 cv 0.21%) clk 2731 MHz | x0.962 vs triton_autotuned
+  cfg7                      13596.58 us (p10 13592.39 p90 13600.70 cv 0.03%) clk 2687 MHz | x0.897 vs triton_autotuned
+  cfg8                      12713.89 us (p10 12707.83 p90 12718.02 cv 0.03%) clk 2638 MHz | x0.959 vs triton_autotuned
+  cfg9                      12189.70 us (p10 12187.62 p90 12193.73 cv 0.02%) clk 2773 MHz | x1.000 vs triton_autotuned
+  cfg10                     12631.42 us (p10 12625.89 p90 12636.01 cv 0.03%) clk 2824 MHz | x0.965 vs triton_autotuned
+[triton sweep B32768] TileLang 6938.1 us; Triton autotuned 12191.7 us (BLOCK_SIZE_M: 32, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 2, num_ctas: 1, num_stages: 5, maxnreg: None); best forced 12189.7 us (BLOCK_SIZE_M: 32, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 2, num_ctas: 1, num_stages: 5, maxnreg: None); ratio best/TL 1.757
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 35.5, 't': '2026-09-24 17:09:34'}

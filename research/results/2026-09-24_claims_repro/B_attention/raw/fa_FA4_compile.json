@@ -1,0 +1,1225 @@
+{
+ "fixed": {
+  "tl_bhsd_h100cfg_s1": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    128,
+    1,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      98304
+     ],
+     "smem_dynamic": 98304,
+     "smem_total": 100352,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 6.5
+  },
+  "tl_bhsd_main": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    64,
+    1,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      49152
+     ],
+     "smem_dynamic": 49152,
+     "smem_total": 51200,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 6.3
+  },
+  "tl_bshd_main": {
+   "layout": "bshd",
+   "cfg": [
+    128,
+    128,
+    1,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      98304
+     ],
+     "smem_dynamic": 98304,
+     "smem_total": 100352,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 3.6
+  },
+  "tl_bshd_tune": {
+   "layout": "bshd",
+   "cfg": [
+    64,
+    64,
+    1,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      49152
+     ],
+     "smem_dynamic": 49152,
+     "smem_total": 51200,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 4.0
+  },
+  "tl_bhsd_h100cfg": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    128,
+    2,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      163840
+     ],
+     "smem_dynamic": 163840,
+     "smem_total": 165888,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 5.5
+  }
+ },
+ "sweep": {
+  "sweep_64_32_1_128": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    32,
+    1,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      32768
+     ],
+     "smem_dynamic": 32768,
+     "smem_total": 34816,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 5.2
+  },
+  "sweep_64_32_1_256": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    32,
+    1,
+    256
+   ],
+   "compile_error": "InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment((64, 32) -> (16,), replicate: 2, thread: 256, forward_thread: _rep * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j // 8 * 4 + _i % 16 // 8 * 2 + _j % 2,), thread_range: I.Range(128, 384))\n    fragment Fragment((64, 32) -> (8,), replicate: 1, thread: 256, forward_thread: _j // 16 * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j % 16 // 8 * 4 + _i % 16 // 8 * 2 + _j % 2",
+   "compile_s": 0.1
+  },
+  "sweep_64_32_2_128": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    32,
+    2,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      49152
+     ],
+     "smem_dynamic": 49152,
+     "smem_total": 51200,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 5.7
+  },
+  "sweep_64_32_2_256": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    32,
+    2,
+    256
+   ],
+   "compile_error": "InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment((64, 32) -> (16,), replicate: 2, thread: 256, forward_thread: _rep * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j // 8 * 4 + _i % 16 // 8 * 2 + _j % 2,), thread_range: I.Range(128, 384))\n    fragment Fragment((64, 32) -> (8,), replicate: 1, thread: 256, forward_thread: _j // 16 * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j % 16 // 8 * 4 + _i % 16 // 8 * 2 + _j % 2",
+   "compile_s": 0.1
+  },
+  "sweep_64_32_3_128": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    32,
+    3,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      65536
+     ],
+     "smem_dynamic": 65536,
+     "smem_total": 67584,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 5.8
+  },
+  "sweep_64_32_3_256": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    32,
+    3,
+    256
+   ],
+   "compile_error": "InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment((64, 32) -> (16,), replicate: 2, thread: 256, forward_thread: _rep * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j // 8 * 4 + _i % 16 // 8 * 2 + _j % 2,), thread_range: I.Range(128, 384))\n    fragment Fragment((64, 32) -> (8,), replicate: 1, thread: 256, forward_thread: _j // 16 * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j % 16 // 8 * 4 + _i % 16 // 8 * 2 + _j % 2",
+   "compile_s": 0.1
+  },
+  "sweep_64_64_1_128": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    64,
+    1,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      49152
+     ],
+     "smem_dynamic": 49152,
+     "smem_total": 51200,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 0.0
+  },
+  "sweep_64_64_1_256": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    64,
+    1,
+    256
+   ],
+   "compile_error": "InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment((64, 64) -> (32,), replicate: 2, thread: 256, forward_thread: _rep * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j // 8 * 4 + _i % 16 // 8 * 2 + _j % 2,), thread_range: I.Range(128, 384))\n    fragment Fragment((64, 64) -> (16,), replicate: 1, thread: 256, forward_thread: _j // 32 * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j % 32 // 8 * 4 + _i % 16 // 8 * 2 + _j % ",
+   "compile_s": 0.1
+  },
+  "sweep_64_64_2_128": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    64,
+    2,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      81920
+     ],
+     "smem_dynamic": 81920,
+     "smem_total": 83968,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 6.3
+  },
+  "sweep_64_64_2_256": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    64,
+    2,
+    256
+   ],
+   "compile_error": "InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment((64, 64) -> (32,), replicate: 2, thread: 256, forward_thread: _rep * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j // 8 * 4 + _i % 16 // 8 * 2 + _j % 2,), thread_range: I.Range(128, 384))\n    fragment Fragment((64, 64) -> (16,), replicate: 1, thread: 256, forward_thread: _j // 32 * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j % 32 // 8 * 4 + _i % 16 // 8 * 2 + _j % ",
+   "compile_s": 0.2
+  },
+  "sweep_64_64_3_128": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    64,
+    3,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      114688
+     ],
+     "smem_dynamic": 114688,
+     "smem_total": 116736,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 6.7
+  },
+  "sweep_64_64_3_256": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    64,
+    3,
+    256
+   ],
+   "compile_error": "InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment((64, 64) -> (32,), replicate: 2, thread: 256, forward_thread: _rep * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j // 8 * 4 + _i % 16 // 8 * 2 + _j % 2,), thread_range: I.Range(128, 384))\n    fragment Fragment((64, 64) -> (16,), replicate: 1, thread: 256, forward_thread: _j // 32 * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j % 32 // 8 * 4 + _i % 16 // 8 * 2 + _j % ",
+   "compile_s": 0.1
+  },
+  "sweep_64_128_1_128": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    128,
+    1,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      81920
+     ],
+     "smem_dynamic": 81920,
+     "smem_total": 83968,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 8.4
+  },
+  "sweep_64_128_1_256": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    128,
+    1,
+    256
+   ],
+   "compile_error": "InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment((64, 128) -> (64,), replicate: 2, thread: 256, forward_thread: _rep * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j // 8 * 4 + _i % 16 // 8 * 2 + _j % 2,), thread_range: I.Range(128, 384))\n    fragment Fragment((64, 128) -> (32,), replicate: 1, thread: 256, forward_thread: _j // 64 * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j % 64 // 8 * 4 + _i % 16 // 8 * 2 + _j ",
+   "compile_s": 0.2
+  },
+  "sweep_64_128_2_128": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    128,
+    2,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      147456
+     ],
+     "smem_dynamic": 147456,
+     "smem_total": 149504,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 7.7
+  },
+  "sweep_64_128_2_256": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    128,
+    2,
+    256
+   ],
+   "compile_error": "InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment((64, 128) -> (64,), replicate: 2, thread: 256, forward_thread: _rep * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j // 8 * 4 + _i % 16 // 8 * 2 + _j % 2,), thread_range: I.Range(128, 384))\n    fragment Fragment((64, 128) -> (32,), replicate: 1, thread: 256, forward_thread: _j // 64 * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j % 64 // 8 * 4 + _i % 16 // 8 * 2 + _j ",
+   "compile_s": 0.1
+  },
+  "sweep_64_128_3_128": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    128,
+    3,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      64,
+      32,
+      1,
+      256,
+      1,
+      1,
+      212992
+     ],
+     "smem_dynamic": 212992,
+     "smem_total": 215040,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 8.4
+  },
+  "sweep_64_128_3_256": {
+   "layout": "bhsd",
+   "cfg": [
+    64,
+    128,
+    3,
+    256
+   ],
+   "compile_error": "InternalError: Layout infer conflict between acc_s and acc_s_cast in T.Parallel loop:\n    loop Fragment((64, 128) -> (64,), replicate: 2, thread: 256, forward_thread: _rep * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j // 8 * 4 + _i % 16 // 8 * 2 + _j % 2,), thread_range: I.Range(128, 384))\n    fragment Fragment((64, 128) -> (32,), replicate: 1, thread: 256, forward_thread: _j // 64 * 128 + _i // 16 * 32 + _i % 8 * 4 + _j % 8 // 2, forward_index: (_j % 64 // 8 * 4 + _i % 16 // 8 * 2 + _j ",
+   "compile_s": 0.1
+  },
+  "sweep_128_32_1_128": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    32,
+    1,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      49152
+     ],
+     "smem_dynamic": 49152,
+     "smem_total": 51200,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 7.3
+  },
+  "sweep_128_32_1_256": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    32,
+    1,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      49152
+     ],
+     "smem_dynamic": 49152,
+     "smem_total": 51200,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 6.1
+  },
+  "sweep_128_32_2_128": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    32,
+    2,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      65536
+     ],
+     "smem_dynamic": 65536,
+     "smem_total": 67584,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 6.4
+  },
+  "sweep_128_32_2_256": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    32,
+    2,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      65536
+     ],
+     "smem_dynamic": 65536,
+     "smem_total": 67584,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 8.0
+  },
+  "sweep_128_32_3_128": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    32,
+    3,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      81920
+     ],
+     "smem_dynamic": 81920,
+     "smem_total": 83968,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 7.1
+  },
+  "sweep_128_32_3_256": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    32,
+    3,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      81920
+     ],
+     "smem_dynamic": 81920,
+     "smem_total": 83968,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 7.8
+  },
+  "sweep_128_64_1_128": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    64,
+    1,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      65536
+     ],
+     "smem_dynamic": 65536,
+     "smem_total": 67584,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 7.4
+  },
+  "sweep_128_64_1_256": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    64,
+    1,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      65536
+     ],
+     "smem_dynamic": 65536,
+     "smem_total": 67584,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 7.9
+  },
+  "sweep_128_64_2_128": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    64,
+    2,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      98304
+     ],
+     "smem_dynamic": 98304,
+     "smem_total": 100352,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 9.4
+  },
+  "sweep_128_64_2_256": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    64,
+    2,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      98304
+     ],
+     "smem_dynamic": 98304,
+     "smem_total": 100352,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 7.7
+  },
+  "sweep_128_64_3_128": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    64,
+    3,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      131072
+     ],
+     "smem_dynamic": 131072,
+     "smem_total": 133120,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 8.2
+  },
+  "sweep_128_64_3_256": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    64,
+    3,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      131072
+     ],
+     "smem_dynamic": 131072,
+     "smem_total": 133120,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 6.7
+  },
+  "sweep_128_128_1_128": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    128,
+    1,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      98304
+     ],
+     "smem_dynamic": 98304,
+     "smem_total": 100352,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 7.6
+  },
+  "sweep_128_128_1_256": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    128,
+    1,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      98304
+     ],
+     "smem_dynamic": 98304,
+     "smem_total": 100352,
+     "fits_99KB": true
+    }
+   },
+   "fits_99KB": true,
+   "compile_s": 0.0
+  },
+  "sweep_128_128_2_128": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    128,
+    2,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      163840
+     ],
+     "smem_dynamic": 163840,
+     "smem_total": 165888,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 8.4
+  },
+  "sweep_128_128_2_256": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    128,
+    2,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      163840
+     ],
+     "smem_dynamic": 163840,
+     "smem_total": 165888,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 0.0
+  },
+  "sweep_128_128_3_128": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    128,
+    3,
+    128
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 240,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      256,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      256,
+      1,
+      1,
+      229376
+     ],
+     "smem_dynamic": 229376,
+     "smem_total": 231424,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 8.8
+  },
+  "sweep_128_128_3_256": {
+   "layout": "bhsd",
+   "cfg": [
+    128,
+    128,
+    3,
+    256
+   ],
+   "resources": {
+    "main_kernel": {
+     "regs": 168,
+     "local_bytes": 0,
+     "smem_static": 2048,
+     "max_threads": [
+      384,
+      1,
+      1
+     ],
+     "launch_values": [
+      32,
+      32,
+      1,
+      384,
+      1,
+      1,
+      229376
+     ],
+     "smem_dynamic": 229376,
+     "smem_total": 231424,
+     "fits_99KB": false
+    }
+   },
+   "fits_99KB": false,
+   "compile_s": 7.2
+  }
+ }
+}

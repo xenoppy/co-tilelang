@@ -1,0 +1,29 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_diag.py --shape CT1 --topk 4', 't': '2026-09-24 17:49:52'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+[diag CT1] flush=clean reps=60
+  triton                       22.56 us (p10 22.21 p90 24.61 cv 4.30%) clk 2825 MHz | x1.000 vs triton
+  top0_shipped                 22.58 us (p10 22.11 p90 22.66 cv 1.30%) clk 2831 MHz | x0.999 vs triton
+  top0_no_ws                   24.61 us (p10 24.16 p90 24.70 cv 1.13%) clk 2835 MHz | x0.917 vs triton
+  top0_no_tma                  22.53 us (p10 22.11 p90 22.66 cv 1.58%) clk 2830 MHz | x1.001 vs triton
+  top1_shipped                 22.56 us (p10 22.11 p90 22.66 cv 1.06%) clk 2829 MHz | x1.000 vs triton
+  top1_no_ws                   20.58 us (p10 20.06 p90 22.60 cv 4.44%) clk 2825 MHz | x1.096 vs triton
+  top1_no_tma                  22.56 us (p10 22.08 p90 22.62 cv 2.48%) clk 2829 MHz | x1.000 vs triton
+  top2_shipped                 22.61 us (p10 22.11 p90 22.66 cv 1.03%) clk 2830 MHz | x0.998 vs triton
+  top2_no_ws                   22.56 us (p10 22.11 p90 22.66 cv 1.29%) clk 2829 MHz | x1.000 vs triton
+  top2_no_tma                  22.56 us (p10 22.11 p90 22.66 cv 1.20%) clk 2829 MHz | x1.000 vs triton
+  top3_shipped                 22.59 us (p10 22.11 p90 22.76 cv 2.77%) clk 2830 MHz | x0.999 vs triton
+  top3_no_ws                   24.56 us (p10 24.01 p90 24.70 cv 2.69%) clk 2827 MHz | x0.919 vs triton
+  top3_no_tma                  22.51 us (p10 22.11 p90 22.56 cv 0.82%) clk 2830 MHz | x1.002 vs triton
+  top1_no_ws         {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 2}                      20.58 us  x1.096  smem 49664 regs 195 ctas/SM 1 (smem-only H100 4)  block [128, 1, 1] tma=False ws=False 
+  top3_no_tma        {'block_M': 64, 'block_N': 128, 'block_K': 32, 'num_stages': 4}                      22.51 us  x1.002  smem 50432 regs 240 ctas/SM 1 (smem-only H100 4)  block [256, 1, 1] tma=True ws=True 
+  top0_no_tma        {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 4}                      22.53 us  x1.001  smem 99840 regs 240 ctas/SM 0 (smem-only H100 2)  block [256, 1, 1] tma=True ws=True 
+  top1_shipped       {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 2}                      22.56 us  x1.000  smem 50432 regs 240 ctas/SM 1 (smem-only H100 4)  block [256, 1, 1] tma=True ws=True 
+  top1_no_tma        {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 2}                      22.56 us  x1.000  smem 50432 regs 240 ctas/SM 1 (smem-only H100 4)  block [256, 1, 1] tma=True ws=True 
+  top2_no_ws         {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 3}                      22.56 us  x1.000  smem 74496 regs 178 ctas/SM 1 (smem-only H100 3)  block [128, 1, 1] tma=False ws=False 
+  top2_no_tma        {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 3}                      22.56 us  x1.000  smem 75136 regs 240 ctas/SM 1 (smem-only H100 2)  block [256, 1, 1] tma=True ws=True 
+  top0_shipped       {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 4}                      22.58 us  x0.999  smem 99840 regs 240 ctas/SM 0 (smem-only H100 2)  block [256, 1, 1] tma=True ws=True 
+  top3_shipped       {'block_M': 64, 'block_N': 128, 'block_K': 32, 'num_stages': 4}                      22.59 us  x0.999  smem 50432 regs 240 ctas/SM 1 (smem-only H100 4)  block [256, 1, 1] tma=True ws=True 
+  top2_shipped       {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 3}                      22.61 us  x0.998  smem 75136 regs 240 ctas/SM 1 (smem-only H100 2)  block [256, 1, 1] tma=True ws=True 
+  top3_no_ws         {'block_M': 64, 'block_N': 128, 'block_K': 32, 'num_stages': 4}                      24.56 us  x0.919  smem 49664 regs 158 ctas/SM 1 (smem-only H100 4)  block [128, 1, 1] tma=False ws=False 
+  top0_no_ws         {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 4}                      24.61 us  x0.917  smem 99328 regs 178 ctas/SM 1 (smem-only H100 2)  block [128, 1, 1] tma=False ws=False 
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 243.4, 't': '2026-09-24 17:53:55'}

@@ -1,0 +1,18 @@
+2026-09-24 17:05:38,422 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[upstream] compiled CC1 {'block_M': 64, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3} in 0.1s sha256 4ffa79d09cd9e226
+2026-09-24 17:05:38,437 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 17:05:38  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `chunk_scan_fwd` with `out_idx=[-1]`
+2026-09-24 17:05:42  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `chunk_scan_fwd`
+[upstream] compiled CC4 {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1} in 5.1s sha256 59f61d454961b6c6
+2026-09-24 17:05:43,615 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 17:05:43  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `chunk_state_fwd` with `out_idx=[-1]`
+2026-09-24 17:05:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `chunk_state_fwd`
+[upstream] compiled CT1 {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 4} in 2.9s sha256 68984753d24022eb
+2026-09-24 17:05:46,462 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 17:05:46  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `chunk_state_fwd` with `out_idx=[-1]`
+2026-09-24 17:05:48  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `chunk_state_fwd`
+[upstream] compiled CT4 {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 4} in 2.9s sha256 baa53beebc08d443
+2026-09-24 17:05:49,547 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 17:05:49  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `main` with `out_idx=[7]`
+2026-09-24 17:05:53  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:145): TileLang completes to compile kernel `main`
+[upstream] compiled B8192 {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1} in 5.3s sha256 e9620d0a8d204528

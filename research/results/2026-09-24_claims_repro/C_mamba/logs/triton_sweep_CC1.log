@@ -1,0 +1,18 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_triton_sweep.py --shape CC1', 't': '2026-09-24 17:10:42'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 17:10:44,073 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[triton sweep CC1] flush=clean reps=60
+  tilelang                     51.10 us (p10 50.98 p90 51.17 cv 0.15%) clk 2764 MHz | x0.760 vs triton_autotuned
+  triton_autotuned             38.85 us (p10 38.78 p90 40.86 cv 2.27%) clk 2688 MHz | x1.000 vs triton_autotuned
+  cfg1                        106.43 us (p10 106.37 p90 106.53 cv 0.18%) clk 2773 MHz | x0.365 vs triton_autotuned
+  cfg2                         85.95 us (p10 85.92 p90 87.08 cv 0.75%) clk 2773 MHz | x0.452 vs triton_autotuned
+  cfg3                         38.85 us (p10 38.82 p90 40.90 cv 2.41%) clk 2684 MHz | x1.000 vs triton_autotuned
+  cfg4                         47.04 us (p10 46.98 p90 47.20 cv 1.12%) clk 2564 MHz | x0.826 vs triton_autotuned
+  cfg5                         67.52 us (p10 66.46 p90 67.58 cv 0.89%) clk 2805 MHz | x0.575 vs triton_autotuned
+  cfg6                         75.71 us (p10 75.65 p90 75.87 cv 0.31%) clk 2771 MHz | x0.513 vs triton_autotuned
+  cfg7                         59.33 us (p10 59.30 p90 59.46 cv 0.58%) clk 2539 MHz | x0.655 vs triton_autotuned
+  cfg8                         61.41 us (p10 61.34 p90 61.50 cv 0.39%) clk 2591 MHz | x0.633 vs triton_autotuned
+  cfg9                         40.96 us (p10 40.86 p90 40.99 cv 0.72%) clk 2522 MHz | x0.948 vs triton_autotuned
+  cfg10                        42.99 us (p10 40.93 p90 43.04 cv 2.02%) clk 2704 MHz | x0.904 vs triton_autotuned
+[triton sweep CC1] TileLang 51.1 us; Triton autotuned 38.8 us (BLOCK_SIZE_M: 128, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 4, num_ctas: 1, num_stages: 4, maxnreg: None); best forced 38.8 us (BLOCK_SIZE_M: 128, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 4, num_ctas: 1, num_stages: 4, maxnreg: None); ratio best/TL 0.760
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 13.1, 't': '2026-09-24 17:10:55'}

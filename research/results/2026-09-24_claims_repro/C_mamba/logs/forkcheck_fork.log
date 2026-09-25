@@ -1,0 +1,24 @@
+[guard] GPU occupied (foreign SM activity: procs [] active [(629462, 'python /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e883')]); waiting 1800s (waited 5s)
+[run_guarded] {'event': 'launch', 'waited_s': 1805.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_forkcheck.py --tag fork --shapes CC1,CC4,CT1,CT4,B8192', 't': '2026-09-24 17:38:56'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 17:41:10,865 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork CC1] flush=clean reps=100
+  tilelang                     51.17 us (p10 51.07 p90 51.63 cv 2.09%) clk 2730 MHz | x0.801 vs triton
+  triton                       40.96 us (p10 38.91 p90 40.99 cv 1.94%) clk 2665 MHz | x1.000 vs triton
+2026-09-24 17:41:21,342 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork CC4] flush=clean reps=100
+  tilelang                   2880.62 us (p10 2872.23 p90 2885.63 cv 0.18%) clk 2491 MHz | x1.515 vs triton
+  triton                     4365.54 us (p10 4358.14 p90 4372.90 cv 0.15%) clk 2775 MHz | x1.000 vs triton
+2026-09-24 17:41:25,709 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork CT1] flush=clean reps=100
+  tilelang                     22.51 us (p10 22.08 p90 22.59 cv 1.09%) clk 2808 MHz | x1.073 vs triton
+  triton                       24.16 us (p10 22.37 p90 24.61 cv 4.18%) clk 2802 MHz | x1.000 vs triton
+2026-09-24 17:41:29,917 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork CT4] flush=clean reps=100
+  tilelang                   1072.88 us (p10 1071.07 p90 1076.83 cv 0.20%) clk 2693 MHz | x1.023 vs triton
+  triton                     1097.76 us (p10 1096.26 p90 1101.39 cv 0.20%) clk 2641 MHz | x1.000 vs triton
+2026-09-24 17:41:33,226 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork B8192] flush=clean reps=100
+  tilelang                   1801.04 us (p10 1795.16 p90 1804.32 cv 0.20%) clk 2427 MHz | x0.917 vs triton
+  triton                     1651.74 us (p10 1643.55 p90 1660.01 cv 0.36%) clk 1982 MHz | x1.000 vs triton
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 161.0, 't': '2026-09-24 17:41:37'}

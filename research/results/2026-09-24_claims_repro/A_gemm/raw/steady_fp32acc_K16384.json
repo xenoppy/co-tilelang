@@ -1,0 +1,629 @@
+{
+ "suite": "fp32acc",
+ "shape": "K16384",
+ "MNK": [
+  8192,
+  8192,
+  16384
+ ],
+ "start": "2026-09-24 17:54:33",
+ "mode": "steady",
+ "gpu_state_before": {
+  "clocks.sm": "2842",
+  "clocks.max.sm": "3090",
+  "power.draw": "115.71",
+  "power.limit": "600.00",
+  "temperature.gpu": "60",
+  "utilization.gpu": "0",
+  "memory.used": "44146"
+ },
+ "tl_config": {
+  "block_M": 128,
+  "block_N": 256,
+  "block_K": 64,
+  "num_stages": 2,
+  "thread_num": 256,
+  "policy": 0,
+  "enable_rasteration": true
+ },
+ "same_device_source_as_flush_run": true,
+ "rotation": {
+  "copies": 1,
+  "bytes_per_copy": 671088640,
+  "total_bytes": 671088640
+ },
+ "correctness": {
+  "tl": {
+   "rel_err_max": 0.00035594752989709377,
+   "tol": 0.005,
+   "pass": true
+  },
+  "cublas": {
+   "rel_err_max": 0.00035594752989709377,
+   "tol": 0.005,
+   "pass": true
+  },
+  "triton_tut03_nt": {
+   "rel_err_max": 0.00035594752989709377,
+   "tol": 0.005,
+   "pass": true
+  }
+ },
+ "triton_best_config": {
+  "BLOCK_SIZE_M": 128,
+  "BLOCK_SIZE_N": 256,
+  "BLOCK_SIZE_K": 64,
+  "GROUP_SIZE_M": 8,
+  "num_warps": 8,
+  "num_stages": 3
+ },
+ "cobench_steady": {
+  "label": "steady fp32acc K16384",
+  "config": {
+   "reference": "cublas",
+   "slice_s": 1.5,
+   "settle_s": 0.4,
+   "rounds": 5,
+   "warmup_s": 5.0,
+   "thermal_warmup": {
+    "plateau": true,
+    "seconds": 88.13143354500062,
+    "temp_c": 86
+   },
+   "lead_ms": 8.0,
+   "variants": [
+    "tl",
+    "cublas",
+    "triton_tut03_nt"
+   ],
+   "run_s": 22.622516632080078,
+   "iterations_total": 15365
+  },
+  "variants": {
+   "tl": {
+    "t_iter_us": 6807.690655743634,
+    "t_iter_mean_us": 6805.449154490151,
+    "cv_slices": 0.0014705151574541627,
+    "slices_us": [
+     6792.9256109543785,
+     6797.48233748071,
+     6807.690655743634,
+     6812.481044982531,
+     6816.666123289499
+    ],
+    "iter_median_us": 6807.5408935546875,
+    "iter_p10_us": 6790.1611328125,
+    "iter_p90_us": 6818.84765625,
+    "n_iter": 808,
+    "group": 1,
+    "lead": 2,
+    "gaps": 0,
+    "est_us": 6126.495997111003,
+    "host_us": 20.340333624820534,
+    "clock_mhz": 1786.5951065655777,
+    "power_w": 599.9985370370371,
+    "cv_ok": true,
+    "kcycles_per_iter": 12162.586812563786,
+    "energy_mj_per_iter": 4084.604434046888
+   },
+   "cublas": {
+    "t_iter_us": 8787.873041062128,
+    "t_iter_mean_us": 8782.255094013515,
+    "cv_slices": 0.0011564652254352353,
+    "slices_us": [
+     8771.42091781374,
+     8771.104358491444,
+     8788.797045510913,
+     8787.873041062128,
+     8792.08010718936
+    ],
+    "iter_median_us": 8787.9638671875,
+    "iter_p10_us": 8763.424682617188,
+    "iter_p90_us": 8800.1708984375,
+    "n_iter": 630,
+    "group": 1,
+    "lead": 2,
+    "gaps": 0,
+    "est_us": 7895.114898681641,
+    "host_us": 42.13033268266978,
+    "clock_mhz": 1617.0737517931398,
+    "power_w": 599.9931851851853,
+    "cv_ok": true,
+    "kcycles_per_iter": 14210.638828792125,
+    "energy_mj_per_iter": 5272.6639369098875
+   },
+   "triton_tut03_nt": {
+    "t_iter_us": 7037.233972245721,
+    "t_iter_mean_us": 7042.270676723283,
+    "cv_slices": 0.0011266123263356967,
+    "slices_us": [
+     7036.2059764373,
+     7036.304376064203,
+     7037.233972245721,
+     7048.756526066707,
+     7052.852532802484
+    ],
+    "iter_median_us": 7037.90283203125,
+    "iter_p10_us": 7030.76171875,
+    "iter_p90_us": 7055.419921875,
+    "n_iter": 781,
+    "group": 1,
+    "lead": 2,
+    "gaps": 0,
+    "est_us": 6434.752146402995,
+    "host_us": 75.75733373717715,
+    "clock_mhz": 1825.3081474570392,
+    "power_w": 600.0000555555556,
+    "cv_ok": true,
+    "kcycles_per_iter": 12845.120505101579,
+    "energy_mj_per_iter": 4222.3407743048765
+   }
+  },
+  "derived": {
+   "speedup": {
+    "tl": {
+     "ratio_of_medians": 1.2908743192741607,
+     "paired_median": 1.2903460315193993,
+     "paired_min": 1.2897918055793807,
+     "paired_max": 1.2912582030441802
+    },
+    "cublas": {
+     "ratio_of_medians": 1.0,
+     "paired_median": 1.0,
+     "paired_min": 1.0,
+     "paired_max": 1.0
+    },
+    "triton_tut03_nt": {
+     "ratio_of_medians": 1.2487680636626246,
+     "paired_median": 1.246612300320271,
+     "paired_min": 1.2465498775647923,
+     "paired_max": 1.248899365883416
+    }
+   }
+  },
+  "slices": [
+   {
+    "variant": "tl",
+    "round": 0,
+    "t_iter_us": 6792.9256109543785,
+    "iter_median_us": 6792.236328125,
+    "iter_p10_us": 6784.979248046875,
+    "iter_p90_us": 6802.1728515625,
+    "n_iter": 162,
+    "group": 1,
+    "span_ms": 1100.4539489746094,
+    "clock_mhz": 1790.335011042606,
+    "power_w": 600.0115000000001,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 86.0,
+    "host_window": [
+     1790272570.9849057,
+     1790272572.0853589
+    ]
+   },
+   {
+    "variant": "cublas",
+    "round": 0,
+    "t_iter_us": 8771.42091781374,
+    "iter_median_us": 8771.6064453125,
+    "iter_p10_us": 8757.217407226562,
+    "iter_p90_us": 8783.905029296875,
+    "n_iter": 126,
+    "group": 1,
+    "span_ms": 1105.1990356445312,
+    "clock_mhz": 1620.0158347594515,
+    "power_w": 600.0257777777779,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 85.0,
+    "host_window": [
+     1790272572.4886167,
+     1790272573.593812
+    ]
+   },
+   {
+    "variant": "triton_tut03_nt",
+    "round": 0,
+    "t_iter_us": 7036.2059764373,
+    "iter_median_us": 7035.888671875,
+    "iter_p10_us": 7027.7252197265625,
+    "iter_p90_us": 7042.6025390625,
+    "n_iter": 156,
+    "group": 1,
+    "span_ms": 1097.6481323242188,
+    "clock_mhz": 1826.0743046620723,
+    "power_w": 599.9692037037037,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 86.0,
+    "host_window": [
+     1790272573.9948587,
+     1790272575.0925074
+    ]
+   },
+   {
+    "variant": "cublas",
+    "round": 1,
+    "t_iter_us": 8771.104358491444,
+    "iter_median_us": 8771.6064453125,
+    "iter_p10_us": 8757.293701171875,
+    "iter_p90_us": 8782.867431640625,
+    "n_iter": 126,
+    "group": 1,
+    "span_ms": 1105.1591491699219,
+    "clock_mhz": 1619.4184929317275,
+    "power_w": 600.0320185185185,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 85.0,
+    "host_window": [
+     1790272575.4961557,
+     1790272576.601312
+    ]
+   },
+   {
+    "variant": "triton_tut03_nt",
+    "round": 1,
+    "t_iter_us": 7036.304376064203,
+    "iter_median_us": 7035.888671875,
+    "iter_p10_us": 7029.78515625,
+    "iter_p90_us": 7044.0673828125,
+    "n_iter": 156,
+    "group": 1,
+    "span_ms": 1097.6634826660156,
+    "clock_mhz": 1826.4585709207736,
+    "power_w": 599.9666111111111,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 86.0,
+    "host_window": [
+     1790272577.002476,
+     1790272578.1001325
+    ]
+   },
+   {
+    "variant": "tl",
+    "round": 1,
+    "t_iter_us": 6797.48233748071,
+    "iter_median_us": 6798.33984375,
+    "iter_p10_us": 6788.0859375,
+    "iter_p90_us": 6804.5654296875,
+    "n_iter": 162,
+    "group": 1,
+    "span_ms": 1101.192138671875,
+    "clock_mhz": 1789.7227584556474,
+    "power_w": 599.9782777777777,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 87.0,
+    "host_window": [
+     1790272578.5013275,
+     1790272579.6025229
+    ]
+   },
+   {
+    "variant": "triton_tut03_nt",
+    "round": 2,
+    "t_iter_us": 7037.233972245721,
+    "iter_median_us": 7037.90283203125,
+    "iter_p10_us": 7029.742431640625,
+    "iter_p90_us": 7045.147705078125,
+    "n_iter": 157,
+    "group": 1,
+    "span_ms": 1104.8457336425781,
+    "clock_mhz": 1825.3081474570392,
+    "power_w": 600.0216666666666,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 87.0,
+    "host_window": [
+     1790272580.003398,
+     1790272581.1082416
+    ]
+   },
+   {
+    "variant": "tl",
+    "round": 2,
+    "t_iter_us": 6807.690655743634,
+    "iter_median_us": 6807.5408935546875,
+    "iter_p10_us": 6801.3916015625,
+    "iter_p90_us": 6814.691162109375,
+    "n_iter": 162,
+    "group": 1,
+    "span_ms": 1102.8458862304688,
+    "clock_mhz": 1786.5951065655777,
+    "power_w": 599.9985370370371,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 87.0,
+    "host_window": [
+     1790272581.510187,
+     1790272582.6130307
+    ]
+   },
+   {
+    "variant": "cublas",
+    "round": 2,
+    "t_iter_us": 8788.797045510913,
+    "iter_median_us": 8787.9638671875,
+    "iter_p10_us": 8776.7333984375,
+    "iter_p90_us": 8802.337646484375,
+    "n_iter": 126,
+    "group": 1,
+    "span_ms": 1107.388427734375,
+    "clock_mhz": 1616.75865535335,
+    "power_w": 599.9931851851853,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 85.0,
+    "host_window": [
+     1790272583.0168433,
+     1790272584.124226
+    ]
+   },
+   {
+    "variant": "tl",
+    "round": 3,
+    "t_iter_us": 6812.481044982531,
+    "iter_median_us": 6812.6220703125,
+    "iter_p10_us": 6805.419921875,
+    "iter_p90_us": 6820.86181640625,
+    "n_iter": 161,
+    "group": 1,
+    "span_ms": 1096.8094482421875,
+    "clock_mhz": 1785.779829312215,
+    "power_w": 599.9868148148148,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 87.0,
+    "host_window": [
+     1790272584.5264525,
+     1790272585.623265
+    ]
+   },
+   {
+    "variant": "cublas",
+    "round": 3,
+    "t_iter_us": 8787.873041062128,
+    "iter_median_us": 8787.9638671875,
+    "iter_p10_us": 8775.634765625,
+    "iter_p90_us": 8800.262451171875,
+    "n_iter": 126,
+    "group": 1,
+    "span_ms": 1107.2720031738281,
+    "clock_mhz": 1617.0737517931398,
+    "power_w": 599.9901090909091,
+    "power_n": 55,
+    "gaps": 0,
+    "temp_c": 86.0,
+    "host_window": [
+     1790272586.0273902,
+     1790272587.1346557
+    ]
+   },
+   {
+    "variant": "triton_tut03_nt",
+    "round": 3,
+    "t_iter_us": 7048.756526066707,
+    "iter_median_us": 7049.1943359375,
+    "iter_p10_us": 7040.52734375,
+    "iter_p90_us": 7057.403564453125,
+    "n_iter": 156,
+    "group": 1,
+    "span_ms": 1099.6060180664062,
+    "clock_mhz": 1822.5983443455257,
+    "power_w": 600.0000555555556,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 87.0,
+    "host_window": [
+     1790272587.5362418,
+     1790272588.635851
+    ]
+   },
+   {
+    "variant": "cublas",
+    "round": 4,
+    "t_iter_us": 8792.08010718936,
+    "iter_median_us": 8792.022705078125,
+    "iter_p10_us": 8781.31103515625,
+    "iter_p90_us": 8804.3212890625,
+    "n_iter": 126,
+    "group": 1,
+    "span_ms": 1107.8020935058594,
+    "clock_mhz": 1615.8383431465593,
+    "power_w": 599.9748518518519,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 86.0,
+    "host_window": [
+     1790272589.0403433,
+     1790272590.14814
+    ]
+   },
+   {
+    "variant": "triton_tut03_nt",
+    "round": 4,
+    "t_iter_us": 7052.852532802484,
+    "iter_median_us": 7053.22265625,
+    "iter_p10_us": 7044.0673828125,
+    "iter_p90_us": 7061.492919921875,
+    "n_iter": 156,
+    "group": 1,
+    "span_ms": 1100.2449951171875,
+    "clock_mhz": 1821.5436598070178,
+    "power_w": 600.0185185185186,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 87.0,
+    "host_window": [
+     1790272590.5498197,
+     1790272591.650062
+    ]
+   },
+   {
+    "variant": "tl",
+    "round": 4,
+    "t_iter_us": 6816.666123289499,
+    "iter_median_us": 6816.7724609375,
+    "iter_p10_us": 6808.59375,
+    "iter_p90_us": 6825.01220703125,
+    "n_iter": 161,
+    "group": 1,
+    "span_ms": 1097.4832458496094,
+    "clock_mhz": 1783.7194926397572,
+    "power_w": 600.0043518518519,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 87.0,
+    "host_window": [
+     1790272592.0523746,
+     1790272593.149851
+    ]
+   }
+  ],
+  "clock": {
+   "n_samples": 1103981,
+   "smid": 0,
+   "span_ms": 110786.600832,
+   "sample_period_us_median": 100.352,
+   "bin_ms": 10.0,
+   "n_bins": 11039,
+   "mhz": {
+    "mean": 1771.0461916106242,
+    "min": 1609.5448022959185,
+    "p10": 1627.9554749062695,
+    "median": 1808.1996372767858,
+    "p90": 1865.545218986469,
+    "max": 2145.7563034923915
+   },
+   "truncated": false,
+   "timed_out": false
+  },
+  "nvml": {
+   "temp_c": {
+    "min": 70.0,
+    "max": 87.0
+   },
+   "throttle": {
+    "reasons_seen": [
+     "SwPowerCap"
+    ],
+    "any_perf_limiting": true,
+    "frac_samples_perf_limited": 1.0,
+    "frac_by_reason": {
+     "SwPowerCap": 1.0
+    }
+   }
+  },
+  "guard": {
+   "attempts": [
+    {
+     "waited_s": 1.8835067749023438e-05,
+     "clean": true,
+     "complete": true,
+     "active": [],
+     "contaminated_slices": []
+    }
+   ],
+   "clean": true,
+   "complete": true,
+   "summary": {
+    "n_active_samples": 0,
+    "active": [],
+    "present": {
+     "73312": [
+      1790272473.4,
+      1790272595.1,
+      "/home/qzr/gigpo_search_reproduction_20260922/runtime/bin/python /home/qzr/gigpo_search_reproduction_20260922/run/local_r"
+     ],
+     "414061": [
+      1790272473.4,
+      1790272595.1,
+      "ray::WorkerDict"
+     ]
+    },
+    "n_lines": 336
+   }
+  },
+  "gpu_state_before": {
+   "sm_clock_mhz": 1897,
+   "mem_clock_mhz": 13365,
+   "max_sm_clock_mhz": 3090,
+   "temp_c": 70,
+   "power_w": 562.527,
+   "power_limit_w": 600.0,
+   "pstate": 1,
+   "reasons": [
+    "SwPowerCap"
+   ]
+  }
+ },
+ "summary": {
+  "tl": {
+   "t_iter_us": 6807.690655743634,
+   "cv_slices": 0.0014705151574541627,
+   "clock_mhz": 1786.5951065655777,
+   "power_w": 599.9985370370371,
+   "energy_mj_per_iter": 4084.604434046888,
+   "kcycles_per_iter": 12162.586812563786,
+   "iter_p10_us": 6790.1611328125,
+   "iter_p90_us": 6818.84765625,
+   "n_iter": 808,
+   "tflops": 323.02044360618663,
+   "tflop_per_joule": 0.5383687186994708,
+   "speedup_vs_cublas": 1.2908743192741607,
+   "speedup_paired_min_max": [
+    1.2897918055793807,
+    1.2912582030441802
+   ]
+  },
+  "cublas": {
+   "t_iter_us": 8787.873041062128,
+   "cv_slices": 0.0011564652254352353,
+   "clock_mhz": 1617.0737517931398,
+   "power_w": 599.9931851851853,
+   "energy_mj_per_iter": 5272.6639369098875,
+   "kcycles_per_iter": 14210.638828792125,
+   "iter_p10_us": 8763.424682617188,
+   "iter_p90_us": 8800.1708984375,
+   "n_iter": 630,
+   "tflops": 250.2338444441409,
+   "tflop_per_joule": 0.41706114439767716,
+   "speedup_vs_cublas": 1.0,
+   "speedup_paired_min_max": [
+    1.0,
+    1.0
+   ]
+  },
+  "triton_tut03_nt": {
+   "t_iter_us": 7037.233972245721,
+   "cv_slices": 0.0011266123263356967,
+   "clock_mhz": 1825.3081474570392,
+   "power_w": 600.0000555555556,
+   "energy_mj_per_iter": 4222.3407743048765,
+   "kcycles_per_iter": 12845.120505101579,
+   "iter_p10_us": 7030.76171875,
+   "iter_p90_us": 7055.419921875,
+   "n_iter": 781,
+   "tflops": 312.4840333893642,
+   "tflop_per_joule": 0.5208066740927667,
+   "speedup_vs_cublas": 1.2487680636626246,
+   "speedup_paired_min_max": [
+    1.2465498775647923,
+    1.248899365883416
+   ]
+  }
+ },
+ "gpu_state_after": {
+  "clocks.sm": "1612",
+  "clocks.max.sm": "3090",
+  "power.draw": "599.93",
+  "power.limit": "600.00",
+  "temperature.gpu": "86",
+  "utilization.gpu": "100",
+  "memory.used": "46834"
+ },
+ "end": "2026-09-24 17:56:35"
+}

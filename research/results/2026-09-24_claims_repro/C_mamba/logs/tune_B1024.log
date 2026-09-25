@@ -1,0 +1,154 @@
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 16:45:03,296 INFO:Auto-tuning with 0.9 CPU utilizations, 128 CPUs available, 115 CPUs will be used
+2026-09-24 16:45:03,471 WARNING:Benchmark timeout is enforced in benchmark workers by running each benchmark call in a daemon sub-thread and waiting up to the configured timeout.
+Compiling configurations:   0%|          | 0/90 [00:00<?, ?it/s]
+Bench configurations:   0%|          | 0/90 [00:00<?, ?it/s][ACompiling configurations:   4%|▍         | 4/90 [00:00<00:02, 37.22it/s]Compiling configurations:   9%|▉         | 8/90 [00:00<00:03, 22.79it/s]Compiling configurations:  12%|█▏        | 11/90 [00:00<00:04, 19.70it/s]Compiling configurations:  16%|█▌        | 14/90 [00:00<00:04, 17.96it/s]Compiling configurations:  18%|█▊        | 16/90 [00:00<00:04, 17.23it/s]Compiling configurations:  20%|██        | 18/90 [00:01<00:04, 14.55it/s]Compiling configurations:  23%|██▎       | 21/90 [00:01<00:03, 17.84it/s]Compiling configurations:  27%|██▋       | 24/90 [00:01<00:03, 20.57it/s]Compiling configurations:  30%|███       | 27/90 [00:01<00:02, 21.59it/s]Compiling configurations:  33%|███▎      | 30/90 [00:01<00:02, 23.45it/s]Compiling configurations:  37%|███▋      | 33/90 [00:01<00:02, 25.13it/s]Compiling configurations:  40%|████      | 36/90 [00:01<00:02, 22.41it/s]Compiling configurations:  43%|████▎     | 39/90 [00:01<00:02, 19.65it/s]Compiling configurations:  47%|████▋     | 42/90 [00:02<00:02, 16.56it/s]Compiling configurations:  49%|████▉     | 44/90 [00:02<00:02, 15.88it/s]Compiling configurations:  51%|█████     | 46/90 [00:02<00:02, 16.51it/s]Compiling configurations:  53%|█████▎    | 48/90 [00:02<00:02, 15.90it/s]Compiling configurations:  56%|█████▌    | 50/90 [00:02<00:02, 15.47it/s]Compiling configurations:  58%|█████▊    | 52/90 [00:02<00:02, 15.11it/s]Compiling configurations:  60%|██████    | 54/90 [00:03<00:02, 13.10it/s]Compiling configurations:  62%|██████▏   | 56/90 [00:03<00:02, 13.47it/s]Compiling configurations:  64%|██████▍   | 58/90 [00:03<00:02, 13.72it/s]Compiling configurations:  67%|██████▋   | 60/90 [00:03<00:02, 13.85it/s]Compiling configurations:  69%|██████▉   | 62/90 [00:03<00:01, 14.14it/s]Compiling configurations:  71%|███████   | 64/90 [00:03<00:01, 15.33it/s]Compiling configurations:  73%|███████▎  | 66/90 [00:03<00:01, 15.26it/s]Compiling configurations:  76%|███████▌  | 68/90 [00:03<00:01, 14.89it/s]Compiling configurations:  78%|███████▊  | 70/90 [00:04<00:01, 15.74it/s]Compiling configurations:  80%|████████  | 72/90 [00:04<00:01, 16.54it/s]Compiling configurations:  82%|████████▏ | 74/90 [00:04<00:00, 17.03it/s]                                                                         
+                                                            [ACompiling configurations:  82%|████████▏ | 74/90 [00:04<00:00, 17.03it/s]
+Bench configurations:   0%|          | 0/90 [00:04<?, ?it/s][ACompiling configurations:  84%|████████▍ | 76/90 [00:05<00:03,  4.54it/s]Compiling configurations:  87%|████████▋ | 78/90 [00:05<00:02,  5.81it/s]Compiling configurations:  89%|████████▉ | 80/90 [00:05<00:01,  7.14it/s]Compiling configurations:  92%|█████████▏| 83/90 [00:05<00:00,  9.41it/s]Compiling configurations:  94%|█████████▍| 85/90 [00:06<00:00, 10.49it/s]Compiling configurations:  97%|█████████▋| 87/90 [00:06<00:00, 11.85it/s]Compiling configurations:  99%|█████████▉| 89/90 [00:06<00:00, 12.48it/s]                                                                         
+                                                            [ACompiling configurations:  99%|█████████▉| 89/90 [00:06<00:00, 12.48it/s]
+Bench configurations:   0%|          | 0/90 [00:06<?, ?it/s][A
+Bench configurations:   1%|          | 1/90 [00:06<09:38,  6.50s/it][A
+Bench configurations:   1%|          | 1/90 [00:06<09:38,  6.50s/it, best_latency=0.266][A                                                                         
+                                                                                        [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:   1%|          | 1/90 [00:06<09:38,  6.50s/it, best_latency=0.266][A
+Bench configurations:   2%|▏         | 2/90 [00:06<09:32,  6.50s/it, best_latency=0.266][A                                                                         
+                                                                                        [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:   2%|▏         | 2/90 [00:06<09:32,  6.50s/it, best_latency=0.266][A
+Bench configurations:   3%|▎         | 3/90 [00:06<09:25,  6.50s/it, best_latency=0.266][A                                                                         
+                                                                                        [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:   3%|▎         | 3/90 [00:06<09:25,  6.50s/it, best_latency=0.266][A
+Bench configurations:   4%|▍         | 4/90 [00:06<09:19,  6.50s/it, best_latency=0.266][A                                                                         
+                                                                                        [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:   4%|▍         | 4/90 [00:06<09:19,  6.50s/it, best_latency=0.266][A
+Bench configurations:   6%|▌         | 5/90 [00:06<09:12,  6.50s/it, best_latency=0.266][A                                                                         
+                                                                                        [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:   6%|▌         | 5/90 [00:06<09:12,  6.50s/it, best_latency=0.266][A
+Bench configurations:   7%|▋         | 6/90 [00:06<09:06,  6.50s/it, best_latency=0.266][A                                                                         
+                                                                                        [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:   7%|▋         | 6/90 [00:06<09:06,  6.50s/it, best_latency=0.266][A
+Bench configurations:   8%|▊         | 7/90 [00:06<08:59,  6.50s/it, best_latency=0.266][A                                                                         
+                                                                                        [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:   8%|▊         | 7/90 [00:06<08:59,  6.50s/it, best_latency=0.266][A2026-09-24 16:45:07  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `main` with `out_idx=[7]`
+2026-09-24 16:45:09  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang begins to compile kernel `main` with `out_idx=[7]`
+Tuned Latency 0.26613759994506836 with config {'block_M': 64, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1} at index 0
+Tuned Latency 0.37088316679000854 with config {'block_M': 64, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 2} at index 1
+Tuned Latency 0.3744767904281616 with config {'block_M': 64, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3} at index 2
+Tuned Latency 0.368124783039093 with config {'block_M': 64, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4} at index 3
+Tuned Latency 0.37068477272987366 with config {'block_M': 64, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5} at index 4
+Tuned Latency 0.3875808119773865 with config {'block_M': 64, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 1} at index 5
+Tuned Latency 0.39967355132102966 with config {'block_M': 64, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2} at index 6
+2026-09-24 16:45:10,056 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,058 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,059 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+
+Bench configurations:  12%|█▏        | 11/90 [00:06<00:34,  2.30it/s, best_latency=0.266][A
+Bench configurations:  12%|█▏        | 11/90 [00:06<00:34,  2.30it/s, best_latency=0.266][A                                                                         
+                                                                                         [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:  12%|█▏        | 11/90 [00:06<00:34,  2.30it/s, best_latency=0.266][ATuned Latency 0.520905613899231 with config {'block_M': 64, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1} at index 10
+2026-09-24 16:45:10,078 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,081 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,083 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,085 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+
+Bench configurations:  18%|█▊        | 16/90 [00:06<00:32,  2.30it/s, best_latency=0.251][A                                                                         
+                                                                                         [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:  18%|█▊        | 16/90 [00:06<00:32,  2.30it/s, best_latency=0.251][A
+Bench configurations:  19%|█▉        | 17/90 [00:06<00:31,  2.30it/s, best_latency=0.244][A                                                                         
+                                                                                         [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:  19%|█▉        | 17/90 [00:06<00:31,  2.30it/s, best_latency=0.244][A
+Bench configurations:  20%|██        | 18/90 [00:06<00:31,  2.30it/s, best_latency=0.244][A                                                                         
+                                                                                         [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:  20%|██        | 18/90 [00:06<00:31,  2.30it/s, best_latency=0.244][ATuned Latency 0.25118401646614075 with config {'block_M': 64, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1} at index 15
+Tuned Latency 0.24359998106956482 with config {'block_M': 64, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 2} at index 16
+Tuned Latency 0.24484479427337646 with config {'block_M': 64, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3} at index 17
+2026-09-24 16:45:10,114 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,116 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+
+Bench configurations:  23%|██▎       | 21/90 [00:06<00:30,  2.30it/s, best_latency=0.244][A                                                                         
+                                                                                         [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:  23%|██▎       | 21/90 [00:06<00:30,  2.30it/s, best_latency=0.244][ATuned Latency 0.25937923789024353 with config {'block_M': 64, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 1} at index 20
+2026-09-24 16:45:10,129 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,131 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,134 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,137 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,139 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,141 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,145 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,147 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,149 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+
+Bench configurations:  34%|███▍      | 31/90 [00:06<00:25,  2.30it/s, best_latency=0.244][A                                                                         
+                                                                                         [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:  34%|███▍      | 31/90 [00:06<00:25,  2.30it/s, best_latency=0.244][A
+Bench configurations:  36%|███▌      | 32/90 [00:06<00:25,  2.30it/s, best_latency=0.244][A                                                                         
+                                                                                         [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:  36%|███▌      | 32/90 [00:06<00:25,  2.30it/s, best_latency=0.244][ATuned Latency 0.3279871940612793 with config {'block_M': 128, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1} at index 30
+Tuned Latency 0.3364831805229187 with config {'block_M': 128, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 2} at index 31
+2026-09-24 16:45:10,175 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,176 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+
+Bench configurations:  39%|███▉      | 35/90 [00:06<00:05,  9.37it/s, best_latency=0.244][A2026-09-24 16:45:10,178 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+
+Bench configurations:  40%|████      | 36/90 [00:06<00:05,  9.37it/s, best_latency=0.244][A                                                                         
+                                                                                         [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:  40%|████      | 36/90 [00:06<00:05,  9.37it/s, best_latency=0.244][ATuned Latency 0.33873921632766724 with config {'block_M': 128, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 1} at index 35
+2026-09-24 16:45:10,194 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,196 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,199 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,201 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,204 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,207 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,210 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,214 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,217 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+
+Bench configurations:  51%|█████     | 46/90 [00:06<00:04,  9.37it/s, best_latency=0.228][A                                                                         
+                                                                                         [ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 12.48it/s]
+Bench configurations:  51%|█████     | 46/90 [00:06<00:04,  9.37it/s, best_latency=0.228][ATuned Latency 0.22804801166057587 with config {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1} at index 45
+2026-09-24 16:45:10,229 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,231 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,232 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,233 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,235 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,237 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,239 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,241 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,244 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,248 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,250 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,253 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,256 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,258 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,260 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,261 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,262 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,264 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,266 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,269 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,271 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,274 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,277 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+
+Bench configurations:  78%|███████▊  | 70/90 [00:06<00:00, 23.25it/s, best_latency=0.228][A2026-09-24 16:45:10,280 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,283 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,285 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,289 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,292 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,293 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,295 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,296 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,297 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,299 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,301 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,304 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,306 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,310 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,313 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,316 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,319 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,322 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,325 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+
+Bench configurations: 100%|██████████| 88/88 [00:06<00:00, 23.25it/s, best_latency=0.228][ACompiling configurations: 100%|██████████| 90/90 [00:06<00:00, 13.13it/s]
+Bench configurations: 100%|██████████| 88/88 [00:06<00:00, 12.84it/s, best_latency=0.228]
+[tune B1024] best {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1} 0.22804801166057587 ms; ok 16/90; wall 8s; failures: {'launch: smem': 72, 'compile': 2}

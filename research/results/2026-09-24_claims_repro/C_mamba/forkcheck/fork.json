@@ -1,0 +1,167 @@
+{
+ "tag": "fork",
+ "tilelang_version": "0.1.14+cuda",
+ "tilelang_file": "/home/ywc/co-tilelang/tilelang/__init__.py",
+ "cache_dir": null,
+ "time": "2026-09-24 17:41:10",
+ "shapes": {
+  "CC1": {
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "compile_s": 0.1348891258239746,
+   "src_sha256": "4ffa79d09cd9e2262afd4906d4fd2bc7450bbe151cb9d2e8f3f135809b80d2d6",
+   "src": {
+    "launch_bounds": [
+     "256, 1"
+    ],
+    "mma_sync": 4,
+    "wgmma": false,
+    "tma": true,
+    "cp_async": 0,
+    "mbarrier": true,
+    "warp_specialized": false,
+    "n_lines": 293
+   },
+   "tilelang_vs_triton": {
+    "max_abs": 0.0078125,
+    "rel_l2": 0.00021415393185031538
+   },
+   "ok": true,
+   "tilelang_us": 51.16799846291542,
+   "triton_us": 40.95999896526337,
+   "ratio_triton_over_tilelang": 0.8005003165200918,
+   "clock_mhz": 2730.224930437366
+  },
+  "CC4": {
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "compile_s": 0.011640310287475586,
+   "src_sha256": "59f61d454961b6c6e667c7da033eaae3c2f15869b3eb62dcff85787c42313cbe",
+   "src": {
+    "launch_bounds": [
+     "256, 1"
+    ],
+    "mma_sync": 4,
+    "wgmma": false,
+    "tma": true,
+    "cp_async": 0,
+    "mbarrier": true,
+    "warp_specialized": false,
+    "n_lines": 280
+   },
+   "tilelang_vs_triton": {
+    "max_abs": 0.015625,
+    "rel_l2": 0.0002136381048921568
+   },
+   "ok": true,
+   "tilelang_us": 2880.6240558624268,
+   "triton_us": 4365.5359745025635,
+   "ratio_triton_over_tilelang": 1.515482718273548,
+   "clock_mhz": 2490.6996174645906
+  },
+  "CT1": {
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 64,
+    "num_stages": 4
+   },
+   "compile_s": 0.03102588653564453,
+   "src_sha256": "68984753d24022ebf6abe36e3d1efeb28b2e42cd4bd28a7527524225a944f2ee",
+   "src": {
+    "launch_bounds": [
+     "256, 1"
+    ],
+    "mma_sync": 2,
+    "wgmma": false,
+    "tma": true,
+    "cp_async": 0,
+    "mbarrier": true,
+    "warp_specialized": true,
+    "n_lines": 201
+   },
+   "tilelang_vs_triton": {
+    "max_abs": 0.001953125,
+    "rel_l2": 0.00040523726051998056
+   },
+   "ok": true,
+   "tilelang_us": 22.512000054121017,
+   "triton_us": 24.159999564290047,
+   "ratio_triton_over_tilelang": 1.073205379628957,
+   "clock_mhz": 2808.269435709173
+  },
+  "CT4": {
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 64,
+    "num_stages": 4
+   },
+   "compile_s": 0.007697582244873047,
+   "src_sha256": "baa53beebc08d44372ef631ecdadcfb127b80c6b444742aeab4b8dcaa9e5a82a",
+   "src": {
+    "launch_bounds": [
+     "256, 1"
+    ],
+    "mma_sync": 2,
+    "wgmma": false,
+    "tma": true,
+    "cp_async": 0,
+    "mbarrier": true,
+    "warp_specialized": true,
+    "n_lines": 201
+   },
+   "tilelang_vs_triton": {
+    "max_abs": 0.00390625,
+    "rel_l2": 0.00040615628805621703
+   },
+   "ok": true,
+   "tilelang_us": 1072.8799700737,
+   "triton_us": 1097.7599620819092,
+   "ratio_triton_over_tilelang": 1.023189911921368,
+   "clock_mhz": 2692.605873022665
+  },
+  "B8192": {
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "compile_s": 0.07766127586364746,
+   "src_sha256": "e9620d0a8d20452891288c650cee836e9ded63b5e71e3bdf7b069176a0e873fe",
+   "src": {
+    "launch_bounds": [
+     "256, 1"
+    ],
+    "mma_sync": 4,
+    "wgmma": false,
+    "tma": true,
+    "cp_async": 0,
+    "mbarrier": true,
+    "warp_specialized": false,
+    "n_lines": 280
+   },
+   "tilelang_vs_triton": {
+    "max_abs": 0.015625,
+    "rel_l2": 0.0002353056333403427
+   },
+   "ok": true,
+   "tilelang_us": 1801.03999376297,
+   "triton_us": 1651.74400806427,
+   "ratio_triton_over_tilelang": 0.9171056799317537,
+   "clock_mhz": 2426.8022876572477
+  }
+ }
+}

@@ -267,3 +267,22 @@
 **关注的问题**
 - 基线强度：sm_120 上 TileLang GEMM 走 mma.sync（无 wgmma/tcgen05），单跑性能若明显低于 cuBLAS，共置收益会被"低效 kernel 留下的空闲资源"虚增。P1 必须同时报告 cuBLAS / FlashInfer（或 torch SDPA）单跑时间作为参照，并在 3×2 分解里用最强的单跑实现作为 solo 基线。
 - 不能锁频：共跑时功耗更高，可能比单跑更早降频，会低估共置收益或引入噪声；需要在结果里报告每组的频率分布。
+
+## 2026-09-24 14:40 — 新任务：在本机复现 TileLang 宣称的加速比
+
+**任务（用户 /goal）**：在本机跑 TileLang 的 example 与 baseline，看能否达到其宣称的加速比。与 D1 研究线独立。
+
+**做法**：计划与完成标准见 [results/2026-09-24_claims_repro/README.md](results/2026-09-24_claims_repro/README.md)。宣称分 6 项（C1 fp16 GEMM vs cuBLAS/Triton；C2 FlashAttention fwd vs FA3/Triton/PyTorch；C3 Mamba-2 chunk scan/state vs Triton；C4 MLA decode vs FlashMLA/FlashInfer/Triton；C5 dequant GEMV vs cuBLAS fp16；C6 benchmark/*/README 的绝对 TFLOPS）。原宣称都在 H100/A100/4090/MI300X 上测得，这里只检验相对比值（同卡、同计时方法、交错测量）。三个子 agent 并行（A GEMM+dequant、B attention、C mamba），GPU 计时经共享 flock 串行化，pmon 守卫照旧。
+
+## 2026-09-25 07:30 — TileLang 宣称加速比复现：完成
+
+**结论**（详见 [results/2026-09-24_claims_repro/README.md](results/2026-09-24_claims_repro/README.md) §4–5）：在本卡（sm_120，无 wgmma，99 KB smem，600W）上：
+- **复现**：fp16 GEMM ≥ cuBLAS（稳态 gmean 1.22×，fp16 累加 1.08×；cuBLAS 在 sm_120 上跑的是 Ampere CUTLASS kernel，TileLang 的 TMA+WS kernel 每周期能耗更低、功耗墙下频率高 3–36%）与 ≥ Triton（1.04–1.07×）；2-bit dequant GEMV（用 TileLang 自带 example；BitBLAS 本身在 sm_120 上编不出 kernel）。
+- **部分**：FlashAttention vs Triton/FA2（1.18× / 1.27×，宣称 1.41× / 1.70×；与 cuDNN SDPA 持平）；MLA vs Triton；INT4 GEMV（cuBLAS GEMV 已达 83–89% DRAM 峰值，封顶约 4×）。
+- **未复现**：Mamba-2 chunk scan/state vs Triton（持平或更慢；大 shape 的优势主要来自 mamba-ssm 的 CTA 顺序；TileLang 在 sm_120 上的自动 warp specialization 使 occupancy 降为 1 CTA/SM）；MLA vs FlashInfer（持平，宣称 1.23×）。
+- **不可测**：FA3、FlashMLA（Hopper-only）、BitBLAS、NF4。
+- 分界线是架构：H100 上的优势来自 wgmma + TMA warp-specialized 流水与 227 KB smem；C2/C4 的所有出厂配置在 sm_120 上都超 smem，launch 失败。
+
+**方法上的新发现**：eager 发射的 kernel 在本卡上以约 2.048 µs 为粒度被观察到完成，<60 µs 的 flush 模式计时有量化误差，需用 CUDA graph 或 bench_steady（已写入 bench/README.md）。
+
+**遗留**：cobench guard 把已退出进程（无法解析 owner）当作外部进程，导致对自己已结束的 job 等 30 分钟（建议首次见到 pid 时记下 owner）；上游缺陷清单见结果 README §4（MLA Triton int32 溢出、attention_sink import 失效、matmul_fp8 get_configs、autotuner 泄漏等），可向上游报告。环境改动：flash-attn 2.8.3.post1（+960 MB），BitBLAS 已卸载但其依赖留存（env_versions.md §6–8）。

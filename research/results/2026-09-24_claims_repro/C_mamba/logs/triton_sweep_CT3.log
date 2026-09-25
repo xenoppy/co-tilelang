@@ -1,0 +1,16 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_triton_sweep.py --shape CT3', 't': '2026-09-24 16:48:20'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 16:51:16,028 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[triton sweep CT3] flush=clean reps=60
+  tilelang                    522.19 us (p10 520.19 p90 524.29 cv 4.88%) clk 2770 MHz | x1.020 vs triton_autotuned
+  triton_autotuned            532.48 us (p10 531.42 p90 534.47 cv 6.94%) clk 2745 MHz | x1.000 vs triton_autotuned
+  cfg1                        896.93 us (p10 894.88 p90 898.02 cv 2.93%) clk 2814 MHz | x0.594 vs triton_autotuned
+  cfg2                        838.53 us (p10 835.61 p90 841.77 cv 3.08%) clk 2815 MHz | x0.635 vs triton_autotuned
+  cfg3                        727.57 us (p10 726.60 p90 729.51 cv 3.49%) clk 2761 MHz | x0.732 vs triton_autotuned
+  cfg4                        532.48 us (p10 530.85 p90 534.43 cv 0.24%) clk 2746 MHz | x1.000 vs triton_autotuned
+  cfg5                        820.29 us (p10 819.10 p90 821.70 cv 3.26%) clk 2651 MHz | x0.649 vs triton_autotuned
+  cfg6                        830.43 us (p10 824.92 p90 832.36 cv 0.46%) clk 2793 MHz | x0.641 vs triton_autotuned
+  cfg7                        825.74 us (p10 820.93 p90 829.16 cv 4.30%) clk 2771 MHz | x0.645 vs triton_autotuned
+  cfg8                        593.30 us (p10 591.80 p90 594.86 cv 0.23%) clk 2751 MHz | x0.897 vs triton_autotuned
+[triton sweep CT3] TileLang 522.2 us; Triton autotuned 532.5 us (BLOCK_SIZE_M: 64, BLOCK_SIZE_N: 128, BLOCK_SIZE_K: 32, num_warps: 4, num_ctas: 1, num_stages: 4, maxnreg: None); best forced 532.5 us (BLOCK_SIZE_M: 64, BLOCK_SIZE_N: 128, BLOCK_SIZE_K: 32, num_warps: 4, num_ctas: 1, num_stages: 4, maxnreg: None); ratio best/TL 1.020
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 188.0, 't': '2026-09-24 16:51:28'}

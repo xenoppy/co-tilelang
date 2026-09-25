@@ -1,0 +1,2942 @@
+2026-09-24 16:45:03,296 INFO:Auto-tuning with 0.9 CPU utilizations, 128 CPUs available, 115 CPUs will be used
+2026-09-24 16:45:03,471 WARNING:Benchmark timeout is enforced in benchmark workers by running each benchmark call in a daemon sub-thread and waiting up to the configured timeout.
+2026-09-24 16:45:08,830 DEBUG:Compilation failed for config {'block_M': 256, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5} at index 74 with error: Invalid layout for shared buffer `cb_shared`: the forward map must be injective. Details: ("injectivity could not be proven: the logical input domain exceeds the exact-check limit of 262144 points",). Layout: Layout((5, 256, 256) -> (5, 4, 32, 512), transform: (_i, _j, _k) -> (_i, _k // 64, _j // 8, _j % 8 * 64 + (_k % 64 // 32 + _j % 8 // 4) % 2 * 32 + (_k % 32 // 16 + _j % 4 // 2) % 2 * 16 + (_k % 16 // 8 + _j % 2) % 2 * 8 + _k % 8)). Check the layout passed to T.annotate_layout.
+2026-09-24 16:45:09,948 DEBUG:Compilation failed for config {'block_M': 256, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5} at index 89 with error: Invalid layout for shared buffer `cb_shared`: the forward map must be injective. Details: ("injectivity could not be proven: the logical input domain exceeds the exact-check limit of 262144 points",). Layout: Layout((5, 256, 256) -> (5, 4, 32, 512), transform: (_i, _j, _k) -> (_i, _k // 64, _j // 8, _j % 8 * 64 + (_k % 64 // 32 + _j % 8 // 4) % 2 * 32 + (_k % 32 // 16 + _j % 4 // 2) % 2 * 16 + (_k % 16 // 8 + _j % 2) % 2 * 8 + _k % 8)). Check the layout passed to T.annotate_layout.
+2026-09-24 16:45:10,056 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,056 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 101120
+
+2026-09-24 16:45:10,058 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,058 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 125952
+
+2026-09-24 16:45:10,059 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,059 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 151808
+
+2026-09-24 16:45:10,078 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,079 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 125952
+
+2026-09-24 16:45:10,081 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,081 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 176640
+
+2026-09-24 16:45:10,083 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,083 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 226304
+
+2026-09-24 16:45:10,085 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,085 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 276992
+
+2026-09-24 16:45:10,114 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,115 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 100864
+
+2026-09-24 16:45:10,116 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,116 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 117376
+
+2026-09-24 16:45:10,129 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,129 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 100864
+
+2026-09-24 16:45:10,131 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,131 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 133888
+
+2026-09-24 16:45:10,134 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,134 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 166912
+
+2026-09-24 16:45:10,137 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,137 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 200960
+
+2026-09-24 16:45:10,139 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,139 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 101376
+
+2026-09-24 16:45:10,141 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,144 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 166912
+
+2026-09-24 16:45:10,145 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,145 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 234496
+
+2026-09-24 16:45:10,147 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,147 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 300032
+
+2026-09-24 16:45:10,149 WARNING:An error occurred while testing config {'block_M': 64, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,149 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 367616
+
+2026-09-24 16:45:10,175 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,175 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 104832
+
+2026-09-24 16:45:10,176 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,177 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 125440
+
+2026-09-24 16:45:10,178 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,178 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 146048
+
+2026-09-24 16:45:10,194 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,194 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 125440
+
+2026-09-24 16:45:10,196 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,196 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 166656
+
+2026-09-24 16:45:10,199 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,200 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 207872
+
+2026-09-24 16:45:10,201 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,201 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 250112
+
+2026-09-24 16:45:10,204 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,204 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 125440
+
+2026-09-24 16:45:10,207 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,208 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 207872
+
+2026-09-24 16:45:10,210 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,211 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 291328
+
+2026-09-24 16:45:10,214 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,214 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 373760
+
+2026-09-24 16:45:10,217 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,217 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 457216
+
+2026-09-24 16:45:10,229 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,229 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 100608
+
+2026-09-24 16:45:10,231 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,231 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 125312
+
+2026-09-24 16:45:10,232 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,232 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 150016
+
+2026-09-24 16:45:10,233 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,234 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 174720
+
+2026-09-24 16:45:10,235 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,236 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 100608
+
+2026-09-24 16:45:10,237 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,238 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 150016
+
+2026-09-24 16:45:10,239 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,239 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 199424
+
+2026-09-24 16:45:10,241 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,241 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 248832
+
+2026-09-24 16:45:10,244 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,244 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 299264
+
+2026-09-24 16:45:10,248 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,248 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 150528
+
+2026-09-24 16:45:10,250 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,251 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 248832
+
+2026-09-24 16:45:10,253 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,253 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 349184
+
+2026-09-24 16:45:10,256 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,256 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 447488
+
+2026-09-24 16:45:10,258 WARNING:An error occurred while testing config {'block_M': 128, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,258 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 547840
+
+2026-09-24 16:45:10,260 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,260 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 112768
+
+2026-09-24 16:45:10,261 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,261 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 149760
+
+2026-09-24 16:45:10,262 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,262 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 186752
+
+2026-09-24 16:45:10,264 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,264 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 223744
+
+2026-09-24 16:45:10,266 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,266 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 260736
+
+2026-09-24 16:45:10,269 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,269 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 149760
+
+2026-09-24 16:45:10,271 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,271 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 223744
+
+2026-09-24 16:45:10,274 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,274 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 297728
+
+2026-09-24 16:45:10,277 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,277 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 371712
+
+2026-09-24 16:45:10,280 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,280 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 446720
+
+2026-09-24 16:45:10,283 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,283 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 223744
+
+2026-09-24 16:45:10,285 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,285 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 371712
+
+2026-09-24 16:45:10,289 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,289 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 520704
+
+2026-09-24 16:45:10,292 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 32, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,292 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "<unknown>", line 0, in __tvm_ffi_main
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 668672
+
+2026-09-24 16:45:10,293 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,294 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 125056
+
+2026-09-24 16:45:10,295 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,295 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 166144
+
+2026-09-24 16:45:10,296 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,296 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 207232
+
+2026-09-24 16:45:10,297 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,297 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 248320
+
+2026-09-24 16:45:10,299 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,299 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 289408
+
+2026-09-24 16:45:10,301 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,301 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 166144
+
+2026-09-24 16:45:10,304 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,304 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 248320
+
+2026-09-24 16:45:10,306 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,307 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 330496
+
+2026-09-24 16:45:10,310 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,310 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 412672
+
+2026-09-24 16:45:10,313 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 128, 'block_Dstate': 128, 'num_stages': 5}, checkout autotuner.log for more details
+2026-09-24 16:45:10,314 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 495872
+
+2026-09-24 16:45:10,316 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 1}, checkout autotuner.log for more details
+2026-09-24 16:45:10,317 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 248832
+
+2026-09-24 16:45:10,319 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 2}, checkout autotuner.log for more details
+2026-09-24 16:45:10,319 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 412672
+
+2026-09-24 16:45:10,322 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 3}, checkout autotuner.log for more details
+2026-09-24 16:45:10,322 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 578560
+
+2026-09-24 16:45:10,325 WARNING:An error occurred while testing config {'block_M': 256, 'block_N': 64, 'block_K': 256, 'block_Dstate': 128, 'num_stages': 4}, checkout autotuner.log for more details
+2026-09-24 16:45:10,325 DEBUG:Error: Traceback (most recent call last):
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 597, in _run_benchmark_target
+    latency, worker_ref_latency = _call_benchmark_target(_jit_kernel, _worker_state)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 569, in _call_benchmark_target
+    return invoke()
+           ^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 560, in invoke
+    return benchmark_target(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/autotuner/tuner.py", line 717, in _benchmark_target
+    latency = profiler.do_bench(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 281, in do_bench
+    return run_bench()
+           ^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/__init__.py", line 267, in run_bench
+    return do_bench(
+           ^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 128, in do_bench
+    return _do_bench_impl(
+           ^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/profiler/bench.py", line 187, in _do_bench_impl
+    fn()
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/base.py", line 100, in __call__
+    return self.func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/co-tilelang/tilelang/jit/adapter/tvm_ffi.py", line 330, in func
+    result = self._get_executable()(*inputs, allocator_anchor)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ywc/mpk-env/lib/python3.12/site-packages/tvm_ffi/module.py", line 299, in __call__
+    return self.main(*args)
+           ^^^^^^^^^^^^^^^^
+  File "python/tvm_ffi/cython/function.pxi", line 968, in tvm_ffi.core.Function.__call__
+  File "/home/ywc/co-tilelang/3rdparty/tvm/src/runtime/cuda/cuda_module.cc", line 271, in void tvm::runtime::CUDAWrappedFunc::operator()(tvm::ffi::PackedArgs, tvm::ffi::Any*, void**) const
+    TVM_FFI_THROW(InternalError)
+    
+tvm.error.InternalError: Failed to set the allowed dynamic shared memory size to 742400
+

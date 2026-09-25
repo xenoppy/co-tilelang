@@ -1,0 +1,239 @@
+{
+ "shape": "V0",
+ "MNK": [
+  1,
+  16384,
+  16384
+ ],
+ "start": "2026-09-24 16:34:33",
+ "bitblas": "0.1.0.post1",
+ "torch": "2.8.0+cu128",
+ "gpu_state_before": {
+  "clocks.sm": "532",
+  "clocks.max.sm": "3090",
+  "power.draw": "66.76",
+  "power.limit": "600.00",
+  "temperature.gpu": "34",
+  "utilization.gpu": "0",
+  "memory.used": "44146"
+ },
+ "bitblas_target": "cuda",
+ "bitblas_target_overridden": false,
+ "correctness": {
+  "cublas_fp16acc": {
+   "rel_err_max": 0.0018113894620910287,
+   "tol": 0.01,
+   "pass": true
+  },
+  "cublas": {
+   "rel_err_max": 0.000292554177576676,
+   "tol": 0.005,
+   "pass": true
+  }
+ },
+ "bitblas_ops": {
+  "W_INT4A_FP16": {
+   "build_error": "ValueError: No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)",
+   "traceback": "Traceback (most recent call last):\n  File \"/home/ywc/co-tilelang/research/bench/scripts/claims_gemv_bitblas.py\", line 123, in run_shape\n    op = bitblas.Matmul(cfg, target=target, enable_tuning=True)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/general_matmul/__init__.py\", line 391, in __init__\n    self.dispatch(target, from_database, source_format, enable_tuning)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/general_matmul/__init__.py\", line 410, in dispatch\n    self._build_default_module(target)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/operator.py\", line 285, in _build_default_module\n    self._build_runtime_module(target)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/operator.py\", line 175, in _build_runtime_module\n    raise ValueError(f\"No optimized function available for platform {self.arch}\")\nValueError: No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)\n",
+   "build_s": 0.001481771469116211
+  },
+  "W_INT2A_FP16": {
+   "build_error": "ValueError: No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)",
+   "traceback": "Traceback (most recent call last):\n  File \"/home/ywc/co-tilelang/research/bench/scripts/claims_gemv_bitblas.py\", line 123, in run_shape\n    op = bitblas.Matmul(cfg, target=target, enable_tuning=True)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/general_matmul/__init__.py\", line 391, in __init__\n    self.dispatch(target, from_database, source_format, enable_tuning)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/general_matmul/__init__.py\", line 410, in dispatch\n    self._build_default_module(target)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/operator.py\", line 285, in _build_default_module\n    self._build_runtime_module(target)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/operator.py\", line 175, in _build_runtime_module\n    raise ValueError(f\"No optimized function available for platform {self.arch}\")\nValueError: No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)\n",
+   "build_s": 0.0005259513854980469
+  },
+  "W_INT2A_INT8": {
+   "build_error": "ValueError: No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)",
+   "traceback": "Traceback (most recent call last):\n  File \"/home/ywc/co-tilelang/research/bench/scripts/claims_gemv_bitblas.py\", line 123, in run_shape\n    op = bitblas.Matmul(cfg, target=target, enable_tuning=True)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/general_matmul/__init__.py\", line 391, in __init__\n    self.dispatch(target, from_database, source_format, enable_tuning)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/general_matmul/__init__.py\", line 410, in dispatch\n    self._build_default_module(target)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/operator.py\", line 285, in _build_default_module\n    self._build_runtime_module(target)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/operator.py\", line 175, in _build_runtime_module\n    raise ValueError(f\"No optimized function available for platform {self.arch}\")\nValueError: No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)\n",
+   "build_s": 0.00047397613525390625
+  },
+  "W_NF4A_FP16": {
+   "build_error": "ValueError: No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)",
+   "traceback": "Traceback (most recent call last):\n  File \"/home/ywc/co-tilelang/research/bench/scripts/claims_gemv_bitblas.py\", line 123, in run_shape\n    op = bitblas.Matmul(cfg, target=target, enable_tuning=True)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/general_matmul/__init__.py\", line 391, in __init__\n    self.dispatch(target, from_database, source_format, enable_tuning)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/general_matmul/__init__.py\", line 410, in dispatch\n    self._build_default_module(target)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/operator.py\", line 285, in _build_default_module\n    self._build_runtime_module(target)\n  File \"/home/ywc/mpk-env/lib/python3.12/site-packages/bitblas/ops/operator.py\", line 175, in _build_runtime_module\n    raise ValueError(f\"No optimized function available for platform {self.arch}\")\nValueError: No optimized function available for platform CUDA(cuda -keys=cuda,gpu -arch=sm_120 -max_num_threads=1024 -thread_warp_size=32)\n",
+   "build_s": 0.0004811286926269531
+  }
+ },
+ "correctness_failed": [],
+ "cobench": {
+  "label": "gemv V0",
+  "config": {
+   "reference": "cublas_fp16acc",
+   "flush": true,
+   "flush_kind": "clean",
+   "reps": 60,
+   "warmup_s": 1.0,
+   "gate": true,
+   "variants": [
+    "cublas_fp16acc",
+    "cublas"
+   ],
+   "gpu_state_before": {
+    "sm_clock_mhz": 2587,
+    "mem_clock_mhz": 13365,
+    "max_sm_clock_mhz": 3090,
+    "temp_c": 33,
+    "power_w": 84.186,
+    "power_limit_w": 600.0,
+    "pstate": 1,
+    "reasons": []
+   }
+  },
+  "variants": {
+   "cublas_fp16acc": {
+    "total": {
+     "n": 60,
+     "median": 333.8559865951538,
+     "p10": 333.72798562049866,
+     "p90": 336.2559974193573,
+     "mean": 334.57066267728806,
+     "std": 1.38347509247298,
+     "cv": 0.0041350759250742145,
+     "min": 333.6000144481659,
+     "max": 339.9359881877899
+    },
+    "clock": {
+     "n": 60,
+     "covered": true,
+     "min": 2849.079951186853,
+     "median": 2861.928935283374,
+     "max": 2870.850557198554,
+     "cv": 0.0021979809763222613,
+     "corr_time_vs_clock": 0.1541254754749297,
+     "cycles_median": 955769.376456018,
+     "cycles_cv": 0.00497692004078611
+    },
+    "cv_ok": true
+   },
+   "cublas": {
+    "total": {
+     "n": 60,
+     "median": 331.85599744319916,
+     "p10": 331.70240819454193,
+     "p90": 332.8959882259369,
+     "mean": 332.12853024403256,
+     "std": 0.851290182068648,
+     "cv": 0.0025631347642527417,
+     "min": 330.6879997253418,
+     "max": 336.2559974193573
+    },
+    "clock": {
+     "n": 60,
+     "covered": true,
+     "min": 2833.1438837506926,
+     "median": 2843.8403450403403,
+     "max": 2850.5607698736467,
+     "cv": 0.0016483569431629587,
+     "corr_time_vs_clock": 0.1030106835012661,
+     "cycles_median": 944351.4696141218,
+     "cycles_cv": 0.003188078245725949
+    },
+    "cv_ok": true
+   }
+  },
+  "derived": {
+   "speedup": {
+    "cublas_fp16acc": 1.0,
+    "cublas": 1.006026677737825
+   }
+  },
+  "nvml": {
+   "n_samples": 6,
+   "duration_s": 0.05841330100156483,
+   "interval_ms_target": 10.0,
+   "max_sm_clock_mhz": 3090,
+   "errors": [],
+   "interval_ms_median": 10.00189499973203,
+   "refresh_ms_observed": {
+    "sm_clock": null,
+    "power": null
+   },
+   "stale_warning": true,
+   "sm_clock_mhz": {
+    "min": 2850.0,
+    "median": 2850.0,
+    "max": 2850.0,
+    "mean": 2850.0
+   },
+   "power_w_polled": {
+    "mean": 436.30299999999994,
+    "max": 436.303
+   },
+   "power_w": {
+    "n": 3,
+    "mean": 432.39900000000006,
+    "min": 425.37,
+    "max": 436.106,
+    "source": "20ms-samples"
+   },
+   "temp_c": {
+    "min": 42.0,
+    "max": 42.0
+   },
+   "throttle": {
+    "reasons_seen": [],
+    "any_perf_limiting": false,
+    "frac_samples_perf_limited": 0.0,
+    "frac_by_reason": {}
+   }
+  },
+  "clock": {
+   "window": {
+    "n_samples": 1144,
+    "smid": 0,
+    "span_ms": 57.351296,
+    "sample_period_us_median": 50.176,
+    "bin_ms": 1.0,
+    "n_bins": 57,
+    "mhz": {
+     "mean": 2852.534910457821,
+     "min": 2842.969746492347,
+     "p10": 2846.201171875,
+     "median": 2852.4992028061224,
+     "p90": 2860.019850760547,
+     "max": 2863.0460778061224
+    },
+    "truncated": false,
+    "timed_out": false
+   }
+  },
+  "guard": {
+   "clean": true,
+   "complete": true,
+   "attempts": [
+    {
+     "waited_s": 0.0,
+     "clean": true,
+     "complete": true,
+     "active": []
+    }
+   ]
+  }
+ },
+ "summary": {
+  "cublas_fp16acc": {
+   "median_us": 333.8559865951538,
+   "weight_GBps": 1608.0913134890993,
+   "clock_mhz": 2861.928935283374,
+   "cv": 0.0041350759250742145,
+   "speedup_vs_cublas_fp16acc": 1.0
+  },
+  "cublas": {
+   "median_us": 331.85599744319916,
+   "weight_GBps": 1617.782761608494,
+   "clock_mhz": 2843.8403450403403,
+   "cv": 0.0025631347642527417,
+   "speedup_vs_cublas_fp16acc": 1.006026677737825
+  }
+ },
+ "gpu_state_after": {
+  "clocks.sm": "2850",
+  "clocks.max.sm": "3090",
+  "power.draw": "438.20",
+  "power.limit": "600.00",
+  "temperature.gpu": "44",
+  "utilization.gpu": "99",
+  "memory.used": "46432"
+ },
+ "end": "2026-09-24 16:34:43",
+ "tag": ""
+}

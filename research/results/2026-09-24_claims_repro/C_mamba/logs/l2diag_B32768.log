@@ -1,0 +1,10 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_l2diag.py --shape B32768', 't': '2026-09-24 17:46:21'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 17:50:10,625 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[l2diag B32768] flush=clean reps=50
+  tilelang                   7109.12 us (p10 7096.22 p90 7125.44 cv 0.16%) clk 2461 MHz | x1.708 vs triton_shipped
+  triton_shipped            12144.46 us (p10 12140.25 p90 12146.89 cv 0.02%) clk 2719 MHz | x1.000 vs triton_shipped
+  triton_orig               12141.09 us (p10 12137.12 p90 12146.66 cv 0.03%) clk 2720 MHz | x1.000 vs triton_shipped
+  triton_heads_first         7612.10 us (p10 7592.15 p90 7624.05 cv 0.17%) clk 1968 MHz | x1.595 vs triton_shipped
+[l2diag B32768] tilelang 7109.1 us  triton_shipped 12144.5 us  triton_orig 12141.1 us  triton_heads_first 7612.1 us
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 245.0, 't': '2026-09-24 17:50:26'}

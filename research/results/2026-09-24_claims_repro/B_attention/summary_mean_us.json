@@ -1,0 +1,5678 @@
+{
+ "statistic": "mean_us",
+ "fa": {
+  "rows": {
+   "FA0": {
+    "shape": {
+     "batch": 1,
+     "heads": 32,
+     "seq": 512,
+     "dim": 128,
+     "causal": true
+    },
+    "t": {
+     "tl_bhsd_h100cfg_s1": 22.523359954357147,
+     "tl_bhsd_main": 20.7007999997586,
+     "tl_bshd_main": 32.764479741454124,
+     "tl_bshd_tune": 20.494399899616838,
+     "tl_bhsd_sweep": 22.49888009391725,
+     "triton_tlbench_ws": 32.72304007783532,
+     "triton_tlbench": 28.665440129116178,
+     "triton_tut06": 28.59376016072929,
+     "sdpa_flash": 32.74847975932062,
+     "sdpa_efficient": 36.89664060249925,
+     "sdpa_cudnn": 22.527680108323693,
+     "sdpa_math": 238.6865619570017,
+     "torch_naive": 88.44879981130362,
+     "flashinfer_prefill": 26.821599872782826,
+     "fa2_pip": 32.63711966574192
+    },
+    "triton_best_name": "triton_tut06",
+    "tl_examples_best": 20.494399899616838,
+    "clock": {
+     "tl_bhsd_h100cfg_s1": 2847.9565721731997,
+     "tl_bhsd_main": 2841.9890227141204,
+     "tl_bshd_main": 2847.879085719116,
+     "tl_bshd_tune": 2842.9528358655098,
+     "tl_bhsd_sweep": 2848.7025607715955,
+     "triton_tlbench_ws": 2848.0985695383074,
+     "triton_tlbench": 2848.1345775679415,
+     "triton_tut06": 2848.9879678114958,
+     "sdpa_flash": 2803.6205759198647,
+     "sdpa_efficient": 2844.68220204699,
+     "sdpa_cudnn": 2843.9492745832963,
+     "sdpa_math": 2710.740646516141,
+     "torch_naive": 2757.856879834684,
+     "flashinfer_prefill": 2840.380151979216,
+     "fa2_pip": 2806.8968705304965
+    },
+    "kcycles": {
+     "tl_bhsd_h100cfg_s1": 64.06543912093991,
+     "tl_bhsd_main": 58.294669540985986,
+     "tl_bshd_main": 93.2749040613785,
+     "tl_bshd_tune": 58.28599065829688,
+     "tl_bhsd_sweep": 64.16187745425555,
+     "triton_tlbench_ws": 93.31568335815054,
+     "triton_tlbench": 81.70654933909476,
+     "triton_tut06": 81.64679025152245,
+     "sdpa_flash": 91.86856992993764,
+     "sdpa_efficient": 104.96471147375816,
+     "sdpa_cudnn": 64.04940967993963,
+     "sdpa_math": 647.319599982834,
+     "torch_naive": 242.88081545862008,
+     "flashinfer_prefill": 75.68426489023402,
+     "fa2_pip": 91.80047498077317
+    },
+    "cv": {
+     "tl_bhsd_h100cfg_s1": 0.01276520794291281,
+     "tl_bhsd_main": 0.03031739158516204,
+     "tl_bshd_main": 0.007677683839278479,
+     "tl_bshd_tune": 0.016613610979032856,
+     "tl_bhsd_sweep": 0.016633267471424375,
+     "triton_tlbench_ws": 0.0075252317516390855,
+     "triton_tlbench": 0.0062122202704430205,
+     "triton_tut06": 0.007383229893573654,
+     "sdpa_flash": 0.007289804291535279,
+     "sdpa_efficient": 0.006131390776310192,
+     "sdpa_cudnn": 0.009633062229568778,
+     "sdpa_math": 0.008855400888831631,
+     "torch_naive": 0.010702359727211251,
+     "flashinfer_prefill": 0.020964700521736154,
+     "fa2_pip": 0.010107649996326894
+    },
+    "power_w": 367.71246666666667,
+    "power_max_w": 371.9,
+    "temp_c": {
+     "min": 47.0,
+     "max": 48.0
+    },
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "up": {
+     "tl_bhsd_h100cfg_s1": 22.86425232887268,
+     "tl_bhsd_main": 25.386780500411987,
+     "tl_bshd_main": 43.023109436035156,
+     "tl_bshd_tune": 26.24582313001156,
+     "tl_bhsd_sweep": 22.763600572943687,
+     "triton_tlbench_ws": 41.98815996258254,
+     "triton_tlbench": 34.31031762577621,
+     "triton_tut06": 33.355232273693275,
+     "sdpa_flash": 62.045405628527526,
+     "sdpa_efficient": 40.19564088545184,
+     "sdpa_cudnn": 24.190726934192842,
+     "sdpa_math": 253.12691348791122,
+     "torch_naive": 104.06542894784037,
+     "flashinfer_prefill": 30.422306432640248,
+     "fa2_pip": 62.61502984116267
+    },
+    "resources": {
+     "tl_bhsd_h100cfg_s1": {
+      "main_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        4,
+        32,
+        1,
+        384,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        8,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        4,
+        32,
+        1,
+        256,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_tune": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        8,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_sweep": {
+      "main_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        4,
+        32,
+        1,
+        384,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     }
+    },
+    "unlaunchable": {
+     "tl_bhsd_h100cfg": {
+      "cfg": [
+       128,
+       128,
+       2,
+       256
+      ],
+      "layout": "bhsd",
+      "provenance": "shipped config, 160 KB smem",
+      "resources": {
+       "main_kernel": {
+        "regs": 168,
+        "local_bytes": 0,
+        "smem_static": 2048,
+        "max_threads": [
+         384,
+         1,
+         1
+        ],
+        "launch_values": [
+         4,
+         32,
+         1,
+         384,
+         1,
+         1,
+         163840
+        ],
+        "smem_dynamic": 163840,
+        "smem_total": 165888,
+        "fits_99KB": false
+       }
+      },
+      "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 163840"
+     },
+     "isolated_process": true
+    },
+    "sweep_best": {
+     "cfg": "128_64_2_256",
+     "tl_do_bench_us": 22.617407143115997
+    },
+    "checks": {
+     "tl_bhsd_h100cfg_s1": 0.0010716915130615234,
+     "tl_bhsd_main": 0.0010716915130615234,
+     "tl_bshd_main": 0.0010716915130615234,
+     "tl_bshd_tune": 0.0010716915130615234,
+     "tl_bhsd_sweep": 0.0010716915130615234,
+     "triton_tlbench_ws": 0.0010716915130615234,
+     "triton_tlbench": 0.0010716915130615234,
+     "triton_tut06": 0.0010716915130615234,
+     "sdpa_flash": 0.0010716915130615234,
+     "sdpa_efficient": 0.0010716915130615234,
+     "sdpa_cudnn": 0.0010716915130615234,
+     "sdpa_math": 0.0009627342224121094,
+     "torch_naive": 0.002129793167114258,
+     "flashinfer_prefill": 0.0009627342224121094,
+     "fa2_pip": 0.0010716915130615234
+    },
+    "errors": {},
+    "triton_configs": {
+     "tlbench_triton_mha._attn_fwd_tma": {
+      "(512, 128, False, True, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None",
+      "(512, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 4, maxnreg: None"
+     },
+     "tlbench_triton_mha._attn_fwd": {},
+     "triton340_tutorial06_fused_attention._attn_fwd": {
+      "(512, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 4, maxnreg: None"
+     }
+    }
+   },
+   "FA1": {
+    "shape": {
+     "batch": 1,
+     "heads": 32,
+     "seq": 512,
+     "dim": 128,
+     "causal": false
+    },
+    "t": {
+     "tl_bhsd_h100cfg_s1": 22.585439942777157,
+     "tl_bhsd_main": 26.674080165103078,
+     "tl_bshd_main": 32.75583988055587,
+     "tl_bshd_tune": 26.645759930834174,
+     "tl_bhsd_sweep": 22.555040130391717,
+     "triton_tlbench": 25.478559965267777,
+     "triton_tut06": 25.11232003569603,
+     "sdpa_flash": 39.19087924063206,
+     "sdpa_efficient": 47.203840631991625,
+     "sdpa_cudnn": 22.527840184047818,
+     "sdpa_math": 202.27839820086956,
+     "torch_naive": 56.578400768339634,
+     "flashinfer_prefill": 27.580000003799796,
+     "fa2_pip": 38.90079990029335
+    },
+    "triton_best_name": "triton_tut06",
+    "tl_examples_best": 22.585439942777157,
+    "clock": {
+     "tl_bhsd_h100cfg_s1": 2828.525751984854,
+     "tl_bhsd_main": 2820.71799498338,
+     "tl_bshd_main": 2830.7095766067505,
+     "tl_bshd_tune": 2822.449711390904,
+     "tl_bhsd_sweep": 2825.7832506920367,
+     "triton_tlbench": 2833.408455747991,
+     "triton_tut06": 2834.4336258737662,
+     "sdpa_flash": 2776.0783496655913,
+     "sdpa_efficient": 2833.524646265947,
+     "sdpa_cudnn": 2794.6328985313594,
+     "sdpa_math": 2685.5337429894353,
+     "torch_naive": 2643.884924594161,
+     "flashinfer_prefill": 2812.140464782715,
+     "fa2_pip": 2780.7678908743314
+    },
+    "kcycles": {
+     "tl_bhsd_h100cfg_s1": 63.696322353333564,
+     "tl_bhsd_main": 75.21599429996014,
+     "tl_bshd_main": 92.72915699244388,
+     "tl_bshd_tune": 75.21431648406933,
+     "tl_bhsd_sweep": 63.636314861136164,
+     "triton_tlbench": 70.11817126767252,
+     "triton_tut06": 69.77130389254782,
+     "sdpa_flash": 108.24729576108324,
+     "sdpa_efficient": 133.55863298474893,
+     "sdpa_cudnn": 63.03929187396888,
+     "sdpa_math": 543.5638712943568,
+     "torch_naive": 150.38428748349736,
+     "flashinfer_prefill": 75.93156438134453,
+     "fa2_pip": 107.99829900673794
+    },
+    "cv": {
+     "tl_bhsd_h100cfg_s1": 0.011351008853425,
+     "tl_bhsd_main": 0.007852084710125747,
+     "tl_bshd_main": 0.0056622557475907885,
+     "tl_bshd_tune": 0.009397605948669646,
+     "tl_bhsd_sweep": 0.014509036252759653,
+     "triton_tlbench": 0.03959960739231509,
+     "triton_tut06": 0.037831792604824874,
+     "sdpa_flash": 0.017918057775898975,
+     "sdpa_efficient": 0.0050012950956135815,
+     "sdpa_cudnn": 0.007270222582373803,
+     "sdpa_math": 0.006386493056734582,
+     "torch_naive": 0.01778384708007979,
+     "flashinfer_prefill": 0.03586062677636216,
+     "fa2_pip": 0.00964395670862945
+    },
+    "power_w": 387.4759642857143,
+    "power_max_w": 391.14,
+    "temp_c": {
+     "min": 50.0,
+     "max": 51.0
+    },
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "up": {
+     "tl_bhsd_h100cfg_s1": 23.922579362988472,
+     "tl_bhsd_main": 32.767072319984436,
+     "tl_bshd_main": 43.78877580165863,
+     "tl_bshd_tune": 34.746360033750534,
+     "tl_bhsd_sweep": 23.62525835633278,
+     "triton_tlbench": 26.960482933355053,
+     "triton_tut06": 28.321588824747515,
+     "sdpa_flash": 60.533047674857464,
+     "sdpa_efficient": 51.40435500162663,
+     "sdpa_cudnn": 24.828916344452985,
+     "sdpa_math": 217.27697453715584,
+     "torch_naive": 78.34814256057143,
+     "flashinfer_prefill": 28.998890653742055,
+     "fa2_pip": 63.59898366854858
+    },
+    "resources": {
+     "tl_bhsd_h100cfg_s1": {
+      "main_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        4,
+        32,
+        1,
+        384,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        8,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        4,
+        32,
+        1,
+        256,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_tune": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        8,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_sweep": {
+      "main_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        4,
+        32,
+        1,
+        384,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     }
+    },
+    "unlaunchable": {
+     "tl_bhsd_h100cfg": {
+      "cfg": [
+       128,
+       128,
+       2,
+       256
+      ],
+      "layout": "bhsd",
+      "provenance": "shipped config, 160 KB smem",
+      "resources": {
+       "main_kernel": {
+        "regs": 168,
+        "local_bytes": 0,
+        "smem_static": 2048,
+        "max_threads": [
+         384,
+         1,
+         1
+        ],
+        "launch_values": [
+         4,
+         32,
+         1,
+         384,
+         1,
+         1,
+         163840
+        ],
+        "smem_dynamic": 163840,
+        "smem_total": 165888,
+        "fits_99KB": false
+       }
+      },
+      "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 163840"
+     },
+     "isolated_process": true
+    },
+    "sweep_best": {
+     "cfg": "128_64_2_256",
+     "tl_do_bench_us": 23.126089945435524
+    },
+    "checks": {
+     "tl_bhsd_h100cfg_s1": 0.0002452731132507324,
+     "tl_bhsd_main": 0.0002452731132507324,
+     "tl_bshd_main": 0.0002452731132507324,
+     "tl_bshd_tune": 0.0002452731132507324,
+     "tl_bhsd_sweep": 0.0002452731132507324,
+     "triton_tlbench_ws": null,
+     "triton_tlbench": 0.0002452731132507324,
+     "triton_tut06": 0.0002452731132507324,
+     "sdpa_flash": 0.0002452731132507324,
+     "sdpa_efficient": 0.0002452731132507324,
+     "sdpa_cudnn": 0.0002452731132507324,
+     "sdpa_math": 0.00024300813674926758,
+     "torch_naive": 0.0011640191078186035,
+     "flashinfer_prefill": 0.0003008246421813965,
+     "fa2_pip": 0.0002452731132507324
+    },
+    "errors": {
+     "triton_tlbench_ws": "OutOfResources: out of resource: shared memory, Required: 123004, Hardware limit: 101376. Reducing block sizes or `num_stages` may help."
+    },
+    "triton_configs": {
+     "tlbench_triton_mha._attn_fwd_tma": {
+      "(512, 128, False, True, 'torch.float32')": "BLOCK_M: 64, BLOCK_N: 64, num_warps: 4, num_ctas: 1, num_stages: 3, maxnreg: None",
+      "(512, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None"
+     },
+     "tlbench_triton_mha._attn_fwd": {},
+     "triton340_tutorial06_fused_attention._attn_fwd": {
+      "(512, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None"
+     }
+    }
+   },
+   "FA2": {
+    "shape": {
+     "batch": 1,
+     "heads": 32,
+     "seq": 1024,
+     "dim": 128,
+     "causal": true
+    },
+    "t": {
+     "tl_bhsd_h100cfg_s1": 51.008799597620964,
+     "tl_bhsd_main": 49.230559691786766,
+     "tl_bshd_main": 80.36671828478575,
+     "tl_bshd_tune": 49.18847979977727,
+     "tl_bhsd_sweep": 49.16959961876273,
+     "triton_tlbench_ws": 75.88032118976116,
+     "triton_tlbench": 64.47872016578913,
+     "triton_tut06": 65.42831994593143,
+     "sdpa_flash": 61.64912039414048,
+     "sdpa_efficient": 94.37072146683931,
+     "sdpa_cudnn": 52.89887961000204,
+     "sdpa_math": 1251.8424010276794,
+     "torch_naive": 268.40079814195633,
+     "flashinfer_prefill": 69.65968035161495,
+     "fa2_pip": 57.26256048306823
+    },
+    "triton_best_name": "triton_tlbench",
+    "tl_examples_best": 49.18847979977727,
+    "clock": {
+     "tl_bhsd_h100cfg_s1": 2759.0348619517713,
+     "tl_bhsd_main": 2734.3343783950622,
+     "tl_bshd_main": 2776.5037218729653,
+     "tl_bshd_tune": 2719.5704976717634,
+     "tl_bhsd_sweep": 2729.5309503873186,
+     "triton_tlbench_ws": 2772.7564476631783,
+     "triton_tlbench": 2772.4160710972424,
+     "triton_tut06": 2777.9219448566437,
+     "sdpa_flash": 2776.675935723316,
+     "sdpa_efficient": 2780.6546591161714,
+     "sdpa_cudnn": 2694.4527970827544,
+     "sdpa_math": 2736.8089523501403,
+     "torch_naive": 2600.496774576588,
+     "flashinfer_prefill": 2796.220064163208,
+     "fa2_pip": 2779.5023715634143
+    },
+    "kcycles": {
+     "tl_bhsd_h100cfg_s1": 141.15211187786656,
+     "tl_bhsd_main": 134.42617848505657,
+     "tl_bshd_main": 222.12159612319016,
+     "tl_bshd_tune": 133.86198193944398,
+     "tl_bhsd_sweep": 134.21122676346837,
+     "triton_tlbench_ws": 210.26591419463472,
+     "triton_tlbench": 178.57957935337973,
+     "triton_tut06": 181.94389211876083,
+     "sdpa_flash": 169.66912929875377,
+     "sdpa_efficient": 262.2243807161189,
+     "sdpa_cudnn": 142.75558729713967,
+     "sdpa_math": 3425.869312649647,
+     "torch_naive": 694.8634191127514,
+     "flashinfer_prefill": 194.79658355000745,
+     "fa2_pip": 159.30168779360542
+    },
+    "cv": {
+     "tl_bhsd_h100cfg_s1": 0.012697022760838065,
+     "tl_bhsd_main": 0.004826845929537591,
+     "tl_bshd_main": 0.011810142550006977,
+     "tl_bshd_tune": 0.007351572112817707,
+     "tl_bhsd_sweep": 0.008598571207120344,
+     "triton_tlbench_ws": 0.0073407357480383345,
+     "triton_tlbench": 0.015522781375134959,
+     "triton_tut06": 0.007767728505745786,
+     "sdpa_flash": 0.2052091307139692,
+     "sdpa_efficient": 0.0039061577515618166,
+     "sdpa_cudnn": 0.03235609814300485,
+     "sdpa_math": 0.0022608583114937138,
+     "torch_naive": 0.05136602926289518,
+     "flashinfer_prefill": 0.003872459129875902,
+     "fa2_pip": 0.0058999606493872064
+    },
+    "power_w": 436.7961555555557,
+    "power_max_w": 445.234,
+    "temp_c": {
+     "min": 56.0,
+     "max": 56.0
+    },
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "up": {
+     "tl_bhsd_h100cfg_s1": 53.15600335597992,
+     "tl_bhsd_main": 60.130126774311066,
+     "tl_bshd_main": 94.31061893701553,
+     "tl_bshd_tune": 59.042904525995255,
+     "tl_bhsd_sweep": 53.26736718416214,
+     "triton_tlbench_ws": 88.99716901949068,
+     "triton_tlbench": 75.68064470043672,
+     "triton_tut06": 76.77821485724833,
+     "sdpa_flash": 70.22818057248712,
+     "sdpa_efficient": 99.06060544819367,
+     "sdpa_cudnn": 50.33003187013997,
+     "sdpa_math": 1292.74423122406,
+     "torch_naive": 294.68350805211486,
+     "flashinfer_prefill": 71.17582613594146,
+     "fa2_pip": 66.99484250083471
+    },
+    "resources": {
+     "tl_bhsd_h100cfg_s1": {
+      "main_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        8,
+        32,
+        1,
+        384,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        16,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        8,
+        32,
+        1,
+        256,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_tune": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        16,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_sweep": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        16,
+        32,
+        1,
+        256,
+        1,
+        1,
+        81920
+       ],
+       "smem_dynamic": 81920,
+       "smem_total": 83968,
+       "fits_99KB": true
+      }
+     }
+    },
+    "unlaunchable": {
+     "tl_bhsd_h100cfg": {
+      "cfg": [
+       128,
+       128,
+       2,
+       256
+      ],
+      "layout": "bhsd",
+      "provenance": "shipped config, 160 KB smem",
+      "resources": {
+       "main_kernel": {
+        "regs": 168,
+        "local_bytes": 0,
+        "smem_static": 2048,
+        "max_threads": [
+         384,
+         1,
+         1
+        ],
+        "launch_values": [
+         8,
+         32,
+         1,
+         384,
+         1,
+         1,
+         163840
+        ],
+        "smem_dynamic": 163840,
+        "smem_total": 165888,
+        "fits_99KB": false
+       }
+      },
+      "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 163840"
+     },
+     "isolated_process": true
+    },
+    "sweep_best": {
+     "cfg": "64_64_2_128",
+     "tl_do_bench_us": 51.7144575715065
+    },
+    "checks": {
+     "tl_bhsd_h100cfg_s1": 0.0009875297546386719,
+     "tl_bhsd_main": 0.0009875297546386719,
+     "tl_bshd_main": 0.0009875297546386719,
+     "tl_bshd_tune": 0.0009875297546386719,
+     "tl_bhsd_sweep": 0.0009875297546386719,
+     "triton_tlbench_ws": 0.0009875297546386719,
+     "triton_tlbench": 0.0009875297546386719,
+     "triton_tut06": 0.0009875297546386719,
+     "sdpa_flash": 0.0009875297546386719,
+     "sdpa_efficient": 0.0009875297546386719,
+     "sdpa_cudnn": 0.0009875297546386719,
+     "sdpa_math": 0.0009655952453613281,
+     "torch_naive": 0.002153337001800537,
+     "flashinfer_prefill": 0.001102447509765625,
+     "fa2_pip": 0.0009875297546386719
+    },
+    "errors": {},
+    "triton_configs": {
+     "tlbench_triton_mha._attn_fwd_tma": {
+      "(1024, 128, False, True, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None",
+      "(1024, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None"
+     },
+     "tlbench_triton_mha._attn_fwd": {},
+     "triton340_tutorial06_fused_attention._attn_fwd": {
+      "(1024, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 4, maxnreg: None"
+     }
+    }
+   },
+   "FA3": {
+    "shape": {
+     "batch": 1,
+     "heads": 32,
+     "seq": 1024,
+     "dim": 128,
+     "causal": false
+    },
+    "t": {
+     "tl_bhsd_h100cfg_s1": 79.24527857452631,
+     "tl_bhsd_main": 72.9617615416646,
+     "tl_bshd_main": 114.58144072443247,
+     "tl_bshd_tune": 72.12768096476793,
+     "tl_bhsd_sweep": 69.12256017327309,
+     "triton_tlbench": 84.86447971314192,
+     "triton_tut06": 84.02207903563976,
+     "sdpa_flash": 80.69695897400379,
+     "sdpa_efficient": 132.68159933388233,
+     "sdpa_cudnn": 71.28400135785341,
+     "sdpa_math": 1068.0249589681625,
+     "torch_naive": 161.2071993201971,
+     "flashinfer_prefill": 76.21856026351452,
+     "fa2_pip": 75.75376149266958
+    },
+    "triton_best_name": "triton_tut06",
+    "tl_examples_best": 72.12768096476793,
+    "clock": {
+     "tl_bhsd_h100cfg_s1": 2715.993019990549,
+     "tl_bhsd_main": 2617.9115909405164,
+     "tl_bshd_main": 2748.944654231082,
+     "tl_bshd_tune": 2607.6297760976004,
+     "tl_bhsd_sweep": 2582.353356171723,
+     "triton_tlbench": 2731.9283369110854,
+     "triton_tut06": 2737.4841484820945,
+     "sdpa_flash": 2722.8936874828396,
+     "sdpa_efficient": 2777.87609154054,
+     "sdpa_cudnn": 2550.5916732211895,
+     "sdpa_math": 2710.080359718492,
+     "torch_naive": 2501.5055593941406,
+     "flashinfer_prefill": 2695.8515073506987,
+     "fa2_pip": 2736.8293315295064
+    },
+    "kcycles": {
+     "tl_bhsd_h100cfg_s1": 215.76079534661864,
+     "tl_bhsd_main": 188.88140324607662,
+     "tl_bshd_main": 314.8327312271558,
+     "tl_bshd_tune": 187.86948655692737,
+     "tl_bhsd_sweep": 178.6123231517724,
+     "triton_tlbench": 229.27774685862678,
+     "triton_tut06": 229.91958857657903,
+     "sdpa_flash": 219.98361324799478,
+     "sdpa_efficient": 369.41263234011063,
+     "sdpa_cudnn": 177.73477532434578,
+     "sdpa_math": 2891.153000352502,
+     "torch_naive": 403.7324986116735,
+     "flashinfer_prefill": 204.84878665310703,
+     "fa2_pip": 207.37304635027695
+    },
+    "cv": {
+     "tl_bhsd_h100cfg_s1": 0.012317744970914894,
+     "tl_bhsd_main": 0.16956713170961193,
+     "tl_bshd_main": 0.006908554007225172,
+     "tl_bshd_tune": 0.011007158574086283,
+     "tl_bhsd_sweep": 0.013059601685733222,
+     "triton_tlbench": 0.15710508883962085,
+     "triton_tut06": 0.004012149191681209,
+     "sdpa_flash": 0.011600023047730565,
+     "sdpa_efficient": 0.006090796386352344,
+     "sdpa_cudnn": 0.2431841608529421,
+     "sdpa_math": 0.011659932448295099,
+     "torch_naive": 0.007954170752307203,
+     "flashinfer_prefill": 0.010555915258843147,
+     "fa2_pip": 0.005040700800515685
+    },
+    "power_w": 456.8280000000001,
+    "power_max_w": 461.951,
+    "temp_c": {
+     "min": 57.0,
+     "max": 58.0
+    },
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "up": {
+     "tl_bhsd_h100cfg_s1": 82.222118973732,
+     "tl_bhsd_main": 79.42509651184082,
+     "tl_bshd_main": 130.46276569366455,
+     "tl_bshd_tune": 79.56066727638245,
+     "tl_bhsd_sweep": 73.93170148134232,
+     "triton_tlbench": 88.55134445903452,
+     "triton_tut06": 88.67548006293903,
+     "sdpa_flash": 90.99439303269013,
+     "sdpa_efficient": 136.20272652364113,
+     "sdpa_cudnn": 71.77856250049231,
+     "sdpa_math": 1098.5157475059416,
+     "torch_naive": 196.28204256296158,
+     "flashinfer_prefill": 78.65338090129873,
+     "fa2_pip": 85.48512954117257
+    },
+    "resources": {
+     "tl_bhsd_h100cfg_s1": {
+      "main_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        8,
+        32,
+        1,
+        384,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        16,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        8,
+        32,
+        1,
+        256,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_tune": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        16,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_sweep": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        16,
+        32,
+        1,
+        256,
+        1,
+        1,
+        81920
+       ],
+       "smem_dynamic": 81920,
+       "smem_total": 83968,
+       "fits_99KB": true
+      }
+     }
+    },
+    "unlaunchable": {
+     "tl_bhsd_h100cfg": {
+      "cfg": [
+       128,
+       128,
+       2,
+       256
+      ],
+      "layout": "bhsd",
+      "provenance": "shipped config, 160 KB smem",
+      "resources": {
+       "main_kernel": {
+        "regs": 168,
+        "local_bytes": 0,
+        "smem_static": 2048,
+        "max_threads": [
+         384,
+         1,
+         1
+        ],
+        "launch_values": [
+         8,
+         32,
+         1,
+         384,
+         1,
+         1,
+         163840
+        ],
+        "smem_dynamic": 163840,
+        "smem_total": 165888,
+        "fits_99KB": false
+       }
+      },
+      "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 163840"
+     },
+     "isolated_process": true
+    },
+    "sweep_best": {
+     "cfg": "64_128_1_128",
+     "tl_do_bench_us": 72.97497987747192
+    },
+    "checks": {
+     "tl_bhsd_h100cfg_s1": 0.0001271069049835205,
+     "tl_bhsd_main": 0.0001271069049835205,
+     "tl_bshd_main": 0.0001271069049835205,
+     "tl_bshd_tune": 0.0001271069049835205,
+     "tl_bhsd_sweep": 0.0001271069049835205,
+     "triton_tlbench_ws": null,
+     "triton_tlbench": 0.0001271069049835205,
+     "triton_tut06": 0.0001271069049835205,
+     "sdpa_flash": 0.00013136863708496094,
+     "sdpa_efficient": 0.0001271069049835205,
+     "sdpa_cudnn": 0.0001271069049835205,
+     "sdpa_math": 0.00011980533599853516,
+     "torch_naive": 0.0009149014949798584,
+     "flashinfer_prefill": 0.00012579560279846191,
+     "fa2_pip": 0.00013136863708496094
+    },
+    "errors": {
+     "triton_tlbench_ws": "OutOfResources: out of resource: shared memory, Required: 123004, Hardware limit: 101376. Reducing block sizes or `num_stages` may help."
+    },
+    "triton_configs": {
+     "tlbench_triton_mha._attn_fwd_tma": {
+      "(1024, 128, False, True, 'torch.float32')": "BLOCK_M: 64, BLOCK_N: 64, num_warps: 4, num_ctas: 1, num_stages: 3, maxnreg: None",
+      "(1024, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None"
+     },
+     "tlbench_triton_mha._attn_fwd": {},
+     "triton340_tutorial06_fused_attention._attn_fwd": {
+      "(1024, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None"
+     }
+    }
+   },
+   "FA4": {
+    "shape": {
+     "batch": 1,
+     "heads": 32,
+     "seq": 4096,
+     "dim": 128,
+     "causal": true
+    },
+    "t": {
+     "tl_bhsd_h100cfg_s1": 458.57280150055885,
+     "tl_bhsd_main": 518.7744018435478,
+     "tl_bshd_main": 730.4465588927269,
+     "tl_bshd_tune": 523.4380787611008,
+     "tl_bhsd_sweep": 458.87055948376656,
+     "triton_tlbench_ws": 643.5881567001343,
+     "triton_tlbench": 530.3566372394562,
+     "triton_tut06": 533.9420801401138,
+     "sdpa_flash": 498.8428780436516,
+     "sdpa_efficient": 996.3340780138969,
+     "sdpa_cudnn": 484.6907202899456,
+     "sdpa_math": 21751.364736557007,
+     "torch_naive": 8265.45250415802,
+     "flashinfer_prefill": 509.68672171235085,
+     "fa2_pip": 476.5374404191971
+    },
+    "triton_best_name": "triton_tlbench",
+    "tl_examples_best": 458.57280150055885,
+    "clock": {
+     "tl_bhsd_h100cfg_s1": 2475.8123937406544,
+     "tl_bhsd_main": 2532.391563238296,
+     "tl_bshd_main": 2706.788653879921,
+     "tl_bshd_tune": 2519.2970899833736,
+     "tl_bhsd_sweep": 2470.793805816541,
+     "triton_tlbench_ws": 2669.218726560127,
+     "triton_tlbench": 2674.3020923859485,
+     "triton_tut06": 2674.792010926797,
+     "sdpa_flash": 2617.312961533922,
+     "sdpa_efficient": 2799.97261687216,
+     "sdpa_cudnn": 2317.459241716415,
+     "sdpa_math": 2731.24085385407,
+     "torch_naive": 2694.9878509737264,
+     "flashinfer_prefill": 2523.188277501601,
+     "fa2_pip": 2608.0430315543485
+    },
+    "kcycles": {
+     "tl_bhsd_h100cfg_s1": 1135.481136550071,
+     "tl_bhsd_main": 1313.610643465095,
+     "tl_bshd_main": 1973.6686193820196,
+     "tl_bshd_tune": 1318.8255029909294,
+     "tl_bhsd_sweep": 1134.2491137633608,
+     "triton_tlbench_ws": 1711.4304947976316,
+     "triton_tlbench": 1418.3803326990521,
+     "triton_tut06": 1423.2177705430006,
+     "sdpa_flash": 1305.2947329269036,
+     "sdpa_efficient": 2780.4446739292043,
+     "sdpa_cudnn": 1120.374749636115,
+     "sdpa_math": 59343.838233933864,
+     "torch_naive": 22222.17943611377,
+     "flashinfer_prefill": 1284.811340758618,
+     "fa2_pip": 1242.8438915336978
+    },
+    "cv": {
+     "tl_bhsd_h100cfg_s1": 0.003486378191312081,
+     "tl_bhsd_main": 0.002798963400176583,
+     "tl_bshd_main": 0.01970402502867032,
+     "tl_bshd_tune": 0.003460014203781846,
+     "tl_bhsd_sweep": 0.0036169754963523795,
+     "triton_tlbench_ws": 0.03314910910202306,
+     "triton_tlbench": 0.0023545902988525544,
+     "triton_tut06": 0.03511413725336485,
+     "sdpa_flash": 0.0029000290011525574,
+     "sdpa_efficient": 0.022224042158460494,
+     "sdpa_cudnn": 0.031398930679057156,
+     "sdpa_math": 0.004670728384760651,
+     "torch_naive": 0.009796534817797787,
+     "flashinfer_prefill": 0.01940183923091303,
+     "fa2_pip": 0.0031595583375409243
+    },
+    "power_w": 530.1678085642317,
+    "power_max_w": 577.928,
+    "temp_c": {
+     "min": 59.0,
+     "max": 64.0
+    },
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "up": {
+     "tl_bhsd_h100cfg_s1": 475.88756680488586,
+     "tl_bhsd_main": 551.2906312942505,
+     "tl_bshd_main": 751.9832849502563,
+     "tl_bshd_tune": 560.028076171875,
+     "tl_bhsd_sweep": 472.9154109954834,
+     "triton_tlbench_ws": 656.2583026885986,
+     "triton_tlbench": 541.9972830889176,
+     "triton_tut06": 542.6176496564525,
+     "sdpa_flash": 514.4941160102295,
+     "sdpa_efficient": 1004.3810523789505,
+     "sdpa_cudnn": 499.9547502037826,
+     "sdpa_math": 21855.735778808594,
+     "torch_naive": 8272.957108237528,
+     "flashinfer_prefill": 522.579579369018,
+     "fa2_pip": 497.8531464269966
+    },
+    "resources": {
+     "tl_bhsd_h100cfg_s1": {
+      "main_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        32,
+        32,
+        1,
+        384,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        64,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_main": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        32,
+        32,
+        1,
+        256,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     },
+     "tl_bshd_tune": {
+      "main_kernel": {
+       "regs": 240,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        256,
+        1,
+        1
+       ],
+       "launch_values": [
+        64,
+        32,
+        1,
+        256,
+        1,
+        1,
+        49152
+       ],
+       "smem_dynamic": 49152,
+       "smem_total": 51200,
+       "fits_99KB": true
+      }
+     },
+     "tl_bhsd_sweep": {
+      "main_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        32,
+        32,
+        1,
+        384,
+        1,
+        1,
+        98304
+       ],
+       "smem_dynamic": 98304,
+       "smem_total": 100352,
+       "fits_99KB": true
+      }
+     }
+    },
+    "unlaunchable": {
+     "tl_bhsd_h100cfg": {
+      "cfg": [
+       128,
+       128,
+       2,
+       256
+      ],
+      "layout": "bhsd",
+      "provenance": "shipped config, 160 KB smem",
+      "resources": {
+       "main_kernel": {
+        "regs": 168,
+        "local_bytes": 0,
+        "smem_static": 2048,
+        "max_threads": [
+         384,
+         1,
+         1
+        ],
+        "launch_values": [
+         32,
+         32,
+         1,
+         384,
+         1,
+         1,
+         163840
+        ],
+        "smem_dynamic": 163840,
+        "smem_total": 165888,
+        "fits_99KB": false
+       }
+      },
+      "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 163840"
+     },
+     "isolated_process": true
+    },
+    "sweep_best": {
+     "cfg": "128_128_1_256",
+     "tl_do_bench_us": 462.3243510723114
+    },
+    "checks": {
+     "tl_bhsd_h100cfg_s1": 0.0011453628540039062,
+     "tl_bhsd_main": 0.0011453628540039062,
+     "tl_bshd_main": 0.0011453628540039062,
+     "tl_bshd_tune": 0.0011453628540039062,
+     "tl_bhsd_sweep": 0.0011453628540039062,
+     "triton_tlbench_ws": 0.0011453628540039062,
+     "triton_tlbench": 0.0011453628540039062,
+     "triton_tut06": 0.0011453628540039062,
+     "sdpa_flash": 0.0011453628540039062,
+     "sdpa_efficient": 0.0011453628540039062,
+     "sdpa_cudnn": 0.0011453628540039062,
+     "sdpa_math": 0.0009765625,
+     "torch_naive": 0.0019579529762268066,
+     "flashinfer_prefill": 0.0009765625,
+     "fa2_pip": 0.0011453628540039062
+    },
+    "errors": {},
+    "triton_configs": {
+     "tlbench_triton_mha._attn_fwd_tma": {
+      "(4096, 128, False, True, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 3, maxnreg: None",
+      "(4096, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 4, maxnreg: None"
+     },
+     "tlbench_triton_mha._attn_fwd": {},
+     "triton340_tutorial06_fused_attention._attn_fwd": {
+      "(4096, 128, False, False, 'torch.float32')": "BLOCK_M: 128, BLOCK_N: 64, num_warps: 8, num_ctas: 1, num_stages: 4, maxnreg: None"
+     }
+    }
+   }
+  },
+  "per_shape": {
+   "FA0": {
+    "measured": {
+     "triton_best": 1.2695157480355332,
+     "triton_upstream_ws": 1.4528489596644325,
+     "pytorch_sdpa_flash": 1.4539784395260893,
+     "sdpa_cudnn": 1.0001918077043257,
+     "sdpa_efficient": 1.6381499331036347,
+     "sdpa_math": 10.597289322760556,
+     "torch_naive": 3.926980698729773,
+     "flashinfer": 1.1908347567652393,
+     "fa2_pip": 1.4490342352064691,
+     "tl_best_example_vs_primary": 0.9099175230137985,
+     "tl_sweep_vs_primary": 0.9989131346082687
+    },
+    "measured_upstream_timers": {
+     "triton_best": 1.4588376560021044,
+     "pytorch_sdpa_flash": 2.713642446561762
+    },
+    "claimed": {
+     "triton": 1.604,
+     "pytorch": 1.757,
+     "fa3": 2.188
+    },
+    "verdict_triton": "partly",
+    "verdict_pytorch": "partly",
+    "verdict_triton_upstream_timers": "reproduced",
+    "verdict_pytorch_upstream_timers": "reproduced",
+    "measured_vs_tl_best_variant": {
+     "triton_best": 1.3951987030985902,
+     "pytorch_sdpa_flash": 1.5979233312380559,
+     "sdpa_cudnn": 1.0992115025892937,
+     "fa2_pip": 1.5924896472012386
+    }
+   },
+   "FA1": {
+    "measured": {
+     "triton_best": 1.1118809329958157,
+     "triton_upstream_ws": null,
+     "pytorch_sdpa_flash": 1.7352276218628777,
+     "sdpa_cudnn": 0.997449695074558,
+     "sdpa_efficient": 2.0900120055924547,
+     "sdpa_math": 8.956141598895814,
+     "torch_naive": 2.5050829610442658,
+     "flashinfer": 1.221140702757039,
+     "fa2_pip": 1.7223839782998718,
+     "tl_best_example_vs_primary": 1.0,
+     "tl_sweep_vs_primary": 0.9986540084026496
+    },
+    "measured_upstream_timers": {
+     "triton_best": 1.1269889640356523,
+     "pytorch_sdpa_flash": 2.53037294834981
+    },
+    "claimed": {
+     "triton": 1.493,
+     "pytorch": 1.646,
+     "fa3": 2.0
+    },
+    "verdict_triton": "partly",
+    "verdict_pytorch": "reproduced",
+    "verdict_triton_upstream_timers": "partly",
+    "verdict_pytorch_upstream_timers": "reproduced",
+    "measured_vs_tl_best_variant": {
+     "triton_best": 1.1133795324912108,
+     "pytorch_sdpa_flash": 1.7375663715988885,
+     "sdpa_cudnn": 0.998794063491501,
+     "fa2_pip": 1.7247054172994616
+    }
+   },
+   "FA2": {
+    "measured": {
+     "triton_best": 1.2640705265449217,
+     "triton_upstream_ws": 1.4875927641571123,
+     "pytorch_sdpa_flash": 1.208597749416863,
+     "sdpa_cudnn": 1.0370539990607666,
+     "sdpa_efficient": 1.8500870871550708,
+     "sdpa_math": 24.541694980135645,
+     "torch_naive": 5.261852861843753,
+     "flashinfer": 1.3656404561785425,
+     "fa2_pip": 1.1226016086396775,
+     "tl_best_example_vs_primary": 0.9643136123138919,
+     "tl_sweep_vs_primary": 0.9639434765497988
+    },
+    "measured_upstream_timers": {
+     "triton_best": 1.4237459538410318,
+     "pytorch_sdpa_flash": 1.321171196829391
+    },
+    "claimed": {
+     "triton": 1.285,
+     "pytorch": 1.569,
+     "fa3": 1.111
+    },
+    "verdict_triton": "reproduced",
+    "verdict_pytorch": "partly",
+    "verdict_triton_upstream_timers": "reproduced",
+    "verdict_pytorch_upstream_timers": "partly",
+    "measured_vs_tl_best_variant": {
+     "triton_best": 1.3113533700848878,
+     "pytorch_sdpa_flash": 1.253805621199642,
+     "sdpa_cudnn": 1.0758452381177463,
+     "fa2_pip": 1.16459277535417
+    }
+   },
+   "FA3": {
+    "measured": {
+     "triton_best": 1.0602786758661098,
+     "triton_upstream_ws": null,
+     "pytorch_sdpa_flash": 1.0183188251160256,
+     "sdpa_cudnn": 0.8995362580600218,
+     "sdpa_efficient": 1.6743155140668953,
+     "sdpa_math": 13.477458571411763,
+     "torch_naive": 2.034281438844203,
+     "flashinfer": 0.9618056953618339,
+     "fa2_pip": 0.9559403772103201,
+     "tl_best_example_vs_primary": 0.9101826917919832,
+     "tl_sweep_vs_primary": 0.8722609272963397
+    },
+    "measured_upstream_timers": {
+     "triton_best": 1.0769771633752783,
+     "pytorch_sdpa_flash": 1.1066899536092065
+    },
+    "claimed": {
+     "triton": 1.34,
+     "pytorch": 1.451,
+     "fa3": 1.062
+    },
+    "verdict_triton": "partly",
+    "verdict_pytorch": "partly",
+    "verdict_triton_upstream_timers": "partly",
+    "verdict_pytorch_upstream_timers": "partly",
+    "measured_vs_tl_best_variant": {
+     "triton_best": 1.2155521847717632,
+     "pytorch_sdpa_flash": 1.1674474841747262,
+     "sdpa_cudnn": 1.0312696922562203,
+     "fa2_pip": 1.0959339657381573
+    }
+   },
+   "FA4": {
+    "measured": {
+     "triton_best": 1.1565374908934931,
+     "triton_upstream_ws": 1.403459068209369,
+     "pytorch_sdpa_flash": 1.0878161033783937,
+     "sdpa_cudnn": 1.0569547925736607,
+     "sdpa_efficient": 2.172684630997861,
+     "sdpa_math": 47.43274059294705,
+     "torch_naive": 18.024297291752806,
+     "flashinfer": 1.1114630436967372,
+     "fa2_pip": 1.039175107768829,
+     "tl_best_example_vs_primary": 1.0,
+     "tl_sweep_vs_primary": 1.0006493145302848
+    },
+    "measured_upstream_timers": {
+     "triton_best": 1.1389187717760585,
+     "pytorch_sdpa_flash": 1.0811253579591256
+    },
+    "claimed": {
+     "triton": 1.34,
+     "pytorch": 2.174,
+     "fa3": 0.91
+    },
+    "verdict_triton": "partly",
+    "verdict_pytorch": "partly",
+    "verdict_triton_upstream_timers": "partly",
+    "verdict_pytorch_upstream_timers": "partly",
+    "measured_vs_tl_best_variant": {
+     "triton_best": 1.1565374908934931,
+     "pytorch_sdpa_flash": 1.0878161033783937,
+     "sdpa_cudnn": 1.0569547925736607,
+     "fa2_pip": 1.039175107768829
+    }
+   }
+  },
+  "geomean": {
+   "tri": 1.1695249323139163,
+   "tri_ws": 1.4475539485461197,
+   "pt": 1.2756369521031783,
+   "cud": 0.9967130630894103,
+   "eff": 1.8728617455065808,
+   "math": 17.16252979167106,
+   "nv": 4.525408534760314,
+   "fi": 1.1624845534418704,
+   "fa2": 1.227187053414242,
+   "c_tri": 1.4075874279212706,
+   "c_pt": 1.7027476815764604,
+   "c_fa3": 1.3626723893225,
+   "u_tri": 1.2348428042186432,
+   "u_pt": 1.6110894570284169
+  },
+  "geomean_vs_tl_best_variant": {
+   "tri": 1.2342026414371006,
+   "pt": 1.3461829263319427,
+   "cud": 1.0518338354582646,
+   "fa2": 1.2950536247779036
+  }
+ },
+ "fa_graph": {
+  "rows": {
+   "FA0": {
+    "graph_flush": {
+     "tl_bhsd_h100cfg_s1": 19.7462865284511,
+     "tl_bhsd_main": 19.046857953071594,
+     "tl_bshd_main": 30.722286020006454,
+     "tl_bshd_tune": 18.770284950733185,
+     "tl_bhsd_sweep": 19.924570407186234,
+     "triton_tlbench_ws": 30.689142644405365,
+     "triton_tlbench": 26.192000934055873,
+     "triton_tut06": 26.185142142432078,
+     "sdpa_flash": 29.29485695702689,
+     "sdpa_efficient": 34.88685722861971,
+     "sdpa_cudnn": 20.033142396381923,
+     "sdpa_math": 220.43999603816442,
+     "torch_naive": 76.18514129093715,
+     "flashinfer_prefill": 23.702857749802725,
+     "fa2_pip": 28.950857264654978
+    },
+    "steady": {
+     "tl_bhsd_h100cfg_s1": 19.852868451375944,
+     "tl_bhsd_main": 19.43992378518552,
+     "tl_bshd_main": 30.685209496620974,
+     "tl_bshd_tune": 19.10466357679597,
+     "tl_bhsd_sweep": 20.0164037479984,
+     "triton_tlbench_ws": 30.782788418036535,
+     "triton_tlbench": 26.386618025155915,
+     "triton_tut06": 26.449286977851433,
+     "sdpa_flash": 30.562925717418487,
+     "sdpa_efficient": 35.15535936744572,
+     "sdpa_cudnn": 20.204952579775025,
+     "sdpa_math": 233.05679360181475,
+     "torch_naive": 79.41274123309682,
+     "flashinfer_prefill": 24.098554564220436,
+     "fa2_pip": 30.22348623425055
+    },
+    "eager_flush": {
+     "tl_bhsd_h100cfg_s1": 22.495999932289124,
+     "tl_bhsd_main": 20.51199972629547,
+     "tl_bshd_main": 32.76799991726875,
+     "tl_bshd_tune": 20.51199972629547,
+     "tl_bhsd_sweep": 22.52800017595291,
+     "triton_tlbench_ws": 32.76799991726875,
+     "triton_tlbench": 28.672000393271446,
+     "triton_tut06": 28.672000393271446,
+     "sdpa_flash": 32.76799991726875,
+     "sdpa_efficient": 36.896001547575,
+     "sdpa_cudnn": 22.52800017595291,
+     "sdpa_math": 239.50400203466415,
+     "torch_naive": 88.06400001049042,
+     "flashinfer_prefill": 26.623999699950218,
+     "fa2_pip": 32.70399942994118
+    },
+    "calls_per_rep": 14,
+    "steady_clock": {
+     "tl_bhsd_h100cfg_s1": 2774.699700357248,
+     "tl_bhsd_main": 2719.3494087180534,
+     "tl_bshd_main": 2798.1846755987367,
+     "tl_bshd_tune": 2715.1772809010004,
+     "tl_bhsd_sweep": 2767.656578733113,
+     "triton_tlbench_ws": 2798.7041220029964,
+     "triton_tlbench": 2798.145292123594,
+     "triton_tut06": 2798.5795733879404,
+     "sdpa_flash": 2611.9903849827606,
+     "sdpa_efficient": 2792.7733896808054,
+     "sdpa_cudnn": 2718.121030020624,
+     "sdpa_math": 2491.9485451964697,
+     "torch_naive": 2578.858657988458,
+     "flashinfer_prefill": 2745.3956464790813,
+     "fa2_pip": 2614.489937776035
+    },
+    "steady_power": {
+     "tl_bhsd_h100cfg_s1": 599.9813703703703,
+     "tl_bhsd_main": 600.0047592592592,
+     "tl_bshd_main": 523.430851851852,
+     "tl_bshd_tune": 600.1114444444445,
+     "tl_bhsd_sweep": 599.9973703703704,
+     "triton_tlbench_ws": 551.0502777777778,
+     "triton_tlbench": 561.6202407407407,
+     "triton_tut06": 561.6678888888889,
+     "sdpa_flash": 600.093537037037,
+     "sdpa_efficient": 593.0304074074074,
+     "sdpa_cudnn": 600.0953636363637,
+     "sdpa_math": 600.0007037037036,
+     "torch_naive": 599.9980555555557,
+     "flashinfer_prefill": 600.0002037037037,
+     "fa2_pip": 600.004425925926
+    },
+    "graph_flush_cv": {
+     "tl_bhsd_h100cfg_s1": 0.0028014313833060575,
+     "tl_bhsd_main": 0.005965078608253408,
+     "tl_bshd_main": 0.002661608057378732,
+     "tl_bshd_tune": 0.004466541066028322,
+     "tl_bhsd_sweep": 0.003455644540560451,
+     "triton_tlbench_ws": 0.002238470029992799,
+     "triton_tlbench": 0.0021862181914404834,
+     "triton_tut06": 0.0022682691024308085,
+     "sdpa_flash": 0.002461964868516576,
+     "sdpa_efficient": 0.002209444900162427,
+     "sdpa_cudnn": 0.0033969009690804812,
+     "sdpa_math": 0.000756229399847003,
+     "torch_naive": 0.0011681642886644228,
+     "flashinfer_prefill": 0.003115078261450033,
+     "fa2_pip": 0.0030357684248977254
+    },
+    "steady_cv": {
+     "tl_bhsd_h100cfg_s1": 0.0003167656756144395,
+     "tl_bhsd_main": 0.00040388935332730296,
+     "tl_bshd_main": 0.0001591020722571774,
+     "tl_bshd_tune": 0.00039807437347744986,
+     "tl_bhsd_sweep": 0.00028398615951148634,
+     "triton_tlbench_ws": 0.00017905370390582998,
+     "triton_tlbench": 0.00021855752350596433,
+     "triton_tut06": 0.0002195511972819664,
+     "sdpa_flash": 0.0008597420553183567,
+     "sdpa_efficient": 0.00013931799043537818,
+     "sdpa_cudnn": 0.0003379747233927115,
+     "sdpa_math": 0.0015383159718903375,
+     "torch_naive": 0.0005568878100655945,
+     "flashinfer_prefill": 0.00030773216663507706,
+     "fa2_pip": 0.0006928819878933462
+    },
+    "excluded": {},
+    "guard": [
+     {
+      "clean": true,
+      "complete": true,
+      "attempts": [
+       {
+        "waited_s": 0.0,
+        "clean": true,
+        "complete": true,
+        "active": []
+       }
+      ]
+     },
+     {
+      "attempts": [
+       {
+        "waited_s": 9.5367431640625e-06,
+        "clean": true,
+        "complete": true,
+        "active": [],
+        "contaminated_slices": []
+       }
+      ],
+      "clean": true,
+      "complete": true,
+      "summary": {
+       "n_active_samples": 0,
+       "active": [],
+       "present": {
+        "73312": [
+         1790271177.2,
+         1790271388.5,
+         "/home/qzr/gigpo_search_reproduction_20260922/runtime/bin/python /home/qzr/gigpo_search_reproduction_20260922/run/local_r"
+        ],
+        "414061": [
+         1790271177.2,
+         1790271388.5,
+         "ray::WorkerDict"
+        ]
+       },
+       "n_lines": 584
+      }
+     }
+    ]
+   },
+   "FA1": {
+    "graph_flush": {
+     "tl_bhsd_h100cfg_s1": 20.802284990038192,
+     "tl_bhsd_main": 24.772571665900095,
+     "tl_bshd_main": 30.86628658430917,
+     "tl_bshd_tune": 24.699428251811437,
+     "tl_bhsd_sweep": 20.89600052152361,
+     "triton_tlbench": 23.593143693038396,
+     "triton_tut06": 23.67542896951948,
+     "sdpa_flash": 37.1337149824415,
+     "sdpa_efficient": 45.27542846543448,
+     "sdpa_cudnn": 20.918856774057662,
+     "sdpa_math": 193.3131388255528,
+     "torch_naive": 51.32342662130083,
+     "flashinfer_prefill": 24.42971510546548,
+     "fa2_pip": 36.54742879526956
+    },
+    "steady": {
+     "tl_bhsd_h100cfg_s1": 21.642441882809425,
+     "tl_bhsd_main": 25.794505379953275,
+     "tl_bshd_main": 31.575275180820814,
+     "tl_bshd_tune": 25.782241034753543,
+     "tl_bhsd_sweep": 21.89078026508417,
+     "triton_tlbench": 24.452448580153227,
+     "triton_tut06": 24.581252748422493,
+     "sdpa_flash": 39.59969467121317,
+     "sdpa_efficient": 46.33070386262598,
+     "sdpa_cudnn": 23.2903237881313,
+     "sdpa_math": 213.69535124570527,
+     "torch_naive": 56.746964699409595,
+     "flashinfer_prefill": 25.839847426124603,
+     "fa2_pip": 38.94320077174988
+    },
+    "eager_flush": {
+     "tl_bhsd_h100cfg_s1": 22.495999932289124,
+     "tl_bhsd_main": 26.688000187277794,
+     "tl_bshd_main": 32.76799991726875,
+     "tl_bshd_tune": 26.623999699950218,
+     "tl_bhsd_sweep": 22.52800017595291,
+     "triton_tlbench": 24.70399998128414,
+     "triton_tut06": 24.607999250292778,
+     "sdpa_flash": 39.0079990029335,
+     "sdpa_efficient": 47.10400104522705,
+     "sdpa_cudnn": 22.52800017595291,
+     "sdpa_math": 202.70399749279022,
+     "torch_naive": 57.312000542879105,
+     "flashinfer_prefill": 27.03999914228916,
+     "fa2_pip": 38.88000175356865
+    },
+    "calls_per_rep": 14,
+    "steady_clock": {
+     "tl_bhsd_h100cfg_s1": 2640.6440092185285,
+     "tl_bhsd_main": 2644.4717645582464,
+     "tl_bshd_main": 2751.016843886338,
+     "tl_bshd_tune": 2654.8962299990894,
+     "tl_bhsd_sweep": 2615.556204162745,
+     "triton_tlbench": 2701.725215239338,
+     "triton_tut06": 2704.108008317584,
+     "sdpa_flash": 2598.4122885951583,
+     "sdpa_efficient": 2776.2660279926686,
+     "sdpa_cudnn": 2391.892977976055,
+     "sdpa_math": 2392.2041301818736,
+     "torch_naive": 2316.0120643238074,
+     "flashinfer_prefill": 2608.486572727021,
+     "fa2_pip": 2595.258928120811
+    },
+    "steady_power": {
+     "tl_bhsd_h100cfg_s1": 600.0005925925926,
+     "tl_bhsd_main": 599.9999444444444,
+     "tl_bshd_main": 599.9973333333334,
+     "tl_bshd_tune": 600.0002962962961,
+     "tl_bhsd_sweep": 600.0029259259259,
+     "triton_tlbench": 599.998851851852,
+     "triton_tut06": 599.9996481481481,
+     "sdpa_flash": 600.0019629629629,
+     "sdpa_efficient": 599.9758888888889,
+     "sdpa_cudnn": 600.0192962962963,
+     "sdpa_math": 600.0037037037038,
+     "torch_naive": 599.9997222222222,
+     "flashinfer_prefill": 600.0003148148148,
+     "fa2_pip": 599.9957592592592
+    },
+    "graph_flush_cv": {
+     "tl_bhsd_h100cfg_s1": 0.003327767111152778,
+     "tl_bhsd_main": 0.002844768916286116,
+     "tl_bshd_main": 0.0029962645444565963,
+     "tl_bshd_tune": 0.0025811052459445956,
+     "tl_bhsd_sweep": 0.002497633273890269,
+     "triton_tlbench": 0.003429862198761245,
+     "triton_tut06": 0.0031801476944206225,
+     "sdpa_flash": 0.0021671346938079753,
+     "sdpa_efficient": 0.0020740343198685845,
+     "sdpa_cudnn": 0.003030025028210836,
+     "sdpa_math": 0.001003468706054983,
+     "torch_naive": 0.001645601048749765,
+     "flashinfer_prefill": 0.0027725731782071335,
+     "fa2_pip": 0.002620293386864846
+    },
+    "steady_cv": {
+     "tl_bhsd_h100cfg_s1": 0.0012713023679117243,
+     "tl_bhsd_main": 0.001271771368201287,
+     "tl_bshd_main": 0.0007055811458055571,
+     "tl_bshd_tune": 0.000918965036955635,
+     "tl_bhsd_sweep": 0.0009786174213727932,
+     "triton_tlbench": 0.0007436529416992725,
+     "triton_tut06": 0.0007730880044724476,
+     "sdpa_flash": 0.0010837588159975555,
+     "sdpa_efficient": 0.0002999723604394738,
+     "sdpa_cudnn": 0.002218951267627142,
+     "sdpa_math": 0.0017691063523837885,
+     "torch_naive": 0.0019256467394179312,
+     "flashinfer_prefill": 0.0014558296468905893,
+     "fa2_pip": 0.0009700682200188508
+    },
+    "excluded": {
+     "triton_tlbench_ws": "OutOfResources: out of resource: shared memory, Required: 123004, Hardware limit: 101376. Reducing block sizes or `num_stages` may help."
+    },
+    "guard": [
+     {
+      "clean": true,
+      "complete": true,
+      "attempts": [
+       {
+        "waited_s": 0.0,
+        "clean": true,
+        "complete": true,
+        "active": []
+       }
+      ]
+     },
+     {
+      "attempts": [
+       {
+        "waited_s": 8.821487426757812e-06,
+        "clean": true,
+        "complete": true,
+        "active": [],
+        "contaminated_slices": []
+       }
+      ],
+      "clean": true,
+      "complete": true,
+      "summary": {
+       "n_active_samples": 0,
+       "active": [],
+       "present": {
+        "73312": [
+         1790317718.6,
+         1790318053.0,
+         "/home/qzr/gigpo_search_reproduction_20260922/runtime/bin/python /home/qzr/gigpo_search_reproduction_20260922/run/local_r"
+        ],
+        "1018428": [
+         1790317718.6,
+         1790318053.0,
+         "ray::WorkerDict"
+        ]
+       },
+       "n_lines": 914
+      }
+     }
+    ]
+   },
+   "FA2": {
+    "graph_flush": {
+     "tl_bhsd_h100cfg_s1": 49.15200173854828,
+     "tl_bhsd_main": 48.469334840774536,
+     "tl_bshd_main": 78.50133379300435,
+     "tl_bshd_tune": 48.1279989083608,
+     "tl_bhsd_sweep": 49.15200173854828,
+     "triton_tlbench_ws": 73.90666504700978,
+     "triton_tlbench": 62.43733565012614,
+     "triton_tut06": 62.8053347269694,
+     "sdpa_flash": 56.847999493281044,
+     "sdpa_efficient": 93.52266291777293,
+     "sdpa_cudnn": 47.11733510096868,
+     "sdpa_math": 1256.0319900512695,
+     "torch_naive": 260.67999998728436,
+     "flashinfer_prefill": 67.24266707897186,
+     "fa2_pip": 54.60800230503082
+    },
+    "steady": {
+     "tl_bhsd_h100cfg_s1": 50.94656049694563,
+     "tl_bhsd_main": 51.839323039331134,
+     "tl_bshd_main": 79.07496754609184,
+     "tl_bshd_tune": 51.702915269611076,
+     "tl_bhsd_sweep": 52.36603354344998,
+     "triton_tlbench_ws": 74.32708276127914,
+     "triton_tlbench": 62.952873247003545,
+     "triton_tut06": 63.38155680310411,
+     "sdpa_flash": 57.084751540110204,
+     "sdpa_efficient": 94.82422663907664,
+     "sdpa_cudnn": 51.177887693723115,
+     "sdpa_math": 1253.865525644904,
+     "torch_naive": 283.8907978876367,
+     "flashinfer_prefill": 67.67366554502725,
+     "fa2_pip": 55.50623695420492
+    },
+    "eager_flush": {
+     "tl_bhsd_h100cfg_s1": 51.16799846291542,
+     "tl_bhsd_main": 49.247998744249344,
+     "tl_bshd_main": 79.8719972372055,
+     "tl_bshd_tune": 49.18399825692177,
+     "tl_bhsd_sweep": 49.18399825692177,
+     "triton_tlbench_ws": 75.77600330114365,
+     "triton_tlbench": 64.52799960970879,
+     "triton_tut06": 65.5359998345375,
+     "sdpa_flash": 61.344001442193985,
+     "sdpa_efficient": 94.30400282144547,
+     "sdpa_cudnn": 53.247999399900436,
+     "sdpa_math": 1251.3279914855957,
+     "torch_naive": 267.16798543930054,
+     "flashinfer_prefill": 69.66400146484375,
+     "fa2_pip": 57.312000542879105
+    },
+    "calls_per_rep": 6,
+    "steady_clock": {
+     "tl_bhsd_h100cfg_s1": 2593.783881275986,
+     "tl_bhsd_main": 2481.3449092140877,
+     "tl_bshd_main": 2709.173373227589,
+     "tl_bshd_tune": 2443.007286492225,
+     "tl_bhsd_sweep": 2490.4919848360014,
+     "triton_tlbench_ws": 2702.2443360097404,
+     "triton_tlbench": 2723.92613361752,
+     "triton_tut06": 2723.7073595133047,
+     "sdpa_flash": 2714.2308245484833,
+     "sdpa_efficient": 2710.2362998974772,
+     "sdpa_cudnn": 2302.7292020365644,
+     "sdpa_math": 2668.7363829213036,
+     "torch_naive": 2299.1848064135,
+     "flashinfer_prefill": 2734.909071546765,
+     "fa2_pip": 2711.871651887412
+    },
+    "steady_power": {
+     "tl_bhsd_h100cfg_s1": 600.0113148148148,
+     "tl_bhsd_main": 600.0008518518518,
+     "tl_bshd_main": 561.5283888888889,
+     "tl_bshd_tune": 600.1008333333333,
+     "tl_bhsd_sweep": 600.0004074074076,
+     "triton_tlbench_ws": 573.5393888888889,
+     "triton_tlbench": 595.415537037037,
+     "triton_tut06": 592.6964444444444,
+     "sdpa_flash": 601.3741111111111,
+     "sdpa_efficient": 562.2448148148147,
+     "sdpa_cudnn": 600.1025925925926,
+     "sdpa_math": 591.1110545454545,
+     "torch_naive": 600.100075471698,
+     "flashinfer_prefill": 548.0542777777778,
+     "fa2_pip": 601.0494814814815
+    },
+    "graph_flush_cv": {
+     "tl_bhsd_h100cfg_s1": 0.003309763691077748,
+     "tl_bhsd_main": 0.003534929564555348,
+     "tl_bshd_main": 0.004140963117558705,
+     "tl_bshd_tune": 0.003043826377598193,
+     "tl_bhsd_sweep": 0.0023069265047980917,
+     "triton_tlbench_ws": 0.0040208638190397635,
+     "triton_tlbench": 0.002405417213690186,
+     "triton_tut06": 0.002053005237418586,
+     "sdpa_flash": 0.002799487034037285,
+     "sdpa_efficient": 0.0016562476241052723,
+     "sdpa_cudnn": 0.014318870089410211,
+     "sdpa_math": 0.0008761464351340918,
+     "torch_naive": 0.0022096352389007496,
+     "flashinfer_prefill": 0.002985787937312561,
+     "fa2_pip": 0.00287591820701791
+    },
+    "steady_cv": {
+     "tl_bhsd_h100cfg_s1": 0.001795088009318299,
+     "tl_bhsd_main": 0.002771191863969047,
+     "tl_bshd_main": 0.0004158380217675576,
+     "tl_bshd_tune": 0.003118167979051839,
+     "tl_bhsd_sweep": 0.0021099419352671595,
+     "triton_tlbench_ws": 0.00016764589793201296,
+     "triton_tlbench": 0.00016627082454198763,
+     "triton_tut06": 0.00020935104963450108,
+     "sdpa_flash": 0.0010779323722768205,
+     "sdpa_efficient": 0.00012511172860877294,
+     "sdpa_cudnn": 0.002125639864984671,
+     "sdpa_math": 0.00047684752546756337,
+     "torch_naive": 0.0017614643245416322,
+     "flashinfer_prefill": 0.00031734078618405047,
+     "fa2_pip": 0.0007726766451847904
+    },
+    "excluded": {},
+    "guard": [
+     {
+      "clean": true,
+      "complete": true,
+      "attempts": [
+       {
+        "waited_s": 0.0,
+        "clean": true,
+        "complete": true,
+        "active": []
+       }
+      ]
+     },
+     {
+      "attempts": [
+       {
+        "waited_s": 1.0013580322265625e-05,
+        "clean": true,
+        "complete": true,
+        "active": [],
+        "contaminated_slices": []
+       }
+      ],
+      "clean": true,
+      "complete": true,
+      "summary": {
+       "n_active_samples": 0,
+       "active": [],
+       "present": {
+        "73312": [
+         1790318205.7,
+         1790318431.9,
+         "/home/qzr/gigpo_search_reproduction_20260922/runtime/bin/python /home/qzr/gigpo_search_reproduction_20260922/run/local_r"
+        ],
+        "1018428": [
+         1790318205.7,
+         1790318431.9,
+         "ray::WorkerDict"
+        ]
+       },
+       "n_lines": 625
+      }
+     }
+    ]
+   },
+   "FA3": {
+    "graph_flush": {
+     "tl_bhsd_h100cfg_s1": 76.65199786424637,
+     "tl_bhsd_main": 69.38000023365021,
+     "tl_bshd_main": 114.17599767446518,
+     "tl_bshd_tune": 69.11999732255936,
+     "tl_bhsd_sweep": 67.07199662923813,
+     "triton_tlbench": 80.89599758386612,
+     "triton_tut06": 80.38400113582611,
+     "sdpa_flash": 76.80000364780426,
+     "sdpa_efficient": 130.50000369548798,
+     "sdpa_cudnn": 64.43200260400772,
+     "sdpa_math": 1073.6479759216309,
+     "torch_naive": 165.38399457931519,
+     "flashinfer_prefill": 73.22400063276291,
+     "fa2_pip": 73.21599870920181
+    },
+    "steady": {
+     "tl_bhsd_h100cfg_s1": 78.44385374888591,
+     "tl_bhsd_main": 78.95493240728398,
+     "tl_bshd_main": 115.00151684399192,
+     "tl_bshd_tune": 79.4617554213357,
+     "tl_bhsd_sweep": 76.4177217608699,
+     "triton_tlbench": 84.92054021511204,
+     "triton_tut06": 84.54345083478744,
+     "sdpa_flash": 81.79961654193131,
+     "sdpa_efficient": 135.4220047993271,
+     "sdpa_cudnn": 75.99639681763134,
+     "sdpa_math": 1089.6290828522115,
+     "torch_naive": 184.75057622995433,
+     "flashinfer_prefill": 79.88141824643071,
+     "fa2_pip": 77.3423028809866
+    },
+    "eager_flush": {
+     "tl_bhsd_h100cfg_s1": 79.80799674987793,
+     "tl_bhsd_main": 71.77600264549255,
+     "tl_bshd_main": 114.68800157308578,
+     "tl_bshd_tune": 71.71200215816498,
+     "tl_bhsd_sweep": 69.56800073385239,
+     "triton_tlbench": 83.99999886751175,
+     "triton_tut06": 83.96799862384796,
+     "sdpa_flash": 80.09599894285202,
+     "sdpa_efficient": 133.05599987506866,
+     "sdpa_cudnn": 69.66400146484375,
+     "sdpa_math": 1066.9280290603638,
+     "torch_naive": 161.6479977965355,
+     "flashinfer_prefill": 75.87199658155441,
+     "fa2_pip": 75.74400305747986
+    },
+    "calls_per_rep": 4,
+    "steady_clock": {
+     "tl_bhsd_h100cfg_s1": 2333.9740414006264,
+     "tl_bhsd_main": 2193.858434731633,
+     "tl_bshd_main": 2595.366163471928,
+     "tl_bshd_tune": 2144.368620441216,
+     "tl_bhsd_sweep": 2123.9212134856216,
+     "triton_tlbench": 2531.4229491891924,
+     "triton_tut06": 2530.5208153073386,
+     "sdpa_flash": 2498.7553574223048,
+     "sdpa_efficient": 2666.565628231587,
+     "sdpa_cudnn": 1823.7143041937777,
+     "sdpa_math": 2616.0484209437227,
+     "torch_naive": 1950.9701126878688,
+     "flashinfer_prefill": 2400.833122983738,
+     "fa2_pip": 2504.892960609365
+    },
+    "steady_power": {
+     "tl_bhsd_h100cfg_s1": 599.9985555555556,
+     "tl_bhsd_main": 599.9993148148149,
+     "tl_bshd_main": 585.0226851851852,
+     "tl_bshd_tune": 600.0902777777778,
+     "tl_bhsd_sweep": 600.0005555555555,
+     "triton_tlbench": 599.9979814814815,
+     "triton_tut06": 600.0041111111111,
+     "sdpa_flash": 599.9981296296296,
+     "sdpa_efficient": 600.0012777777779,
+     "sdpa_cudnn": 600.0024814814816,
+     "sdpa_math": 599.4936666666666,
+     "torch_naive": 600.0584528301887,
+     "flashinfer_prefill": 600.0021296296296,
+     "fa2_pip": 599.9992962962963
+    },
+    "graph_flush_cv": {
+     "tl_bhsd_h100cfg_s1": 0.003880156775670783,
+     "tl_bhsd_main": 0.003784665670042057,
+     "tl_bshd_main": 0.0036633170445422034,
+     "tl_bshd_tune": 0.003148867970727581,
+     "tl_bhsd_sweep": 0.003723176201885299,
+     "triton_tlbench": 0.002548153389334403,
+     "triton_tut06": 0.002633259377245417,
+     "sdpa_flash": 0.0027894092425162957,
+     "sdpa_efficient": 0.0016539268951724188,
+     "sdpa_cudnn": 0.004308473271090678,
+     "sdpa_math": 0.0011755300416158422,
+     "torch_naive": 0.004998936103350224,
+     "flashinfer_prefill": 0.0031722612001676012,
+     "fa2_pip": 0.0021919896976867934
+    },
+    "steady_cv": {
+     "tl_bhsd_h100cfg_s1": 0.0010384709031930862,
+     "tl_bhsd_main": 0.0010432617162316608,
+     "tl_bshd_main": 0.0005735952920001296,
+     "tl_bshd_tune": 0.0005830667294363869,
+     "tl_bhsd_sweep": 0.0006288320999499042,
+     "triton_tlbench": 0.001370418016327523,
+     "triton_tut06": 0.0014389929186641194,
+     "sdpa_flash": 0.0003806532265937945,
+     "sdpa_efficient": 0.0004470063174771277,
+     "sdpa_cudnn": 0.0012625414037688804,
+     "sdpa_math": 0.0007929018559044331,
+     "torch_naive": 0.0010595666624509574,
+     "flashinfer_prefill": 0.0015624278509682485,
+     "fa2_pip": 0.001473289945815523
+    },
+    "excluded": {
+     "triton_tlbench_ws": "OutOfResources: out of resource: shared memory, Required: 123004, Hardware limit: 101376. Reducing block sizes or `num_stages` may help."
+    },
+    "guard": [
+     {
+      "clean": true,
+      "complete": true,
+      "attempts": [
+       {
+        "waited_s": 0.0,
+        "clean": true,
+        "complete": true,
+        "active": []
+       }
+      ]
+     },
+     {
+      "attempts": [
+       {
+        "waited_s": 9.5367431640625e-06,
+        "clean": true,
+        "complete": true,
+        "active": [],
+        "contaminated_slices": []
+       }
+      ],
+      "clean": true,
+      "complete": true,
+      "summary": {
+       "n_active_samples": 0,
+       "active": [],
+       "present": {
+        "73312": [
+         1790318435.7,
+         1790318615.5,
+         "/home/qzr/gigpo_search_reproduction_20260922/runtime/bin/python /home/qzr/gigpo_search_reproduction_20260922/run/local_r"
+        ],
+        "1018428": [
+         1790318435.7,
+         1790318615.5,
+         "ray::WorkerDict"
+        ]
+       },
+       "n_lines": 496
+      }
+     }
+    ]
+   },
+   "FA4": {
+    "graph_flush": {
+     "tl_bhsd_h100cfg_s1": 471.0400104522705,
+     "tl_bhsd_main": 532.480001449585,
+     "tl_bshd_main": 741.3599789142609,
+     "tl_bshd_tune": 538.0640029907227,
+     "tl_bhsd_sweep": 471.0400104522705,
+     "triton_tlbench_ws": 653.3120274543762,
+     "triton_tlbench": 540.0639772415161,
+     "triton_tut06": 541.263997554779,
+     "sdpa_flash": 509.92000102996826,
+     "sdpa_efficient": 1008.6400508880615,
+     "sdpa_cudnn": 497.24799394607544,
+     "sdpa_math": 21994.447708129883,
+     "torch_naive": 8291.104316711426,
+     "flashinfer_prefill": 520.8960175514221,
+     "fa2_pip": 487.42398619651794
+    },
+    "steady": {
+     "tl_bhsd_h100cfg_s1": 519.9386127733452,
+     "tl_bhsd_main": 602.8488728038052,
+     "tl_bshd_main": 775.370021871146,
+     "tl_bshd_tune": 614.613646438573,
+     "tl_bhsd_sweep": 520.2853155474291,
+     "triton_tlbench_ws": 703.2918997170905,
+     "triton_tlbench": 581.7520706741898,
+     "triton_tut06": 582.7638497729117,
+     "sdpa_flash": 549.6941907201223,
+     "sdpa_efficient": 1050.471498039413,
+     "sdpa_cudnn": 564.6455422425881,
+     "sdpa_math": 22205.90798896656,
+     "torch_naive": 8329.915364583334,
+     "flashinfer_prefill": 558.6658107580515,
+     "fa2_pip": 530.3908772551255
+    },
+    "eager_flush": {
+     "tl_bhsd_h100cfg_s1": 458.71999859809875,
+     "tl_bhsd_main": 518.2559788227081,
+     "tl_bshd_main": 729.1360199451447,
+     "tl_bshd_tune": 523.3280062675476,
+     "tl_bhsd_sweep": 458.75200629234314,
+     "triton_tlbench_ws": 641.0560011863708,
+     "triton_tlbench": 530.4319858551025,
+     "triton_tut06": 532.4479937553406,
+     "sdpa_flash": 498.6880123615265,
+     "sdpa_efficient": 993.3440089225769,
+     "sdpa_cudnn": 483.3599925041199,
+     "sdpa_math": 21730.671882629395,
+     "torch_naive": 8249.312400817871,
+     "flashinfer_prefill": 508.92800092697144,
+     "fa2_pip": 477.08800435066223
+    },
+    "calls_per_rep": 1,
+    "steady_clock": {
+     "tl_bhsd_h100cfg_s1": 2055.9167907444294,
+     "tl_bhsd_main": 2100.446413937371,
+     "tl_bshd_main": 2524.577533863135,
+     "tl_bshd_tune": 2067.3034245271824,
+     "tl_bhsd_sweep": 2054.9568860426966,
+     "triton_tlbench_ws": 2379.6241980707855,
+     "triton_tlbench": 2393.055487758184,
+     "triton_tut06": 2395.623977471049,
+     "sdpa_flash": 2305.463933411325,
+     "sdpa_efficient": 2636.23435023853,
+     "sdpa_cudnn": 1851.5024634801566,
+     "sdpa_math": 2647.418614979273,
+     "torch_naive": 2618.8829351828426,
+     "flashinfer_prefill": 2212.9747572028223,
+     "fa2_pip": 2275.6925388112677
+    },
+    "steady_power": {
+     "tl_bhsd_h100cfg_s1": 599.8948518518519,
+     "tl_bhsd_main": 600.146537037037,
+     "tl_bshd_main": 599.8124259259259,
+     "tl_bshd_tune": 599.9825555555555,
+     "tl_bhsd_sweep": 599.6612962962963,
+     "triton_tlbench_ws": 600.0510740740742,
+     "triton_tlbench": 599.9976296296296,
+     "triton_tut06": 600.0380925925926,
+     "sdpa_flash": 600.0216296296296,
+     "sdpa_efficient": 600.0723518518519,
+     "sdpa_cudnn": 598.564,
+     "sdpa_math": 554.0832698412698,
+     "torch_naive": 595.4772040816326,
+     "flashinfer_prefill": 600.1890000000001,
+     "fa2_pip": 600.0614999999999
+    },
+    "graph_flush_cv": {
+     "tl_bhsd_h100cfg_s1": 0.002864289360979467,
+     "tl_bhsd_main": 0.003362431937062617,
+     "tl_bshd_main": 0.004102087044818015,
+     "tl_bshd_tune": 0.0038779024795905447,
+     "tl_bhsd_sweep": 0.003121134996092433,
+     "triton_tlbench_ws": 0.0035828023469667123,
+     "triton_tlbench": 0.0027128230984146203,
+     "triton_tut06": 0.002672100376700485,
+     "sdpa_flash": 0.002848572246867869,
+     "sdpa_efficient": 0.0015131181521321414,
+     "sdpa_cudnn": 0.009382742578146272,
+     "sdpa_math": 0.0014494659578272828,
+     "torch_naive": 0.0008050060462053344,
+     "flashinfer_prefill": 0.021247870883204813,
+     "fa2_pip": 0.003068165062105626
+    },
+    "steady_cv": {
+     "tl_bhsd_h100cfg_s1": 0.002051432317645097,
+     "tl_bhsd_main": 0.001806835579599504,
+     "tl_bshd_main": 0.0015015391211657216,
+     "tl_bshd_tune": 0.0018302707936575248,
+     "tl_bhsd_sweep": 0.001681246586583667,
+     "triton_tlbench_ws": 0.001777195876259359,
+     "triton_tlbench": 0.001525059886870359,
+     "triton_tut06": 0.0014509417961746378,
+     "sdpa_flash": 0.0013304457044704572,
+     "sdpa_efficient": 0.0005027107011610192,
+     "sdpa_cudnn": 0.0009141656119572909,
+     "sdpa_math": 0.0004975866470996625,
+     "torch_naive": 0.00036888952743965327,
+     "flashinfer_prefill": 0.0012504906578008745,
+     "fa2_pip": 0.0011534444660328644
+    },
+    "excluded": {},
+    "guard": [
+     {
+      "clean": true,
+      "complete": true,
+      "attempts": [
+       {
+        "waited_s": 0.0,
+        "clean": true,
+        "complete": true,
+        "active": []
+       }
+      ]
+     },
+     {
+      "attempts": [
+       {
+        "waited_s": 1.2159347534179688e-05,
+        "clean": true,
+        "complete": true,
+        "active": [],
+        "contaminated_slices": []
+       }
+      ],
+      "clean": true,
+      "complete": true,
+      "summary": {
+       "n_active_samples": 0,
+       "active": [],
+       "present": {
+        "73312": [
+         1790318618.5,
+         1790318817.6,
+         "/home/qzr/gigpo_search_reproduction_20260922/runtime/bin/python /home/qzr/gigpo_search_reproduction_20260922/run/local_r"
+        ],
+        "1018428": [
+         1790318618.5,
+         1790318817.6,
+         "ray::WorkerDict"
+        ]
+       },
+       "n_lines": 551
+      }
+     }
+    ]
+   }
+  },
+  "per_shape": {
+   "FA0": {
+    "claimed": {
+     "triton": 1.604,
+     "pytorch": 1.757,
+     "fa3": 2.188
+    },
+    "graph_flush": {
+     "triton_best": 1.3260793164681197,
+     "triton_upstream_ws": 1.5541728618283461,
+     "pytorch_sdpa_flash": 1.4835628417939695,
+     "sdpa_cudnn": 1.0145270791810659,
+     "sdpa_efficient": 1.7667553430035352,
+     "torch_naive": 3.8582009422970285,
+     "flashinfer": 1.2003703944866224,
+     "fa2_pip": 1.4661418602906235,
+     "triton_best_vs_tl_best": 1.3950316796554152,
+     "sdpa_flash_vs_tl_best": 1.5607039016145894,
+     "verdict_triton": "partly",
+     "verdict_pytorch": "partly"
+    },
+    "steady": {
+     "triton_best": 1.3291085915258325,
+     "triton_upstream_ws": 1.5505461335942652,
+     "pytorch_sdpa_flash": 1.5394715273651178,
+     "sdpa_cudnn": 1.0177346729144663,
+     "sdpa_efficient": 1.7707949586000105,
+     "torch_naive": 4.0000638410311415,
+     "flashinfer": 1.2138575653811998,
+     "fa2_pip": 1.5223737722472972,
+     "triton_best_vs_tl_best": 1.3811610928969416,
+     "sdpa_flash_vs_tl_best": 1.5997625707756207,
+     "verdict_triton": "partly",
+     "verdict_pytorch": "partly"
+    }
+   },
+   "FA1": {
+    "claimed": {
+     "triton": 1.493,
+     "pytorch": 1.646,
+     "fa3": 2.0
+    },
+    "graph_flush": {
+     "triton_best": 1.1341611608694282,
+     "triton_upstream_ws": null,
+     "pytorch_sdpa_flash": 1.7850786584369989,
+     "sdpa_cudnn": 1.005603797086488,
+     "sdpa_efficient": 2.1764641955014077,
+     "torch_naive": 2.4672013985905212,
+     "flashinfer": 1.1743765224428178,
+     "fa2_pip": 1.7568949186481875,
+     "triton_best_vs_tl_best": 1.1341611608694282,
+     "sdpa_flash_vs_tl_best": 1.7850786584369989,
+     "verdict_triton": "partly",
+     "verdict_pytorch": "reproduced"
+    },
+    "steady": {
+     "triton_best": 1.1298377841354301,
+     "triton_upstream_ws": null,
+     "pytorch_sdpa_flash": 1.8297239694873422,
+     "sdpa_cudnn": 1.076141218918129,
+     "sdpa_efficient": 2.1407336618252133,
+     "torch_naive": 2.6220222748747988,
+     "flashinfer": 1.1939432512303139,
+     "fa2_pip": 1.7993903360176022,
+     "triton_best_vs_tl_best": 1.1298377841354301,
+     "sdpa_flash_vs_tl_best": 1.8297239694873422,
+     "verdict_triton": "partly",
+     "verdict_pytorch": "reproduced"
+    }
+   },
+   "FA2": {
+    "claimed": {
+     "triton": 1.285,
+     "pytorch": 1.569,
+     "fa3": 1.111
+    },
+    "graph_flush": {
+     "triton_best": 1.2702908008151093,
+     "triton_upstream_ws": 1.503634896502033,
+     "pytorch_sdpa_flash": 1.1565754696150463,
+     "sdpa_cudnn": 0.958604602750413,
+     "sdpa_efficient": 1.902723380733164,
+     "torch_naive": 5.303547989233604,
+     "flashinfer": 1.3680555155546326,
+     "fa2_pip": 1.1110026117655263,
+     "triton_best_vs_tl_best": 1.297318339975268,
+     "sdpa_flash_vs_tl_best": 1.1811835269013315,
+     "verdict_triton": "reproduced",
+     "verdict_pytorch": "partly"
+    },
+    "steady": {
+     "triton_best": 1.2356648345432018,
+     "triton_upstream_ws": 1.458922487333276,
+     "pytorch_sdpa_flash": 1.1204829331615542,
+     "sdpa_cudnn": 1.004540585164554,
+     "sdpa_efficient": 1.8612488402384217,
+     "torch_naive": 5.572325101410068,
+     "flashinfer": 1.3283264833763302,
+     "fa2_pip": 1.0894992009820301,
+     "triton_best_vs_tl_best": 1.2356648345432018,
+     "sdpa_flash_vs_tl_best": 1.1204829331615542,
+     "verdict_triton": "reproduced",
+     "verdict_pytorch": "partly"
+    }
+   },
+   "FA3": {
+    "claimed": {
+     "triton": 1.34,
+     "pytorch": 1.451,
+     "fa3": 1.062
+    },
+    "graph_flush": {
+     "triton_best": 1.0486876190518772,
+     "triton_upstream_ws": null,
+     "pytorch_sdpa_flash": 1.0019308796597841,
+     "sdpa_cudnn": 0.840578254961068,
+     "sdpa_efficient": 1.7024997042687458,
+     "torch_naive": 2.1575953554689677,
+     "flashinfer": 0.9552784359573435,
+     "fa2_pip": 0.9551740430676074,
+     "triton_best_vs_tl_best": 1.1984733596075026,
+     "sdpa_flash_vs_tl_best": 1.1450382798702237,
+     "verdict_triton": "partly",
+     "verdict_pytorch": "partly"
+    },
+    "steady": {
+     "triton_best": 1.0777574888840562,
+     "triton_upstream_ws": null,
+     "pytorch_sdpa_flash": 1.0427791679356786,
+     "sdpa_cudnn": 0.9687998891654487,
+     "sdpa_efficient": 1.7263558370403294,
+     "torch_naive": 2.355195052264732,
+     "flashinfer": 1.0183260310252824,
+     "fa2_pip": 0.9859574610979007,
+     "triton_best_vs_tl_best": 1.106333045354911,
+     "sdpa_flash_vs_tl_best": 1.0704273126317834,
+     "verdict_triton": "partly",
+     "verdict_pytorch": "partly"
+    }
+   },
+   "FA4": {
+    "claimed": {
+     "triton": 1.34,
+     "pytorch": 2.174,
+     "fa3": 0.91
+    },
+    "graph_flush": {
+     "triton_best": 1.1465352523302044,
+     "triton_upstream_ws": 1.3869565492474762,
+     "pytorch_sdpa_flash": 1.0825407390348158,
+     "sdpa_cudnn": 1.0556385506798909,
+     "sdpa_efficient": 2.1413044083444475,
+     "torch_naive": 17.601698651353836,
+     "flashinfer": 1.1058424040269577,
+     "fa2_pip": 1.0347825564297952,
+     "triton_best_vs_tl_best": 1.1465352523302044,
+     "sdpa_flash_vs_tl_best": 1.0825407390348158,
+     "verdict_triton": "partly",
+     "verdict_pytorch": "partly"
+    },
+    "steady": {
+     "triton_best": 1.1188860692056173,
+     "triton_upstream_ws": 1.352644105360326,
+     "pytorch_sdpa_flash": 1.057229021303229,
+     "sdpa_cudnn": 1.0859850150977954,
+     "sdpa_efficient": 2.020376006383163,
+     "torch_naive": 16.020959320854598,
+     "flashinfer": 1.0744841737722381,
+     "fa2_pip": 1.0201028818114277,
+     "triton_best_vs_tl_best": 1.1188860692056173,
+     "sdpa_flash_vs_tl_best": 1.057229021303229,
+     "verdict_triton": "partly",
+     "verdict_pytorch": "partly"
+    }
+   }
+  },
+  "geomean": {
+   "tri": 1.1809627401112857,
+   "tri_s": 1.1747807799128993,
+   "pt": 1.2714048346686349,
+   "pt_s": 1.283230818974019,
+   "cud": 0.9720412385763741,
+   "cud_s": 1.0296884648315523,
+   "eff": 1.9284740989912517,
+   "nv": 4.5345699495804395,
+   "fi": 1.1529485147157945,
+   "fa2": 1.2311577244700227,
+   "ws": 1.479908476619019,
+   "c_tri": 1.4075874279212706,
+   "c_pt": 1.7027476815764604,
+   "tb_tri": 1.2304507608699475,
+   "tb_pt": 1.3246828143319185,
+   "tb_tri_s": 1.1900537406385996,
+   "tb_pt_s": 1.2999137050369414
+  }
+ },
+ "mla": {
+  "rows": {
+   "b128_L1024": {
+    "t": {
+     "tl_adapted": 352.6310411095619,
+     "tl_adapted_split2": 376.0278391838074,
+     "tl_adapted_split4": 403.5564789175987,
+     "triton_mla": 2195.2841687202454,
+     "flashinfer_xqa_bf16": 992.9689562320709,
+     "flashinfer_mla_fa2": 341.6624015569687
+    },
+    "flops": 41034973184,
+    "bytes": 205373440,
+    "torch_up": 116223.9990234375,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 366.869181394577,
+     "tl_adapted_split2": 389.30314779281616,
+     "tl_adapted_split4": 420.14792561531067,
+     "triton_mla": 2222.2948528471447,
+     "flashinfer_xqa_bf16": 1012.301621765926,
+     "flashinfer_mla_fa2": 356.8091891189613
+    },
+    "clock": {
+     "tl_adapted": 2783.217913242438,
+     "tl_adapted_split2": 2797.369784553841,
+     "tl_adapted_split4": 2802.8149120698727,
+     "triton_mla": 2831.2491934882187,
+     "flashinfer_xqa_bf16": 2823.503142239144,
+     "flashinfer_mla_fa2": 2697.8726992315737
+    },
+    "cv": {
+     "tl_adapted": 0.005059603881829855,
+     "tl_adapted_split2": 0.0038938506863436637,
+     "tl_adapted_split4": 0.003701137347779281,
+     "triton_mla": 0.0025164683680372157,
+     "flashinfer_xqa_bf16": 0.002295337467604508,
+     "flashinfer_mla_fa2": 0.0038143271035982204
+    },
+    "power_w": 487.19025,
+    "power_max_w": 492.132,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        128,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7294,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 0.00022864341735839844,
+     "tl_adapted_split2": 0.0006244182586669922,
+     "tl_adapted_split4": 0.0007311701774597168,
+     "triton_mla": 0.0007311701774597168,
+     "flashinfer_xqa_bf16": 0.002444744110107422,
+     "flashinfer_mla_fa2": 0.00022864341735839844,
+     "torch_mla": 1.3113021850585938e-06
+    },
+    "errors": {}
+   },
+   "b128_L16384": {
+    "t": {
+     "tl_adapted": 4599.436149597168,
+     "tl_adapted_split2": 4665.087056159973,
+     "tl_adapted_split4": 4696.240668296814,
+     "triton_mla": 14703.504981994629,
+     "flashinfer_xqa_bf16": 11556.468849182129,
+     "flashinfer_mla_fa2": 4535.0022649765015
+    },
+    "flops": 588643303424,
+    "bytes": 2470297600,
+    "torch_up": 1660633.056640625,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 4631.664752960205,
+     "tl_adapted_split2": 4751.014232635498,
+     "tl_adapted_split4": 4832.444667816162,
+     "triton_mla": 14854.661464691162,
+     "flashinfer_xqa_bf16": 11544.831991195679,
+     "flashinfer_mla_fa2": 4559.948149181548
+    },
+    "clock": {
+     "tl_adapted": 2792.766808680647,
+     "tl_adapted_split2": 2809.333077591972,
+     "tl_adapted_split4": 2810.4356612629326,
+     "triton_mla": 2827.221738649238,
+     "flashinfer_xqa_bf16": 2812.5768852380033,
+     "flashinfer_mla_fa2": 2659.5721432364744
+    },
+    "cv": {
+     "tl_adapted": 0.005258102399347169,
+     "tl_adapted_split2": 0.006782210448040898,
+     "tl_adapted_split4": 0.004647530912235741,
+     "triton_mla": 0.0032058604683788197,
+     "flashinfer_xqa_bf16": 0.008273766921675672,
+     "flashinfer_mla_fa2": 0.0063246292408310366
+    },
+    "power_w": 557.7861929824561,
+    "power_max_w": 633.352,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        128,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7298,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 7.048249244689941e-05,
+     "tl_adapted_split2": 0.0001704096794128418,
+     "tl_adapted_split4": 0.00018891692161560059,
+     "triton_mla": 0.00011457502841949463,
+     "flashinfer_xqa_bf16": 0.0011570155620574951,
+     "flashinfer_mla_fa2": 6.99758529663086e-05,
+     "torch_mla": 1.2665987014770508e-06
+    },
+    "errors": {}
+   },
+   "b128_L2048": {
+    "t": {
+     "tl_adapted": 633.6732798814774,
+     "tl_adapted_split2": 665.2191948890686,
+     "tl_adapted_split4": 695.9750378131866,
+     "triton_mla": 3484.842574596405,
+     "flashinfer_xqa_bf16": 1720.2995204925537,
+     "flashinfer_mla_fa2": 614.2006438970566
+    },
+    "flops": 77542195200,
+    "bytes": 356368384,
+    "torch_up": 210827.2247314453,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 644.6245312690735,
+     "tl_adapted_split2": 671.3339686393738,
+     "tl_adapted_split4": 704.66548204422,
+     "triton_mla": 3507.844739490085,
+     "flashinfer_xqa_bf16": 1738.034111148906,
+     "flashinfer_mla_fa2": 630.4483677594717
+    },
+    "clock": {
+     "tl_adapted": 2795.7745085550214,
+     "tl_adapted_split2": 2810.5373482146183,
+     "tl_adapted_split4": 2811.1200190571153,
+     "triton_mla": 2835.7666148857115,
+     "flashinfer_xqa_bf16": 2822.2074060479777,
+     "flashinfer_mla_fa2": 2697.3911316676977
+    },
+    "cv": {
+     "tl_adapted": 0.004640523223176686,
+     "tl_adapted_split2": 0.0026894303015001517,
+     "tl_adapted_split4": 0.0025437698433563283,
+     "triton_mla": 0.0010618248578527602,
+     "flashinfer_xqa_bf16": 0.0024035675812428465,
+     "flashinfer_mla_fa2": 0.002480908692156608
+    },
+    "power_w": 501.8149090909091,
+    "power_max_w": 513.727,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        128,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7294,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 0.00012958049774169922,
+     "tl_adapted_split2": 0.0005295276641845703,
+     "tl_adapted_split4": 0.0004687458276748657,
+     "triton_mla": 0.0005005598068237305,
+     "flashinfer_xqa_bf16": 0.0014788657426834106,
+     "flashinfer_mla_fa2": 0.00012379884719848633,
+     "torch_mla": 9.387731552124023e-07
+    },
+    "errors": {}
+   },
+   "b128_L32768": {
+    "t": {
+     "tl_adapted": 9259.79299545288,
+     "tl_adapted_split2": 9306.213159561157,
+     "tl_adapted_split4": 9346.542091369629,
+     "flashinfer_xqa_bf16": 22664.279918670654,
+     "flashinfer_mla_fa2": 9164.815664291382
+    },
+    "flops": 1172758855680,
+    "bytes": 4886216704,
+    "torch_up": 4664428.7109375,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 9253.576278686523,
+     "tl_adapted_split2": 9487.034797668457,
+     "tl_adapted_split4": 9554.941177368164,
+     "flashinfer_xqa_bf16": 22687.744140625,
+     "flashinfer_mla_fa2": 9064.451217651367
+    },
+    "clock": {
+     "tl_adapted": 2751.701721966436,
+     "tl_adapted_split2": 2788.0493774274055,
+     "tl_adapted_split4": 2785.140227045278,
+     "flashinfer_xqa_bf16": 2813.790607574081,
+     "flashinfer_mla_fa2": 2571.42999862783
+    },
+    "cv": {
+     "tl_adapted": 0.005162786525855709,
+     "tl_adapted_split2": 0.0030358167816155247,
+     "tl_adapted_split4": 0.0030621015623697296,
+     "flashinfer_xqa_bf16": 0.0006374325364330116,
+     "flashinfer_mla_fa2": 0.005906342564948905
+    },
+    "power_w": 600.1522516556291,
+    "power_max_w": 657.905,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "skipped": "nope cache has 2164260864 elements >= 2**31: int32 offset overflow in _mla_attn_kernel",
+     "isolated_attempt": {
+      "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+      "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+      "num_stages1_error": "RuntimeError: Triton Error [CUDA]: an illegal memory access was encountered",
+      "isolated_process": true
+     }
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        128,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7298,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 7.243454456329346e-05,
+     "tl_adapted_split2": 0.00014162063598632812,
+     "tl_adapted_split4": 0.00014792382717132568,
+     "flashinfer_xqa_bf16": 0.001126989722251892,
+     "flashinfer_mla_fa2": 7.402896881103516e-05,
+     "torch_mla": 1.7881393432617188e-06
+    },
+    "errors": {}
+   },
+   "b128_L4096": {
+    "t": {
+     "tl_adapted": 1198.2505643367767,
+     "tl_adapted_split2": 1239.755198955536,
+     "tl_adapted_split4": 1271.2940895557404,
+     "triton_mla": 5055.7446002960205,
+     "flashinfer_xqa_bf16": 3152.542395591736,
+     "flashinfer_mla_fa2": 1174.3366396427155
+    },
+    "flops": 150556639232,
+    "bytes": 658358272,
+    "torch_up": 390768.6462402344,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 1209.2467546463013,
+     "tl_adapted_split2": 1252.6532411575317,
+     "tl_adapted_split4": 1299.888014793396,
+     "triton_mla": 5178.5279379950625,
+     "flashinfer_xqa_bf16": 3247.6982729775564,
+     "flashinfer_mla_fa2": 1202.752416071139
+    },
+    "clock": {
+     "tl_adapted": 2801.5934670194392,
+     "tl_adapted_split2": 2816.2101145091883,
+     "tl_adapted_split4": 2816.180073440548,
+     "triton_mla": 2839.453884017843,
+     "flashinfer_xqa_bf16": 2823.421660676748,
+     "flashinfer_mla_fa2": 2684.755416401431
+    },
+    "cv": {
+     "tl_adapted": 0.0039288511631692695,
+     "tl_adapted_split2": 0.002540132224776448,
+     "tl_adapted_split4": 0.002342202164616346,
+     "triton_mla": 0.001469711867538475,
+     "flashinfer_xqa_bf16": 0.0016894625370086392,
+     "flashinfer_mla_fa2": 0.0023590778631490564
+    },
+    "power_w": 528.6124428571429,
+    "power_max_w": 556.606,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        128,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7294,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 0.00010848045349121094,
+     "tl_adapted_split2": 0.00036185234785079956,
+     "tl_adapted_split4": 0.0003378540277481079,
+     "triton_mla": 0.00020839273929595947,
+     "flashinfer_xqa_bf16": 0.0014578402042388916,
+     "flashinfer_mla_fa2": 0.00010848045349121094,
+     "torch_mla": 7.301568984985352e-07
+    },
+    "errors": {}
+   },
+   "b128_L8192": {
+    "t": {
+     "tl_adapted": 2327.922878265381,
+     "tl_adapted_split2": 2377.8560042381287,
+     "tl_adapted_split4": 2412.6547169685364,
+     "triton_mla": 8274.345874786377,
+     "flashinfer_xqa_bf16": 5960.428819656372,
+     "flashinfer_mla_fa2": 2290.3414607048035
+    },
+    "flops": 296585527296,
+    "bytes": 1262338048,
+    "torch_up": 749379.5776367188,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 2344.8944091796875,
+     "tl_adapted_split2": 2407.0563316345215,
+     "tl_adapted_split4": 2459.3498706817627,
+     "triton_mla": 8395.34837549383,
+     "flashinfer_xqa_bf16": 5980.071991682053,
+     "flashinfer_mla_fa2": 2320.4632103443146
+    },
+    "clock": {
+     "tl_adapted": 2801.4221672840285,
+     "tl_adapted_split2": 2812.829870523433,
+     "tl_adapted_split4": 2812.880375828573,
+     "triton_mla": 2841.3665427665173,
+     "flashinfer_xqa_bf16": 2822.3400759497454,
+     "flashinfer_mla_fa2": 2673.935591692498
+    },
+    "cv": {
+     "tl_adapted": 0.004063493914020051,
+     "tl_adapted_split2": 0.002332615024083306,
+     "tl_adapted_split4": 0.00858324372427043,
+     "triton_mla": 0.007015194064510532,
+     "flashinfer_xqa_bf16": 0.007869007467379166,
+     "flashinfer_mla_fa2": 0.002395954937216539
+    },
+    "power_w": 543.8009430894309,
+    "power_max_w": 600.354,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        128,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7298,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 7.496774196624756e-05,
+     "tl_adapted_split2": 0.00023828446865081787,
+     "tl_adapted_split4": 0.00019315630197525024,
+     "triton_mla": 0.0001569017767906189,
+     "flashinfer_xqa_bf16": 0.001239672303199768,
+     "flashinfer_mla_fa2": 7.258355617523193e-05,
+     "torch_mla": 9.5367431640625e-07
+    },
+    "errors": {}
+   },
+   "b64_L1024": {
+    "t": {
+     "tl_adapted": 174.68448102474213,
+     "tl_adapted_split2": 194.19968277215958,
+     "tl_adapted_split4": 192.1478407084942,
+     "triton_mla": 1074.126719236374,
+     "flashinfer_xqa_bf16": 615.5587232112885,
+     "flashinfer_mla_fa2": 173.80320101976395
+    },
+    "flops": 19376635904,
+    "bytes": 97968128,
+    "torch_up": 55418.880462646484,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 181.74344301223755,
+     "tl_adapted_split2": 202.7117758989334,
+     "tl_adapted_split4": 200.64426958560944,
+     "triton_mla": 1103.4100010991096,
+     "flashinfer_xqa_bf16": 634.1085323067599,
+     "flashinfer_mla_fa2": 186.34114089559336
+    },
+    "clock": {
+     "tl_adapted": 2786.4652998567826,
+     "tl_adapted_split2": 2794.643548873102,
+     "tl_adapted_split4": 2791.7788953897116,
+     "triton_mla": 2829.0484427145007,
+     "flashinfer_xqa_bf16": 2825.1764957775667,
+     "flashinfer_mla_fa2": 2730.5864744827522
+    },
+    "cv": {
+     "tl_adapted": 0.00816104285989537,
+     "tl_adapted_split2": 0.005471094298832178,
+     "tl_adapted_split4": 0.004237577330187294,
+     "triton_mla": 0.0034316871488606223,
+     "flashinfer_xqa_bf16": 0.0024640073578683797,
+     "flashinfer_mla_fa2": 0.005723116135496792
+    },
+    "power_w": 444.1554705882353,
+    "power_max_w": 446.913,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        64,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7284,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 0.00017589330673217773,
+     "tl_adapted_split2": 0.0009274780750274658,
+     "tl_adapted_split4": 0.0007472634315490723,
+     "triton_mla": 0.0008150339126586914,
+     "flashinfer_xqa_bf16": 0.002862781286239624,
+     "flashinfer_mla_fa2": 0.00031238794326782227,
+     "torch_mla": 1.1771917343139648e-06
+    },
+    "errors": {}
+   },
+   "b64_L16384": {
+    "t": {
+     "tl_adapted": 2287.3443055152893,
+     "tl_adapted_split2": 2472.8361678123474,
+     "tl_adapted_split4": 2330.418245792389,
+     "triton_mla": 7237.616019248962,
+     "flashinfer_xqa_bf16": 7404.267210960388,
+     "flashinfer_mla_fa2": 2237.170886993408
+    },
+    "flops": 293180801024,
+    "bytes": 1230430208,
+    "torch_up": 821602.294921875,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 2297.382354736328,
+     "tl_adapted_split2": 2481.8778038024902,
+     "tl_adapted_split4": 2366.908073425293,
+     "triton_mla": 7378.313834850605,
+     "flashinfer_xqa_bf16": 7450.018442594088,
+     "flashinfer_mla_fa2": 2275.0595313746753
+    },
+    "clock": {
+     "tl_adapted": 2825.866881626068,
+     "tl_adapted_split2": 2835.1652900260997,
+     "tl_adapted_split4": 2835.717842707315,
+     "triton_mla": 2849.0106917571593,
+     "flashinfer_xqa_bf16": 2846.8125183299867,
+     "flashinfer_mla_fa2": 2698.0913044176955
+    },
+    "cv": {
+     "tl_adapted": 0.0028147060724099202,
+     "tl_adapted_split2": 0.003297750497066492,
+     "tl_adapted_split4": 0.0020564388335590623,
+     "triton_mla": 0.0006395801268571652,
+     "flashinfer_xqa_bf16": 0.0008483520659704914,
+     "flashinfer_mla_fa2": 0.0016480950712271856
+    },
+    "power_w": 501.4281693548387,
+    "power_max_w": 537.473,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        64,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7290,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 7.098913192749023e-05,
+     "tl_adapted_split2": 0.00017751753330230713,
+     "tl_adapted_split4": 0.00015165656805038452,
+     "triton_mla": 0.00013075768947601318,
+     "flashinfer_xqa_bf16": 0.0011474788188934326,
+     "flashinfer_mla_fa2": 0.00011742115020751953,
+     "torch_mla": 1.3262033462524414e-06
+    },
+    "errors": {}
+   },
+   "b64_L2048": {
+    "t": {
+     "tl_adapted": 317.8073599934578,
+     "tl_adapted_split2": 347.3196819424629,
+     "tl_adapted_split4": 339.55839842557907,
+     "triton_mla": 1713.3055996894836,
+     "flashinfer_xqa_bf16": 1093.6364805698395,
+     "flashinfer_mla_fa2": 312.74239867925644
+    },
+    "flops": 37630246912,
+    "bytes": 173465600,
+    "torch_up": 102519.80590820312,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 326.5027105808258,
+     "tl_adapted_split2": 356.36475682258606,
+     "tl_adapted_split4": 348.67793321609497,
+     "triton_mla": 1733.286034386113,
+     "flashinfer_xqa_bf16": 1112.8895116757742,
+     "flashinfer_mla_fa2": 331.5183476942806
+    },
+    "clock": {
+     "tl_adapted": 2784.223581129505,
+     "tl_adapted_split2": 2799.1271193584334,
+     "tl_adapted_split4": 2798.3182194721267,
+     "triton_mla": 2829.578526055635,
+     "flashinfer_xqa_bf16": 2825.5587310931305,
+     "flashinfer_mla_fa2": 2711.32473760642
+    },
+    "cv": {
+     "tl_adapted": 0.005238641269346048,
+     "tl_adapted_split2": 0.0038619718729156786,
+     "tl_adapted_split4": 0.0035101762126079085,
+     "triton_mla": 0.0019870566336592983,
+     "flashinfer_xqa_bf16": 0.00225077306308797,
+     "flashinfer_mla_fa2": 0.003645256884225675
+    },
+    "power_w": 456.74951999999996,
+    "power_max_w": 462.472,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        64,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7286,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 0.00012424588203430176,
+     "tl_adapted_split2": 0.0004934072494506836,
+     "tl_adapted_split4": 0.00040462613105773926,
+     "triton_mla": 0.00045215338468551636,
+     "flashinfer_xqa_bf16": 0.0015555620193481445,
+     "flashinfer_mla_fa2": 0.0001869797706604004,
+     "torch_mla": 7.748603820800781e-07
+    },
+    "errors": {}
+   },
+   "b64_L32768": {
+    "t": {
+     "tl_adapted": 4563.855028152466,
+     "tl_adapted_split2": 4919.734725952148,
+     "tl_adapted_split4": 4612.25790977478,
+     "triton_mla": 13581.046981811523,
+     "flashinfer_xqa_bf16": 14619.651803970337,
+     "flashinfer_mla_fa2": 4475.223083496094
+    },
+    "flops": 585238577152,
+    "bytes": 2438389760,
+    "torch_up": 2325575.68359375,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 4592.7863121032715,
+     "tl_adapted_split2": 4961.3542556762695,
+     "tl_adapted_split4": 4703.927040100098,
+     "triton_mla": 13650.207928248814,
+     "flashinfer_xqa_bf16": 14615.21085103353,
+     "flashinfer_mla_fa2": 4506.066299620128
+    },
+    "clock": {
+     "tl_adapted": 2810.531729208365,
+     "tl_adapted_split2": 2823.2051255364895,
+     "tl_adapted_split4": 2823.124307555904,
+     "triton_mla": 2842.6000429709284,
+     "flashinfer_xqa_bf16": 2835.1725796730743,
+     "flashinfer_mla_fa2": 2676.4361501907774
+    },
+    "cv": {
+     "tl_adapted": 0.002960863487512737,
+     "tl_adapted_split2": 0.009739907534044329,
+     "tl_adapted_split4": 0.002218053377450436,
+     "triton_mla": 0.005647913436192122,
+     "flashinfer_xqa_bf16": 0.005815475658948713,
+     "flashinfer_mla_fa2": 0.01038788595150358
+    },
+    "power_w": 521.1760588235294,
+    "power_max_w": 619.746,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        64,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7290,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 6.930530071258545e-05,
+     "tl_adapted_split2": 0.0001573711633682251,
+     "tl_adapted_split4": 0.00013141334056854248,
+     "triton_mla": 9.468197822570801e-05,
+     "flashinfer_xqa_bf16": 0.0010520517826080322,
+     "flashinfer_mla_fa2": 0.00011804699897766113,
+     "torch_mla": 1.6093254089355469e-06
+    },
+    "errors": {}
+   },
+   "b64_L4096": {
+    "t": {
+     "tl_adapted": 602.0211184024811,
+     "tl_adapted_split2": 656.3887989521027,
+     "tl_adapted_split4": 629.7142434120178,
+     "triton_mla": 2505.3027081489563,
+     "flashinfer_xqa_bf16": 2016.2813019752502,
+     "flashinfer_mla_fa2": 590.4070401191711
+    },
+    "flops": 74137468928,
+    "bytes": 324460544,
+    "torch_up": 192921.60034179688,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 610.1705431938171,
+     "tl_adapted_split2": 664.333701133728,
+     "tl_adapted_split4": 638.3441686630249,
+     "triton_mla": 2534.263327315047,
+     "flashinfer_xqa_bf16": 2034.9683191465292,
+     "flashinfer_mla_fa2": 604.9844123699047
+    },
+    "clock": {
+     "tl_adapted": 2793.354612457412,
+     "tl_adapted_split2": 2809.738640974311,
+     "tl_adapted_split4": 2809.9460698983467,
+     "triton_mla": 2836.476573895775,
+     "flashinfer_xqa_bf16": 2828.4702730885433,
+     "flashinfer_mla_fa2": 2697.646084254817
+    },
+    "cv": {
+     "tl_adapted": 0.004401179336478916,
+     "tl_adapted_split2": 0.0036679578899185806,
+     "tl_adapted_split4": 0.0029502558994651575,
+     "triton_mla": 0.001554481408201206,
+     "flashinfer_xqa_bf16": 0.0025140468618420142,
+     "flashinfer_mla_fa2": 0.002525219621599035
+    },
+    "power_w": 483.0602051282051,
+    "power_max_w": 498.621,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 0.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        64,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7286,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 0.00011867284774780273,
+     "tl_adapted_split2": 0.00031665340065956116,
+     "tl_adapted_split4": 0.00035662949085235596,
+     "triton_mla": 0.0002140253782272339,
+     "flashinfer_xqa_bf16": 0.0011783093214035034,
+     "flashinfer_mla_fa2": 0.00015491247177124023,
+     "torch_mla": 7.152557373046875e-07
+    },
+    "errors": {}
+   },
+   "b64_L8192": {
+    "t": {
+     "tl_adapted": 1155.4240024089813,
+     "tl_adapted_split2": 1257.0691192150116,
+     "tl_adapted_split4": 1191.2345612049103,
+     "triton_mla": 4080.9503841400146,
+     "flashinfer_xqa_bf16": 3812.352623939514,
+     "flashinfer_mla_fa2": 1128.4742450714111
+    },
+    "flops": 147151912960,
+    "bytes": 626450432,
+    "torch_up": 372497.4060058594,
+    "torch_check": true,
+    "up": {
+     "tl_adapted": 1160.4089736938477,
+     "tl_adapted_split2": 1260.7589960098267,
+     "tl_adapted_split4": 1196.9314813613892,
+     "triton_mla": 4114.438886227816,
+     "flashinfer_xqa_bf16": 3823.622417449951,
+     "flashinfer_mla_fa2": 1143.9306552593525
+    },
+    "clock": {
+     "tl_adapted": 2835.4156795945955,
+     "tl_adapted_split2": 2838.5407291152114,
+     "tl_adapted_split4": 2836.067640868565,
+     "triton_mla": 2856.0892838882028,
+     "flashinfer_xqa_bf16": 2849.7740116795203,
+     "flashinfer_mla_fa2": 2728.9834419780664
+    },
+    "cv": {
+     "tl_adapted": 0.003956847609972542,
+     "tl_adapted_split2": 0.003465524920502592,
+     "tl_adapted_split4": 0.0027037018685810437,
+     "triton_mla": 0.001068831131778761,
+     "flashinfer_xqa_bf16": 0.0018922098442353832,
+     "flashinfer_mla_fa2": 0.0016156651924669257
+    },
+    "power_w": 481.12161194029846,
+    "power_max_w": 507.218,
+    "guard": {
+     "clean": true,
+     "complete": true,
+     "attempts": [
+      {
+       "waited_s": 1800.0,
+       "clean": true,
+       "complete": true,
+       "active": []
+      }
+     ]
+    },
+    "fi": {
+     "xqa_bf16": {
+      "ok": true
+     },
+     "fa3": {
+      "causal": true,
+      "error": "RuntimeError: Check failed: (status == cudaSuccess) is false: Failed to run MLA, error: no kernel image is available for execution on the device",
+      "isolated_process": true
+     },
+     "fa2": {
+      "causal": true,
+      "ok": true
+     },
+     "cutile": {
+      "causal": false,
+      "error": "ValueError: No valid config found in search space.\nConfig: namespace(BLOCK_H=16, BLOCK_N=16, occupancy=1)\nFileNotFoundError: 'tileiras' compiler not found, make sure it is available as a python package via `pip install cuda-tile[tileiras]` or available in $PATH or $CUDA_HOME/bin via system CTK (13.1+) installation.",
+      "cleared_last_error": null
+     }
+    },
+    "triton": {
+     "shipped_error": "OutOfResources: out of resource: shared memory, Required: 102656, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "num_stages2_error": "OutOfResources: out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing block sizes or `num_stages` may help.",
+     "used": "same kernels, num_stages=1 (default exceeds 99 KB)"
+    },
+    "tl_adapt": {
+     "picked": {
+      "num_stages": 1,
+      "block_H": 16,
+      "block_N": 64,
+      "num_split": 1,
+      "smem": 98304,
+      "fits": true
+     },
+     "tried": [
+      {
+       "num_stages": 2,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 233472,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 192512,
+       "fits": false
+      },
+      {
+       "num_stages": 2,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 172032,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 64,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 159744,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 32,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 118784,
+       "fits": false
+      },
+      {
+       "num_stages": 1,
+       "block_H": 16,
+       "block_N": 64,
+       "num_split": 1,
+       "smem": 98304,
+       "fits": true
+      }
+     ]
+    },
+    "tl_shipped": {
+     "block_N": 64,
+     "block_H": 64,
+     "num_split": 1,
+     "num_stages": 2,
+     "resources": {
+      "main_no_split_kernel": {
+       "regs": 168,
+       "local_bytes": 0,
+       "smem_static": 2048,
+       "max_threads": [
+        384,
+        1,
+        1
+       ],
+       "launch_values": [
+        64,
+        2,
+        384,
+        1,
+        1,
+        231424
+       ],
+       "smem_dynamic": 231424,
+       "smem_total": 233472,
+       "fits_99KB": false
+      }
+     },
+     "launch": "failed: InternalError: Failed to set the allowed dynamic shared memory size to 231424",
+     "isolated_process": true
+    },
+    "faithful": {
+     "identical_kernel_source": true,
+     "tir_len": 7288,
+     "stages1_differs": true
+    },
+    "checks": {
+     "tl_adapted": 7.870793342590332e-05,
+     "tl_adapted_split2": 0.0002478957176208496,
+     "tl_adapted_split4": 0.00021350011229515076,
+     "triton_mla": 0.00015532225370407104,
+     "flashinfer_xqa_bf16": 0.001101478934288025,
+     "flashinfer_mla_fa2": 0.0001230388879776001,
+     "torch_mla": 9.5367431640625e-07
+    },
+    "errors": {}
+   }
+  },
+  "per_shape": {
+   "b64_L1024": {
+    "measured": {
+     "flashinfer_fa2": 0.9949550183289988,
+     "flashinfer_xqa_bf16": 3.523831765708491,
+     "flashinfer_cutile": null,
+     "triton": 6.148953318207104,
+     "torch_upstream_timers": 304.9291877832143,
+     "tl_split2_vs_split1": 1.1117168602095417,
+     "tl_split4_vs_split1": 1.0999708708026477
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 1.0252977373332044,
+     "triton": 6.071250675188389
+    },
+    "claimed": {
+     "flashinfer": 1.158,
+     "triton": 11.77,
+     "flashmla": 1.061,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 110.92362521462633,
+     "tl_adapted_split2": 99.7768669207004,
+     "tl_adapted_split4": 100.8423297006815,
+     "triton_mla": 18.039431993438708,
+     "flashinfer_xqa_bf16": 31.478127387935718,
+     "flashinfer_mla_fa2": 111.48607039634784
+    },
+    "gbps": {
+     "tl_adapted": 560.829029718581,
+     "tl_adapted_split2": 504.4711021229572,
+     "tl_adapted_split4": 509.85807406822016,
+     "triton_mla": 91.20723490581095,
+     "flashinfer_xqa_bf16": 159.1531795519252,
+     "flashinfer_mla_fa2": 563.6727484027156
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "partly",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "partly",
+    "verdict_triton_upstream_timers": "partly"
+   },
+   "b64_L2048": {
+    "measured": {
+     "flashinfer_fa2": 0.9840627941583681,
+     "flashinfer_xqa_bf16": 3.4411930566754414,
+     "flashinfer_cutile": null,
+     "triton": 5.391019263130825,
+     "torch_upstream_timers": 313.99373599633356,
+     "tl_split2_vs_split1": 1.0928622985622882,
+     "tl_split4_vs_split1": 1.0684409525083656
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 1.0153617012996072,
+     "triton": 5.308642097649715
+    },
+    "claimed": {
+     "flashinfer": 1.256,
+     "triton": 7.22,
+     "flashmla": 1.03,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 118.40583840718679,
+     "tl_adapted_split2": 108.34470048326786,
+     "tl_adapted_split4": 110.8211344101018,
+     "triton_mla": 21.963534654191314,
+     "flashinfer_xqa_bf16": 34.408368393483684,
+     "flashinfer_mla_fa2": 120.3234581269327
+    },
+    "gbps": {
+     "tl_adapted": 545.819958365882,
+     "tl_adapted_split2": 499.4407429773484,
+     "tl_adapted_split4": 510.8564559271781,
+     "triton_mla": 101.2461524852534,
+     "flashinfer_xqa_bf16": 158.6135823757596,
+     "flashinfer_mla_fa2": 554.6596839205789
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "partly",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "partly",
+    "verdict_triton_upstream_timers": "partly"
+   },
+   "b64_L4096": {
+    "measured": {
+     "flashinfer_fa2": 0.9807081879218308,
+     "flashinfer_xqa_bf16": 3.349186997502081,
+     "flashinfer_cutile": null,
+     "triton": 4.161486418943258,
+     "torch_upstream_timers": 316.17652227520995,
+     "tl_split2_vs_split1": 1.090308593648494,
+     "tl_split4_vs_split1": 1.0460002550791292
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9915005224657902,
+     "triton": 4.153368850043049
+    },
+    "claimed": {
+     "flashinfer": 1.199,
+     "triton": 4.98,
+     "flashmla": 0.921,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 123.14762167269258,
+     "tl_adapted_split2": 112.94749247147024,
+     "tl_adapted_split4": 117.73192317565595,
+     "triton_mla": 29.592220008725608,
+     "flashinfer_xqa_bf16": 36.76940755011278,
+     "flashinfer_mla_fa2": 125.57009637458873
+    },
+    "gbps": {
+     "tl_adapted": 538.9520966656222,
+     "tl_adapted_split2": 494.31151859688606,
+     "tl_adapted_split4": 515.2504447762786,
+     "triton_mla": 129.50951713125627,
+     "flashinfer_xqa_bf16": 160.92027619466697,
+     "flashinfer_mla_fa2": 549.5539889471999
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "partly",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "partly"
+   },
+   "b64_L8192": {
+    "measured": {
+     "flashinfer_fa2": 0.9766754392488111,
+     "flashinfer_xqa_bf16": 3.2995269407516337,
+     "flashinfer_cutile": null,
+     "triton": 3.5319937751262804,
+     "torch_upstream_timers": 321.0052786993837,
+     "tl_split2_vs_split1": 1.0879721354187788,
+     "tl_split4_vs_split1": 1.0309934350690884
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9857995596310835,
+     "triton": 3.545679996881284
+    },
+    "claimed": {
+     "flashinfer": 1.213,
+     "triton": 4.01,
+     "flashmla": 0.928,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 127.35750049609337,
+     "tl_adapted_split2": 117.05952418264032,
+     "tl_adapted_split4": 123.52891508718379,
+     "triton_mla": 36.058246023250675,
+     "flashinfer_xqa_bf16": 38.59871514402039,
+     "flashinfer_mla_fa2": 130.39899989094397
+    },
+    "gbps": {
+     "tl_adapted": 542.1822903920059,
+     "tl_adapted_split2": 498.3420739753696,
+     "tl_adapted_split4": 525.883358661419,
+     "triton_mla": 153.50601527394284,
+     "flashinfer_xqa_bf16": 164.3212194135007,
+     "flashinfer_mla_fa2": 555.1304646393215
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "partly",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "partly"
+   },
+   "b64_L16384": {
+    "measured": {
+     "flashinfer_fa2": 0.9780647721460639,
+     "flashinfer_xqa_bf16": 3.2370584494459687,
+     "flashinfer_cutile": null,
+     "triton": 3.1642005105210793,
+     "torch_upstream_timers": 357.62540494317096,
+     "tl_split2_vs_split1": 1.081094858281631,
+     "tl_split4_vs_split1": 1.0188314195520276
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9902833660597977,
+     "triton": 3.2116177003098025
+    },
+    "claimed": {
+     "flashinfer": 1.351,
+     "triton": 3.53,
+     "flashmla": 0.977,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 128.1751944021181,
+     "tl_adapted_split2": 118.56054389699796,
+     "tl_adapted_split4": 125.80608719200646,
+     "triton_mla": 40.5079241899908,
+     "flashinfer_xqa_bf16": 39.59619401498778,
+     "flashinfer_mla_fa2": 131.04980166178242
+    },
+    "gbps": {
+     "tl_adapted": 537.9296002937392,
+     "tl_adapted_split2": 497.57853917533447,
+     "tl_adapted_split4": 527.9868582481121,
+     "triton_mla": 170.00490281987635,
+     "flashinfer_xqa_bf16": 166.1785255640989,
+     "flashinfer_mla_fa2": 549.9938405034436
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "partly",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "reproduced"
+   },
+   "b64_L32768": {
+    "measured": {
+     "flashinfer_fa2": 0.9805795880654317,
+     "flashinfer_xqa_bf16": 3.2033558721273945,
+     "flashinfer_cutile": null,
+     "triton": 2.975784046170587,
+     "torch_upstream_timers": 506.3539920124762,
+     "tl_split2_vs_split1": 1.0779778708141283,
+     "tl_split4_vs_split1": 1.0106057009531937
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9811182130867678,
+     "triton": 2.9720973284293053
+    },
+    "claimed": {
+     "flashinfer": 1.325,
+     "triton": 3.13,
+     "flashmla": 0.966,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 128.23338461496124,
+     "tl_adapted_split2": 118.95734419679202,
+     "tl_adapted_split4": 126.8876521219035,
+     "triton_mla": 43.092301936351696,
+     "flashinfer_xqa_bf16": 40.03095183108695,
+     "flashinfer_mla_fa2": 130.77305113800165
+    },
+    "gbps": {
+     "tl_adapted": 534.2829132298502,
+     "tl_adapted_split2": 495.63439815915734,
+     "tl_adapted_split4": 528.6759343687847,
+     "triton_mla": 179.54357740354072,
+     "flashinfer_xqa_bf16": 166.78849761235722,
+     "flashinfer_mla_fa2": 544.864404412015
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "reproduced",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "reproduced"
+   },
+   "b128_L1024": {
+    "measured": {
+     "flashinfer_fa2": 0.9688948553193725,
+     "flashinfer_xqa_bf16": 2.8158864095108322,
+     "flashinfer_cutile": null,
+     "triton": 6.225442212383606,
+     "torch_upstream_timers": 316.7995703036055,
+     "tl_split2_vs_split1": 1.0663492300638846,
+     "tl_split4_vs_split1": 1.1444156409140804
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9725788025110892,
+     "triton": 6.057458531674839
+    },
+    "claimed": {
+     "flashinfer": 1.11,
+     "triton": 12.74,
+     "flashmla": 0.973,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 116.36801188824016,
+     "tl_adapted_split2": 109.12748713783813,
+     "tl_adapted_split4": 101.68334626682784,
+     "triton_mla": 18.692328660084854,
+     "flashinfer_xqa_bf16": 41.32553482810952,
+     "flashinfer_mla_fa2": 120.10385982479211
+    },
+    "gbps": {
+     "tl_adapted": 582.4031808254532,
+     "tl_adapted_split2": 546.1655191428812,
+     "tl_adapted_split4": 508.90879152985855,
+     "triton_mla": 93.55209814122777,
+     "flashinfer_xqa_bf16": 206.82765428972922,
+     "flashinfer_mla_fa2": 601.1004988084886
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "partly",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "partly"
+   },
+   "b128_L2048": {
+    "measured": {
+     "flashinfer_fa2": 0.9692702270986352,
+     "flashinfer_xqa_bf16": 2.7148052081576166,
+     "flashinfer_cutile": null,
+     "triton": 5.499431150463236,
+     "torch_upstream_timers": 327.0542998361998,
+     "tl_split2_vs_split1": 1.0497826182816035,
+     "tl_split4_vs_split1": 1.098318423562632
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9780086502732169,
+     "triton": 5.441686701845157
+    },
+    "claimed": {
+     "flashinfer": 1.182,
+     "triton": 7.3,
+     "flashmla": 0.94,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 122.36936235421437,
+     "tl_adapted_split2": 116.56638262359655,
+     "tl_adapted_split4": 111.4151959295038,
+     "triton_mla": 22.251276360448077,
+     "flashinfer_xqa_bf16": 45.07482230640757,
+     "flashinfer_mla_fa2": 126.24896435796722
+    },
+    "gbps": {
+     "tl_adapted": 562.3850575909645,
+     "tl_adapted_split2": 535.7157260914994,
+     "tl_adapted_split4": 512.0419047208073,
+     "triton_mla": 102.26240536597916,
+     "flashinfer_xqa_bf16": 207.1548470222006,
+     "flashinfer_mla_fa2": 580.2149306436243
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "partly",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "partly"
+   },
+   "b128_L4096": {
+    "measured": {
+     "flashinfer_fa2": 0.9800426343155553,
+     "flashinfer_xqa_bf16": 2.6309542339641174,
+     "flashinfer_cutile": null,
+     "triton": 4.219271620451386,
+     "torch_upstream_timers": 323.1504610111873,
+     "tl_split2_vs_split1": 1.0346376925277991,
+     "tl_split4_vs_split1": 1.060958473455335
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9946294347698605,
+     "triton": 4.282441046955513
+    },
+    "claimed": {
+     "flashinfer": 1.201,
+     "triton": 5.19,
+     "flashmla": 0.926,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 125.64704220717981,
+     "tl_adapted_split2": 121.44061937295393,
+     "tl_adapted_split4": 118.42786060982375,
+     "triton_mla": 29.77932058181592,
+     "flashinfer_xqa_bf16": 47.75721317579311,
+     "flashinfer_mla_fa2": 128.2056900462596
+    },
+    "gbps": {
+     "tl_adapted": 549.4328912454105,
+     "tl_adapted_split2": 531.0389281324661,
+     "tl_adapted_split4": 517.8646525683655,
+     "triton_mla": 130.21984377166763,
+     "flashinfer_xqa_bf16": 208.83407402247653,
+     "flashinfer_mla_fa2": 560.6214178928296
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "partly",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "partly"
+   },
+   "b128_L8192": {
+    "measured": {
+     "flashinfer_fa2": 0.9838562445897775,
+     "flashinfer_xqa_bf16": 2.560406478799548,
+     "flashinfer_cutile": null,
+     "triton": 3.554390032436079,
+     "torch_upstream_timers": 319.5792419066211,
+     "tl_split2_vs_split1": 1.0214496478551536,
+     "tl_split4_vs_split1": 1.036398043721402
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9895811091792744,
+     "triton": 3.580267129568008
+    },
+    "claimed": {
+     "flashinfer": 1.27,
+     "triton": 4.11,
+     "flashmla": 0.952,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 127.4035020941057,
+     "tl_adapted_split2": 124.72812767778458,
+     "tl_adapted_split4": 122.92912251805977,
+     "triton_mla": 35.84398474322384,
+     "flashinfer_xqa_bf16": 49.759092217982165,
+     "flashinfer_mla_fa2": 129.49402191092162
+    },
+    "gbps": {
+     "tl_adapted": 542.2593934643633,
+     "tl_adapted_split2": 530.8723681123224,
+     "tl_adapted_split4": 523.2153772861906,
+     "triton_mla": 152.56046424728294,
+     "flashinfer_xqa_bf16": 211.78644795438993,
+     "flashinfer_mla_fa2": 551.1571395173288
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "partly",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "partly"
+   },
+   "b128_L16384": {
+    "measured": {
+     "flashinfer_fa2": 0.985990916598264,
+     "flashinfer_xqa_bf16": 2.5125838196915242,
+     "flashinfer_cutile": null,
+     "triton": 3.1968059787681593,
+     "torch_upstream_timers": 358.5391312225859,
+     "tl_split2_vs_split1": 1.01427368582311,
+     "tl_split4_vs_split1": 1.0210470404525833
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9845160201344837,
+     "triton": 3.207197035406589
+    },
+    "claimed": {
+     "flashinfer": 1.31,
+     "triton": 3.54,
+     "flashmla": 0.977,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 127.98162302471685,
+     "tl_adapted_split2": 126.18056133523407,
+     "tl_adapted_split4": 125.34351303539206,
+     "triton_mla": 40.034216613306214,
+     "flashinfer_xqa_bf16": 50.936260124619245,
+     "flashinfer_mla_fa2": 129.80000207939258
+    },
+    "gbps": {
+     "tl_adapted": 537.0870514674621,
+     "tl_adapted_split2": 529.5287248151388,
+     "tl_adapted_split4": 526.0159720255358,
+     "triton_mla": 168.00739708151463,
+     "flashinfer_xqa_bf16": 213.758859409276,
+     "flashinfer_mla_fa2": 544.7180520896168
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "reproduced",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "reproduced"
+   },
+   "b128_L32768": {
+    "measured": {
+     "flashinfer_fa2": 0.9897430394817531,
+     "flashinfer_xqa_bf16": 2.4476011428981392,
+     "flashinfer_cutile": null,
+     "triton": null,
+     "torch_upstream_timers": 504.0676783181584,
+     "tl_split2_vs_split1": 1.0050130887516677,
+     "tl_split4_vs_split1": 1.009368362333731
+    },
+    "measured_upstream_timers": {
+     "flashinfer_fa2": 0.9795619493113422,
+     "triton": null
+    },
+    "claimed": {
+     "flashinfer": 1.216,
+     "triton": 2.96,
+     "flashmla": 0.939,
+     "torch_paper": 1075.9
+    },
+    "tflops": {
+     "tl_adapted": 126.65065582523235,
+     "tl_adapted_split2": 126.01891183581084,
+     "tl_adapted_split4": 125.47515907117106,
+     "flashinfer_xqa_bf16": 51.74480988976361,
+     "flashinfer_mla_fa2": 127.96316899742871
+    },
+    "gbps": {
+     "tl_adapted": 527.6809866483438,
+     "tl_adapted_split2": 525.0488700637516,
+     "tl_adapted_split4": 522.7833626846676,
+     "flashinfer_xqa_bf16": 215.59108524664725,
+     "flashinfer_mla_fa2": 533.1494798131108
+    },
+    "verdict_flashinfer": "not reproduced",
+    "verdict_triton": "n/a",
+    "verdict_torch": "partly",
+    "verdict_flashinfer_upstream_timers": "not reproduced",
+    "verdict_triton_upstream_timers": "n/a"
+   }
+  },
+  "geomean": {
+   "fi": 0.9810437117079966,
+   "c_fi": 1.230679940973919,
+   "x": 2.9531965516675043,
+   "tr": 4.218565461524524,
+   "c_tr": 5.471890237574578,
+   "to": 350.2042922360859,
+   "c_fm": 0.964991284256285,
+   "u_fi": 0.9905787449487803,
+   "u_tr": 4.208944306515153
+  }
+ },
+ "mla_graph": {
+  "mla_b64_s1024": {
+   "eager flush": {
+    "t": {
+     "tl_adapted": 174.14399981498718,
+     "tl_adapted_split2": 194.5279985666275,
+     "tl_adapted_split4": 192.47999787330627,
+     "triton_mla": 1074.4799971580505,
+     "flashinfer_xqa_bf16": 615.8400177955627,
+     "flashinfer_mla_fa2": 174.0799993276596
+    },
+    "fi_over_tl": 0.9996324852570541,
+    "triton_over_tl": 6.170066142385565
+   },
+   "graph-flush": {
+    "t": {
+     "tl_adapted": 173.5600009560585,
+     "tl_adapted_split2": 191.69600307941437,
+     "tl_adapted_split4": 189.66400623321533,
+     "triton_mla": 1081.7999839782715,
+     "flashinfer_xqa_bf16": 617.9839968681335,
+     "flashinfer_mla_fa2": 176.11999809741974
+    },
+    "fi_over_tl": 1.0147499258311792,
+    "triton_over_tl": 6.233002869435101
+   },
+   "steady": {
+    "t": {
+     "tl_adapted": 178.09836764503146,
+     "tl_adapted_split2": 196.82962059612075,
+     "tl_adapted_split4": 198.71841160645764,
+     "triton_mla": 1090.4949733189173,
+     "flashinfer_xqa_bf16": 622.5946300965047,
+     "flashinfer_mla_fa2": 183.51756817671802
+    },
+    "fi_over_tl": 1.030428131393588,
+    "triton_over_tl": 6.122992522269418
+   }
+  }
+ },
+ "sink": {
+  "s2048_d64": {
+   "t": {
+    "tl_fixed": 138.5343998670578,
+    "tl_tuned": 135.43039828538895,
+    "triton": 149.97120141983032
+   },
+   "measured_tuned": 1.1073673511895012,
+   "measured_fixed": 1.0825556797715776,
+   "claimed": 1.21,
+   "upstream": 1.1236300597328424,
+   "verdict": "reproduced",
+   "tuned_config": {
+    "block_M": 128,
+    "block_N": 128,
+    "num_stages": 1,
+    "threads": 256
+   },
+   "fixed": null,
+   "tflops": {
+    "tl_fixed": 248.02315093559972,
+    "tl_tuned": 253.7077259094714,
+    "triton": 229.1089091952603
+   }
+  },
+  "s4096_d64": {
+   "t": {
+    "tl_fixed": 452.56895899772644,
+    "tl_tuned": 447.9596811532974,
+    "triton": 509.3600010871887
+   },
+   "measured_tuned": 1.1370666212097766,
+   "measured_fixed": 1.1254859418887975,
+   "claimed": 1.25,
+   "upstream": 1.1371809748095136,
+   "verdict": "reproduced",
+   "tuned_config": {
+    "block_M": 128,
+    "block_N": 128,
+    "num_stages": 1,
+    "threads": 256
+   },
+   "fixed": null,
+   "tflops": {
+    "tl_fixed": 303.6862134256328,
+    "tl_tuned": 306.8109904850269,
+    "triton": 269.82674960469495
+   }
+  },
+  "s8192_d64": {
+   "t": {
+    "tl_fixed": 1749.8156762123108,
+    "tl_tuned": 1737.8483176231384,
+    "triton": 2008.4198546409607
+   },
+   "measured_tuned": 1.155693413673688,
+   "measured_fixed": 1.1477893825871022,
+   "claimed": 1.29,
+   "upstream": 1.1652793755030564,
+   "verdict": "partly",
+   "tuned_config": {
+    "block_M": 128,
+    "block_N": 128,
+    "num_stages": 1,
+    "threads": 256
+   },
+   "fixed": null,
+   "tflops": {
+    "tl_fixed": 314.17927120073205,
+    "tl_tuned": 316.3428063963046,
+    "triton": 273.72554230513634
+   }
+  },
+  "s16384_d64": {
+   "t": {
+    "tl_fixed": 6975.532827377319,
+    "tl_tuned": 6938.226566314697,
+    "triton": 8097.885456085205
+   },
+   "measured_tuned": 1.167140533490314,
+   "measured_fixed": 1.1608984799416207,
+   "claimed": 1.29,
+   "upstream": 1.179922783173116,
+   "verdict": "reproduced",
+   "tuned_config": {
+    "block_M": 128,
+    "block_N": 128,
+    "num_stages": 1,
+    "threads": 256
+   },
+   "fixed": null,
+   "tflops": {
+    "tl_fixed": 315.24806921148064,
+    "tl_tuned": 316.943131581826,
+    "triton": 271.5552433381891
+   }
+  },
+  "s2048_d128": {
+   "t": {
+    "tl_tuned": 239.88288313150406,
+    "triton": 407.84448325634
+   },
+   "measured_tuned": 1.7001816800440874,
+   "measured_fixed": null,
+   "claimed": 1.3,
+   "upstream": 1.679614480652586,
+   "verdict": "reproduced",
+   "tuned_config": {
+    "block_M": 128,
+    "block_N": 128,
+    "num_stages": 1,
+    "threads": 256
+   },
+   "fixed": "smem > 99 KB (fails at launch on sm_120)",
+   "tflops": {
+    "tl_tuned": 286.4709471510225,
+    "triton": 168.49431476263996
+   }
+  },
+  "s4096_d128": {
+   "t": {
+    "tl_tuned": 806.4121556282043,
+    "triton": 1439.1379189491272
+   },
+   "measured_tuned": 1.784618335555746,
+   "measured_fixed": null,
+   "claimed": 1.35,
+   "upstream": 1.7168273260864244,
+   "verdict": "reproduced",
+   "tuned_config": {
+    "block_M": 128,
+    "block_N": 128,
+    "num_stages": 1,
+    "threads": 256
+   },
+   "fixed": "smem > 99 KB (fails at launch on sm_120)",
+   "tflops": {
+    "tl_tuned": 340.8652821333862,
+    "triton": 191.0017819172735
+   }
+  },
+  "s8192_d128": {
+   "t": {
+    "tl_tuned": 3191.942410469055,
+    "triton": 5493.884811401367
+   },
+   "measured_tuned": 1.7211729113226832,
+   "measured_fixed": null,
+   "claimed": 1.27,
+   "upstream": 1.7087060299616958,
+   "verdict": "reproduced",
+   "tuned_config": {
+    "block_M": 128,
+    "block_N": 128,
+    "num_stages": 1,
+    "threads": 256
+   },
+   "fixed": "smem > 99 KB (fails at launch on sm_120)",
+   "tflops": {
+    "tl_tuned": 344.4647447804132,
+    "triton": 200.1337242262892
+   }
+  },
+  "s16384_d128": {
+   "t": {
+    "tl_tuned": 12707.148170471191,
+    "triton": 21799.343376159668
+   },
+   "measured_tuned": 1.7155181543264661,
+   "measured_fixed": null,
+   "claimed": 1.31,
+   "upstream": 1.7045292904746923,
+   "verdict": "reproduced",
+   "tuned_config": {
+    "block_M": 128,
+    "block_N": 128,
+    "num_stages": 1,
+    "threads": 256
+   },
+   "fixed": "smem > 99 KB (fails at launch on sm_120)",
+   "tflops": {
+    "tl_tuned": 346.10806863212304,
+    "triton": 201.75132962554363
+   }
+  }
+ }
+}

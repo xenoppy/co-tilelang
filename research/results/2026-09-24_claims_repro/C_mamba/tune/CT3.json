@@ -1,0 +1,645 @@
+{
+ "shape_name": "CT3",
+ "shape": {
+  "kind": "state_ex",
+  "batch": 64,
+  "nheads": 64,
+  "seqlen": 1024,
+  "headdim": 64,
+  "dstate": 128,
+  "chunk_size": 256,
+  "ngroups": 1
+ },
+ "env": {
+  "torch": "2.8.0+cu128",
+  "triton": "3.4.0",
+  "tilelang": "0.1.14+cuda",
+  "mamba_ssm": "2.2.6.post3+vendored-triton-ssd",
+  "cuda": "12.8",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+  "helion_stubbed": false
+ },
+ "n_configs": 60,
+ "n_tuned": 55,
+ "n_ok": 55,
+ "config_filter": {
+  "ref": "CT0",
+  "removed": [
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 128,
+     "block_K": 64,
+     "num_stages": 5
+    },
+    "dyn_smem": 124544,
+    "ref_reason": "launch: dynamic smem 124544 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 64,
+     "num_stages": 5
+    },
+    "dyn_smem": 104064,
+    "ref_reason": "launch: dynamic smem 104064 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 64,
+     "num_stages": 5
+    },
+    "dyn_smem": 124544,
+    "ref_reason": "launch: dynamic smem 124544 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 128,
+     "block_K": 64,
+     "num_stages": 4
+    },
+    "dyn_smem": 132608,
+    "ref_reason": "launch: dynamic smem 132608 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 128,
+     "block_K": 64,
+     "num_stages": 5
+    },
+    "dyn_smem": 165504,
+    "ref_reason": "launch: dynamic smem 165504 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+   }
+  ],
+  "mismatch": []
+ },
+ "best_config": {
+  "block_M": 64,
+  "block_N": 128,
+  "block_K": 64,
+  "num_stages": 2
+ },
+ "best_latency_ms": 0.5649375915527344,
+ "ref_latency_ms": null,
+ "tune_wall_s": 16.833213806152344,
+ "per_config": [
+  {
+   "index": 26,
+   "latency_ms": 0.5649375915527344,
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 64,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 28,
+   "latency_ms": 0.5649376511573792,
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 64,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 27,
+   "latency_ms": 0.5674015879631042,
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 64,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 22,
+   "latency_ms": 0.5982176065444946,
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 23,
+   "latency_ms": 0.6009887456893921,
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 24,
+   "latency_ms": 0.606726348400116,
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 21,
+   "latency_ms": 0.6089727282524109,
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 25,
+   "latency_ms": 0.6355999708175659,
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 64,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 53,
+   "latency_ms": 0.6876128315925598,
+   "config": {
+    "block_M": 128,
+    "block_N": 128,
+    "block_K": 64,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 54,
+   "latency_ms": 0.6908928155899048,
+   "config": {
+    "block_M": 128,
+    "block_N": 128,
+    "block_K": 64,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 52,
+   "latency_ms": 0.6919136047363281,
+   "config": {
+    "block_M": 128,
+    "block_N": 128,
+    "block_K": 64,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 18,
+   "latency_ms": 0.7030816078186035,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 19,
+   "latency_ms": 0.7030879855155945,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 16,
+   "latency_ms": 0.7032768130302429,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 17,
+   "latency_ms": 0.7045088410377502,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 48,
+   "latency_ms": 0.7359359860420227,
+   "config": {
+    "block_M": 128,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 50,
+   "latency_ms": 0.7377919554710388,
+   "config": {
+    "block_M": 128,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 20,
+   "latency_ms": 0.7418912053108215,
+   "config": {
+    "block_M": 64,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 49,
+   "latency_ms": 0.7421919703483582,
+   "config": {
+    "block_M": 128,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 51,
+   "latency_ms": 0.7426111698150635,
+   "config": {
+    "block_M": 128,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 47,
+   "latency_ms": 0.804150402545929,
+   "config": {
+    "block_M": 128,
+    "block_N": 128,
+    "block_K": 32,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 15,
+   "latency_ms": 0.8053728342056274,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 13,
+   "latency_ms": 0.8258591890335083,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 12,
+   "latency_ms": 0.8377344012260437,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 14,
+   "latency_ms": 0.8385536074638367,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 11,
+   "latency_ms": 0.8415167927742004,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 44,
+   "latency_ms": 0.946684718132019,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 43,
+   "latency_ms": 0.9539552927017212,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 45,
+   "latency_ms": 0.9563136100769043,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 46,
+   "latency_ms": 0.9616416096687317,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 39,
+   "latency_ms": 1.0774495601654053,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 10,
+   "latency_ms": 1.0819584131240845,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 41,
+   "latency_ms": 1.0877854824066162,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 40,
+   "latency_ms": 1.0976288318634033,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 42,
+   "latency_ms": 1.0994656085968018,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 6,
+   "latency_ms": 1.1029503345489502,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 7,
+   "latency_ms": 1.1206719875335693,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 8,
+   "latency_ms": 1.1306977272033691,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 9,
+   "latency_ms": 1.137561559677124,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 38,
+   "latency_ms": 1.2053534984588623,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 32,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 5,
+   "latency_ms": 1.2200863361358643,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 1,
+   "latency_ms": 1.3809632062911987,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 3,
+   "latency_ms": 1.3849600553512573,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 2,
+   "latency_ms": 1.410252571105957,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 4,
+   "latency_ms": 1.4120960235595703,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 35,
+   "latency_ms": 1.5327231884002686,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 36,
+   "latency_ms": 1.5499231815338135,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 37,
+   "latency_ms": 1.5733792781829834,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 34,
+   "latency_ms": 1.5870944261550903,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 0,
+   "latency_ms": 1.7171424627304077,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 30,
+   "latency_ms": 1.8033664226531982,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 32,
+   "latency_ms": 1.82302725315094,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 31,
+   "latency_ms": 1.8388992547988892,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 33,
+   "latency_ms": 1.8431968688964844,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 29,
+   "latency_ms": 1.997004747390747,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 32,
+    "num_stages": 1
+   }
+  }
+ ],
+ "failed": [],
+ "failure_summary": {},
+ "time": "2026-09-24 15:59:17"
+}

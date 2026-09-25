@@ -1,0 +1,15 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_linear_attn.py --fla-path /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/C_mamba/fla_target', 't': '2026-09-24 17:54:24'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+[linear_attn 1 512 16 128] flush=clean reps=100
+  tilelang                     24.98 us (p10 24.54 p90 26.72 cv 3.71%) clk 2847 MHz | x0.898 vs fla
+  fla                          22.43 us (p10 20.38 p90 22.98 cv 5.46%) clk 2841 MHz | x1.000 vs fla
+[linear_attn 1 512 16 128] TL 25.0 us FLA 22.4 us ratio 0.898 ok=True
+[linear_attn 8 1024 32 128] flush=clean reps=100
+  tilelang                    391.07 us (p10 389.02 p90 393.12 cv 0.45%) clk 2827 MHz | x1.694 vs fla
+  fla                         662.43 us (p10 659.33 p90 666.60 cv 0.48%) clk 2736 MHz | x1.000 vs fla
+[linear_attn 8 1024 32 128] TL 391.1 us FLA 662.4 us ratio 1.694 ok=True
+[linear_attn 8 4096 32 128] flush=clean reps=100
+  tilelang                   1598.37 us (p10 1588.12 p90 1607.57 cv 0.45%) clk 2823 MHz | x1.817 vs fla
+  fla                        2905.02 us (p10 2897.82 p90 2912.15 cv 0.19%) clk 2793 MHz | x1.000 vs fla
+[linear_attn 8 4096 32 128] TL 1598.4 us FLA 2905.0 us ratio 1.817 ok=True
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 229.3, 't': '2026-09-24 17:58:13'}

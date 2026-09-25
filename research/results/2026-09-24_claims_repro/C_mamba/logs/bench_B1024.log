@@ -1,0 +1,22 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.4, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python /home/ywc/co-tilelang/research/bench/scripts/claims_mamba_bench.py --shape B1024', 't': '2026-09-24 16:53:20'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 16:55:35,711 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[B1024] check tilelang {'max_abs': 0.008851051330566406, 'rel_l2': 0.00024409761329872436, 'mismatch_frac': 0.0, 'nonfinite': 0, 'ref_max_abs': 17.24587059020996, 'ok': True} triton {'max_abs': 0.007060050964355469, 'rel_l2': 0.00022901702283600753, 'mismatch_frac': 0.0, 'nonfinite': 0, 'ref_max_abs': 17.24587059020996, 'ok': True}
+[mamba B1024] flush=clean reps=100
+  tilelang                    212.96 us (p10 210.94 p90 213.09 cv 0.39%) clk 2664 MHz | x0.861 vs triton
+  triton                      183.33 us (p10 182.27 p90 184.67 cv 0.56%) clk 2400 MHz | x1.000 vs triton
+2026-09-24 16:55:46,926 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 16:55:46,966 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 16:55:47,004 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 16:55:47,042 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+2026-09-24 16:55:47,179 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[topk B1024] flush=clean reps=50
+  tl_top0                     212.99 us (p10 211.99 p90 213.12 cv 0.26%) clk 2670 MHz | x0.865 vs triton
+  tl_top1                     229.31 us (p10 227.30 p90 229.50 cv 11.45%) clk 2695 MHz | x0.804 vs triton
+  tl_top2                     231.41 us (p10 231.23 p90 231.52 cv 0.25%) clk 2700 MHz | x0.797 vs triton
+  tl_top3                     231.33 us (p10 229.37 p90 231.46 cv 0.54%) clk 2709 MHz | x0.797 vs triton
+  tl_top4                     243.71 us (p10 243.64 p90 244.77 cv 0.54%) clk 2704 MHz | x0.756 vs triton
+  tl_top5                     251.92 us (p10 251.84 p90 253.95 cv 0.42%) clk 2402 MHz | x0.732 vs triton
+  triton                      184.32 us (p10 183.27 p90 184.35 cv 0.39%) clk 2418 MHz | x1.000 vs triton
+[B1024] TL 212.96 us  Triton 183.33 us  ratio 0.861  (secondary 0.888)  ok=True
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 151.3, 't': '2026-09-24 16:55:52'}

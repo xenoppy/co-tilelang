@@ -1,0 +1,22 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock env -u PYTHONPATH PYTHONPATH=/tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/C_mamba/tl_upstream:/tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/C_mamba/z3_415 LD_LIBRARY_PATH=/tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/C_mamba/z3_415/z3/lib CUDA_HOME=/usr/local/cuda-12.9 TILELANG_CACHE_DIR=/tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/C_mamba/tl_upstream_cache /home/ywc/mpk-env/bin/python research/bench/scripts/claims_mamba_forkcheck.py --tag upstream --shapes CC1,CC4,CT1,CT4,B8192', 't': '2026-09-24 17:41:43'}
+2026-09-24 17:45:07,600 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[upstream CC1] flush=clean reps=100
+  tilelang                     51.17 us (p10 51.07 p90 51.36 cv 1.03%) clk 2727 MHz | x0.800 vs triton
+  triton                       40.93 us (p10 38.91 p90 40.99 cv 2.00%) clk 2660 MHz | x1.000 vs triton
+2026-09-24 17:45:18,145 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[upstream CC4] flush=clean reps=100
+  tilelang                   2870.42 us (p10 2864.09 p90 2876.42 cv 0.17%) clk 2502 MHz | x1.521 vs triton
+  triton                     4364.70 us (p10 4357.94 p90 4372.81 cv 0.15%) clk 2777 MHz | x1.000 vs triton
+2026-09-24 17:45:22,512 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[upstream CT1] flush=clean reps=100
+  tilelang                     22.51 us (p10 22.08 p90 22.62 cv 1.29%) clk 2808 MHz | x1.072 vs triton
+  triton                       24.14 us (p10 22.11 p90 24.61 cv 4.38%) clk 2802 MHz | x1.000 vs triton
+2026-09-24 17:45:26,734 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[upstream CT4] flush=clean reps=100
+  tilelang                   1072.61 us (p10 1070.95 p90 1074.35 cv 0.18%) clk 2695 MHz | x1.024 vs triton
+  triton                     1098.72 us (p10 1096.60 p90 1103.51 cv 1.02%) clk 2642 MHz | x1.000 vs triton
+2026-09-24 17:45:30,045 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[upstream B8192] flush=clean reps=100
+  tilelang                   1798.50 us (p10 1795.07 p90 1803.30 cv 0.18%) clk 2429 MHz | x0.918 vs triton
+  triton                     1650.72 us (p10 1645.41 p90 1655.94 cv 0.29%) clk 1982 MHz | x1.000 vs triton
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 230.3, 't': '2026-09-24 17:45:34'}

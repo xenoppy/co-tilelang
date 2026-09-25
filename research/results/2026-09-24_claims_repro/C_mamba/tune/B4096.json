@@ -1,0 +1,1039 @@
+{
+ "shape_name": "B4096",
+ "shape": {
+  "kind": "scan_bm",
+  "batch": 8,
+  "nheads": 80,
+  "seqlen": 4096,
+  "headdim": 64,
+  "dstate": 128,
+  "chunk_size": 256,
+  "ngroups": 1
+ },
+ "env": {
+  "torch": "2.8.0+cu128",
+  "triton": "3.4.0",
+  "tilelang": "0.1.14+cuda",
+  "mamba_ssm": "2.2.6.post3+vendored-triton-ssd",
+  "cuda": "12.8",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+  "helion_stubbed": true
+ },
+ "n_configs": 90,
+ "n_tuned": 18,
+ "n_ok": 16,
+ "config_filter": {
+  "ref": "CC0",
+  "removed": [
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 101120,
+    "ref_reason": "launch: dynamic smem 101120 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 125952,
+    "ref_reason": "launch: dynamic smem 125952 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 151808,
+    "ref_reason": "launch: dynamic smem 151808 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 125952,
+    "ref_reason": "launch: dynamic smem 125952 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 176640,
+    "ref_reason": "launch: dynamic smem 176640 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 226304,
+    "ref_reason": "launch: dynamic smem 226304 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 276992,
+    "ref_reason": "launch: dynamic smem 276992 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 100864,
+    "ref_reason": "launch: dynamic smem 100864 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 117376,
+    "ref_reason": "launch: dynamic smem 117376 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 100864,
+    "ref_reason": "launch: dynamic smem 100864 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 133888,
+    "ref_reason": "launch: dynamic smem 133888 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 166912,
+    "ref_reason": "launch: dynamic smem 166912 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 200960,
+    "ref_reason": "launch: dynamic smem 200960 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 101376,
+    "ref_reason": "launch: dynamic smem 101376 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 166912,
+    "ref_reason": "launch: dynamic smem 166912 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 234496,
+    "ref_reason": "launch: dynamic smem 234496 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 300032,
+    "ref_reason": "launch: dynamic smem 300032 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 367616,
+    "ref_reason": "launch: dynamic smem 367616 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 104832,
+    "ref_reason": "launch: dynamic smem 104832 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 125440,
+    "ref_reason": "launch: dynamic smem 125440 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 146048,
+    "ref_reason": "launch: dynamic smem 146048 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 125440,
+    "ref_reason": "launch: dynamic smem 125440 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 166656,
+    "ref_reason": "launch: dynamic smem 166656 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 207872,
+    "ref_reason": "launch: dynamic smem 207872 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 250112,
+    "ref_reason": "launch: dynamic smem 250112 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 125440,
+    "ref_reason": "launch: dynamic smem 125440 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 207872,
+    "ref_reason": "launch: dynamic smem 207872 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 291328,
+    "ref_reason": "launch: dynamic smem 291328 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 373760,
+    "ref_reason": "launch: dynamic smem 373760 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 457216,
+    "ref_reason": "launch: dynamic smem 457216 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 100608,
+    "ref_reason": "launch: dynamic smem 100608 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 125312,
+    "ref_reason": "launch: dynamic smem 125312 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 150016,
+    "ref_reason": "launch: dynamic smem 150016 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 174720,
+    "ref_reason": "launch: dynamic smem 174720 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 100608,
+    "ref_reason": "launch: dynamic smem 100608 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 150016,
+    "ref_reason": "launch: dynamic smem 150016 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 199424,
+    "ref_reason": "launch: dynamic smem 199424 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 248832,
+    "ref_reason": "launch: dynamic smem 248832 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 299264,
+    "ref_reason": "launch: dynamic smem 299264 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 150528,
+    "ref_reason": "launch: dynamic smem 150528 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 248832,
+    "ref_reason": "launch: dynamic smem 248832 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 349184,
+    "ref_reason": "launch: dynamic smem 349184 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 447488,
+    "ref_reason": "launch: dynamic smem 447488 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 547840,
+    "ref_reason": "launch: dynamic smem 547840 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 112768,
+    "ref_reason": "launch: dynamic smem 112768 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 149760,
+    "ref_reason": "launch: dynamic smem 149760 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 186752,
+    "ref_reason": "launch: dynamic smem 186752 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 223744,
+    "ref_reason": "launch: dynamic smem 223744 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 260736,
+    "ref_reason": "launch: dynamic smem 260736 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 149760,
+    "ref_reason": "launch: dynamic smem 149760 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 223744,
+    "ref_reason": "launch: dynamic smem 223744 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 297728,
+    "ref_reason": "launch: dynamic smem 297728 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 371712,
+    "ref_reason": "launch: dynamic smem 371712 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 446720,
+    "ref_reason": "launch: dynamic smem 446720 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 223744,
+    "ref_reason": "launch: dynamic smem 223744 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 371712,
+    "ref_reason": "launch: dynamic smem 371712 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 520704,
+    "ref_reason": "launch: dynamic smem 520704 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 32,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 668672,
+    "ref_reason": "launch: dynamic smem 668672 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 125056,
+    "ref_reason": "launch: dynamic smem 125056 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 166144,
+    "ref_reason": "launch: dynamic smem 166144 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 207232,
+    "ref_reason": "launch: dynamic smem 207232 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 248320,
+    "ref_reason": "launch: dynamic smem 248320 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 289408,
+    "ref_reason": "launch: dynamic smem 289408 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 166144,
+    "ref_reason": "launch: dynamic smem 166144 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 248320,
+    "ref_reason": "launch: dynamic smem 248320 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 330496,
+    "ref_reason": "launch: dynamic smem 330496 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 412672,
+    "ref_reason": "launch: dynamic smem 412672 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 5
+    },
+    "dyn_smem": 495872,
+    "ref_reason": "launch: dynamic smem 495872 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "dyn_smem": 248832,
+    "ref_reason": "launch: dynamic smem 248832 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "dyn_smem": 412672,
+    "ref_reason": "launch: dynamic smem 412672 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "dyn_smem": 578560,
+    "ref_reason": "launch: dynamic smem 578560 B > sm_120 limit"
+   },
+   {
+    "config": {
+     "block_M": 256,
+     "block_N": 64,
+     "block_K": 256,
+     "block_Dstate": 128,
+     "num_stages": 4
+    },
+    "dyn_smem": 742400,
+    "ref_reason": "launch: dynamic smem 742400 B > sm_120 limit"
+   }
+  ],
+  "mismatch": []
+ },
+ "best_config": {
+  "block_M": 128,
+  "block_N": 64,
+  "block_K": 64,
+  "block_Dstate": 128,
+  "num_stages": 1
+ },
+ "best_latency_ms": 0.8694784045219421,
+ "ref_latency_ms": null,
+ "tune_wall_s": 3.8828978538513184,
+ "per_config": [
+  {
+   "index": 15,
+   "latency_ms": 0.8694784045219421,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 9,
+   "latency_ms": 0.9449440240859985,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 10,
+   "latency_ms": 0.9499680399894714,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 8,
+   "latency_ms": 0.9661440849304199,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 11,
+   "latency_ms": 1.0059744119644165,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 0,
+   "latency_ms": 1.0454015731811523,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 12,
+   "latency_ms": 1.2931102514266968,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 13,
+   "latency_ms": 1.3395968675613403,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 14,
+   "latency_ms": 1.3498369455337524,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 1,
+   "latency_ms": 1.4419902563095093,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 3,
+   "latency_ms": 1.4477312564849854,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 2,
+   "latency_ms": 1.456844687461853,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 4,
+   "latency_ms": 1.4610368013381958,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 5,
+   "latency_ms": 1.5445983409881592,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 6,
+   "latency_ms": 1.5943679809570312,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 7,
+   "latency_ms": 2.073401689529419,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  }
+ ],
+ "failed": [
+  {
+   "index": 16,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "compile: Invalid layout for shared buffer `cb_shared`: the forward map must be injective. Details: (\"injectivity could not be proven: the logical input domain exceeds the exact-check limit of 262144 points\",)."
+  },
+  {
+   "index": 17,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "compile: Invalid layout for shared buffer `cb_shared`: the forward map must be injective. Details: (\"injectivity could not be proven: the logical input domain exceeds the exact-check limit of 262144 points\",)."
+  }
+ ],
+ "failure_summary": {
+  "compile": 2
+ },
+ "time": "2026-09-24 17:01:17"
+}

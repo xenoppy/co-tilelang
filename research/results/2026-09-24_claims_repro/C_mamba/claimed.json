@@ -1,0 +1,135 @@
+{
+ "c3": {
+  "source": "https://arxiv.org/e-print/2504.17577v2 figures/mha_performance_h100.pdf (vector original of Fig. 12 = images/mha_performance_h100.png)",
+  "chunk_scan_triton_over_tilelang": [
+   1.805,
+   1.559,
+   1.459,
+   1.439,
+   1.964
+  ],
+  "chunk_state_triton_over_tilelang": [
+   2.588,
+   2.233,
+   1.648,
+   1.688,
+   1.918
+  ],
+  "labels_scan": [
+   "CC0",
+   "CC1",
+   "CC2",
+   "CC3",
+   "CC4"
+  ],
+  "labels_state": [
+   "CT0",
+   "CT1",
+   "CT2",
+   "CT3",
+   "CT4"
+  ],
+  "mean_scan": 1.645,
+  "mean_state": 2.015,
+  "paper_text": "In our Linear Attention experiments, we use the chunk-scan and chunk-state functions from Mamba-2. Compared to Triton, TileLang achieves an average speedup of $1.77 \\times$ and $2.10\\times$.",
+  "flashattention_panel": {
+   "tilelang_height_units": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "FlashAttention-3": [
+    2.194,
+    2.0,
+    1.114,
+    1.059,
+    0.91
+   ],
+   "Triton": [
+    1.606,
+    1.497,
+    1.29,
+    1.346,
+    1.343
+   ],
+   "PyTorch": [
+    1.761,
+    1.648,
+    1.57,
+    1.45,
+    2.173
+   ]
+  }
+ },
+ "c6": {
+  "seq_len": [
+   1024,
+   2048,
+   4096,
+   8192,
+   16384,
+   32768
+  ],
+  "tilelang_tflops_readme": [
+   126.477,
+   130.195,
+   133.054,
+   134.362,
+   135.711,
+   135.379
+  ],
+  "tilelang_latency_ms_readme": [
+   0.169,
+   0.329,
+   0.645,
+   1.278,
+   2.531,
+   5.076
+  ],
+  "triton_tflops_read": [
+   107.1,
+   109.6,
+   105.7,
+   90.6,
+   90.6,
+   89.8
+  ],
+  "helion_tflops_read": [
+   113.9,
+   118.3,
+   121.1,
+   121.9,
+   113.9,
+   123.3
+  ],
+  "tilelang_tflops_read": [
+   126.5,
+   130.1,
+   133.0,
+   134.4,
+   135.9,
+   135.2
+  ],
+  "fit_max_residual_tflops": 0.21,
+  "ratio_tilelang_over_triton": [
+   1.181,
+   1.188,
+   1.259,
+   1.483,
+   1.498,
+   1.508
+  ],
+  "ratio_tilelang_over_helion": [
+   1.11,
+   1.101,
+   1.099,
+   1.102,
+   1.191,
+   1.098
+  ],
+  "platform": "H800 SXM (README) / figure caption says H100",
+  "versions": "Triton 3.5.0, mamba-ssm 2.2.6.post3, Helion 0.2.1"
+ }
+}

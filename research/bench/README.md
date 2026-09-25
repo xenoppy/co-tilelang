@@ -75,6 +75,14 @@ Measured (methodology v1, part A):
 - Read-dominated ops agree with back-to-back execution: decode B16×8192 takes 330 µs clean-flush vs 328 µs back-to-back.
 - With the old write flush the same ops paid for the flush's dirty lines: decode 342 µs, RMSNorm 43.4 µs, copy 754 µs.
 
+**Completion grid for eager kernels (found 2026-09-25, `results/2026-09-24_claims_repro/B_attention/raw/timerprobe.json`).**
+- Two events around nothing read 0.35–0.42 µs (32 ns steps), but an eagerly launched kernel is seen complete on a
+  ~2.048 µs grid: a calibrated spin kernel swept in 128 ns steps gives event durations in a 2.048 µs staircase,
+  +2.3 to +4.0 µs above the true kernel time. Several eager launches per rep do not help (the step is per kernel).
+- Inside a CUDA graph the per-call time is continuous (kernel + ~0.9 µs).
+- Consequence: flush-mode per-kernel times below ~60 µs carry up to ~2 µs of quantization. For such kernels time a
+  CUDA graph of N calls on N cold input copies per rep (`research/bench/scripts/claims_attn_graph.py`), or use `bench_steady`.
+
 **Flush floor and duty cycle.**
 - An empty kernel reads 3.9 µs (bimodal 2.0 / 4.1 µs) in flush mode vs 0.63 µs back-to-back. That is the launch plus event floor.
 - Every flush-mode rep adds about 140 µs of low-power (~350 W) flush phase. Under the 600 W cap this lends the clock headroom: matmul 4096³ runs at 2450 MHz in clean-flush mode vs 2150 MHz back-to-back, 9–10% faster in time.

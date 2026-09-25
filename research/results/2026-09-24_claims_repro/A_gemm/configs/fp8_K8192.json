@@ -1,0 +1,4097 @@
+{
+ "suite": "fp8",
+ "shape": "K8192",
+ "MNK": [
+  8192,
+  8192,
+  8192
+ ],
+ "smem_limit": 101376,
+ "n_configs": 576,
+ "n_compiled": 576,
+ "n_launchable": 528,
+ "wall_s": 190.94354152679443,
+ "when": "2026-09-24 16:58:10",
+ "records": [
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 8192,
+   "launchable": true,
+   "compile_s": 8.989382028579712
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 8192,
+   "launchable": true,
+   "compile_s": 8.98782992362976
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 8192,
+   "launchable": true,
+   "compile_s": 8.99817442893982
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 8192,
+   "launchable": true,
+   "compile_s": 8.971933364868164
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 8192,
+   "launchable": true,
+   "compile_s": 8.881494998931885
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 8192,
+   "launchable": true,
+   "compile_s": 8.953305721282959
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 8192,
+   "launchable": true,
+   "compile_s": 8.978000402450562
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 8192,
+   "launchable": true,
+   "compile_s": 8.989646911621094
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 8208,
+   "launchable": true,
+   "compile_s": 9.113227367401123
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 8208,
+   "launchable": true,
+   "compile_s": 9.110786437988281
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 8208,
+   "launchable": true,
+   "compile_s": 9.257038593292236
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 8208,
+   "launchable": true,
+   "compile_s": 9.02687382698059
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 8208,
+   "launchable": true,
+   "compile_s": 9.16546630859375
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 8208,
+   "launchable": true,
+   "compile_s": 9.1646146774292
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 8208,
+   "launchable": true,
+   "compile_s": 9.144404411315918
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 8208,
+   "launchable": true,
+   "compile_s": 9.289668083190918
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16416,
+   "launchable": true,
+   "compile_s": 8.971539497375488
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16416,
+   "launchable": true,
+   "compile_s": 9.22736382484436
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16416,
+   "launchable": true,
+   "compile_s": 8.90896463394165
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16416,
+   "launchable": true,
+   "compile_s": 9.026860237121582
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16416,
+   "launchable": true,
+   "compile_s": 9.084145784378052
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16416,
+   "launchable": true,
+   "compile_s": 9.093015909194946
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16416,
+   "launchable": true,
+   "compile_s": 9.120136976242065
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16416,
+   "launchable": true,
+   "compile_s": 8.925538539886475
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24624,
+   "launchable": true,
+   "compile_s": 8.516435384750366
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24624,
+   "launchable": true,
+   "compile_s": 8.828687191009521
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24624,
+   "launchable": true,
+   "compile_s": 8.737741947174072
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24624,
+   "launchable": true,
+   "compile_s": 8.775940418243408
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24624,
+   "launchable": true,
+   "compile_s": 8.792052507400513
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24624,
+   "launchable": true,
+   "compile_s": 8.877306699752808
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24624,
+   "launchable": true,
+   "compile_s": 9.04777193069458
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24624,
+   "launchable": true,
+   "compile_s": 8.760940551757812
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 8.534923553466797
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 8.455031633377075
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 8.592384815216064
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 8.555898904800415
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 8.5859055519104
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 8.56766414642334
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 8.480584383010864
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 8.508944511413574
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 8.614226341247559
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 8.43394160270691
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 8.47131633758545
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 8.442985773086548
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 8.67735242843628
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 8.604918241500854
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 8.674873113632202
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 8.63667345046997
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 5.886863470077515
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 8.393345594406128
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 9.056455612182617
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 9.793696165084839
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 9.787663459777832
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 9.911979675292969
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 9.786246299743652
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 9.823360443115234
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 9.090717315673828
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 9.03542184829712
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 9.499606609344482
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 9.050377368927002
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 9.750095844268799
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 9.482710838317871
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 9.408937215805054
+  },
+  {
+   "config": "block_M=64,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 9.730359315872192
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 9.095773458480835
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 8.910711765289307
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 8.909682989120483
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 8.871274948120117
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 9.224797248840332
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 8.775632858276367
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 9.132062435150146
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 9.120705127716064
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 5.347697019577026
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 4.976786136627197
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 6.276215553283691
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 9.036377668380737
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 9.165861368179321
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 8.975530862808228
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 8.938705205917358
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 8.979065179824829
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 9.010383605957031
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 8.940404415130615
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 8.89090347290039
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 8.593196630477905
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 8.664501190185547
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 8.730307817459106
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 8.759536266326904
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 8.763806104660034
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 8.560575008392334
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 8.28998351097107
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 8.415664672851562
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 8.27275538444519
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 8.342331409454346
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 8.430388450622559
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 8.487497806549072
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 8.235968112945557
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 7.408391952514648
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 5.635221242904663
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 6.05882453918457
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 8.561989068984985
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 9.278979063034058
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 9.254172325134277
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 9.260658740997314
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 9.19533920288086
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 9.470471382141113
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 9.167646169662476
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 9.314584970474243
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 9.385051727294922
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 9.495319366455078
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 9.416280269622803
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 9.335353136062622
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 9.445476770401001
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 9.212462425231934
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 9.165157556533813
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 9.106328964233398
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 9.10370659828186
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 9.42109203338623
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 9.266978979110718
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 9.398927450180054
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 9.231651067733765
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 8.887555837631226
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 8.493875503540039
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 6.131377935409546
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 5.079006671905518
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 8.694125413894653
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 8.752483129501343
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 8.841334581375122
+  },
+  {
+   "config": "block_M=64,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 9.078441619873047
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.884602308273315
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.879210710525513
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.863798141479492
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.895461082458496
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 9.08643913269043
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.843176126480103
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.870439291000366
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.79202914237976
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.675724983215332
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 9.023528575897217
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.95800495147705
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.974445343017578
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.958389282226562
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 9.017635107040405
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 9.015961170196533
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.88942575454712
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 8.968886852264404
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 8.933486223220825
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 8.740839719772339
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 6.442800760269165
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 9.050244092941284
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 9.032649278640747
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 9.315143346786499
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 9.247993230819702
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 9.212616205215454
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 9.130906820297241
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 9.204821586608887
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 9.129232168197632
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 9.111326456069946
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 9.097175121307373
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 9.16500449180603
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 9.020609378814697
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 9.12719202041626
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 9.011820554733276
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.975744247436523
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.9422128200531
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.898013353347778
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.910592794418335
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.8760666847229
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.805066108703613
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 9.04728364944458
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 8.91304874420166
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 8.85759949684143
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 7.508736610412598
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 9.118689060211182
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 9.047721862792969
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 9.39757752418518
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 9.339703798294067
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.256962537765503
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.374680280685425
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.326988935470581
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.187305212020874
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.589447975158691
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.566934823989868
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.567659378051758
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.481607913970947
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 8.111615657806396,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 7.908612489700317,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 8.060821056365967,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 8.110446691513062,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 8.11096477508545,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 8.17807936668396,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 8.155816555023193,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=64,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 8.14233112335205,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 8.657083749771118
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 8.552677392959595
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 8.558736801147461
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 8.542595624923706
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 5.896841049194336
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 7.04584264755249
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 7.30602502822876
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12288,
+   "launchable": true,
+   "compile_s": 7.225275039672852
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 7.13887095451355
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 7.157669305801392
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 7.149960517883301
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 7.058913469314575
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 8.069382905960083
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 8.039066553115845
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 8.349326133728027
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 12304,
+   "launchable": true,
+   "compile_s": 8.042141199111938
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 7.923590660095215
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 7.899150133132935
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 7.7036590576171875
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 7.668377161026001
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 7.794778347015381
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 7.987457275390625
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 7.668698787689209
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24608,
+   "launchable": true,
+   "compile_s": 7.905681371688843
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 7.584328651428223
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 7.578004598617554
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 7.175964117050171
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 7.482955455780029
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 5.66883659362793
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 5.35205864906311
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 6.215755939483643
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 36912,
+   "launchable": true,
+   "compile_s": 6.2828004360198975
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 6.299562692642212
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 6.337877035140991
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 6.2982518672943115
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 6.217614412307739
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 8.076801061630249
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 8.034173250198364
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 7.664313316345215
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24576,
+   "launchable": true,
+   "compile_s": 8.006608247756958
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 8.145346641540527
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 7.940685272216797
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 7.9570231437683105
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 7.956080436706543
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 8.142293930053711
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 8.180737972259521
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 8.043462991714478
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 24592,
+   "launchable": true,
+   "compile_s": 7.888960599899292
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.883707046508789
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.7435078620910645
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.676798343658447
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.608264923095703
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 6.039118766784668
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 5.623595237731934
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 5.651926517486572
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 5.944666385650635
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 5.843801259994507
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 5.854311466217041
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 5.943810701370239
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 5.815519332885742
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 5.7435455322265625
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.546520233154297
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.540327310562134
+  },
+  {
+   "config": "block_M=128,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 6.925413370132446
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 7.167050123214722
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 7.192953824996948
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 7.45572829246521
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 7.118445634841919
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 7.615383625030518
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 7.386315822601318
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 7.608848333358765
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16384,
+   "launchable": true,
+   "compile_s": 7.050683498382568
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 7.6535561084747314
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 7.483710527420044
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 7.47480034828186
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 7.345437049865723
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 7.310594797134399
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 6.746015548706055
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 6.272918224334717
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 16400,
+   "launchable": true,
+   "compile_s": 6.407242298126221
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 6.239786624908447
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 6.230646371841431
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 6.236015796661377
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 6.139912128448486
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 5.232315301895142
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 6.947735548019409
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 6.91307806968689
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32800,
+   "launchable": true,
+   "compile_s": 7.134338855743408
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 7.12978458404541
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 7.140029191970825
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 7.033065557479858
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 6.956889867782593
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 7.777965307235718
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 7.779660701751709
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 7.544766902923584
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49200,
+   "launchable": true,
+   "compile_s": 7.5428831577301025
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.841146945953369
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.839010000228882
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.827194690704346
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.811401844024658
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.6628477573394775
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.589429140090942
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.066753149032593
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.036916255950928
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 7.036633729934692
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 7.015723705291748
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.941572427749634
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.693918704986572
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 5.721673488616943
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.436127662658691
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.622627258300781
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.905815601348877
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 6.4273951053619385
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 6.414851903915405
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 6.346409559249878
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 6.197776556015015
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 8.388463497161865
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 8.246212720870972
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 8.13971757888794
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 8.304409742355347
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 8.090796947479248
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 7.949657917022705
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 7.9395751953125
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 7.92814302444458
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 8.278518915176392
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 8.110560894012451
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 8.143746376037598
+  },
+  {
+   "config": "block_M=128,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 8.022395133972168
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 8.046539783477783
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.8316099643707275
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 8.075579404830933
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.941125869750977
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 7.836203336715698
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 5.977044105529785
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 6.288846492767334
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 6.230542182922363
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.390425205230713
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.2938923835754395
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.31060528755188
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 5.899254083633423
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 7.364320516586304
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 7.425721645355225
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 7.941570997238159
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 7.9401655197143555
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 8.088374853134155
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.998363018035889
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.955364942550659
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.924933671951294
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.788275718688965
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.786703109741211
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.832127094268799
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.724836349487305
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.724905729293823
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.736558198928833
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.708458185195923
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.6198413372039795
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.51840877532959
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.5086705684661865
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.2656049728393555
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.293731212615967
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 7.3144166469573975
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 7.31541109085083
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 7.251888036727905
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 7.241310119628906
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 5.563558578491211
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 5.935071229934692
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 8.540446996688843
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 8.402489185333252
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 9.144138097763062
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 9.052822351455688
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 9.217607736587524
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 9.00337815284729
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 8.982789754867554
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 8.93782353401184
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 8.986884117126465
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 8.962091207504272
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 8.992191791534424
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 8.926385402679443
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 9.139304399490356
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 9.156744718551636
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 8.909123182296753
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 7.235857725143433
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 6.882745981216431
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 6.880441665649414
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 5.610048055648804,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 5.483048677444458,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 5.643996953964233,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 5.598977327346802,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 5.011589050292969,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 5.028353214263916,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 5.3093719482421875,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=128,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 5.401692628860474,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 5.66144585609436
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 5.655033588409424
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 5.71131443977356
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 5.6914308071136475
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.1013822555542
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.082395792007446
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.014997005462646
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20480,
+   "launchable": true,
+   "compile_s": 8.117482423782349
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.100924730300903
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.074774980545044
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.051780462265015
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.249792098999023
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.159670352935791
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.116252422332764
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.103680849075317
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 20496,
+   "launchable": true,
+   "compile_s": 8.096445560455322
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 7.918368816375732
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 7.921166658401489
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 7.708183526992798
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 7.664626359939575
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 7.561853408813477
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 7.01547646522522
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 6.242419481277466
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40992,
+   "launchable": true,
+   "compile_s": 6.123400926589966
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 5.857192516326904
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 5.857049465179443
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 5.836893558502197
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 5.873283624649048
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 8.022991180419922
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 8.371047019958496
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 8.408907175064087
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 61488,
+   "launchable": true,
+   "compile_s": 8.347027778625488
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.658056735992432
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.421944856643677
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.372117757797241
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.329890012741089
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.307411193847656
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.315071105957031
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.249232053756714
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40960,
+   "launchable": true,
+   "compile_s": 8.18959903717041
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 8.146772861480713
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 8.11758303642273
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 8.13027048110962
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 8.136647462844849
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 8.192851781845093
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 8.284083366394043
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 6.601715803146362
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 40976,
+   "launchable": true,
+   "compile_s": 6.923940896987915
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 6.848931074142456
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 6.8381359577178955
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 6.529857635498047
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 6.973934888839722
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 5.804441690444946
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.160187244415283
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 9.134608268737793
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 81952,
+   "launchable": true,
+   "compile_s": 8.992194175720215
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 7.611943006515503,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 7.596575021743774,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 7.517167568206787,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 7.62421989440918,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 7.6249895095825195,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 7.6392998695373535,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 7.581100225448608,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=64,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 122880,
+   "launchable": false,
+   "compile_s": 7.632939100265503,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 8.922553300857544
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 9.06488823890686
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 8.913736343383789
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 9.056090593338013
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 8.791997194290161
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 8.660891056060791
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 8.232751369476318
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32768,
+   "launchable": true,
+   "compile_s": 8.00912857055664
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 7.97632098197937
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 8.138937950134277
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 7.950378656387329
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 7.8836236000061035
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 5.2759528160095215
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.270494222640991
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.7052576541900635
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 32784,
+   "launchable": true,
+   "compile_s": 6.608221530914307
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 6.740973472595215
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 6.671326398849487
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 6.653871536254883
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 6.620367765426636
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 6.6073267459869385
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.715628385543823
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.769491195678711
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49184,
+   "launchable": true,
+   "compile_s": 7.75325608253479
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.680946588516235
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.723691463470459
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.6265130043029785
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.588022947311401
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.895745277404785
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.8977415561676025
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.892501592636108
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 73776,
+   "launchable": true,
+   "compile_s": 7.787069320678711
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 7.746608257293701
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 7.7290873527526855
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 7.580290079116821
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 7.560635328292847
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 6.360373020172119
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 6.369295120239258
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 6.438116073608398
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49152,
+   "launchable": true,
+   "compile_s": 6.456256866455078
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 6.624579191207886
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 6.5757222175598145
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 6.574475049972534
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 6.5568108558654785
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 6.5116798877716064
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 7.930162191390991
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 8.174307346343994
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 49168,
+   "launchable": true,
+   "compile_s": 8.08737587928772
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 8.207423686981201
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 8.125247240066528
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 8.178638935089111
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 8.176974534988403
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 7.990541458129883
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 7.974990606307983
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 7.909335613250732
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98336,
+   "launchable": true,
+   "compile_s": 7.891665458679199
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 6.68136191368103,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 6.67315149307251,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 6.715428113937378,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 6.53126859664917,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 6.61890983581543,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 4.8539416790008545,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 4.841280460357666,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=128,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 147456,
+   "launchable": false,
+   "compile_s": 5.2773120403289795,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.634613037109375
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.817925930023193
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.818249940872192
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.92815899848938
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.567232131958008
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.094714403152466
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.1556408405303955
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.108514308929443
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 6.392930507659912
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 6.433011293411255
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 7.970957279205322
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 7.819502115249634
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 7.805978298187256
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 7.558476209640503
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 7.920497894287109
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 7.97705602645874
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 7.91818642616272
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 7.918893098831177
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 8.005133867263794
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 7.888847589492798
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 7.822245359420776
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 7.666471481323242
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 7.426471948623657
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65568,
+   "launchable": true,
+   "compile_s": 6.861987829208374
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 6.6176652908325195
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 6.5082738399505615
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 6.489115953445435
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 6.487777948379517
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 6.287270784378052
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 6.240344285964966
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 6.358016729354858
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=64,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 98352,
+   "launchable": true,
+   "compile_s": 6.358556747436523
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.6182475090026855
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 6.526017189025879
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 8.465218305587769
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=0,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 8.3742835521698
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 8.193282842636108
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 8.218883991241455
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 8.24259877204895
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=0,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65536,
+   "launchable": true,
+   "compile_s": 8.105445384979248
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 8.340384006500244
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 8.399002075195312
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 8.398797035217285
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=1,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 8.346972703933716
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 8.14062762260437
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 8.087290525436401
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 8.09511947631836
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=1,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 65552,
+   "launchable": true,
+   "compile_s": 8.110661029815674
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 131072,
+   "launchable": false,
+   "compile_s": 6.573446989059448,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 131072,
+   "launchable": false,
+   "compile_s": 6.529693841934204,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 131072,
+   "launchable": false,
+   "compile_s": 6.54167914390564,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=2,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 131072,
+   "launchable": false,
+   "compile_s": 6.531938314437866,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 131072,
+   "launchable": false,
+   "compile_s": 6.046660423278809,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 131072,
+   "launchable": false,
+   "compile_s": 5.362525701522827,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 131072,
+   "launchable": false,
+   "compile_s": 5.3549485206604,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=2,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 131072,
+   "launchable": false,
+   "compile_s": 5.430548906326294,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 196608,
+   "launchable": false,
+   "compile_s": 5.688255310058594,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 196608,
+   "launchable": false,
+   "compile_s": 5.5990660190582275,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 196608,
+   "launchable": false,
+   "compile_s": 5.559372663497925,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=3,thread_num=128,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 196608,
+   "launchable": false,
+   "compile_s": 5.410254955291748,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 196608,
+   "launchable": false,
+   "compile_s": 5.17641282081604,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=1,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 196608,
+   "launchable": false,
+   "compile_s": 5.139223098754883,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=True",
+   "ok": true,
+   "smem": 196608,
+   "launchable": false,
+   "compile_s": 5.079251289367676,
+   "note": "rejected at module load"
+  },
+  {
+   "config": "block_M=256,block_N=256,block_K=128,num_stages=3,thread_num=256,k_pack=2,policy=Square,enable_rasteration=False",
+   "ok": true,
+   "smem": 196608,
+   "launchable": false,
+   "compile_s": 5.013537645339966,
+   "note": "rejected at module load"
+  }
+ ]
+}

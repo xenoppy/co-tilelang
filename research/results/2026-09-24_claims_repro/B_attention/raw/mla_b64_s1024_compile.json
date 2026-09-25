@@ -1,0 +1,184 @@
+{
+ "faithful": {
+  "identical_kernel_source": true,
+  "tir_len": 7284,
+  "stages1_differs": true
+ },
+ "shipped": {
+  "block_N": 64,
+  "block_H": 64,
+  "num_split": 1,
+  "num_stages": 2,
+  "resources": {
+   "main_no_split_kernel": {
+    "regs": 168,
+    "local_bytes": 0,
+    "smem_static": 2048,
+    "max_threads": [
+     384,
+     1,
+     1
+    ],
+    "launch_values": [
+     64,
+     2,
+     384,
+     1,
+     1,
+     231424
+    ],
+    "smem_dynamic": 231424,
+    "smem_total": 233472,
+    "fits_99KB": false
+   }
+  }
+ },
+ "adapted": {
+  "num_stages": 1,
+  "block_H": 16,
+  "block_N": 64,
+  "num_split": 1,
+  "smem": 98304,
+  "fits": true
+ },
+ "adapt_tried": [
+  {
+   "num_stages": 2,
+   "block_H": 64,
+   "block_N": 64,
+   "num_split": 1,
+   "smem": 233472,
+   "fits": false
+  },
+  {
+   "num_stages": 2,
+   "block_H": 32,
+   "block_N": 64,
+   "num_split": 1,
+   "smem": 192512,
+   "fits": false
+  },
+  {
+   "num_stages": 2,
+   "block_H": 16,
+   "block_N": 64,
+   "num_split": 1,
+   "smem": 172032,
+   "fits": false
+  },
+  {
+   "num_stages": 1,
+   "block_H": 64,
+   "block_N": 64,
+   "num_split": 1,
+   "smem": 159744,
+   "fits": false
+  },
+  {
+   "num_stages": 1,
+   "block_H": 32,
+   "block_N": 64,
+   "num_split": 1,
+   "smem": 118784,
+   "fits": false
+  },
+  {
+   "num_stages": 1,
+   "block_H": 16,
+   "block_N": 64,
+   "num_split": 1,
+   "smem": 98304,
+   "fits": true
+  }
+ ],
+ "split_sweep": {
+  "2": {
+   "main_split_kernel_1": {
+    "regs": 19,
+    "local_bytes": 0,
+    "smem_static": 1024,
+    "max_threads": [
+     128,
+     1,
+     1
+    ],
+    "launch_values": [
+     128,
+     64,
+     128,
+     1,
+     1
+    ],
+    "smem_dynamic": 1,
+    "smem_total": 1025,
+    "fits_99KB": true
+   },
+   "main_split_kernel": {
+    "regs": 168,
+    "local_bytes": 0,
+    "smem_static": 2048,
+    "max_threads": [
+     384,
+     1,
+     1
+    ],
+    "launch_values": [
+     64,
+     8,
+     2,
+     384,
+     1,
+     1,
+     96256
+    ],
+    "smem_dynamic": 96256,
+    "smem_total": 98304,
+    "fits_99KB": true
+   }
+  },
+  "4": {
+   "main_split_kernel_1": {
+    "regs": 24,
+    "local_bytes": 0,
+    "smem_static": 1024,
+    "max_threads": [
+     128,
+     1,
+     1
+    ],
+    "launch_values": [
+     128,
+     64,
+     128,
+     1,
+     1
+    ],
+    "smem_dynamic": 1,
+    "smem_total": 1025,
+    "fits_99KB": true
+   },
+   "main_split_kernel": {
+    "regs": 168,
+    "local_bytes": 0,
+    "smem_static": 2048,
+    "max_threads": [
+     384,
+     1,
+     1
+    ],
+    "launch_values": [
+     64,
+     8,
+     4,
+     384,
+     1,
+     1,
+     96256
+    ],
+    "smem_dynamic": 96256,
+    "smem_total": 98304,
+    "fits_99KB": true
+   }
+  }
+ }
+}

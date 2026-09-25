@@ -1,0 +1,164 @@
+{
+ "shape": {
+  "B": 8,
+  "S": 4096,
+  "H": 32,
+  "D": 128
+ },
+ "check": {
+  "tilelang_o": {
+   "max_abs": 0.0008836686611175537,
+   "rel_l2": 0.0002936749266044473
+  },
+  "tilelang_h": {
+   "max_abs": 0.00018310546875,
+   "rel_l2": 4.868656743707984e-06
+  },
+  "fla_o": {
+   "max_abs": 0.0014562606811523438,
+   "rel_l2": 0.0003594874514714193
+  },
+  "fla_h": {
+   "max_abs": 0.00018310546875,
+   "rel_l2": 4.868656743707984e-06
+  }
+ },
+ "correctness_ok": true,
+ "tilelang_us": 1598.3680486679077,
+ "fla_us": 2905.0240516662598,
+ "ratio_fla_over_tilelang": 1.817493820705018,
+ "fla_version": "0.5.2",
+ "secondary": {
+  "method": "example's do_bench(backend='event'), median of 3",
+  "raw": {
+   "tilelang": [
+    1.640735387802124,
+    1.6414092779159546,
+    1.6396886110305786
+   ],
+   "fla": [
+    2.9566850662231445,
+    2.9558050632476807,
+    2.956110954284668
+   ],
+   "cupti_error": "UnsupportedOperation('fileno')"
+  },
+  "ratio_fla_over_tilelang": 1.8016987847410169
+ },
+ "primary": {
+  "label": "linear_attn 8 4096 32 128",
+  "config": {
+   "reference": "fla",
+   "flush": true,
+   "flush_kind": "clean",
+   "reps": 100,
+   "warmup_s": 1.0,
+   "gate": true,
+   "variants": [
+    "tilelang",
+    "fla"
+   ]
+  },
+  "variants": {
+   "tilelang": {
+    "total": {
+     "n": 100,
+     "median": 1598.3680486679077,
+     "p10": 1588.1247758865356,
+     "p90": 1607.5680494308472,
+     "mean": 1598.1913650035858,
+     "std": 7.218723919523685,
+     "cv": 0.004516808235606685,
+     "min": 1577.9839754104614,
+     "max": 1614.848017692566
+    },
+    "clock": {
+     "n": 100,
+     "covered": true,
+     "min": 2813.3675904508295,
+     "median": 2823.0955359696345,
+     "max": 2826.0876477537035,
+     "cv": 0.0009636752851428113,
+     "corr_time_vs_clock": -0.04417619295880488,
+     "cycles_median": 4511683.084348407,
+     "cycles_cv": 0.004576450741776543
+    },
+    "cv_ok": true
+   },
+   "fla": {
+    "total": {
+     "n": 100,
+     "median": 2905.0240516662598,
+     "p10": 2897.8208541870117,
+     "p90": 2912.1535778045654,
+     "mean": 2905.1382327079773,
+     "std": 5.3995995221861515,
+     "cv": 0.0018586377272495577,
+     "min": 2894.7200775146484,
+     "max": 2921.567916870117
+    },
+    "clock": {
+     "n": 100,
+     "covered": true,
+     "min": 2785.1906865442297,
+     "median": 2792.9284366995817,
+     "max": 2799.1645155975393,
+     "cv": 0.0011668265092941014,
+     "corr_time_vs_clock": 0.1351327241035834,
+     "cycles_median": 8113606.624564417,
+     "cycles_cv": 0.002324125668230483
+    },
+    "cv_ok": true
+   }
+  },
+  "derived": {
+   "speedup": {
+    "tilelang": 1.817493820705018,
+    "fla": 1.0
+   }
+  },
+  "nvml": null,
+  "clock": {
+   "window": {
+    "n_samples": 9662,
+    "smid": 0,
+    "span_ms": 484.763968,
+    "sample_period_us_median": 50.176,
+    "bin_ms": 1.0,
+    "n_bins": 483,
+    "mhz": {
+     "mean": 2797.6584885120833,
+     "min": 2704.8748405612246,
+     "p10": 2726.3002232142853,
+     "median": 2818.211894132653,
+     "p90": 2827.9045758928573,
+     "max": 2839.569714604592
+    },
+    "truncated": false,
+    "timed_out": false
+   }
+  },
+  "guard": {
+   "clean": true,
+   "complete": true,
+   "attempts": [
+    {
+     "waited_s": 0.0,
+     "clean": true,
+     "complete": true,
+     "active": []
+    }
+   ]
+  }
+ },
+ "env": {
+  "torch": "2.8.0+cu128",
+  "triton": "3.4.0",
+  "tilelang": "0.1.14+cuda",
+  "mamba_ssm": "2.2.6.post3+vendored-triton-ssd",
+  "cuda": "12.8",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+  "helion_stubbed": false
+ },
+ "time": "2026-09-24 17:58:11"
+}

@@ -1,0 +1,165 @@
+{
+ "point": {
+  "seq_len": 32768,
+  "vertical": 1000,
+  "slash": 600,
+  "batch": 1,
+  "heads": 1,
+  "head_dim": 64
+ },
+ "check": {
+  "tilelang": {
+   "max_abs": 0.0005522966384887695,
+   "rel_l2": 0.0002622967178307619,
+   "ok": true
+  },
+  "triton": {
+   "max_abs": 0.0007430315017700195,
+   "rel_l2": 0.00032851123446509325,
+   "ok": true
+  }
+ },
+ "tilelang_us": 503.77601385116577,
+ "triton_us": 612.384021282196,
+ "ratio_triton_over_tilelang": 1.2155878891509058,
+ "secondary": {
+  "method": "example's tilelang.profiler.do_bench (event, 256 MB flush, mean), median of 3",
+  "tilelang_ms": 0.5068278312683105,
+  "triton_ms": 0.6164062023162842,
+  "raw": {
+   "tilelang": [
+    0.5068278312683105,
+    0.5068871378898621,
+    0.506683349609375
+   ],
+   "triton": [
+    0.6165454387664795,
+    0.6164062023162842,
+    0.6158798336982727
+   ]
+  },
+  "ratio_triton_over_tilelang": 1.216204328743667
+ },
+ "claimed": {
+  "triton_ms": 0.823,
+  "tilelang_ms": 0.554,
+  "speedup": 1.49
+ },
+ "clock_mhz": 2633.0931946107976,
+ "primary": {
+  "label": "minference 32768 1000 600",
+  "config": {
+   "reference": "triton",
+   "flush": true,
+   "flush_kind": "clean",
+   "reps": 100,
+   "warmup_s": 1.0,
+   "gate": true,
+   "variants": [
+    "tilelang",
+    "triton"
+   ]
+  },
+  "variants": {
+   "tilelang": {
+    "total": {
+     "n": 100,
+     "median": 503.77601385116577,
+     "p10": 501.7247974872589,
+     "p90": 505.79522252082825,
+     "mean": 503.624324798584,
+     "std": 1.2951888048334217,
+     "cv": 0.0025717359965712746,
+     "min": 500.67198276519775,
+     "max": 506.9119930267334
+    },
+    "clock": {
+     "n": 100,
+     "covered": true,
+     "min": 2618.354969179099,
+     "median": 2633.0931946107976,
+     "max": 2648.221619096321,
+     "cv": 0.002412175620172207,
+     "corr_time_vs_clock": -0.8160432699638976,
+     "cycles_median": 1325966.9176066772,
+     "cycles_cv": 0.0015191454011108283
+    },
+    "cv_ok": true
+   },
+   "triton": {
+    "total": {
+     "n": 100,
+     "median": 612.384021282196,
+     "p10": 610.3039979934692,
+     "p90": 614.4319772720337,
+     "mean": 612.6428866386414,
+     "std": 1.6533082944601745,
+     "cv": 0.0026986492955648317,
+     "min": 608.2879900932312,
+     "max": 616.4159774780273
+    },
+    "clock": {
+     "n": 100,
+     "covered": true,
+     "min": 2603.035488001928,
+     "median": 2621.1289495677142,
+     "max": 2636.6859009517498,
+     "cv": 0.0023051297224095718,
+     "corr_time_vs_clock": -0.18690563874426488,
+     "cycles_median": 1606669.6654209853,
+     "cycles_cv": 0.0032043985513636984
+    },
+    "cv_ok": true
+   }
+  },
+  "derived": {
+   "speedup": {
+    "tilelang": 1.2155878891509058,
+    "triton": 1.0
+   }
+  },
+  "nvml": null,
+  "clock": {
+   "window": {
+    "n_samples": 2805,
+    "smid": 0,
+    "span_ms": 140.693696,
+    "sample_period_us_median": 50.176,
+    "bin_ms": 1.0,
+    "n_bins": 140,
+    "mhz": {
+     "mean": 2656.298026316687,
+     "min": 2582.998501227718,
+     "p10": 2611.2781545424914,
+     "median": 2657.1762365543154,
+     "p90": 2692.52377368724,
+     "max": 2715.352957589286
+    },
+    "truncated": false,
+    "timed_out": false
+   }
+  },
+  "guard": {
+   "clean": true,
+   "complete": true,
+   "attempts": [
+    {
+     "waited_s": 0.0,
+     "clean": true,
+     "complete": true,
+     "active": []
+    }
+   ]
+  }
+ },
+ "env": {
+  "torch": "2.8.0+cu128",
+  "triton": "3.4.0",
+  "tilelang": "0.1.14+cuda",
+  "mamba_ssm": "2.2.6.post3+vendored-triton-ssd",
+  "cuda": "12.8",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+  "helion_stubbed": false
+ },
+ "time": "2026-09-24 17:50:03"
+}

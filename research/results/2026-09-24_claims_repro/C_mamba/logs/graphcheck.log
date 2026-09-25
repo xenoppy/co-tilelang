@@ -1,0 +1,17 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_graphcheck.py --shapes CC0,CC1,CC2,CT0,CT1,CT2,B1024', 't': '2026-09-25 06:31:52'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-25 06:34:16,500 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[graphcheck CC0] TL 26.62 us  Triton 24.85 us  ratio 0.934  (k=20, copies=20) TL-vs-Triton rel 2.2e-04
+2026-09-25 06:34:44,651 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[graphcheck CC1] TL 50.96 us  Triton 43.57 us  ratio 0.855  (k=20, copies=10) TL-vs-Triton rel 2.1e-04
+2026-09-25 06:35:04,022 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[graphcheck CC2] TL 189.92 us  Triton 174.59 us  ratio 0.919  (k=21, copies=3) TL-vs-Triton rel 1.9e-04
+2026-09-25 06:35:23,469 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[graphcheck CT0] TL 12.84 us  Triton 11.57 us  ratio 0.902  (k=31, copies=31) TL-vs-Triton rel 4.1e-04
+2026-09-25 06:35:43,865 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[graphcheck CT1] TL 20.16 us  Triton 19.93 us  ratio 0.989  (k=32, copies=16) TL-vs-Triton rel 4.1e-04
+2026-09-25 06:36:03,260 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[graphcheck CT2] TL 66.01 us  Triton 70.82 us  ratio 1.073  (k=20, copies=4) TL-vs-Triton rel 4.1e-04
+2026-09-25 06:36:22,704 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[graphcheck B1024] TL 237.79 us  Triton 219.85 us  ratio 0.925  (k=20, copies=2) TL-vs-Triton rel 2.1e-04
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 292.1, 't': '2026-09-25 06:36:44'}

@@ -1,0 +1,26 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_minference.py --seq 65536', 't': '2026-09-24 17:50:15'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+W0924 17:53:58.606000 658042 torch/utils/cpp_extension.py:2425] TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+W0924 17:53:58.606000 658042 torch/utils/cpp_extension.py:2425] If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'] to specific architectures.
+triton_time: 1.000ms
+tilelang_time: 1.000ms
+speedup: 1.00x
+[minference 65536 1000 200] flush=clean reps=100
+  tilelang                    440.22 us (p10 438.30 p90 440.42 cv 0.21%) clk 2629 MHz | x1.070 vs triton
+  triton                      470.94 us (p10 468.89 p90 472.04 cv 0.32%) clk 2532 MHz | x1.000 vs triton
+[minference 65536 1000 200] TL 440.2 us Triton 470.9 us ratio 1.070 (claimed 1.22) check {'tilelang': {'max_abs': 0.001089334487915039, 'rel_l2': 0.00027409856427990683, 'ok': True}, 'triton': {'max_abs': 0.0008637905120849609, 'rel_l2': 0.0003450050299735354, 'ok': True}}
+triton_time: 1.000ms
+tilelang_time: 1.000ms
+speedup: 1.00x
+[minference 65536 1000 600] flush=clean reps=100
+  tilelang                   1164.26 us (p10 1162.27 p90 1166.27 cv 0.13%) clk 2591 MHz | x1.088 vs triton
+  triton                     1267.20 us (p10 1264.67 p90 1271.63 cv 0.20%) clk 2485 MHz | x1.000 vs triton
+[minference 65536 1000 600] TL 1164.3 us Triton 1267.2 us ratio 1.088 (claimed 1.17) check {'tilelang': {'max_abs': 0.001089334487915039, 'rel_l2': 0.00027107762415099716, 'ok': True}, 'triton': {'max_abs': 0.0008637905120849609, 'rel_l2': 0.00033943697084304174, 'ok': True}}
+triton_time: 1.000ms
+tilelang_time: 1.000ms
+speedup: 1.00x
+[minference 65536 800 600] flush=clean reps=100
+  tilelang                   1164.32 us (p10 1162.14 p90 1168.26 cv 0.20%) clk 2583 MHz | x1.091 vs triton
+  triton                     1270.67 us (p10 1266.59 p90 1274.92 cv 0.25%) clk 2474 MHz | x1.000 vs triton
+[minference 65536 800 600] TL 1164.3 us Triton 1270.7 us ratio 1.091 (claimed 1.2) check {'tilelang': {'max_abs': 0.001089334487915039, 'rel_l2': 0.0002711475243229483, 'ok': True}, 'triton': {'max_abs': 0.0008637905120849609, 'rel_l2': 0.00033949631606145143, 'ok': True}}
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 243.3, 't': '2026-09-24 17:54:18'}

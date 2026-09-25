@@ -1,0 +1,986 @@
+[
+ {
+  "shape": "CC1",
+  "top": 0,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC1_top0_shipped.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 84352,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 130,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CC1",
+  "top": 0,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC1_top0_no_ws.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 49920,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 202,
+  "static_smem": 0
+ },
+ {
+  "shape": "CC1",
+  "top": 1,
+  "variant": "shipped",
+  "config": {
+   "block_M": 128,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC1_top1_shipped.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 75904,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 237,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CC1",
+  "top": 1,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 128,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC1_top1_no_ws.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 49152,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 254,
+  "static_smem": 0
+ },
+ {
+  "shape": "CC1",
+  "top": 2,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 128,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC1_top2_shipped.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 67840,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 182,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CC1",
+  "top": 2,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 128,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC1_top2_no_ws.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 33280,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 254,
+  "static_smem": 0
+ },
+ {
+  "shape": "CC1",
+  "top": 3,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC1_top3_shipped.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 67840,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 138,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CC1",
+  "top": 3,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC1_top3_no_ws.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 33280,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 203,
+  "static_smem": 0
+ },
+ {
+  "shape": "CC4",
+  "top": 0,
+  "variant": "shipped",
+  "config": {
+   "block_M": 128,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC4_top0_shipped.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 75904,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 250,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CC4",
+  "top": 0,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 128,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC4_top0_no_ws.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 49152,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 254,
+  "static_smem": 0
+ },
+ {
+  "shape": "CC4",
+  "top": 1,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC4_top1_shipped.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 84352,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 130,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CC4",
+  "top": 1,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC4_top1_no_ws.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 49920,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 191,
+  "static_smem": 0
+ },
+ {
+  "shape": "CC4",
+  "top": 2,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC4_top2_shipped.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 67840,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 138,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CC4",
+  "top": 2,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC4_top2_no_ws.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 33280,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 193,
+  "static_smem": 0
+ },
+ {
+  "shape": "CC4",
+  "top": 3,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC4_top3_shipped.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 51328,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 142,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CC4",
+  "top": 3,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CC4_top3_no_ws.cubin",
+  "func": "chunk_scan_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 32768,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 183,
+  "static_smem": 0
+ },
+ {
+  "shape": "B8192",
+  "top": 0,
+  "variant": "shipped",
+  "config": {
+   "block_M": 128,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/B8192_top0_shipped.cubin",
+  "func": "main_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 75904,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 250,
+  "static_smem": 1024
+ },
+ {
+  "shape": "B8192",
+  "top": 0,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 128,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/B8192_top0_no_ws.cubin",
+  "func": "main_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 49152,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 254,
+  "static_smem": 0
+ },
+ {
+  "shape": "B8192",
+  "top": 1,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/B8192_top1_shipped.cubin",
+  "func": "main_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 67840,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 138,
+  "static_smem": 1024
+ },
+ {
+  "shape": "B8192",
+  "top": 1,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/B8192_top1_no_ws.cubin",
+  "func": "main_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 33280,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 192,
+  "static_smem": 0
+ },
+ {
+  "shape": "B8192",
+  "top": 2,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/B8192_top2_shipped.cubin",
+  "func": "main_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 84352,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 130,
+  "static_smem": 1024
+ },
+ {
+  "shape": "B8192",
+  "top": 2,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/B8192_top2_no_ws.cubin",
+  "func": "main_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 49920,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 191,
+  "static_smem": 0
+ },
+ {
+  "shape": "B8192",
+  "top": 3,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/B8192_top3_shipped.cubin",
+  "func": "main_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 51328,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 142,
+  "static_smem": 1024
+ },
+ {
+  "shape": "B8192",
+  "top": 3,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/B8192_top3_no_ws.cubin",
+  "func": "main_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 32768,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 182,
+  "static_smem": 0
+ },
+ {
+  "shape": "CT1",
+  "top": 0,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 4
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT1_top0_shipped.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 99840,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 240,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CT1",
+  "top": 0,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 4
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT1_top0_no_ws.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 99328,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 178,
+  "static_smem": 0
+ },
+ {
+  "shape": "CT1",
+  "top": 1,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT1_top1_shipped.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 50432,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 240,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CT1",
+  "top": 1,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT1_top1_no_ws.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 49664,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 195,
+  "static_smem": 0
+ },
+ {
+  "shape": "CT1",
+  "top": 2,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT1_top2_shipped.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 75136,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 240,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CT1",
+  "top": 2,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT1_top2_no_ws.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 74496,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 178,
+  "static_smem": 0
+ },
+ {
+  "shape": "CT1",
+  "top": 3,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 32,
+   "num_stages": 4
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT1_top3_shipped.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 50432,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 240,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CT1",
+  "top": 3,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 32,
+   "num_stages": 4
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT1_top3_no_ws.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 49664,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 158,
+  "static_smem": 0
+ },
+ {
+  "shape": "CT4",
+  "top": 0,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 4
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT4_top0_shipped.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 99840,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 240,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CT4",
+  "top": 0,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 4
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT4_top0_no_ws.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 99328,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 178,
+  "static_smem": 0
+ },
+ {
+  "shape": "CT4",
+  "top": 1,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT4_top1_shipped.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 50432,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 240,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CT4",
+  "top": 1,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 2
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT4_top1_no_ws.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 49664,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 195,
+  "static_smem": 0
+ },
+ {
+  "shape": "CT4",
+  "top": 2,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT4_top2_shipped.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 75136,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 240,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CT4",
+  "top": 2,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 64,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT4_top2_no_ws.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 74496,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 178,
+  "static_smem": 0
+ },
+ {
+  "shape": "CT4",
+  "top": 3,
+  "variant": "shipped",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 32,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT4_top3_shipped.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   256,
+   1,
+   1
+  ],
+  "dyn_smem": 38080,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 1,
+  "regs": 240,
+  "static_smem": 1024
+ },
+ {
+  "shape": "CT4",
+  "top": 3,
+  "variant": "no_ws",
+  "config": {
+   "block_M": 64,
+   "block_N": 128,
+   "block_K": 32,
+   "num_stages": 3
+  },
+  "cubin": "/home/ywc/co-tilelang/research/results/2026-09-24_claims_repro/C_mamba/diag/cubins/CT4_top3_no_ws.cubin",
+  "func": "chunk_state_fwd_kernel",
+  "block": [
+   128,
+   1,
+   1
+  ],
+  "dyn_smem": 37248,
+  "set_attr_err": 0,
+  "occ_err": 0,
+  "ctas_per_sm": 2,
+  "regs": 163,
+  "static_smem": 0
+ }
+]

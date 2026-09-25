@@ -1,0 +1,382 @@
+{
+ "shape_name": "B8192",
+ "shape": {
+  "kind": "scan_bm",
+  "batch": 8,
+  "nheads": 80,
+  "seqlen": 8192,
+  "headdim": 64,
+  "dstate": 128,
+  "chunk_size": 256,
+  "ngroups": 1
+ },
+ "flops": 171798691840.0,
+ "env": {
+  "torch": "2.8.0+cu128",
+  "triton": "3.4.0",
+  "tilelang": "0.1.14+cuda",
+  "mamba_ssm": "2.2.6.post3+vendored-triton-ssd",
+  "cuda": "12.8",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+  "helion_stubbed": false
+ },
+ "time_start": "2026-09-24 17:05:17",
+ "tune": {
+  "best_config": {
+   "block_M": 128,
+   "block_N": 64,
+   "block_K": 64,
+   "block_Dstate": 128,
+   "num_stages": 1
+  },
+  "autotuner_latency_ms": 1.7964063882827759,
+  "n_ok": 16,
+  "n_configs": 90,
+  "failure_summary": {
+   "compile": 2
+  }
+ },
+ "tilelang_src": {
+  "launch_bounds": [
+   "256, 1"
+  ],
+  "mma_sync": 4,
+  "wgmma": false,
+  "tma": true,
+  "cp_async": 0,
+  "mbarrier": true,
+  "warp_specialized": false,
+  "n_lines": 280
+ },
+ "triton_best_config": "BLOCK_SIZE_M: 128, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 4, num_ctas: 1, num_stages: 4, maxnreg: None",
+ "check": {
+  "tilelang": {
+   "max_abs": 0.01187896728515625,
+   "rel_l2": 0.00025277968510593164,
+   "mismatch_frac": 0.0,
+   "nonfinite": 0,
+   "ref_max_abs": 21.788375854492188,
+   "ok": true
+  },
+  "triton": {
+   "max_abs": 0.010105133056640625,
+   "rel_l2": 0.00023424409450614343,
+   "mismatch_frac": 0.0,
+   "nonfinite": 0,
+   "ref_max_abs": 21.788375854492188,
+   "ok": true
+  },
+  "tilelang_vs_triton": {
+   "max_abs": 0.015625,
+   "rel_l2": 0.0002353056333403427
+  }
+ },
+ "primary": {
+  "label": "mamba B8192",
+  "config": {
+   "reference": "triton",
+   "flush": true,
+   "flush_kind": "clean",
+   "reps": 100,
+   "warmup_s": 1.0,
+   "gate": true,
+   "variants": [
+    "tilelang",
+    "triton"
+   ],
+   "gpu_state_before": {
+    "sm_clock_mhz": 2610,
+    "mem_clock_mhz": 13365,
+    "max_sm_clock_mhz": 3090,
+    "temp_c": 61,
+    "power_w": 97.717,
+    "power_limit_w": 600.0,
+    "pstate": 1,
+    "reasons": []
+   }
+  },
+  "variants": {
+   "tilelang": {
+    "total": {
+     "n": 100,
+     "median": 1745.967984199524,
+     "p10": 1741.532838344574,
+     "p90": 1751.9680261611938,
+     "mean": 1746.235202550888,
+     "std": 4.315169514232643,
+     "cv": 0.0024711273188909913,
+     "min": 1735.584020614624,
+     "max": 1761.6640329360962
+    },
+    "clock": {
+     "n": 100,
+     "covered": true,
+     "min": 2501.7025330998595,
+     "median": 2516.9274187118535,
+     "max": 2537.960628472101,
+     "cv": 0.00325917762670041,
+     "corr_time_vs_clock": -0.8968365875444946,
+     "cycles_median": 4394094.740918887,
+     "cycles_cv": 0.0015102269926098178
+    },
+    "cv_ok": true
+   },
+   "triton": {
+    "total": {
+     "n": 100,
+     "median": 1593.3760404586792,
+     "p10": 1584.1856360435486,
+     "p90": 1598.4959602355957,
+     "mean": 1592.6505661010742,
+     "std": 6.046170333732565,
+     "cv": 0.003796294342539955,
+     "min": 1580.0000429153442,
+     "max": 1608.7360382080078
+    },
+    "clock": {
+     "n": 100,
+     "covered": true,
+     "min": 2030.0907768465622,
+     "median": 2067.4788575825137,
+     "max": 2095.282512211753,
+     "cv": 0.005677515388600325,
+     "corr_time_vs_clock": -0.9498926514449917,
+     "cycles_median": 3294921.489286444,
+     "cycles_cv": 0.0023900596863750045
+    },
+    "cv_ok": true
+   }
+  },
+  "derived": {
+   "speedup": {
+    "tilelang": 0.9126032406540354,
+    "triton": 1.0
+   }
+  },
+  "nvml": {
+   "n_samples": 37,
+   "duration_s": 0.3675783420003427,
+   "interval_ms_target": 10.0,
+   "max_sm_clock_mhz": 3090,
+   "errors": [],
+   "interval_ms_median": 9.999771002185298,
+   "refresh_ms_observed": {
+    "sm_clock": null,
+    "power": null
+   },
+   "stale_warning": true,
+   "sm_clock_mhz": {
+    "min": 2340.0,
+    "median": 2340.0,
+    "max": 2340.0,
+    "mean": 2340.0
+   },
+   "power_w_polled": {
+    "mean": 600.1612432432432,
+    "max": 600.402
+   },
+   "power_w": {
+    "n": 19,
+    "mean": 600.1958947368421,
+    "min": 582.308,
+    "max": 604.432,
+    "source": "20ms-samples"
+   },
+   "temp_c": {
+    "min": 73.0,
+    "max": 74.0
+   },
+   "throttle": {
+    "reasons_seen": [
+     "SwPowerCap"
+    ],
+    "any_perf_limiting": true,
+    "frac_samples_perf_limited": 1.0,
+    "frac_by_reason": {
+     "SwPowerCap": 1.0
+    }
+   }
+  },
+  "clock": {
+   "window": {
+    "n_samples": 7306,
+    "smid": 0,
+    "span_ms": 366.535936,
+    "sample_period_us_median": 50.176,
+    "bin_ms": 1.0,
+    "n_bins": 365,
+    "mhz": {
+     "mean": 2343.340113859941,
+     "min": 1985.662468112245,
+     "p10": 2028.6753975475376,
+     "median": 2434.4247265537806,
+     "p90": 2559.790736607143,
+     "max": 2588.614392055598
+    },
+    "truncated": false,
+    "timed_out": false
+   }
+  },
+  "guard": {
+   "clean": true,
+   "complete": true,
+   "attempts": [
+    {
+     "waited_s": 5.46,
+     "clean": true,
+     "complete": true,
+     "active": []
+    }
+   ]
+  }
+ },
+ "summary": {
+  "tilelang_us": 1745.967984199524,
+  "triton_us": 1593.3760404586792,
+  "ratio_triton_over_tilelang": 0.9126032406540354,
+  "tilelang_tflops": 98.3973895253095,
+  "triton_tflops": 107.82055677864024,
+  "clock_mhz_tilelang": 2516.9274187118535,
+  "clock_mhz_triton": 2067.4788575825137,
+  "correctness_ok": true
+ },
+ "topk": {
+  "configs": {
+   "tl_top0": {
+    "config": {
+     "block_M": 128,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "autotuner_ms": 1.7964063882827759,
+    "vs_checked_tilelang": {
+     "max_abs": 0.0,
+     "rel_l2": 0.0
+    },
+    "ok": true,
+    "picked": true,
+    "median_us": 1758.2080364227295,
+    "clock_mhz": 2496.2195216151404
+   },
+   "tl_top1": {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 2
+    },
+    "autotuner_ms": 1.9111934900283813,
+    "vs_checked_tilelang": {
+     "max_abs": 0.0,
+     "rel_l2": 0.0
+    },
+    "ok": true,
+    "picked": false,
+    "median_us": 1889.1680240631104,
+    "clock_mhz": 2573.7981014781526
+   },
+   "tl_top2": {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 3
+    },
+    "autotuner_ms": 1.938841462135315,
+    "vs_checked_tilelang": {
+     "max_abs": 0.0,
+     "rel_l2": 0.0
+    },
+    "ok": true,
+    "picked": false,
+    "median_us": 1911.8080139160156,
+    "clock_mhz": 2580.7067040370703
+   },
+   "tl_top3": {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "autotuner_ms": 1.9523584842681885,
+    "vs_checked_tilelang": {
+     "max_abs": 0.0,
+     "rel_l2": 0.0
+    },
+    "ok": true,
+    "picked": false,
+    "median_us": 1914.4160151481628,
+    "clock_mhz": 2609.2780592481104
+   },
+   "tl_top4": {
+    "config": {
+     "block_M": 64,
+     "block_N": 64,
+     "block_K": 128,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "autotuner_ms": 2.0387840270996094,
+    "vs_checked_tilelang": {
+     "max_abs": 0.0,
+     "rel_l2": 0.0
+    },
+    "ok": true,
+    "picked": false,
+    "median_us": 2012.2239589691162,
+    "clock_mhz": 2585.197884620855
+   },
+   "tl_top5": {
+    "config": {
+     "block_M": 64,
+     "block_N": 32,
+     "block_K": 64,
+     "block_Dstate": 128,
+     "num_stages": 1
+    },
+    "autotuner_ms": 2.1075968742370605,
+    "vs_checked_tilelang": {
+     "max_abs": 0.0,
+     "rel_l2": 0.0
+    },
+    "ok": true,
+    "picked": false,
+    "median_us": 2255.952000617981,
+    "clock_mhz": 2032.7658252921503
+   }
+  },
+  "triton_us": 1606.6400408744812
+ },
+ "secondary": {
+  "method": "tilelang.profiler.do_bench(fn) defaults: warmup 25 ms, rep 100 ms, event timer, 256 MB zero_() flush before each call, return mean; alternated 3x, median of the 3 means reported",
+  "tilelang_ms": 1.7771612405776978,
+  "triton_ms": 1.6562198400497437,
+  "raw": {
+   "tilelang": [
+    1.724448561668396,
+    1.7771612405776978,
+    1.7801549434661865
+   ],
+   "triton": [
+    1.645939826965332,
+    1.6562198400497437,
+    1.6584272384643555
+   ]
+  },
+  "ratio_triton_over_tilelang": 0.9319468612264805,
+  "triton_benchmark_script_ms": 1.6606464385986328,
+  "triton_benchmark_script_raw": [
+   1.6614528894424438,
+   1.6575714349746704,
+   1.6606464385986328
+  ],
+  "tilelang_autotuner_ms": 1.7964063882827759
+ },
+ "time_end": "2026-09-24 17:05:34"
+}

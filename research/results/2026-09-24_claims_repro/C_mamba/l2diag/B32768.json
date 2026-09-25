@@ -1,0 +1,219 @@
+{
+ "shape_name": "B32768",
+ "shape": {
+  "kind": "scan_bm",
+  "batch": 8,
+  "nheads": 80,
+  "seqlen": 32768,
+  "headdim": 64,
+  "dstate": 128,
+  "chunk_size": 256,
+  "ngroups": 1
+ },
+ "triton_pick": "BLOCK_SIZE_M: 32, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 2, num_ctas: 1, num_stages: 5, maxnreg: None",
+ "variants": {
+  "orig": {
+   "program_id_lines": [
+    "pid_bc = tl.program_id(axis=1)",
+    "pid_h = tl.program_id(axis=2)",
+    "pid_m = tl.program_id(axis=0) // num_pid_n",
+    "pid_n = tl.program_id(axis=0) % num_pid_n"
+   ],
+   "vs_tilelang": {
+    "max_abs": 0.015625,
+    "rel_l2": 0.0002077287112063598
+   },
+   "ok": true
+  },
+  "heads_first": {
+   "program_id_lines": [
+    "pid_bc = tl.program_id(axis=2)",
+    "pid_h = tl.program_id(axis=0)",
+    "pid_m = tl.program_id(axis=1) // num_pid_n",
+    "pid_n = tl.program_id(axis=1) % num_pid_n"
+   ],
+   "vs_tilelang": {
+    "max_abs": 0.015625,
+    "rel_l2": 0.0002077287112063598
+   },
+   "ok": true
+  }
+ },
+ "time": "2026-09-24 17:50:13",
+ "shipped_vs_tilelang": {
+  "max_abs": 0.015625,
+  "rel_l2": 0.0002077287112063598
+ },
+ "timing_us": {
+  "tilelang": 7109.119892120361,
+  "triton_shipped": 12144.463539123535,
+  "triton_orig": 12141.088008880615,
+  "triton_heads_first": 7612.095832824707
+ },
+ "clock_mhz": {
+  "tilelang": 2461.39656971037,
+  "triton_shipped": 2718.955105885946,
+  "triton_orig": 2719.5249737441463,
+  "triton_heads_first": 1967.8017772534206
+ },
+ "primary": {
+  "label": "l2diag B32768",
+  "config": {
+   "reference": "triton_shipped",
+   "flush": true,
+   "flush_kind": "clean",
+   "reps": 50,
+   "warmup_s": 1.0,
+   "gate": true,
+   "variants": [
+    "tilelang",
+    "triton_shipped",
+    "triton_orig",
+    "triton_heads_first"
+   ]
+  },
+  "variants": {
+   "tilelang": {
+    "total": {
+     "n": 50,
+     "median": 7109.119892120361,
+     "p10": 7096.217727661133,
+     "p90": 7125.4401206970215,
+     "mean": 7110.192604064941,
+     "std": 11.116443718350752,
+     "cv": 0.0015634518412335852,
+     "min": 7078.911781311035,
+     "max": 7129.568099975586
+    },
+    "clock": {
+     "n": 50,
+     "covered": true,
+     "min": 2452.6344910900725,
+     "median": 2461.39656971037,
+     "max": 2472.8627933290854,
+     "cv": 0.001963171825687577,
+     "corr_time_vs_clock": -0.9654933520072452,
+     "cycles_median": 17495802.528265566,
+     "cycles_cv": 0.0006093099232220493
+    },
+    "cv_ok": true
+   },
+   "triton_shipped": {
+    "total": {
+     "n": 50,
+     "median": 12144.463539123535,
+     "p10": 12140.252780914307,
+     "p90": 12146.889781951904,
+     "mean": 12144.00707244873,
+     "std": 2.7241896305841196,
+     "cv": 0.0002243237849197671,
+     "min": 12138.496398925781,
+     "max": 12150.78353881836
+    },
+    "clock": {
+     "n": 50,
+     "covered": true,
+     "min": 2714.918373909328,
+     "median": 2718.955105885946,
+     "max": 2727.227050612058,
+     "cv": 0.0009843189823151323,
+     "corr_time_vs_clock": -0.03672909684400663,
+     "cycles_median": 33019616.534015365,
+     "cycles_cv": 0.0010014747242924813
+    },
+    "cv_ok": true
+   },
+   "triton_orig": {
+    "total": {
+     "n": 50,
+     "median": 12141.088008880615,
+     "p10": 12137.122917175293,
+     "p90": 12146.659278869629,
+     "mean": 12142.20417022705,
+     "std": 3.7041477257247752,
+     "cv": 0.00030506386433588607,
+     "min": 12135.040283203125,
+     "max": 12151.200294494629
+    },
+    "clock": {
+     "n": 50,
+     "covered": true,
+     "min": 2716.419025416318,
+     "median": 2719.5249737441463,
+     "max": 2728.3134546891033,
+     "cv": 0.0010385840311372518,
+     "corr_time_vs_clock": 0.12991810004162366,
+     "cycles_median": 33018960.092186227,
+     "cycles_cv": 0.0011198275673437832
+    },
+    "cv_ok": true
+   },
+   "triton_heads_first": {
+    "total": {
+     "n": 50,
+     "median": 7612.095832824707,
+     "p10": 7592.1471118927,
+     "p90": 7624.054431915283,
+     "mean": 7609.393892288208,
+     "std": 12.641358965318533,
+     "cv": 0.001661283295917958,
+     "min": 7580.0957679748535,
+     "max": 7635.583877563477
+    },
+    "clock": {
+     "n": 50,
+     "covered": true,
+     "min": 1960.2241087668053,
+     "median": 1967.8017772534206,
+     "max": 1977.526528430283,
+     "cv": 0.002129115244800485,
+     "corr_time_vs_clock": -0.9544693207727435,
+     "cycles_median": 14977749.193408435,
+     "cycles_cv": 0.0007345525124204139
+    },
+    "cv_ok": true
+   }
+  },
+  "derived": {
+   "speedup": {
+    "tilelang": 1.7082935332943634,
+    "triton_shipped": 1.0,
+    "triton_orig": 1.0002780253499892,
+    "triton_heads_first": 1.5954165325605143
+   }
+  },
+  "nvml": null,
+  "clock": {
+   "window": {
+    "n_samples": 39504,
+    "smid": 0,
+    "span_ms": 1982.143264,
+    "sample_period_us_median": 50.176,
+    "bin_ms": 1.0,
+    "n_bins": 1975,
+    "mhz": {
+     "mean": 2529.3111487222955,
+     "min": 1916.3391632919868,
+     "p10": 1958.519743610674,
+     "median": 2717.580080678593,
+     "p90": 2726.0766103316328,
+     "max": 2746.5880102040815
+    },
+    "truncated": false,
+    "timed_out": false
+   }
+  },
+  "guard": {
+   "clean": true,
+   "complete": true,
+   "attempts": [
+    {
+     "waited_s": 5.46,
+     "clean": true,
+     "complete": true,
+     "active": []
+    }
+   ]
+  }
+ }
+}

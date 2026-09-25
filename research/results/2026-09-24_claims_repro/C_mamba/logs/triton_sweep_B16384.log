@@ -1,0 +1,18 @@
+[run_guarded] {'event': 'launch', 'waited_s': 5.4, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_triton_sweep.py --shape B16384', 't': '2026-09-24 17:09:54'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 17:10:06,697 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[triton sweep B16384] flush=clean reps=60
+  tilelang                   3492.30 us (p10 3485.31 p90 3502.15 cv 0.20%) clk 2518 MHz | x1.120 vs triton_autotuned
+  triton_autotuned           3911.68 us (p10 3897.28 p90 3919.79 cv 2.23%) clk 1956 MHz | x1.000 vs triton_autotuned
+  cfg1                       8517.63 us (p10 8505.03 p90 8529.83 cv 0.12%) clk 2699 MHz | x0.459 vs triton_autotuned
+  cfg2                       6337.44 us (p10 6325.02 p90 6343.82 cv 0.12%) clk 2684 MHz | x0.617 vs triton_autotuned
+  cfg3                       5392.30 us (p10 5371.70 p90 5407.68 cv 0.27%) clk 2811 MHz | x0.725 vs triton_autotuned
+  cfg4                       4207.58 us (p10 4192.22 p90 4222.85 cv 0.26%) clk 2095 MHz | x0.930 vs triton_autotuned
+  cfg5                       4908.05 us (p10 4900.80 p90 4913.19 cv 0.10%) clk 2762 MHz | x0.797 vs triton_autotuned
+  cfg6                       5742.11 us (p10 5735.13 p90 5750.00 cv 0.11%) clk 2719 MHz | x0.681 vs triton_autotuned
+  cfg7                       5077.97 us (p10 5063.51 p90 5088.39 cv 0.22%) clk 2195 MHz | x0.770 vs triton_autotuned
+  cfg8                       4996.03 us (p10 4982.62 p90 5005.22 cv 0.19%) clk 2231 MHz | x0.783 vs triton_autotuned
+  cfg9                       3907.73 us (p10 3897.02 p90 3919.91 cv 3.06%) clk 1963 MHz | x1.001 vs triton_autotuned
+  cfg10                      4783.12 us (p10 4770.81 p90 4792.55 cv 0.20%) clk 2758 MHz | x0.818 vs triton_autotuned
+[triton sweep B16384] TileLang 3492.3 us; Triton autotuned 3911.7 us (BLOCK_SIZE_M: 32, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 2, num_ctas: 1, num_stages: 5, maxnreg: None); best forced 3907.7 us (BLOCK_SIZE_M: 32, BLOCK_SIZE_N: 64, BLOCK_SIZE_K: 32, num_warps: 2, num_ctas: 1, num_stages: 5, maxnreg: None); ratio best/TL 1.119
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 28.4, 't': '2026-09-24 17:10:23'}

@@ -154,3 +154,46 @@ pip install --no-cache-dir flashinfer-python==0.7.0
 - JIT 缓存会自动重编：FlashInfer 用 ninja（`deps = gcc` 的依赖文件）管理 `~/.cache/flashinfer/0.7.0/120f/cached_ops/pod_with_kv_cache_*`，头文件变了之后第一次加载 POD 模块时重编 16 个实例（约 130 s，96 核），`pod_patch_status()["pod_so"]` 报告 `.so` 是否比头文件新。撤销补丁后同样会自动重编回原版。
 - 验证（`research/bench/scripts/p4_pod_patch.py`，结果 `research/results/2026-09-24_p4_prep/pod_patch_{unpatched,patched}.json`）：8 个 P4 配置 × 3 组输入，默认流上补丁版与原版输出逐位相同（SHA-256）；补丁版在 torch side stream（每配置 24 次背靠背调用）、green context stream（96 SM）、CUDA graph（每配置捕获一次、回放 24 次，每次回放前换输入并把输出置 NaN）上共 576 次调用全部与默认流结果逐位相同；原版在同样的测试上 side 44/48、green 48/48、graph 46/48 次错误。
 - `pip install --force-reinstall flashinfer-python==0.7.0` 会覆盖补丁，需要重新执行上面的 `patch`。
+
+## 6. flash-attn 2.8.3.post1（claims-repro 子研究 B，2026-09-24）
+
+用途：C2（FlashAttention 前向）的额外参照（独立的 FA2 实现；PyTorch SDPA 的 flash 后端内置的也是 FA2）。结果见 `research/results/2026-09-24_claims_repro/B_attention/`。
+
+```bash
+source research/env.sh
+# 官方预编译 wheel（GitHub release v2.8.3.post1，256 MB，sha256 9a08775a…3d86e），不从源码编译
+curl -L -O https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3.post1/flash_attn-2.8.3.post1+cu12torch2.8cxx11abiTRUE-cp312-cp312-linux_x86_64.whl
+pip install --dry-run --no-cache-dir --report dry.json ./flash_attn-2.8.3.post1+cu12torch2.8cxx11abiTRUE-cp312-cp312-linux_x86_64.whl   # 只新增 flash_attn
+pip install --no-cache-dir --no-deps ./flash_attn-2.8.3.post1+cu12torch2.8cxx11abiTRUE-cp312-cp312-linux_x86_64.whl
+```
+
+- 安装前后 `pip list` 对比：只多了 `flash_attn 2.8.3.post1`，其余包版本全部不变（torch 2.8.0+cu128、triton 3.4.0、apache-tvm-ffi 0.1.12、flashinfer 0.7.0）。
+- `flash_attn_2_cuda.*.so` 含 sm_80 / sm_90 / sm_100 / sm_120 的 SASS（`cuobjdump --list-elf` 各 72 个 cubin），在本机 sm_120 上直接可用。
+- 占盘：site-packages 多约 960 MB（`flash_attn_2_cuda.cpython-312-x86_64-linux-gnu.so` 955 MB）。wheel 文件已删除，pip 缓存未增长。
+- 卸载：`pip uninstall flash_attn`。
+
+## 7. BitBLAS 0.1.0.post1（claims-repro 子研究 A，2026-09-24；已卸载）
+
+用途：C5（反量化 GEMV）的声明就是用 BitBLAS（TileLang 后端）测的，想用原工件复现。结果见 `research/results/2026-09-24_claims_repro/A_gemm/`。
+
+```bash
+source research/env.sh
+pip install --dry-run --no-cache-dir --report dry.json bitblas          # 只有新增，没有任何已装包升级/降级
+pip download --no-deps --no-cache-dir -d whl bitblas==0.1.0.post1       # 82 MB wheel，先检查内容
+pip install --no-cache-dir whl/bitblas-0.1.0.post1-py3-none-manylinux1_x86_64.whl
+```
+
+- 新增 14 个包（安装前后 `pip list` 对比，已有包版本全部不变）：bitblas 0.1.0.post1、attrs 26.1.0、cffi 2.1.1、cpplint 2.0.2、decorator 5.3.1、docutils 0.23、dtlib 0.0.0.dev2、execnet 2.1.2、pycparser 3.0、pytest-xdist 3.8.0、RapidFuzz 3.14.6、scipy 1.18.1、thefuzz 0.22.1、tornado 6.5.10。site-packages 多 467 MB（bitblas 自带旧版 TVM 153 MB、CUTLASS 95 MB、旧版 TileLang 7 MB，都在 `bitblas/3rdparty` 下；import bitblas 时会把它们插到 `sys.path` 最前面，所以必须在不含本 fork tilelang 的进程里用，脚本用 `env -u PYTHONPATH`）。
+- **在 sm_120 上一个 kernel 都编不出来**：（1）按原样（自动检测 target `cuda`，sm_120）：`bitblas/ops/general_matmul/tilelang/dequantize/matmul_dequantize.py` 的 `dispatch_scheduler` 只认 Volta/Ampere/Ada/Hopper，报 `Unsupported architecture`；（2）把 TVM target 改成 `cuda -arch=sm_89`（Ada 调度，nvcc 仍按设备编 `compute_120`）：自带旧 TileLang 的 `tl_templates/cuda/gemm.h` 对 `__CUDA_ARCH_LIST__ >= 900` 一律包含 Hopper 的 `gemm_sm90.h`，nvcc 报 `identifier "warpgroup_wait" is undefined`。证据：`research/results/2026-09-24_claims_repro/A_gemm/bitblas_sm120_build_errors.txt`。
+- 因此 bitblas 已卸载（`pip uninstall -y bitblas`，释放约 300 MB）；它的 13 个依赖包仍在（共约 170 MB，scipy 占 140 MB），没有其他代码依赖它们，需要时可 `pip uninstall -y attrs cffi cpplint decorator docutils dtlib execnet pycparser pytest-xdist rapidfuzz scipy thefuzz tornado`（其中 attrs/cffi/pycparser 若被后装的包依赖则保留）。
+- 另外：子研究 A 编译了约 1.6 万个 GEMM 配置，`~/.tilelang/cache` 曾增长约 6.5 GB，结束时已按 params.pkl 的形状精确删除这些条目（其他子研究的条目未动）；TileLang 的 cython 执行后端会在 `/tmp` 留下 `tmp*.cu/.so`（`tilelang/jit/adapter/libgen.py` 用 `delete=False`），fp8 编译留下的约 4.6 GB 也已删除。
+
+## 8. mamba-ssm Triton 基线（claims-repro 子研究 C，2026-09-24）
+
+用途：C3 / C6（Mamba-2 chunk-scan / chunk-state）的 Triton 基线。结果见 `research/results/2026-09-24_claims_repro/C_mamba/`。
+
+- **`~/mpk-env` 没有任何改动**（没有安装、升级或卸载任何包）。
+- mamba-ssm **没有安装**，而是把 PyPI sdist `mamba_ssm-2.2.6.post3.tar.gz`（sha256 `826a3cdb…a7bf3`，`benchmark/mamba2/README.md` 所用版本）里的 4 个纯 Triton 文件原样拷到 `research/bench/baselines/mamba_ssm_triton/mamba_ssm/ops/triton/`（`ssd_chunk_scan.py`、`ssd_chunk_state.py`、`ssd_bmm.py`、`softplus.py`，md5 见该目录的 `mamba_ssm/__init__.py`），并附 Apache-2.0 LICENSE。自带的 `__init__.py` 不导入 CUDA 扩展（上游的会导入 `selective_scan_cuda` 和依赖 `transformers` 的模型类）。用法：`sys.path.insert(0, "research/bench/baselines/mamba_ssm_triton")` 之后 `from mamba_ssm.ops.triton.ssd_chunk_scan import _chunk_scan_fwd`，示例文件里的调用无需修改。
+- 其余只在 scratch 目录里用 `pip install --no-deps --no-cache-dir --target <dir>` 临时装过、从不进默认 `sys.path`、用完已删：pillow 12.3.0（读 JPEG 图）、tilelang 0.1.14 wheel + z3-solver 4.15.4.0（fork 与上游对比；wheel 链接 `libz3.so.4.15`，另用独立的 `TILELANG_CACHE_DIR`）、helion 0.2.1（只做了 import 测试）、fla-core 0.5.2（linear attention 的可选基线）。
+- `~/.tilelang/cache` 因本子研究多了 935 个 kernel 目录（约 0.55 GB，外加 `cuda-binaries/` 里对应的 cubin）；`~/.tilelang/cache/torch_extensions` 4.4 MB（minference 示例自己编的 index 转换算子）。
+- sm_120 上的相关观察：chunk-scan 示例 90 个 autotune 配置中 72 个在 launch 时因 smem > 99 KB 失败（2 个编译失败：layout 单射性检查超出 262144 点上限），只剩 16 个；上游 autotuner 会跳过它们，但每个失败配置都泄漏它刚分配的输入张量，大 shape 时会把后续配置挤成 CUDA OOM（CC4 实测涨到 56 GB）。TileLang 在 sm_120 上默认对这些 kernel 做 warp specialization（256 线程、每线程约 240 寄存器 → 每 SM 1 个 CTA），关掉（`tl.disable_warp_specialized`）后 chunk-scan 快 15–25 %。

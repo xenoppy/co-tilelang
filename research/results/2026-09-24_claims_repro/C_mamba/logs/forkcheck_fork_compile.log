@@ -1,0 +1,11 @@
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 17:05:36,163 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork] compiled CC1 {'block_M': 64, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 3} in 0.1s sha256 4ffa79d09cd9e226
+2026-09-24 17:05:36,177 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork] compiled CC4 {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1} in 0.0s sha256 59f61d454961b6c6
+2026-09-24 17:05:36,210 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork] compiled CT1 {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 4} in 0.0s sha256 68984753d24022eb
+2026-09-24 17:05:36,217 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork] compiled CT4 {'block_M': 64, 'block_N': 128, 'block_K': 64, 'num_stages': 4} in 0.0s sha256 baa53beebc08d443
+2026-09-24 17:05:36,337 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'block_Dstate', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[fork] compiled B8192 {'block_M': 128, 'block_N': 64, 'block_K': 64, 'block_Dstate': 128, 'num_stages': 1} in 0.1s sha256 e9620d0a8d204528

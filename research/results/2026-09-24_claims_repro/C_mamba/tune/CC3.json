@@ -1,0 +1,1033 @@
+{
+ "shape_name": "CC3",
+ "shape": {
+  "kind": "scan_ex",
+  "batch": 64,
+  "nheads": 64,
+  "seqlen": 1024,
+  "headdim": 64,
+  "dstate": 128,
+  "chunk_size": 256,
+  "ngroups": 1
+ },
+ "env": {
+  "torch": "2.8.0+cu128",
+  "triton": "3.4.0",
+  "tilelang": "0.1.14+cuda",
+  "mamba_ssm": "2.2.6.post3+vendored-triton-ssd",
+  "cuda": "12.8",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+  "helion_stubbed": false
+ },
+ "n_configs": 90,
+ "n_ok": 16,
+ "best_config": {
+  "block_M": 128,
+  "block_N": 64,
+  "block_K": 64,
+  "block_Dstate": 128,
+  "num_stages": 1
+ },
+ "best_latency_ms": 1.3965343236923218,
+ "ref_latency_ms": null,
+ "tune_wall_s": 21.31192922592163,
+ "per_config": [
+  {
+   "index": 45,
+   "latency_ms": 1.3965343236923218,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 16,
+   "latency_ms": 1.5582207441329956,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 17,
+   "latency_ms": 1.573891282081604,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 15,
+   "latency_ms": 1.5969280004501343,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 20,
+   "latency_ms": 1.6491520404815674,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 0,
+   "latency_ms": 1.755344033241272,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 30,
+   "latency_ms": 2.0828192234039307,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 31,
+   "latency_ms": 2.1401631832122803,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 35,
+   "latency_ms": 2.159209728240967,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 3,
+   "latency_ms": 2.445209503173828,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 4
+   }
+  },
+  {
+   "index": 4,
+   "latency_ms": 2.460364818572998,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 5
+   }
+  },
+  {
+   "index": 1,
+   "latency_ms": 2.4620063304901123,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 2,
+   "latency_ms": 2.4848415851593018,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 3
+   }
+  },
+  {
+   "index": 5,
+   "latency_ms": 2.534604549407959,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  },
+  {
+   "index": 6,
+   "latency_ms": 2.6272737979888916,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 2
+   }
+  },
+  {
+   "index": 10,
+   "latency_ms": 3.215158462524414,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 1
+   }
+  }
+ ],
+ "failed": [
+  {
+   "index": 7,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 101120 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 8,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 125952 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 9,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 151808 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 11,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 125952 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 12,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 176640 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 13,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 226304 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 14,
+   "config": {
+    "block_M": 64,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 276992 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 18,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 100864 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 19,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 117376 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 21,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 100864 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 22,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 133888 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 23,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 166912 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 24,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 200960 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 25,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 101376 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 26,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 166912 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 27,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 234496 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 28,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 300032 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 29,
+   "config": {
+    "block_M": 64,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 367616 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 32,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 104832 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 33,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 125440 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 34,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 146048 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 36,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 125440 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 37,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 166656 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 38,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 207872 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 39,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 250112 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 40,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 125440 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 41,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 207872 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 42,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 291328 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 43,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 373760 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 44,
+   "config": {
+    "block_M": 128,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 457216 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 46,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 100608 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 47,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 125312 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 48,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 150016 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 49,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 174720 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 50,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 100608 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 51,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 150016 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 52,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 199424 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 53,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 248832 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 54,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 299264 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 55,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 150528 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 56,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 248832 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 57,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 349184 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 58,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 447488 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 59,
+   "config": {
+    "block_M": 128,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 547840 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 60,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 112768 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 61,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 149760 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 62,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 186752 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 63,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 223744 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 64,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 260736 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 65,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 149760 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 66,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 223744 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 67,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 297728 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 68,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 371712 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 69,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 446720 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 70,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 223744 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 71,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 371712 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 72,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 520704 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 73,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 668672 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 74,
+   "config": {
+    "block_M": 256,
+    "block_N": 32,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "compile: Invalid layout for shared buffer `cb_shared`: the forward map must be injective. Details: (\"injectivity could not be proven: the logical input domain exceeds the exact-check limit of 262144 points\",)."
+  },
+  {
+   "index": 75,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 125056 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 76,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 166144 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 77,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 207232 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 78,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 248320 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 79,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 64,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 289408 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 80,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 166144 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 81,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 248320 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 82,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 330496 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 83,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 412672 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 84,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 128,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "launch: dynamic smem 495872 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 85,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 1
+   },
+   "reason": "launch: dynamic smem 248832 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 86,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 2
+   },
+   "reason": "launch: dynamic smem 412672 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 87,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 3
+   },
+   "reason": "launch: dynamic smem 578560 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 88,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 4
+   },
+   "reason": "launch: dynamic smem 742400 B rejected (sm_120 opt-in limit 101376 B per CTA incl. static smem)"
+  },
+  {
+   "index": 89,
+   "config": {
+    "block_M": 256,
+    "block_N": 64,
+    "block_K": 256,
+    "block_Dstate": 128,
+    "num_stages": 5
+   },
+   "reason": "compile: Invalid layout for shared buffer `cb_shared`: the forward map must be injective. Details: (\"injectivity could not be proven: the logical input domain exceeds the exact-check limit of 262144 points\",)."
+  }
+ ],
+ "failure_summary": {
+  "launch: smem": 72,
+  "compile": 2
+ },
+ "time": "2026-09-24 15:18:08"
+}

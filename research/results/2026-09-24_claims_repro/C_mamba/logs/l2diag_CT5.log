@@ -1,0 +1,11 @@
+[guard] GPU occupied (foreign SM activity: procs [] active [(631505, 'python research/bench/scripts/claims_mamba_triton_sweep.py --shape CC1')]); waiting 1800s (waited 5s)
+[run_guarded] {'event': 'launch', 'waited_s': 1805.5, 'cmd': 'flock /tmp/claude-1008/-home-ywc-co-tilelang/d36518d2-9f4d-4232-868c-46d863e88350/scratchpad/gpu.lock python research/bench/scripts/claims_mamba_l2diag.py --shape CT5', 't': '2026-09-24 17:40:57'}
+Loading tilelang libs from dev root: /home/ywc/co-tilelang/build
+2026-09-24 17:42:02,260 WARNING:Tunable parameters ['block_M', 'block_N', 'block_K', 'num_stages'] already provided during auto-tuning. Skipping compilation and using direct JIT
+[l2diag CT5] flush=clean reps=50
+  tilelang                   4355.68 us (p10 4353.63 p90 4360.31 cv 0.07%) clk 2771 MHz | x2.204 vs triton_shipped
+  triton_shipped             9597.98 us (p10 9592.83 p90 9603.14 cv 0.04%) clk 2822 MHz | x1.000 vs triton_shipped
+  triton_orig                9598.03 us (p10 9593.95 p90 9602.08 cv 0.03%) clk 2822 MHz | x1.000 vs triton_shipped
+  triton_heads_first         6468.46 us (p10 6464.11 p90 6476.69 cv 0.08%) clk 2770 MHz | x1.484 vs triton_shipped
+[l2diag CT5] tilelang 4355.7 us  triton_shipped 9598.0 us  triton_orig 9598.0 us  triton_heads_first 6468.5 us
+[run_guarded] {'event': 'exit', 'rc': 0, 'wall_s': 79.6, 't': '2026-09-24 17:42:16'}

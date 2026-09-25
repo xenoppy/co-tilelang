@@ -1,0 +1,82 @@
+{
+ "FA bhsd 128x128 2-stage 256thr (sm_90a)": {
+  "dyn_smem": {
+   "main_kernel": 163840
+  },
+  "wgmma": true,
+  "mma_sync": false,
+  "tma": true,
+  "launch_bounds": [
+   "384"
+  ]
+ },
+ "FA bhsd 128x128 2-stage 256thr (sm_120a)": {
+  "dyn_smem": {
+   "main_kernel": 163840
+  },
+  "wgmma": false,
+  "mma_sync": true,
+  "tma": true,
+  "launch_bounds": [
+   "384"
+  ]
+ },
+ "MLA paged block_N=64 block_H=64 2-stage (sm_90a)": {
+  "dyn_smem": {
+   "main_no_split_kernel": 231424
+  },
+  "wgmma": true,
+  "mma_sync": false,
+  "tma": true,
+  "launch_bounds": [
+   "384"
+  ]
+ },
+ "MLA paged block_N=32 block_H=64 2-stage (sm_90a)": {
+  "dyn_smem": {
+   "main_no_split_kernel": 153600
+  },
+  "wgmma": true,
+  "mma_sync": false,
+  "tma": true,
+  "launch_bounds": [
+   "384"
+  ]
+ },
+ "MLA paged block_N=64 block_H=16 2-stage (sm_90a)": {
+  "dyn_smem": {
+   "main_no_split_kernel": 169984
+  },
+  "wgmma": false,
+  "mma_sync": true,
+  "tma": true,
+  "launch_bounds": [
+   "384"
+  ]
+ },
+ "MLA paged block_N=64 block_H=64 2-stage (sm_120a)": {
+  "dyn_smem": {
+   "main_no_split_kernel": 231424
+  },
+  "wgmma": false,
+  "mma_sync": true,
+  "tma": true,
+  "launch_bounds": [
+   "384"
+  ]
+ },
+ "MLA paged block_N=32 block_H=64 2-stage (sm_120a)": {
+  "error": "InternalError: Layout infer conflict between scores_max_prev and scores_scale in T.Parallel loop:"
+ },
+ "MLA paged block_N=64 block_H=16 2-stage (sm_120a)": {
+  "dyn_smem": {
+   "main_no_split_kernel": 169984
+  },
+  "wgmma": false,
+  "mma_sync": true,
+  "tma": true,
+  "launch_bounds": [
+   "384"
+  ]
+ }
+}

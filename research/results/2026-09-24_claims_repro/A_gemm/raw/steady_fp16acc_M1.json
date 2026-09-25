@@ -1,0 +1,628 @@
+{
+ "suite": "fp16acc",
+ "shape": "M1",
+ "MNK": [
+  4096,
+  8192,
+  8192
+ ],
+ "start": "2026-09-24 18:00:49",
+ "mode": "steady",
+ "gpu_state_before": {
+  "clocks.sm": "1860",
+  "clocks.max.sm": "3090",
+  "power.draw": "600.02",
+  "power.limit": "600.00",
+  "temperature.gpu": "86",
+  "utilization.gpu": "100",
+  "memory.used": "45606"
+ },
+ "tl_config": {
+  "block_M": 128,
+  "block_N": 256,
+  "block_K": 64,
+  "num_stages": 2,
+  "thread_num": 256,
+  "enable_rasteration": true
+ },
+ "same_device_source_as_flush_run": true,
+ "rotation": {
+  "copies": 1,
+  "bytes_per_copy": 268435456,
+  "total_bytes": 268435456
+ },
+ "correctness": {
+  "tl": {
+   "rel_err_max": 0.008493737317621708,
+   "tol": 0.025481211952865124,
+   "pass": true
+  },
+  "cublas_fp16acc": {
+   "rel_err_max": 0.008493737317621708,
+   "tol": 0.025481211952865124,
+   "pass": true
+  },
+  "triton_tlbench_fp16acc_nt": {
+   "rel_err_max": 0.008493737317621708,
+   "tol": 0.025481211952865124,
+   "pass": true
+  }
+ },
+ "triton_best_config": {
+  "BLOCK_SIZE_M": 128,
+  "BLOCK_SIZE_N": 256,
+  "BLOCK_SIZE_K": 64,
+  "GROUP_SIZE_M": 8,
+  "num_warps": 8,
+  "num_stages": 3
+ },
+ "cobench_steady": {
+  "label": "steady fp16acc M1",
+  "config": {
+   "reference": "cublas_fp16acc",
+   "slice_s": 1.5,
+   "settle_s": 0.4,
+   "rounds": 5,
+   "warmup_s": 5.0,
+   "thermal_warmup": {
+    "plateau": true,
+    "seconds": 30.06019824500254,
+    "temp_c": 87
+   },
+   "lead_ms": 8.0,
+   "variants": [
+    "tl",
+    "cublas_fp16acc",
+    "triton_tlbench_fp16acc_nt"
+   ],
+   "run_s": 22.566921710968018,
+   "iterations_total": 31957
+  },
+  "variants": {
+   "tl": {
+    "t_iter_us": 1665.904698227391,
+    "t_iter_mean_us": 1665.4058480432172,
+    "cv_slices": 0.000721522181530638,
+    "slices_us": [
+     1663.7226976172467,
+     1664.685752175071,
+     1665.904698227391,
+     1665.9326726740057,
+     1666.7834195223722
+    ],
+    "iter_median_us": 1665.71044921875,
+    "iter_p10_us": 1661.56005859375,
+    "iter_p90_us": 1669.677734375,
+    "n_iter": 3301,
+    "group": 1,
+    "lead": 5,
+    "gaps": 0,
+    "est_us": 1643.104076385498,
+    "host_us": 12.273333898823088,
+    "clock_mhz": 1953.3285895380113,
+    "power_w": 599.9989814814815,
+    "cv_ok": true,
+    "kcycles_per_iter": 3254.059274493256,
+    "energy_mj_per_iter": 999.5411221816494
+   },
+   "cublas_fp16acc": {
+    "t_iter_us": 1724.4737678934414,
+    "t_iter_mean_us": 1724.326721240046,
+    "cv_slices": 0.0005731318596289373,
+    "slices_us": [
+     1723.05875727455,
+     1723.7317315463363,
+     1724.4737678934414,
+     1724.7097290421727,
+     1725.6596204437303
+    ],
+    "iter_median_us": 1724.7314453125,
+    "iter_p10_us": 1719.7265625,
+    "iter_p90_us": 1728.21044921875,
+    "n_iter": 3190,
+    "group": 1,
+    "lead": 5,
+    "gaps": 0,
+    "est_us": 1703.0720710754395,
+    "host_us": 24.440333315093692,
+    "clock_mhz": 1804.6513089377756,
+    "power_w": 599.967648148148,
+    "cv_ok": true,
+    "kcycles_per_iter": 3112.0738424577567,
+    "energy_mj_per_iter": 1034.6284708162034
+   },
+   "triton_tlbench_fp16acc_nt": {
+    "t_iter_us": 1781.0867457713896,
+    "t_iter_mean_us": 1781.2526062225893,
+    "cv_slices": 0.0007266271471750752,
+    "slices_us": [
+     1779.8181428878438,
+     1780.2024273424859,
+     1781.0867457713896,
+     1782.5893606127179,
+     1782.5663544985082
+    ],
+    "iter_median_us": 1781.1279296875,
+    "iter_p10_us": 1776.9775390625,
+    "iter_p90_us": 1785.21728515625,
+    "n_iter": 3089,
+    "group": 1,
+    "lead": 5,
+    "gaps": 0,
+    "est_us": 1780.725320180257,
+    "host_us": 56.20366573566571,
+    "clock_mhz": 2001.7925635507302,
+    "power_w": 600.0175740740741,
+    "cv_ok": true,
+    "kcycles_per_iter": 3565.3662027239375,
+    "energy_mj_per_iter": 1068.6833484132364
+   }
+  },
+  "derived": {
+   "speedup": {
+    "tl": {
+     "ratio_of_medians": 1.0351575151497987,
+     "paired_median": 1.035323246098902,
+     "paired_min": 1.0351575151497987,
+     "paired_max": 1.035664633140056
+    },
+    "cublas_fp16acc": {
+     "ratio_of_medians": 1.0,
+     "paired_median": 1.0,
+     "paired_min": 1.0,
+     "paired_max": 1.0
+    },
+    "triton_tlbench_fp16acc_nt": {
+     "ratio_of_medians": 0.9682143623760284,
+     "paired_median": 0.9681094465521074,
+     "paired_min": 0.9675305862082277,
+     "paired_max": 0.9682784974737677
+    }
+   }
+  },
+  "slices": [
+   {
+    "variant": "tl",
+    "round": 0,
+    "t_iter_us": 1663.7226976172467,
+    "iter_median_us": 1663.6962890625,
+    "iter_p10_us": 1660.15625,
+    "iter_p90_us": 1667.6025390625,
+    "n_iter": 661,
+    "group": 1,
+    "span_ms": 1099.720703125,
+    "clock_mhz": 1956.0071202093372,
+    "power_w": 599.9979444444444,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272881.2787907,
+     1790272882.3785114
+    ]
+   },
+   {
+    "variant": "cublas_fp16acc",
+    "round": 0,
+    "t_iter_us": 1723.05875727455,
+    "iter_median_us": 1723.0224609375,
+    "iter_p10_us": 1718.93310546875,
+    "iter_p90_us": 1727.1728515625,
+    "n_iter": 639,
+    "group": 1,
+    "span_ms": 1101.0345458984375,
+    "clock_mhz": 1806.122489173602,
+    "power_w": 600.0042037037038,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272882.7792008,
+     1790272883.8802361
+    ]
+   },
+   {
+    "variant": "triton_tlbench_fp16acc_nt",
+    "round": 0,
+    "t_iter_us": 1779.8181428878438,
+    "iter_median_us": 1780.2734375,
+    "iter_p10_us": 1776.165771484375,
+    "iter_p90_us": 1783.447265625,
+    "n_iter": 618,
+    "group": 1,
+    "span_ms": 1099.9276123046875,
+    "clock_mhz": 2002.9287532972123,
+    "power_w": 600.0175555555555,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272884.2815917,
+     1790272885.3815174
+    ]
+   },
+   {
+    "variant": "cublas_fp16acc",
+    "round": 1,
+    "t_iter_us": 1723.7317315463363,
+    "iter_median_us": 1723.7548828125,
+    "iter_p10_us": 1719.6044921875,
+    "iter_p90_us": 1727.874755859375,
+    "n_iter": 638,
+    "group": 1,
+    "span_ms": 1099.7408447265625,
+    "clock_mhz": 1805.7727942870288,
+    "power_w": 599.9635185185185,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272885.7825017,
+     1790272886.8822439
+    ]
+   },
+   {
+    "variant": "triton_tlbench_fp16acc_nt",
+    "round": 1,
+    "t_iter_us": 1780.2024273424859,
+    "iter_median_us": 1780.3955078125,
+    "iter_p10_us": 1776.30615234375,
+    "iter_p90_us": 1784.1796875,
+    "n_iter": 618,
+    "group": 1,
+    "span_ms": 1100.1651000976562,
+    "clock_mhz": 2002.5686771334565,
+    "power_w": 600.0268518518519,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272887.2833219,
+     1790272888.383486
+    ]
+   },
+   {
+    "variant": "tl",
+    "round": 1,
+    "t_iter_us": 1664.685752175071,
+    "iter_median_us": 1664.48974609375,
+    "iter_p10_us": 1661.2548828125,
+    "iter_p90_us": 1668.45703125,
+    "n_iter": 660,
+    "group": 1,
+    "span_ms": 1098.6925964355469,
+    "clock_mhz": 1954.8195404323149,
+    "power_w": 599.9989814814815,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272888.784783,
+     1790272889.883474
+    ]
+   },
+   {
+    "variant": "triton_tlbench_fp16acc_nt",
+    "round": 2,
+    "t_iter_us": 1781.0867457713896,
+    "iter_median_us": 1781.1279296875,
+    "iter_p10_us": 1777.099609375,
+    "iter_p90_us": 1784.9853515625,
+    "n_iter": 618,
+    "group": 1,
+    "span_ms": 1100.7116088867188,
+    "clock_mhz": 2001.7925635507302,
+    "power_w": 599.9892037037038,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272890.2840838,
+     1790272891.3847947
+    ]
+   },
+   {
+    "variant": "tl",
+    "round": 2,
+    "t_iter_us": 1665.904698227391,
+    "iter_median_us": 1665.71044921875,
+    "iter_p10_us": 1662.353515625,
+    "iter_p90_us": 1669.73876953125,
+    "n_iter": 660,
+    "group": 1,
+    "span_ms": 1099.4971008300781,
+    "clock_mhz": 1953.2927241768475,
+    "power_w": 599.9982037037036,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272891.7860992,
+     1790272892.8855953
+    ]
+   },
+   {
+    "variant": "cublas_fp16acc",
+    "round": 2,
+    "t_iter_us": 1724.4737678934414,
+    "iter_median_us": 1724.7314453125,
+    "iter_p10_us": 1720.703125,
+    "iter_p90_us": 1728.1494140625,
+    "n_iter": 638,
+    "group": 1,
+    "span_ms": 1100.2142639160156,
+    "clock_mhz": 1804.6513089377756,
+    "power_w": 599.9673703703704,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272893.2866464,
+     1790272894.3868573
+    ]
+   },
+   {
+    "variant": "tl",
+    "round": 3,
+    "t_iter_us": 1665.9326726740057,
+    "iter_median_us": 1665.771484375,
+    "iter_p10_us": 1662.353515625,
+    "iter_p90_us": 1669.7998046875,
+    "n_iter": 660,
+    "group": 1,
+    "span_ms": 1099.5155639648438,
+    "clock_mhz": 1953.3285895380113,
+    "power_w": 600.0081666666666,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272894.7874274,
+     1790272895.886943
+    ]
+   },
+   {
+    "variant": "cublas_fp16acc",
+    "round": 3,
+    "t_iter_us": 1724.7097290421727,
+    "iter_median_us": 1725.03662109375,
+    "iter_p10_us": 1720.947265625,
+    "iter_p90_us": 1728.94287109375,
+    "n_iter": 638,
+    "group": 1,
+    "span_ms": 1100.3648071289062,
+    "clock_mhz": 1803.8038661551686,
+    "power_w": 599.967648148148,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272896.2881968,
+     1790272897.38856
+    ]
+   },
+   {
+    "variant": "triton_tlbench_fp16acc_nt",
+    "round": 3,
+    "t_iter_us": 1782.5893606127179,
+    "iter_median_us": 1782.470703125,
+    "iter_p10_us": 1778.38134765625,
+    "iter_p90_us": 1786.62109375,
+    "n_iter": 617,
+    "group": 1,
+    "span_ms": 1099.8576354980469,
+    "clock_mhz": 1999.8001066121556,
+    "power_w": 600.0175740740741,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272897.790189,
+     1790272898.8900485
+    ]
+   },
+   {
+    "variant": "cublas_fp16acc",
+    "round": 4,
+    "t_iter_us": 1725.6596204437303,
+    "iter_median_us": 1725.830078125,
+    "iter_p10_us": 1721.6796875,
+    "iter_p90_us": 1729.248046875,
+    "n_iter": 637,
+    "group": 1,
+    "span_ms": 1099.2451782226562,
+    "clock_mhz": 1802.6018119346484,
+    "power_w": 599.9727777777777,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272899.29165,
+     1790272900.3908923
+    ]
+   },
+   {
+    "variant": "triton_tlbench_fp16acc_nt",
+    "round": 4,
+    "t_iter_us": 1782.5663544985082,
+    "iter_median_us": 1782.470703125,
+    "iter_p10_us": 1778.3203125,
+    "iter_p90_us": 1786.4990234375,
+    "n_iter": 618,
+    "group": 1,
+    "span_ms": 1101.6260070800781,
+    "clock_mhz": 1999.9843857668639,
+    "power_w": 600.0192037037037,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272900.7909784,
+     1790272901.892607
+    ]
+   },
+   {
+    "variant": "tl",
+    "round": 4,
+    "t_iter_us": 1666.7834195223722,
+    "iter_median_us": 1666.50390625,
+    "iter_p10_us": 1663.51318359375,
+    "iter_p90_us": 1670.5322265625,
+    "n_iter": 660,
+    "group": 1,
+    "span_ms": 1100.0770568847656,
+    "clock_mhz": 1952.3889013543276,
+    "power_w": 600.0002407407408,
+    "power_n": 54,
+    "gaps": 0,
+    "temp_c": 88.0,
+    "host_window": [
+     1790272902.2926931,
+     1790272903.3927672
+    ]
+   }
+  ],
+  "clock": {
+   "n_samples": 524748,
+   "smid": 0,
+   "span_ms": 52659.41136,
+   "sample_period_us_median": 100.352,
+   "bin_ms": 10.0,
+   "n_bins": 5247,
+   "mhz": {
+    "mean": 1924.195256006371,
+    "min": 1779.2422736215765,
+    "p10": 1803.1531808035716,
+    "median": 1956.8802814094388,
+    "p90": 2014.049694006132,
+    "max": 2549.9582469706634
+   },
+   "truncated": false,
+   "timed_out": false
+  },
+  "nvml": {
+   "temp_c": {
+    "min": 77.0,
+    "max": 88.0
+   },
+   "throttle": {
+    "reasons_seen": [
+     "SwPowerCap"
+    ],
+    "any_perf_limiting": true,
+    "frac_samples_perf_limited": 1.0,
+    "frac_by_reason": {
+     "SwPowerCap": 1.0
+    }
+   }
+  },
+  "guard": {
+   "attempts": [
+    {
+     "waited_s": 1.4066696166992188e-05,
+     "clean": true,
+     "complete": true,
+     "active": [],
+     "contaminated_slices": []
+    }
+   ],
+   "clean": true,
+   "complete": true,
+   "summary": {
+    "n_active_samples": 0,
+    "active": [],
+    "present": {
+     "73312": [
+      1790272710.8,
+      1790272905.7,
+      "/home/qzr/gigpo_search_reproduction_20260922/runtime/bin/python /home/qzr/gigpo_search_reproduction_20260922/run/local_r"
+     ],
+     "414061": [
+      1790272710.8,
+      1790272905.7,
+      "ray::WorkerDict"
+     ]
+    },
+    "n_lines": 540
+   }
+  },
+  "gpu_state_before": {
+   "sm_clock_mhz": 1890,
+   "mem_clock_mhz": 13365,
+   "max_sm_clock_mhz": 3090,
+   "temp_c": 83,
+   "power_w": 602.255,
+   "power_limit_w": 600.0,
+   "pstate": 1,
+   "reasons": [
+    "SwPowerCap"
+   ]
+  }
+ },
+ "summary": {
+  "tl": {
+   "t_iter_us": 1665.904698227391,
+   "cv_slices": 0.000721522181530638,
+   "clock_mhz": 1953.3285895380113,
+   "power_w": 599.9989814814815,
+   "energy_mj_per_iter": 999.5411221816494,
+   "kcycles_per_iter": 3254.059274493256,
+   "iter_p10_us": 1661.56005859375,
+   "iter_p90_us": 1669.677734375,
+   "n_iter": 3301,
+   "tflops": 330.00436007712125,
+   "tflop_per_joule": 0.5500082004510979,
+   "speedup_vs_cublas_fp16acc": 1.0351575151497987,
+   "speedup_paired_min_max": [
+    1.0351575151497987,
+    1.035664633140056
+   ]
+  },
+  "cublas_fp16acc": {
+   "t_iter_us": 1724.4737678934414,
+   "cv_slices": 0.0005731318596289373,
+   "clock_mhz": 1804.6513089377756,
+   "power_w": 599.967648148148,
+   "energy_mj_per_iter": 1034.6284708162034,
+   "kcycles_per_iter": 3112.0738424577567,
+   "iter_p10_us": 1719.7265625,
+   "iter_p90_us": 1728.21044921875,
+   "n_iter": 3190,
+   "tflops": 318.79627520200734,
+   "tflop_per_joule": 0.5313557759089169,
+   "speedup_vs_cublas_fp16acc": 1.0,
+   "speedup_paired_min_max": [
+    1.0,
+    1.0
+   ]
+  },
+  "triton_tlbench_fp16acc_nt": {
+   "t_iter_us": 1781.0867457713896,
+   "cv_slices": 0.0007266271471750752,
+   "clock_mhz": 2001.7925635507302,
+   "power_w": 600.0175740740741,
+   "energy_mj_per_iter": 1068.6833484132364,
+   "kcycles_per_iter": 3565.3662027239375,
+   "iter_p10_us": 1776.9775390625,
+   "iter_p90_us": 1785.21728515625,
+   "n_iter": 3089,
+   "tflops": 308.66313232256437,
+   "tflop_per_joule": 0.5144234863435164,
+   "speedup_vs_cublas_fp16acc": 0.9682143623760284,
+   "speedup_paired_min_max": [
+    0.9675305862082277,
+    0.9682784974737677
+   ]
+  }
+ },
+ "gpu_state_after": {
+  "clocks.sm": "1800",
+  "clocks.max.sm": "3090",
+  "power.draw": "600.02",
+  "power.limit": "600.00",
+  "temperature.gpu": "88",
+  "utilization.gpu": "100",
+  "memory.used": "45862"
+ },
+ "end": "2026-09-24 18:01:45"
+}
